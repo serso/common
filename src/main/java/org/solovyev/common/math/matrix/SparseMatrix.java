@@ -49,8 +49,7 @@ public abstract class SparseMatrix<T> extends AbstractMatrix<T> {
     }
 
     public T getCheckedIJ(int i, int j) {
-		// todo serso : get default value
-        T result = null;
+        T result = getEmptyValue();
 		final List<Property<T, Integer>> iRow = this.rows.get(i);
 
 		if (iRow != null) {
