@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * Time: 12:35:34 AM
  */
 public class Pair<K, V> {
+
     private K first;
     private V second;
 

@@ -48,16 +48,16 @@ public abstract class ArrayMatrix<T> extends AbstractMatrix<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public T getIJ(int i, int j) {
+    public T getCheckedIJ(int i, int j) {
         return (T) array[i * this.getNumberOfColumns() + j];
     }
 
-    public void setIJ(int i, int j, T value) {
+    public void setCheckedIJ(int i, int j, T value) {
         array[i * this.getNumberOfColumns() + j] = value;
     }
 
     public void transpose() {
-        //todo serso: not to use additional array
+        //todo serso: hint: use just boolean stored in Matrix (transposed) and use it proper in each method working with matrix
         Object[] array = new Object[this.getNumberOfColumns() * this.getNumberOfRows()];
         for (int i = 0; i < this.getNumberOfColumns(); i++) {
             for (int j = 0; j < this.getNumberOfRows(); j++) {
@@ -72,10 +72,11 @@ public abstract class ArrayMatrix<T> extends AbstractMatrix<T> {
 
     @SuppressWarnings("unchecked")
     public Matrix<T> clone() {
-        ArrayMatrix<T> result;
-        result = (ArrayMatrix<T>) super.clone();
+        final ArrayMatrix<T> clone = (ArrayMatrix<T>) super.clone();
+
         //todo serso: only for simple types
-        result.array = Arrays.copyOf(this.array, this.array.length);
-        return result;
+        clone.array = Arrays.copyOf(this.array, this.array.length);
+
+        return clone;
     }
 }

@@ -1,17 +1,16 @@
 package org.solovyev.common.math.matrix;
 
 import org.solovyev.common.definitions.Property;
+import org.solovyev.common.math.graph.Graph;
+import org.solovyev.common.math.graph.LinkedNode;
+import org.solovyev.common.math.graph.Node;
 
-import java.io.PrintWriter;
-import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-
-import org.solovyev.common.math.graph.Graph;
-import org.solovyev.common.math.graph.Node;
-import org.solovyev.common.math.graph.LinkedNode;
+import java.util.List;
 
 /**
  * User: serso
@@ -49,23 +48,21 @@ public class SparseMatrix extends AbstractMatrix<Double> {
     public SparseMatrix() {
     }
 
-    public Double getIJ(int i, int j) {
-        Double result = null;
-        if (i >= 0 && i < this.m && j >= 0 && j < this.n) {
-            result = 0d;
-            List<Property<Double, Integer>> iRow = this.rows.get(i);
+    public Double getCheckedIJ(int i, int j) {
+        Double result = 0d;
+		final List<Property<Double, Integer>> iRow = this.rows.get(i);
 
-            if (iRow != null) {
-                for (Property<Double, Integer> element : iRow) {
-                    if (element.getId() == j) {
-                        result = element.getValue();
-                        break;
-                    } else if (element.getId() > j) {
-                        break;
-                    }
-                }
-            }
-        }
+		if (iRow != null) {
+			for (Property<Double, Integer> element : iRow) {
+				if (element.getId() == j) {
+					result = element.getValue();
+					break;
+				} else if (element.getId() > j) {
+					break;
+				}
+			}
+		}
+
         return result;
     }
 
@@ -90,41 +87,36 @@ public class SparseMatrix extends AbstractMatrix<Double> {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public boolean equals(Matrix<Double> r) {
+    public boolean equals(Matrix<Double> that) {
         return false;
     }
 
-    public void setIJ(int i, int j, Double value) {
-        if (i >= 0 && i < this.m && j >= 0 && j < this.n) {
-            List<Property<Double, Integer>> iRow = this.rows.get(i);
-            Property<Double, Integer> element;
+	public void setCheckedIJ(int i, int j, Double value) {
+		List<Property<Double, Integer>> iRow = this.rows.get(i);
 
-            if (iRow == null) {
-                iRow = new ArrayList<Property<Double, Integer>>();
-                element = new Property<Double, Integer>(value, j);
-                iRow.add(element);
-                this.rows.set(i, iRow);
-            } else {
-                int index;
-                boolean isFound = false;
-                for (index = iRow.size() - 1; index >= 0; index--) {
-                    if (iRow.get(index).getId().equals(j)) {
-                        isFound = true;
-                        break;
-                    } else if (iRow.get(index).getId() - j < 0) {
-                        break;
-                    }
-                }
+		if (iRow == null) {
+			iRow = new ArrayList<Property<Double, Integer>>();
+			iRow.add(new Property<Double, Integer>(value, j));
+			this.rows.set(i, iRow);
+		} else {
+			int index;
+			boolean isFound = false;
+			for (index = iRow.size() - 1; index >= 0; index--) {
+				if (iRow.get(index).getId().equals(j)) {
+					isFound = true;
+					break;
+				} else if (iRow.get(index).getId() - j < 0) {
+					break;
+				}
+			}
 
-                if (isFound) {
-                    iRow.get(index).setValue(value);
-                } else {
-                    element = new Property<Double, Integer>(value, j);
-                    iRow.add(index + 1, element);
-                }
-            }
-        }
-    }
+			if (isFound) {
+				iRow.get(index).setValue(value);
+			} else {
+				iRow.add(index + 1, new Property<Double, Integer>(value, j));
+			}
+		}
+	}
 
     public void textDisplay(PrintWriter out) {
         List<Property<Double, Integer>> iRow;
