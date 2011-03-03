@@ -142,7 +142,7 @@ public class MatrixUtils {
         if (m instanceof SparseMatrix) {
             int index;
             for (int i = 0; i < m.getNumberOfRows(); i++) {
-                List<Property<Double, Integer>> row = ((SparseMatrix) m).getRows().get(i);
+                List<Property<Double, Integer>> row = ((SparseMatrix<Double>) m).getRows().get(i);
                 if (row != null) {
                     index = 0;
                     for (Property<Double, Integer> element : row) {

@@ -17,9 +17,9 @@ import java.util.List;
  * Date: 29.04.2009
  * Time: 23:35:53
  */
-public class SparseMatrix extends AbstractMatrix<Double> {
+public abstract class SparseMatrix<T> extends AbstractMatrix<T> {
 
-    List<List<Property<Double, Integer>>> rows;
+    List<List<Property<T, Integer>>> rows;
 
     protected final static int DEFAULT_M_SIZE = 2;
     protected final static int DEFAULT_N_SIZE = 2;
@@ -28,10 +28,10 @@ public class SparseMatrix extends AbstractMatrix<Double> {
         super(fName, fileFormat);
     }
 
-    public SparseMatrix(Graph<?, Double> g) {
+    public SparseMatrix(Graph<?, T> g) {
         this.init(g.getNodes().size(), g.getNodes().size());
-        for (Node<?, Double> node : g.getNodes()) {
-            for (LinkedNode<?, Double> linkedNode : node.getLinkedNodes()) {
+        for (Node<?, T> node : g.getNodes()) {
+            for (LinkedNode<?, T> linkedNode : node.getLinkedNodes()) {
                 this.setIJ(node.getId(), linkedNode.getNode().getId(), linkedNode.getArc());
             }
         }
@@ -48,12 +48,13 @@ public class SparseMatrix extends AbstractMatrix<Double> {
     public SparseMatrix() {
     }
 
-    public Double getCheckedIJ(int i, int j) {
-        Double result = 0d;
-		final List<Property<Double, Integer>> iRow = this.rows.get(i);
+    public T getCheckedIJ(int i, int j) {
+		// todo serso : get default value
+        T result = null;
+		final List<Property<T, Integer>> iRow = this.rows.get(i);
 
 		if (iRow != null) {
-			for (Property<Double, Integer> element : iRow) {
+			for (Property<T, Integer> element : iRow) {
 				if (element.getId() == j) {
 					result = element.getValue();
 					break;
@@ -87,16 +88,17 @@ public class SparseMatrix extends AbstractMatrix<Double> {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public boolean equals(Matrix<Double> that) {
+    public boolean equals(Matrix<T> that) {
+		// todo serso: implement
         return false;
     }
 
-	public void setCheckedIJ(int i, int j, Double value) {
-		List<Property<Double, Integer>> iRow = this.rows.get(i);
+	public void setCheckedIJ(int i, int j, T value) {
+		List<Property<T, Integer>> iRow = this.rows.get(i);
 
 		if (iRow == null) {
-			iRow = new ArrayList<Property<Double, Integer>>();
-			iRow.add(new Property<Double, Integer>(value, j));
+			iRow = new ArrayList<Property<T, Integer>>();
+			iRow.add(new Property<T, Integer>(value, j));
 			this.rows.set(i, iRow);
 		} else {
 			int index;
@@ -113,13 +115,13 @@ public class SparseMatrix extends AbstractMatrix<Double> {
 			if (isFound) {
 				iRow.get(index).setValue(value);
 			} else {
-				iRow.add(index + 1, new Property<Double, Integer>(value, j));
+				iRow.add(index + 1, new Property<T, Integer>(value, j));
 			}
 		}
 	}
 
     public void textDisplay(PrintWriter out) {
-        List<Property<Double, Integer>> iRow;
+        List<Property<T, Integer>> iRow;
         int k;
         int prev;
         for (int i = 0; i < this.m; i++) {
@@ -130,7 +132,7 @@ public class SparseMatrix extends AbstractMatrix<Double> {
                 }
             } else {
                 prev = 0;
-                for (Property<Double, Integer> e : iRow) {
+                for (Property<T, Integer> e : iRow) {
                     if (prev == 0) {
                         k = 0;
                     } else {
@@ -147,7 +149,7 @@ public class SparseMatrix extends AbstractMatrix<Double> {
         }
     }
 
-    public Matrix<Double> clone() {
+    public Matrix<T> clone() {
         SparseMatrix result;
         result = (SparseMatrix) super.clone();
         result.init(this.m, this.n);
@@ -159,28 +161,28 @@ public class SparseMatrix extends AbstractMatrix<Double> {
         return result;
     }
 
-    public void init(int m, int n, Double defaultValue) {
+    public void init(int m, int n, T defaultValue) {
         this.m = m;
         this.n = n;
-        rows = new ArrayList<List<Property<Double, Integer>>>();
+        rows = new ArrayList<List<Property<T, Integer>>>();
         for (int i = 0; i < this.m; i++) {
             rows.add(null);
         }
     }
 
-    protected Double getValueFromString(String value) throws InstantiationException, IllegalAccessException, ClassCastException {
-        Double result = null;
+/*    protected T getValueFromString(String value) throws InstantiationException, IllegalAccessException, ClassCastException {
+        T result = null;
         if (value != null) {
             result = Double.valueOf(value);
         }
         return result;
-    }
+    }*/
 
-    protected Double getEmptyValue() {
+/*    protected Double getEmptyValue() {
         return 0d;
-    }
+    }*/
 
-    public List<List<Property<Double, Integer>>> getRows() {
+    public List<List<Property<T, Integer>>> getRows() {
         return rows;
     }
 
@@ -194,9 +196,9 @@ public class SparseMatrix extends AbstractMatrix<Double> {
 
         if (matrixFileFormat.equals(MatrixFileFormat.SHORTED)) {
             for (int i = 0; i < this.getNumberOfRows(); i++) {
-                List<Property<Double, Integer>> row = this.getRows().get(i);
+                List<Property<T, Integer>> row = this.getRows().get(i);
                 if (row != null) {
-                    for (Property<Double, Integer> element : row) {
+                    for (Property<T, Integer> element : row) {
                         out.write((i+1) + " " + (element.getId()+1) + " " + element.getValue());
                         out.newLine();
                     }
@@ -205,10 +207,10 @@ public class SparseMatrix extends AbstractMatrix<Double> {
         } else if (matrixFileFormat.equals(MatrixFileFormat.SIMPLE)) {
             int index;
             for (int i = 0; i < this.getNumberOfRows(); i++) {
-                List<Property<Double, Integer>> row = this.getRows().get(i);
+                List<Property<T, Integer>> row = this.getRows().get(i);
                 if (row != null) {
                     index = 0;
-                    for (Property<Double, Integer> element : row) {
+                    for (Property<T, Integer> element : row) {
                         while (index < element.getId()) {
                             out.write(0d + " ");
                             index++;
