@@ -88,11 +88,6 @@ public abstract class AbstractSparseMatrix<T> extends AbstractMatrix<T> {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public boolean equals(Matrix<T> that) {
-		// todo serso: implement
-        return false;
-    }
-
 	public void setChecked(int i, int j, T value) {
 		List<Property<T, Integer>> iRow = this.rows.get(i);
 

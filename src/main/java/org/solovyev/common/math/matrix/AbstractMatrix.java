@@ -226,28 +226,16 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		return result;
 	}
 
-	public boolean equals(Matrix<T> that) {
-		boolean result = true;
-		if (this.getNumberOfRows() != that.getNumberOfRows()) {
-			result = false;
-		} else if (this.getNumberOfColumns() != that.getNumberOfColumns()) {
-			result = false;
-		}
+	@Override
+	public boolean equals(Object that) {
+		if (this == that) return true;
 
-		if (result) {
-			for (int i = 0; i < this.getNumberOfRows(); i++) {
-				for (int j = 0; j < this.getNumberOfColumns(); j++) {
-					if (!this.get(i, j).equals(that.get(i, j))) {
-						result = false;
-						break;
-					}
-				}
-				if (!result) {
-					break;
-				}
-			}
-		}
-		return result;
+		if (!AbstractMatrix.class.isAssignableFrom(that.getClass())) return false;
+
+		if (((AbstractMatrix) that).getObjectClass() != this.getObjectClass()) return false;
+
+		//noinspection unchecked
+		return MatrixUtils.areEqual(this, (AbstractMatrix)that);
 	}
 
 	public Matrix<T> clone() {
@@ -299,17 +287,6 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 
 	public final Matrix<T> multiply(Matrix<T> that) {
 		return MatrixUtils.multiply(this, that);
-	}
-
-	@Override
-	public final boolean equals(Object o) {
-		if (this == o) return true;
-
-		if (o == null || getClass() != o.getClass()) return false;
-
-		if (((AbstractMatrix) o).getObjectClass() != this.getObjectClass()) return false;
-
-		return MatrixUtils.areEqual(this, (AbstractMatrix<T>)o);
 	}
 
 	@Override

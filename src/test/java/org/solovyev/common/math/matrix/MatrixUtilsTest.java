@@ -27,6 +27,14 @@ public class MatrixUtilsTest extends TestCase {
 		r.set(2, 0, 6d);
 		r.set(2, 1, 1d);
 
+		Matrix<Double> rSparse = new DoubleSparseMatrix(3, 2);
+		rSparse.set(0, 0, 3d);
+		rSparse.set(0, 1, -1d);
+		rSparse.set(1, 0, 1d);
+		rSparse.set(1, 1, 2d);
+		rSparse.set(2, 0, 6d);
+		rSparse.set(2, 1, 1d);
+
 		Matrix<Double> result = new DoubleArrayMatrix(2, 2);
 		result.set(0, 0, 11d);
 		result.set(0, 1, 0d);
@@ -34,6 +42,12 @@ public class MatrixUtilsTest extends TestCase {
 		result.set(1, 1, 20d);
 
 		doMultiplyTest(l, r, result);
+		doMultiplyTest(l, rSparse, result);
+		doEqualsTest(r, rSparse);
+	}
+
+	private void doEqualsTest(@NotNull Matrix<Double> l, @NotNull Matrix<Double> r) {
+		assertTrue(MatrixUtils.areEqual(l, r));
 	}
 
 	public static <T> void doMultiplyTest(@NotNull Matrix<T> l, @NotNull Matrix<T> r, @NotNull Matrix<T> expectedResult) {

@@ -77,12 +77,6 @@ public interface Matrix<T> extends TextDisplay, SimpleCloneable<Matrix<T>> {
 	 */
 	public boolean isSymmetric();
 
-	/**
-	 * @param that matrix with which current will be compared on equals
-	 * @return 'true' is all elements of this matrix equals to all elements of that matrix, 'false' otherwise
-	 */
-	public boolean equals(Matrix<T> that);
-
 	// todo serso: think about removing from interface
 	public void save(String fName, MatrixFileFormat matrixFileFormat) throws IOException;
 
