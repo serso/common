@@ -10,7 +10,7 @@ import java.io.*;
  * Date: 15.04.2009
  * Time: 11:43:56
  */
-public class HoleckyDecompositionAlgorithm extends AbstractAlgorithm<HoleckyDecompositionAlgorithm.Input, Matrix<Double>> {
+public class CholeskyDecompositionAlgorithm extends AbstractAlgorithm<CholeskyDecompositionAlgorithm.Input, Matrix<Double>> {
 
 	public static class Input {
 		private final Matrix<Double> m;
@@ -22,14 +22,19 @@ public class HoleckyDecompositionAlgorithm extends AbstractAlgorithm<HoleckyDeco
 
 
 	public Matrix<Double> doAlgorithm() {
-		CutHillMcKeeAlgorithm kma = new CutHillMcKeeAlgorithm();
+
+		// run CutHill-McKee algorithm
+		final CutHillMcKeeAlgorithm kma = new CutHillMcKeeAlgorithm();
 		kma.init(new CutHillMcKeeAlgorithm.Input(new Graph<Object, Double>(input.m), false, false));
 		kma.doAlgorithm();
-		Matrix<Double> tmp = new DoubleArrayMatrix(kma.getResult());
+		final Matrix<Double> tmp = new DoubleArrayMatrix(kma.getResult());
+
 		result = new DoubleArrayMatrix(tmp.getNumberOfRows(), tmp.getNumberOfColumns());
+
 		Double value;
 		for (int i = 0; i < tmp.getNumberOfRows(); i++) {
 			//todo serso: use faster
+
 			//setting left to diagonal elements
 			for (int j = 0; j < i; j++) {
 				value = 0d;
@@ -37,7 +42,6 @@ public class HoleckyDecompositionAlgorithm extends AbstractAlgorithm<HoleckyDeco
 					value += result.get(i, k) * result.get(j, k);
 				}
 				result.set(i, j, (tmp.get(i, j) - value) / result.get(j, j));
-				//l.set(j, i, l.get(i, j));
 			}
 
 			//setting diagonal element
@@ -45,6 +49,7 @@ public class HoleckyDecompositionAlgorithm extends AbstractAlgorithm<HoleckyDeco
 			for (int k = 0; k < i; k++) {
 				value += result.get(i, k) * result.get(i, k);
 			}
+
 			result.set(i, i, Math.sqrt(tmp.get(i, i) - value));
 		}
 
@@ -56,7 +61,7 @@ public class HoleckyDecompositionAlgorithm extends AbstractAlgorithm<HoleckyDeco
 			if (arg != null && arg.length > 0) {
 				PrintWriter out = new PrintWriter(System.out, true);
 				Matrix<Double> m = new DoubleArrayMatrix(arg[0], MatrixFileFormat.valueOf(arg[1].toUpperCase()));
-				HoleckyDecompositionAlgorithm hda = new HoleckyDecompositionAlgorithm();
+				CholeskyDecompositionAlgorithm hda = new CholeskyDecompositionAlgorithm();
 				hda.init(new Input(m));
 				hda.doAlgorithm();
 				Matrix<Double> l = hda.getResult();
