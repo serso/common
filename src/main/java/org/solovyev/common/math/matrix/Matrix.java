@@ -1,5 +1,6 @@
 package org.solovyev.common.math.matrix;
 
+import org.solovyev.common.math.matrix.helpers.MatrixHelper;
 import org.solovyev.common.utils.TextDisplay;
 import org.solovyev.common.definitions.SimpleCloneable;
 
@@ -23,14 +24,14 @@ public interface Matrix<T> extends TextDisplay, SimpleCloneable<Matrix<T>> {
 	 * @param j column index
 	 * @return element in i-th row and j-th column
 	 */
-	public T getIJ(int i, int j);
+	public T get(int i, int j);
 
 	/**
 	 * @param i	 row index
 	 * @param j	 column index
 	 * @param value value to be set on the i-th row nad j-th column
 	 */
-	public void setIJ(int i, int j, T value);
+	public void set(int i, int j, T value);
 
 	/**
 	 * Initialize m x n matrix (i.e. allocate memory) filled with nulls
@@ -84,4 +85,6 @@ public interface Matrix<T> extends TextDisplay, SimpleCloneable<Matrix<T>> {
 
 	// todo serso: think about removing from interface
 	public void save(String fName, MatrixFileFormat matrixFileFormat) throws IOException;
+
+	public Class<T> getObjectClass();
 }

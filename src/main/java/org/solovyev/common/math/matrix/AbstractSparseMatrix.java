@@ -1,5 +1,6 @@
 package org.solovyev.common.math.matrix;
 
+import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.definitions.Property;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.LinkedNode;
@@ -17,38 +18,38 @@ import java.util.List;
  * Date: 29.04.2009
  * Time: 23:35:53
  */
-public abstract class SparseMatrix<T> extends AbstractMatrix<T> {
+public abstract class AbstractSparseMatrix<T> extends AbstractMatrix<T> {
 
     List<List<Property<T, Integer>>> rows;
 
     protected final static int DEFAULT_M_SIZE = 2;
     protected final static int DEFAULT_N_SIZE = 2;
 
-    public SparseMatrix(String fName, MatrixFileFormat fileFormat) throws IOException, IllegalArgumentException {
+    public AbstractSparseMatrix(String fName, MatrixFileFormat fileFormat) throws IOException, IllegalArgumentException {
         super(fName, fileFormat);
     }
 
-    public SparseMatrix(Graph<?, T> g) {
-        this.init(g.getNodes().size(), g.getNodes().size());
+    public AbstractSparseMatrix(Graph<?, T> g) {
+		this.init(g.getNodes().size(), g.getNodes().size());
         for (Node<?, T> node : g.getNodes()) {
             for (LinkedNode<?, T> linkedNode : node.getLinkedNodes()) {
-                this.setIJ(node.getId(), linkedNode.getNode().getId(), linkedNode.getArc());
+                this.set(node.getId(), linkedNode.getNode().getId(), linkedNode.getArc());
             }
         }
     }
 
-    public SparseMatrix(int m, int n) {
+    public AbstractSparseMatrix(int m, int n) {
         super(m, n, null);
     }
 
-    public SparseMatrix(int m) {
+    public AbstractSparseMatrix(int m) {
         super(m);
     }
 
-    public SparseMatrix() {
-    }
+    public AbstractSparseMatrix() {
+	}
 
-    public T getCheckedIJ(int i, int j) {
+    public T getChecked(int i, int j) {
         T result = getEmptyValue();
 		final List<Property<T, Integer>> iRow = this.rows.get(i);
 
@@ -92,7 +93,7 @@ public abstract class SparseMatrix<T> extends AbstractMatrix<T> {
         return false;
     }
 
-	public void setCheckedIJ(int i, int j, T value) {
+	public void setChecked(int i, int j, T value) {
 		List<Property<T, Integer>> iRow = this.rows.get(i);
 
 		if (iRow == null) {
@@ -149,12 +150,13 @@ public abstract class SparseMatrix<T> extends AbstractMatrix<T> {
     }
 
     public Matrix<T> clone() {
-        SparseMatrix result;
-        result = (SparseMatrix) super.clone();
-        result.init(this.m, this.n);
-        for (int i = 0; i < this.m; i++) {
+        final AbstractSparseMatrix<T> result= (AbstractSparseMatrix<T>) super.clone();
+
+		result.init(this.m, this.n);
+
+		for (int i = 0; i < this.m; i++) {
             for (int j = 0; j < this.n; j++) {
-                result.setIJ(i, j, this.getIJ(i, j));
+                result.set(i, j, this.get(i, j));
             }
         }
         return result;
@@ -168,18 +170,6 @@ public abstract class SparseMatrix<T> extends AbstractMatrix<T> {
             rows.add(null);
         }
     }
-
-/*    protected T getValueFromString(String value) throws InstantiationException, IllegalAccessException, ClassCastException {
-        T result = null;
-        if (value != null) {
-            result = Double.valueOf(value);
-        }
-        return result;
-    }*/
-
-/*    protected Double getEmptyValue() {
-        return 0d;
-    }*/
 
     public List<List<Property<T, Integer>>> getRows() {
         return rows;

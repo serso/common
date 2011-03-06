@@ -1,7 +1,12 @@
 package org.solovyev.common.math.matrix;
 
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.definitions.Property;
+import org.solovyev.common.exceptions.AnyRuntimeException;
+import org.solovyev.common.math.algorithms.matrix.BinaryMatrixOperationInput;
+import org.solovyev.common.math.algorithms.matrix.MatrixEquals;
+import org.solovyev.common.math.algorithms.matrix.MatrixMultiplication;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -21,70 +26,51 @@ public class MatrixUtils {
         return result;
     }
 
-    public static Matrix<Double> multiply(Matrix<Double> l, Matrix<Double> r) {
-        Matrix<Double> result = null;
-        try {
-            result = initMatrix(l.getClass(), l.getNumberOfRows(), l.getNumberOfColumns());
-            Double value;
-            for (int i = 0; i < result.getNumberOfRows(); i++) {
-                for (int j = 0; j < result.getNumberOfColumns(); j++) {
-                    value = 0d;
-                    for (int k = 0; k < l.getNumberOfColumns(); k++) {
-                        value += l.getIJ(i, k) * r.getIJ(k, j);
-                    }
-                    result.setIJ(i, j, value);
-                }
-            }
-        } catch (InstantiationException e) {
-            Logger.getLogger(MatrixUtils.class).error(e);
-        } catch (IllegalAccessException e) {
-            Logger.getLogger(MatrixUtils.class).error(e);
-        }
-        return result;
-    }
+	public static <T> Matrix<T> multiply(final Matrix<T> l, final Matrix<T> r) {
+		return new MatrixMultiplication<T>().init(new BinaryMatrixOperationInput<T>(l, r)).doAlgorithm();
+	}
 
-    public static Matrix<Double> copyMatrix(Matrix<Double> m, int startRow, int startCol, int endRow, int endCol) {
-        Matrix<Double> result = null;
-        try {
-            result = initMatrix(m.getClass(), endRow - startRow, endCol - startCol);
+	public static Matrix<Double> copyMatrix(Matrix<Double> m, int startRow, int startCol, int endRow, int endCol) {
+		final Matrix<Double> result = initMatrix(m.getClass(), endRow - startRow, endCol - startCol);
+
+		for (int i = startRow; i < endRow; i++) {
+			for (int j = startCol; j < endCol; j++) {
+				result.set(i, j, m.get(i, j));
+			}
+		}
+
+		return result;
+	}
 
 
-            for (int i = startRow; i < endRow; i++) {
-                for (int j = startCol; j < endCol; j++) {
-                    result.setIJ(i, j, m.getIJ(i, j));
-                }
-            }
-        } catch (InstantiationException e) {
-            Logger.getLogger(MatrixUtils.class).error(e);
-        } catch (IllegalAccessException e) {
-            Logger.getLogger(MatrixUtils.class).error(e);
-        }
+	public static Matrix<Double> difference(Matrix<Double> l, Matrix<Double> r) {
+		final Matrix<Double> result = initMatrix(l.getClass(), l.getNumberOfRows(), l.getNumberOfColumns());
 
-        return result;
-    }
+		for (int i = 0; i < result.getNumberOfRows(); i++) {
+			for (int j = 0; j < result.getNumberOfColumns(); j++) {
+				result.set(i, j, l.get(i, j) - r.get(i, j));
+			}
+		}
 
+		return result;
+	}
 
-    public static Matrix<Double> difference(Matrix<Double> l, Matrix<Double> r) {
-        Matrix<Double> result = null;
-        try {
-            result = initMatrix(l.getClass(), l.getNumberOfRows(), l.getNumberOfColumns());
-            for (int i = 0; i < result.getNumberOfRows(); i++) {
-                for (int j = 0; j < result.getNumberOfColumns(); j++) {
-                    result.setIJ(i, j, l.getIJ(i, j) - r.getIJ(i, j));
-                }
-            }
-        } catch (InstantiationException e) {
-            Logger.getLogger(MatrixUtils.class).error(e);
-        } catch (IllegalAccessException e) {
-            Logger.getLogger(MatrixUtils.class).error(e);
-        }
-        return result;
-    }
+	@NotNull
+    public static <K extends Matrix> K initMatrix(Class<K> klass, int numberOfRows, int numberOfColumns) {
+		final K result;
 
-    @SuppressWarnings("unchecked")
-    public static Matrix<Double> initMatrix(Class klass, int numberOfRows, int numberOfColumns) throws InstantiationException, IllegalAccessException {
-        Matrix<Double> result = (Matrix<Double>) klass.newInstance();
-        result.init(numberOfRows, numberOfColumns);
+		try {
+			result = klass.newInstance();
+		} catch (InstantiationException e) {
+			Logger.getLogger(MatrixUtils.class).error(e);
+			throw new AnyRuntimeException(e);
+		} catch (IllegalAccessException e) {
+			Logger.getLogger(MatrixUtils.class).error(e);
+			throw new AnyRuntimeException(e);
+		}
+
+		result.init(numberOfRows, numberOfColumns);
+
         return result;
     }
 
@@ -93,12 +79,12 @@ public class MatrixUtils {
         for (int i = 0; i < m.getNumberOfRows(); i++) {
             for (int j = 0; j < m.getNumberOfColumns(); j++) {
                 if (i == j) {
-                    if (Math.abs(m.getIJ(i, j).doubleValue() - 1d) > error) {
+                    if (Math.abs(m.get(i, j).doubleValue() - 1d) > error) {
                         isE = false;
                         break;
                     }
                 } else {
-                    if (Math.abs(m.getIJ(i, j).doubleValue()) > error) {
+                    if (Math.abs(m.get(i, j).doubleValue()) > error) {
                         isE = false;
                         break;
                     }
@@ -122,7 +108,7 @@ public class MatrixUtils {
         if (result) {
             for (int i = 0; i < m1.getNumberOfRows(); i++) {
                 for (int j = 0; j < m1.getNumberOfColumns(); j++) {
-                    if (Math.abs(m1.getIJ(i, j).doubleValue() - m2.getIJ(i, j).doubleValue()) > error) {
+                    if (Math.abs(m1.get(i, j).doubleValue() - m2.get(i, j).doubleValue()) > error) {
                         result = false;
                         break;
                     }
@@ -139,10 +125,10 @@ public class MatrixUtils {
         BufferedWriter out = new BufferedWriter(new FileWriter(fName));
 
         Double value;
-        if (m instanceof SparseMatrix) {
+        if (m instanceof AbstractSparseMatrix) {
             int index;
             for (int i = 0; i < m.getNumberOfRows(); i++) {
-                List<Property<Double, Integer>> row = ((SparseMatrix<Double>) m).getRows().get(i);
+                List<Property<Double, Integer>> row = ((AbstractSparseMatrix<Double>) m).getRows().get(i);
                 if (row != null) {
                     index = 0;
                     for (Property<Double, Integer> element : row) {
@@ -163,7 +149,7 @@ public class MatrixUtils {
         } else {
             for (int i = 0; i < m.getNumberOfRows(); i++) {
                 for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                    value = m.getIJ(i, j);
+                    value = m.get(i, j);
                     if (value != null) {
                         out.write(value.toString() + " ");
                     }
@@ -182,7 +168,7 @@ public class MatrixUtils {
         for (int i = 0; i < m.getNumberOfRows(); i++) {
             bandWidth = 0;
             for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                if (Math.abs(m.getIJ(i, j).doubleValue()) > 0) {
+                if (Math.abs(m.get(i, j).doubleValue()) > 0) {
                     bandWidth = m.getNumberOfColumns() / 2 - j;
                     break;
                 }
@@ -200,7 +186,7 @@ public class MatrixUtils {
         for (int i = 0; i < m.getNumberOfRows(); i++) {
             bandWidth = 0;
             for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                if (Math.abs(m.getIJ(i, j).doubleValue()) > 0) {
+                if (Math.abs(m.get(i, j).doubleValue()) > 0) {
                     bandWidth = m.getNumberOfColumns() / 2 - j;
                     break;
                 }
@@ -214,7 +200,7 @@ public class MatrixUtils {
         Double sum = 0d;
         for (int i = 0; i < m.getNumberOfRows(); i++) {
             for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                sum = m.getIJ(i, j) * m.getIJ(i, j);
+                sum = m.get(i, j) * m.get(i, j);
             }
         }
         return Math.pow(sum, 0.5d);
@@ -228,8 +214,8 @@ public class MatrixUtils {
         double result = Double.MIN_VALUE;
 
         for (int i = 0; i < m.getNumberOfRows(); i++) {
-            if (m.getIJ(i, j) > result) {
-                result = m.getIJ(i, j);
+            if (m.get(i, j) > result) {
+                result = m.get(i, j);
             }
         }
 
@@ -240,11 +226,43 @@ public class MatrixUtils {
         double result = Double.MAX_VALUE;
 
         for (int i = 0; i < m.getNumberOfRows(); i++) {
-            if (m.getIJ(i, j) < result) {
-                result = m.getIJ(i, j);
+            if (m.get(i, j) < result) {
+                result = m.get(i, j);
             }
         }
 
         return result;
     }
+
+	/**
+	 * Method gets element from array supposing that this array represents matrix
+	 * @param array array of elements
+	 * @param i i-th row in matrix
+	 * @param j j-th column in matrix
+	 * @param numberOfColumns total number of columns in matrix
+	 *
+	 * @param <T> type of elements in matrix
+	 *
+	 * @return element on (i, j) position in matrix represented by array
+	 */
+	public static <T> T getElement (@NotNull T[] array, int i, int j, int numberOfColumns) {
+		return (T) array[i * numberOfColumns + j];
+	}
+
+	/**
+	 * Method sets element from array supposing that this array represents matrix
+	 * @param array array of elements
+	 * @param value
+	 * @param i i-th row in matrix
+	 * @param j j-th column in matrix
+	 * @param numberOfColumns total number of columns in matrix
+*
+	 */
+	public static <T> void setElement(@NotNull T[] array, T value, int i, int j, int numberOfColumns) {
+		array[i * numberOfColumns + j] = value;
+	}
+
+	public static <T> boolean areEqual(Matrix<T> l, Matrix<T> r) {
+		return new MatrixEquals<T>().init(new BinaryMatrixOperationInput<T>(l, r)).doAlgorithm();
+	}
 }

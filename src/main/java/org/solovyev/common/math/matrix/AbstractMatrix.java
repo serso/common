@@ -1,8 +1,11 @@
 package org.solovyev.common.math.matrix;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.LinkedNode;
 import org.solovyev.common.math.graph.Node;
+import org.solovyev.common.math.matrix.helpers.MatrixHelper;
 import org.solovyev.common.utils.StringsUtils;
 
 import java.io.*;
@@ -41,75 +44,73 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		this(m, m, null);
 	}
 
-	public AbstractMatrix(int m, int n, T defaultValue) {
+	public AbstractMatrix(int m, int n, @Nullable T defaultValue) {
 		this.init(m, n, defaultValue);
 	}
 
 	public AbstractMatrix(Graph<?, T> g) {
 		this.init(g.getNodes().size(), g.getNodes().size());
+
 		for (int i = 0; i < this.m; i++) {
 			for (int j = 0; j < this.n; j++) {
-				this.setIJ(i, j, this.getEmptyValue());
+				this.set(i, j, this.getEmptyValue());
 			}
 		}
+
 		for (Node<?, T> node : g.getNodes()) {
 			for (LinkedNode<?, T> linkedNode : node.getLinkedNodes()) {
-				this.setIJ(node.getId(), linkedNode.getNode().getId(), linkedNode.getArc());
+				this.set(node.getId(), linkedNode.getNode().getId(), linkedNode.getArc());
 			}
 		}
 	}
 
-	public AbstractMatrix(String fName, MatrixFileFormat fileFormat) throws IOException, IllegalArgumentException {
+	public AbstractMatrix(String fName, MatrixFileFormat fileFormat ) throws IOException, IllegalArgumentException {
 		if (fName != null) {
 			BufferedReader in = new BufferedReader(new FileReader(fName));
 			String s = in.readLine();
 			String[] params = StringsUtils.getParams(s, " ");
-			try {
-				if (params != null && params.length > 0) {
-					if (params.length == 1) {
-						Integer size = Integer.valueOf(params[0]);
-						this.init(size, size);
-					} else {
-						Integer m = Integer.valueOf(params[0]);
-						Integer n = Integer.valueOf(params[1]);
-						this.init(m, n);
-					}
-					switch (fileFormat) {
-						case SIMPLE:
-							for (int i = 0; i < this.getNumberOfRows(); i++) {
-								s = in.readLine();
-								params = StringsUtils.getParams(s, " ");
-								if (params != null && params.length == this.getNumberOfColumns()) {
-									for (int j = 0; j < this.getNumberOfColumns(); j++) {
-										this.setIJ(i, j, this.getValueFromString(params[j]));
-									}
-								} else {
-									throw new IllegalArgumentException();
-								}
-							}
-							break;
-						case SHORTED:
-							Integer param0;
-							Integer param1;
-							T param2;
-							while ((s = in.readLine()) != null) {
-								params = StringsUtils.getParams(s, " ");
-								if (params.length > 2) {
-									param0 = Integer.valueOf(params[0]) - 1;
-									param1 = Integer.valueOf(params[1]) - 1;
-									param2 = this.getValueFromString(params[2]);
-									this.setIJ(param0, param1, param2);
-									this.setIJ(param1, param0, param2);
-								}
-							}
-							break;
-					}
+
+			if (params != null && params.length > 0) {
+				if (params.length == 1) {
+					Integer size = Integer.valueOf(params[0]);
+					this.init(size, size);
+				} else {
+					Integer m = Integer.valueOf(params[0]);
+					Integer n = Integer.valueOf(params[1]);
+					this.init(m, n);
 				}
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
+				switch (fileFormat) {
+					case SIMPLE:
+						for (int i = 0; i < this.getNumberOfRows(); i++) {
+							s = in.readLine();
+							params = StringsUtils.getParams(s, " ");
+							if (params != null && params.length == this.getNumberOfColumns()) {
+								for (int j = 0; j < this.getNumberOfColumns(); j++) {
+									this.set(i, j, this.getValueFromString(params[j]));
+								}
+							} else {
+								throw new IllegalArgumentException();
+							}
+						}
+						break;
+					case SHORTED:
+						Integer param0;
+						Integer param1;
+						T param2;
+						while ((s = in.readLine()) != null) {
+							params = StringsUtils.getParams(s, " ");
+							if (params.length > 2) {
+								param0 = Integer.valueOf(params[0]) - 1;
+								param1 = Integer.valueOf(params[1]) - 1;
+								param2 = this.getValueFromString(params[2]);
+								this.set(param0, param1, param2);
+								this.set(param1, param0, param2);
+							}
+						}
+						break;
+				}
 			}
+
 			in.close();
 		}
 	}
@@ -134,7 +135,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		if (matrixFileFormat.equals(MatrixFileFormat.SHORTED)) {
 			for (int i = 0; i < this.getNumberOfRows(); i++) {
 				for (int j = 0; j < this.getNumberOfColumns(); j++) {
-					value = this.getIJ(i, j);
+					value = this.get(i, j);
 					if (value != null) {
 						if (value instanceof Number) {
 							if (((Number) value).doubleValue() > 0) {
@@ -152,7 +153,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		} else if (matrixFileFormat.equals(MatrixFileFormat.SIMPLE)) {
 			for (int i = 0; i < this.getNumberOfRows(); i++) {
 				for (int j = 0; j < this.getNumberOfColumns(); j++) {
-					value = this.getIJ(i, j);
+					value = this.get(i, j);
 					if (value != null) {
 						out.write(value.toString() + " ");
 					}
@@ -164,9 +165,20 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		out.close();
 	}
 
-	protected abstract T getValueFromString(String value) throws InstantiationException, IllegalAccessException;
+	protected final T getValueFromString(String value) {
+		return this.getMatrixHelper().getValueFromString(value);
+	}
 
-	protected abstract T getEmptyValue();
+	protected final T getEmptyValue() {
+		return this.getMatrixHelper().getEmptyValue();
+	}
+
+	public final Class<T> getObjectClass() {
+		return this.getMatrixHelper().getObjectClass();
+	}
+
+	@NotNull
+	protected abstract MatrixHelper<T> getMatrixHelper();
 
 	public int getNumberOfRows() {
 		return this.m;
@@ -181,7 +193,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		StringBuffer result = new StringBuffer();
 		for (int i = 0; i < this.getNumberOfRows(); i++) {
 			for (int j = 0; j < this.getNumberOfColumns(); j++) {
-				result.append(this.getIJ(i, j).toString());
+				result.append(this.get(i, j).toString());
 				result.append(" ");
 			}
 			result.append("/");
@@ -192,7 +204,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 	public void textDisplay(PrintWriter out) {
 		for (int i = 0; i < this.getNumberOfRows(); i++) {
 			for (int j = 0; j < this.getNumberOfColumns(); j++) {
-				out.write(this.getIJ(i, j).toString() + " ");
+				out.write(this.get(i, j).toString() + " ");
 			}
 			out.println();
 		}
@@ -202,7 +214,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		boolean result = true;
 		for (int i = 0; i < this.getNumberOfRows(); i++) {
 			for (int j = 0; j < i; j++) {
-				if (!getIJ(i, j).equals(getIJ(j, i))) {
+				if (!get(i, j).equals(get(j, i))) {
 					result = false;
 					break;
 				}
@@ -225,7 +237,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		if (result) {
 			for (int i = 0; i < this.getNumberOfRows(); i++) {
 				for (int j = 0; j < this.getNumberOfColumns(); j++) {
-					if (!this.getIJ(i, j).equals(that.getIJ(i, j))) {
+					if (!this.get(i, j).equals(that.get(i, j))) {
 						result = false;
 						break;
 					}
@@ -238,10 +250,10 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Matrix<T> clone() {
-		Matrix<T> result = null;
+		Matrix<T> result;
 		try {
+			//noinspection unchecked
 			result = (Matrix<T>) super.clone();
 		} catch (CloneNotSupportedException e) {
 			throw new IllegalArgumentException(e);
@@ -250,36 +262,60 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 	}
 
 	@Override
-	public final T getIJ(int i, int j) {
+	public final T get(int i, int j) {
 		checkIJ(i, j);
-		return getCheckedIJ(i, j);
+		return getChecked(i, j);
 	}
 
 	@Override
-	public final void setIJ(int i, int j, T value) {
+	public final void set(int i, int j, T value) {
 		checkIJ(i, j);
-		setCheckedIJ(i, j, value);
+		setChecked(i, j, value);
 	}
 
 	/**
-	 * Same as setIJ(), but i, j are checked on bounds
+	 * Same as set(), but i, j are checked on bounds
+	 *
 	 * @param i	 row index already checked for bounds
 	 * @param j	 column index already checked for bounds
 	 * @param value value to be set on the i-th row nad j-th column
 	 */
-	protected abstract void setCheckedIJ(int i, int j, T value);
+	protected abstract void setChecked(int i, int j, T value);
 
 	/**
-	 * Same as getIJ(), but i, j are checked on bounds
-	 * @param i	 row index already checked for bounds
-	 * @param j	 column index already checked for bounds
+	 * Same as get(), but i, j are checked on bounds
+	 *
+	 * @param i row index already checked for bounds
+	 * @param j column index already checked for bounds
 	 * @return element in i-th row and j-th column
 	 */
-	protected abstract T getCheckedIJ(int i, int j);
+	protected abstract T getChecked(int i, int j);
 
 	protected void checkIJ(int i, int j) {
-		if ( i < 0 || i >= this.m || j < 0 && j >= this.n ) {
+		if (i < 0 || i >= this.m || j < 0 && j >= this.n) {
 			throw new IndexOutOfBoundsException("Matrix dimensions: " + m + " x " + n + ", i = " + i + ", j = " + j);
 		}
+	}
+
+	public final Matrix<T> multiply(Matrix<T> that) {
+		return MatrixUtils.multiply(this, that);
+	}
+
+	@Override
+	public final boolean equals(Object o) {
+		if (this == o) return true;
+
+		if (o == null || getClass() != o.getClass()) return false;
+
+		if (((AbstractMatrix) o).getObjectClass() != this.getObjectClass()) return false;
+
+		return MatrixUtils.areEqual(this, (AbstractMatrix<T>)o);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = m;
+		result = 31 * result + n;
+		return result;
 	}
 }

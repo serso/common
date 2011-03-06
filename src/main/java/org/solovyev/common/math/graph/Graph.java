@@ -1,7 +1,7 @@
 package org.solovyev.common.math.graph;
 
 import org.solovyev.common.math.matrix.Matrix;
-import org.solovyev.common.math.matrix.SparseMatrix;
+import org.solovyev.common.math.matrix.AbstractSparseMatrix;
 
 import java.util.*;
 import java.io.PrintWriter;
@@ -49,8 +49,8 @@ public class Graph<T, N> implements TextDisplay, SimpleCloneable<Graph<T, N>> {
             N tmp;
             //adding linked nodes
 
-            if (m instanceof SparseMatrix) {
-                List<List<Property<Double, Integer>>> rows = ((SparseMatrix)m).getRows();
+            if (m instanceof AbstractSparseMatrix) {
+                List<List<Property<Double, Integer>>> rows = ((AbstractSparseMatrix)m).getRows();
                 List<Property<Double, Integer>> row;
                 for ( int i = 0; i < rows.size(); i++ ) {
                     row = rows.get(i);
@@ -66,7 +66,7 @@ public class Graph<T, N> implements TextDisplay, SimpleCloneable<Graph<T, N>> {
                 for (int i = 0; i < m.getNumberOfRows(); i++) {
                     node = this.nodes.get(i);
                     for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                        tmp = m.getIJ(i, j);
+                        tmp = m.get(i, j);
                         if (tmp instanceof Empty) {
                             if (!((Empty) tmp).isEmpty()) {
                                 node.addLinkedNode(this.nodes.get(j), tmp);

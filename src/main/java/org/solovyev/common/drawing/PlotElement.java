@@ -109,7 +109,7 @@ public class PlotElement {
 
         for (int i = 0; i < m.getNumberOfRows(); i++) {
             for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                if (m.getIJ(i, j).doubleValue() > 0) {
+                if (m.get(i, j).doubleValue() > 0) {
                     xs.add((double) j);
                     ys.add((double) i);
                     colors.add(color);
