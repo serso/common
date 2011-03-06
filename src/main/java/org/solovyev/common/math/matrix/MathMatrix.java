@@ -5,7 +5,7 @@ package org.solovyev.common.math.matrix;
  * Date: 3/6/11
  * Time: 11:24 AM
  */
-public interface MathMatrix<T extends Number> extends Matrix<T> {
+public interface MathMatrix<T> extends Matrix<T> {
 
 	/**
 	 * Method multiplies this matrix to another (this matrix - left part, that matrix - right)

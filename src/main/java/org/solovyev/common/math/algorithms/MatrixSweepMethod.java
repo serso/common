@@ -10,7 +10,7 @@ import java.io.PrintWriter;
  * Date: 20.05.2009
  * Time: 1:43:02
  */
-public class MatrixSweepMethod extends AbstractAlgorithm<MatrixSweepMethod.Input, MathMatrix<Double>> {
+public class MatrixSweepMethod extends AbstractAlgorithm<MatrixSweepMethod.Input, Matrix<Double>> {
 
 	public static class Input {
 		private final Matrix<Double> a;
@@ -28,7 +28,7 @@ public class MatrixSweepMethod extends AbstractAlgorithm<MatrixSweepMethod.Input
 	}
 
 
-	public MathMatrix<Double> doAlgorithm() {
+	public Matrix<Double> doAlgorithm() {
 		double aArray[] = new double[input.a.getNumberOfRows()];
 		double bArray[] = new double[input.a.getNumberOfRows()];
 
@@ -55,8 +55,8 @@ public class MatrixSweepMethod extends AbstractAlgorithm<MatrixSweepMethod.Input
 
 	public static void main(String[] args) {
 		try {
-			MathMatrix<Double> a = new DoubleArrayMatrix("test_sweep.txt", MatrixFileFormat.SHORTED);
-			MathMatrix<Double> b = new DoubleArrayMatrix("test_sweep_2.txt", MatrixFileFormat.SIMPLE);
+			Matrix<Double> a = new DoubleArrayMatrix("test_sweep.txt", MatrixFileFormat.SHORTED);
+			Matrix<Double> b = new DoubleArrayMatrix("test_sweep_2.txt", MatrixFileFormat.SIMPLE);
 
 			MatrixSweepMethod msm = new MatrixSweepMethod();
 			msm.init(new Input(a, b));

@@ -92,9 +92,9 @@ public class NonExplicitFiniteDifferenceMethod extends AbstractAlgorithm<NonExpl
 
 	public Matrix<Double> doAlgorithm() {
 
-		MathMatrix<Double> a;
-		MathMatrix<Double> b;
-		MathMatrix<Double> x;
+		Matrix<Double> a;
+		Matrix<Double> b;
+		Matrix<Double> x;
 
 		MatrixSweepMethod msm;
 		PrintWriter out = new PrintWriter(System.out, true);
