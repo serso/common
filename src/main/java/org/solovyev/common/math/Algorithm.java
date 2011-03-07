@@ -7,12 +7,12 @@ import org.jetbrains.annotations.NotNull;
  * Date: 15.04.2009
  * Time: 11:42:06
  */
-public interface Algorithm<INPUT, RESULT> {
+public interface Algorithm<IN, OUT> {
 
-	Algorithm<INPUT, RESULT> init(@NotNull INPUT input);
+	Algorithm<IN, OUT> init(@NotNull IN in);
 
-    public RESULT doAlgorithm();
+    public OUT doAlgorithm();
 
 	@NotNull
-	public RESULT getResult();
+	public OUT getResult();
 }

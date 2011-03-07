@@ -1,6 +1,5 @@
 package org.solovyev.common.math.matrix;
 
-import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.definitions.Property;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.LinkedNode;
@@ -178,7 +177,7 @@ public abstract class AbstractSparseMatrix<T> extends AbstractMatrix<T> {
         out.write(String.valueOf(this.getNumberOfColumns()));
         out.newLine();
 
-        if (matrixFileFormat.equals(MatrixFileFormat.SHORTED)) {
+        if (matrixFileFormat.equals(MatrixFileFormat.sparse)) {
             for (int i = 0; i < this.getNumberOfRows(); i++) {
                 List<Property<T, Integer>> row = this.getRows().get(i);
                 if (row != null) {
@@ -188,7 +187,7 @@ public abstract class AbstractSparseMatrix<T> extends AbstractMatrix<T> {
                     }
                 }
             }
-        } else if (matrixFileFormat.equals(MatrixFileFormat.SIMPLE)) {
+        } else if (matrixFileFormat.equals(MatrixFileFormat.dense)) {
             int index;
             for (int i = 0; i < this.getNumberOfRows(); i++) {
                 List<Property<T, Integer>> row = this.getRows().get(i);

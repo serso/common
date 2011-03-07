@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.math.Conditions;
 import org.solovyev.common.math.Function;
 import org.solovyev.common.math.matrix.DoubleArrayMatrix;
-import org.solovyev.common.math.matrix.MathMatrix;
 import org.solovyev.common.math.matrix.Matrix;
 import org.solovyev.common.math.matrix.MatrixUtils;
 import org.solovyev.common.utils.Interval;

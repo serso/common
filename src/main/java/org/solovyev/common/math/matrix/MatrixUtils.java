@@ -2,15 +2,17 @@ package org.solovyev.common.math.matrix;
 
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.definitions.Property;
 import org.solovyev.common.exceptions.AnyRuntimeException;
+import org.solovyev.common.exceptions.IllegalMatrixFormatException;
 import org.solovyev.common.math.algorithms.matrix.BinaryMatrixOperationInput;
 import org.solovyev.common.math.algorithms.matrix.MatrixEquals;
 import org.solovyev.common.math.algorithms.matrix.MatrixMultiplication;
+import org.solovyev.common.utils.CollectionsUtils;
+import org.solovyev.common.utils.StringsUtils;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -21,10 +23,10 @@ import java.util.List;
 public class MatrixUtils {
 
 	public static <T> Matrix<T> getTransposeMatrix(Matrix<T> m) {
-        Matrix<T> result = m.clone();
-        result.transpose();
-        return result;
-    }
+		Matrix<T> result = m.clone();
+		result.transpose();
+		return result;
+	}
 
 	public static <T> Matrix<T> multiply(final Matrix<T> l, final Matrix<T> r) {
 		return new MatrixMultiplication<T>().init(new BinaryMatrixOperationInput<T>(l, r)).doAlgorithm();
@@ -56,7 +58,7 @@ public class MatrixUtils {
 	}
 
 	@NotNull
-    public static <K extends Matrix> K initMatrix(Class<K> klass, int numberOfRows, int numberOfColumns) {
+	public static <K extends Matrix> K initMatrix(Class<K> klass, int numberOfRows, int numberOfColumns) {
 		final K result;
 
 		try {
@@ -71,192 +73,191 @@ public class MatrixUtils {
 
 		result.init(numberOfRows, numberOfColumns);
 
-        return result;
-    }
+		return result;
+	}
 
-    public static <T extends Number> boolean isEMatrix(Matrix<T> m, Double error) {
-        boolean isE = true;
-        for (int i = 0; i < m.getNumberOfRows(); i++) {
-            for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                if (i == j) {
-                    if (Math.abs(m.get(i, j).doubleValue() - 1d) > error) {
-                        isE = false;
-                        break;
-                    }
-                } else {
-                    if (Math.abs(m.get(i, j).doubleValue()) > error) {
-                        isE = false;
-                        break;
-                    }
-                }
-            }
-            if (!isE) {
-                break;
-            }
-        }
-        return isE;
-    }
+	public static <T extends Number> boolean isEMatrix(Matrix<T> m, Double error) {
+		boolean isE = true;
+		for (int i = 0; i < m.getNumberOfRows(); i++) {
+			for (int j = 0; j < m.getNumberOfColumns(); j++) {
+				if (i == j) {
+					if (Math.abs(m.get(i, j).doubleValue() - 1d) > error) {
+						isE = false;
+						break;
+					}
+				} else {
+					if (Math.abs(m.get(i, j).doubleValue()) > error) {
+						isE = false;
+						break;
+					}
+				}
+			}
+			if (!isE) {
+				break;
+			}
+		}
+		return isE;
+	}
 
-    public static <T extends Number> boolean isSame(Matrix<T> m1, Matrix<T> m2, Double error) {
-        boolean result = true;
-        if (m1.getNumberOfRows() != m2.getNumberOfRows()) {
-            result = false;
-        } else if (m1.getNumberOfColumns() != m2.getNumberOfColumns()) {
-            result = false;
-        }
+	public static <T extends Number> boolean isSame(Matrix<T> m1, Matrix<T> m2, Double error) {
+		boolean result = true;
+		if (m1.getNumberOfRows() != m2.getNumberOfRows()) {
+			result = false;
+		} else if (m1.getNumberOfColumns() != m2.getNumberOfColumns()) {
+			result = false;
+		}
 
-        if (result) {
-            for (int i = 0; i < m1.getNumberOfRows(); i++) {
-                for (int j = 0; j < m1.getNumberOfColumns(); j++) {
-                    if (Math.abs(m1.get(i, j).doubleValue() - m2.get(i, j).doubleValue()) > error) {
-                        result = false;
-                        break;
-                    }
-                }
-                if (!result) {
-                    break;
-                }
-            }
-        }
-        return result;
-    }
+		if (result) {
+			for (int i = 0; i < m1.getNumberOfRows(); i++) {
+				for (int j = 0; j < m1.getNumberOfColumns(); j++) {
+					if (Math.abs(m1.get(i, j).doubleValue() - m2.get(i, j).doubleValue()) > error) {
+						result = false;
+						break;
+					}
+				}
+				if (!result) {
+					break;
+				}
+			}
+		}
+		return result;
+	}
 
-    public static void saveMatrixInMatlabRepresentation(Matrix<Double> m, String fName) throws IOException {
-        BufferedWriter out = new BufferedWriter(new FileWriter(fName));
+	public static void saveMatrixInMatlabRepresentation(Matrix<Double> m, String fName) throws IOException {
+		BufferedWriter out = new BufferedWriter(new FileWriter(fName));
 
-        Double value;
-        if (m instanceof AbstractSparseMatrix) {
-            int index;
-            for (int i = 0; i < m.getNumberOfRows(); i++) {
-                List<Property<Double, Integer>> row = ((AbstractSparseMatrix<Double>) m).getRows().get(i);
-                if (row != null) {
-                    index = 0;
-                    for (Property<Double, Integer> element : row) {
-                        while (index < element.getId()) {
-                            out.write(0d + " ");
-                            index++;
-                        }
-                        out.write(element.getValue() + " ");
-                        index++;
-                    }
-                } else {
-                    for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                        out.write(0d + " ");
-                    }
-                }
-                out.newLine();
-            }
-        } else {
-            for (int i = 0; i < m.getNumberOfRows(); i++) {
-                for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                    value = m.get(i, j);
-                    if (value != null) {
-                        out.write(value.toString() + " ");
-                    }
-                }
-                out.newLine();
-            }
-        }
+		Double value;
+		if (m instanceof AbstractSparseMatrix) {
+			int index;
+			for (int i = 0; i < m.getNumberOfRows(); i++) {
+				List<Property<Double, Integer>> row = ((AbstractSparseMatrix<Double>) m).getRows().get(i);
+				if (row != null) {
+					index = 0;
+					for (Property<Double, Integer> element : row) {
+						while (index < element.getId()) {
+							out.write(0d + " ");
+							index++;
+						}
+						out.write(element.getValue() + " ");
+						index++;
+					}
+				} else {
+					for (int j = 0; j < m.getNumberOfColumns(); j++) {
+						out.write(0d + " ");
+					}
+				}
+				out.newLine();
+			}
+		} else {
+			for (int i = 0; i < m.getNumberOfRows(); i++) {
+				for (int j = 0; j < m.getNumberOfColumns(); j++) {
+					value = m.get(i, j);
+					if (value != null) {
+						out.write(value.toString() + " ");
+					}
+				}
+				out.newLine();
+			}
+		}
 
-        out.close();
-    }
+		out.close();
+	}
 
 
-    public static <T extends Number> int getBandWidth(Matrix<T> m) {
-        int result = 0;
-        int bandWidth;
-        for (int i = 0; i < m.getNumberOfRows(); i++) {
-            bandWidth = 0;
-            for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                if (Math.abs(m.get(i, j).doubleValue()) > 0) {
-                    bandWidth = m.getNumberOfColumns() / 2 - j;
-                    break;
-                }
-            }
-            if (bandWidth > result) {
-                result = bandWidth;
-            }
-        }
-        return result;
-    }
+	public static <T extends Number> int getBandWidth(Matrix<T> m) {
+		int result = 0;
+		int bandWidth;
+		for (int i = 0; i < m.getNumberOfRows(); i++) {
+			bandWidth = 0;
+			for (int j = 0; j < m.getNumberOfColumns(); j++) {
+				if (Math.abs(m.get(i, j).doubleValue()) > 0) {
+					bandWidth = m.getNumberOfColumns() / 2 - j;
+					break;
+				}
+			}
+			if (bandWidth > result) {
+				result = bandWidth;
+			}
+		}
+		return result;
+	}
 
-    public static <T extends Number> int getProfile(Matrix<T> m) {
-        int result = 0;
-        int bandWidth;
-        for (int i = 0; i < m.getNumberOfRows(); i++) {
-            bandWidth = 0;
-            for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                if (Math.abs(m.get(i, j).doubleValue()) > 0) {
-                    bandWidth = m.getNumberOfColumns() / 2 - j;
-                    break;
-                }
-            }
-            result += bandWidth;
-        }
-        return result;
-    }
+	public static <T extends Number> int getProfile(Matrix<T> m) {
+		int result = 0;
+		int bandWidth;
+		for (int i = 0; i < m.getNumberOfRows(); i++) {
+			bandWidth = 0;
+			for (int j = 0; j < m.getNumberOfColumns(); j++) {
+				if (Math.abs(m.get(i, j).doubleValue()) > 0) {
+					bandWidth = m.getNumberOfColumns() / 2 - j;
+					break;
+				}
+			}
+			result += bandWidth;
+		}
+		return result;
+	}
 
-    public static Double getEuclidianMetric(Matrix<Double> m) {
-        Double sum = 0d;
-        for (int i = 0; i < m.getNumberOfRows(); i++) {
-            for (int j = 0; j < m.getNumberOfColumns(); j++) {
-                sum = m.get(i, j) * m.get(i, j);
-            }
-        }
-        return Math.pow(sum, 0.5d);
-    }
+	public static Double getEuclidianMetric(Matrix<Double> m) {
+		Double sum = 0d;
+		for (int i = 0; i < m.getNumberOfRows(); i++) {
+			for (int j = 0; j < m.getNumberOfColumns(); j++) {
+				sum = m.get(i, j) * m.get(i, j);
+			}
+		}
+		return Math.pow(sum, 0.5d);
+	}
 
-    public static Double getEuclidianDistance(Matrix<Double> m1, Matrix<Double> m2) {
-        return getEuclidianMetric(difference(m1, m2));
-    }
+	public static Double getEuclidianDistance(Matrix<Double> m1, Matrix<Double> m2) {
+		return getEuclidianMetric(difference(m1, m2));
+	}
 
-    public static double maxInColumn(Matrix<Double> m, int j) {
-        double result = Double.MIN_VALUE;
+	public static double maxInColumn(Matrix<Double> m, int j) {
+		double result = Double.MIN_VALUE;
 
-        for (int i = 0; i < m.getNumberOfRows(); i++) {
-            if (m.get(i, j) > result) {
-                result = m.get(i, j);
-            }
-        }
+		for (int i = 0; i < m.getNumberOfRows(); i++) {
+			if (m.get(i, j) > result) {
+				result = m.get(i, j);
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    public static double minInColumn(Matrix<Double> m, int j) {
-        double result = Double.MAX_VALUE;
+	public static double minInColumn(Matrix<Double> m, int j) {
+		double result = Double.MAX_VALUE;
 
-        for (int i = 0; i < m.getNumberOfRows(); i++) {
-            if (m.get(i, j) < result) {
-                result = m.get(i, j);
-            }
-        }
+		for (int i = 0; i < m.getNumberOfRows(); i++) {
+			if (m.get(i, j) < result) {
+				result = m.get(i, j);
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 	/**
 	 * Method gets element from array supposing that this array represents matrix
-	 * @param array array of elements
-	 * @param i i-th row in matrix
-	 * @param j j-th column in matrix
+	 *
+	 * @param array		   array of elements
+	 * @param i			   i-th row in matrix
+	 * @param j			   j-th column in matrix
 	 * @param numberOfColumns total number of columns in matrix
-	 *
-	 * @param <T> type of elements in matrix
-	 *
+	 * @param <T>             type of elements in matrix
 	 * @return element on (i, j) position in matrix represented by array
 	 */
-	public static <T> T getElement (@NotNull T[] array, int i, int j, int numberOfColumns) {
+	public static <T> T getElement(@NotNull T[] array, int i, int j, int numberOfColumns) {
 		return (T) array[i * numberOfColumns + j];
 	}
 
 	/**
 	 * Method sets element from array supposing that this array represents matrix
-	 * @param array array of elements
+	 *
+	 * @param array		   array of elements
 	 * @param value
-	 * @param i i-th row in matrix
-	 * @param j j-th column in matrix
+	 * @param i			   i-th row in matrix
+	 * @param j			   j-th column in matrix
 	 * @param numberOfColumns total number of columns in matrix
-*
 	 */
 	public static <T> void setElement(@NotNull T[] array, T value, int i, int j, int numberOfColumns) {
 		array[i * numberOfColumns + j] = value;
@@ -264,5 +265,121 @@ public class MatrixUtils {
 
 	public static <T> boolean areEqual(Matrix<T> l, Matrix<T> r) {
 		return new MatrixEquals<T>().init(new BinaryMatrixOperationInput<T>(l, r)).doAlgorithm();
+	}
+
+	public static <T> Matrix<T> read(@NotNull Matrix<T> matrix, @NotNull String fileName, @NotNull MatrixFileFormat fileFormat, @Nullable T defaultValue) throws IOException, IllegalMatrixFormatException {
+		FileInputStream in = null;
+		try {
+			in = new FileInputStream(fileName);
+			return read(matrix, in, fileFormat, defaultValue);
+		} finally {
+			if (in != null) {
+				in.close();
+			}
+		}
+	}
+
+	public static <T> Matrix<T> read(@NotNull Matrix<T> matrix, @NotNull InputStream inputStream, @NotNull MatrixFileFormat fileFormat, @Nullable T defaultValue) throws IOException, IllegalMatrixFormatException {
+
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(inputStream));
+
+			String s = in.readLine();
+
+			// skip comments
+			while (s.startsWith("%")) {
+				s = in.readLine();
+			}
+
+			String[] values = StringsUtils.split(s, " ");
+
+			if (!CollectionsUtils.isEmpty(values)) {
+
+				if (values.length == 1) {
+					Integer size = Integer.valueOf(values[0]);
+					matrix.init(size, size);
+				} else if (values.length > 1) {
+					Integer m = Integer.valueOf(values[0]);
+					Integer n = Integer.valueOf(values[1]);
+					matrix.init(m, n);
+				} else {
+					throw new IllegalMatrixFormatException("Matrix dimensions have to be specified!");
+				}
+
+				switch (fileFormat) {
+					case dense:
+
+						for (int i = 0; i < matrix.getNumberOfRows(); i++) {
+
+							s = in.readLine();
+
+							if (s != null) {
+								values = StringsUtils.split(in.readLine(), " ");
+
+								if (values != null && values.length == matrix.getNumberOfColumns()) {
+
+									try {
+										for (int j = 0; j < matrix.getNumberOfColumns(); j++) {
+
+											matrix.set(i, j, matrix.getMatrixHelper().getValueFromString(values[j]));
+
+										}
+									} catch (IllegalArgumentException e) {
+										throw new IllegalMatrixFormatException(e);
+									}
+
+								} else {
+									throw new IllegalMatrixFormatException("Number of columns in file differs from expected!");
+								}
+							} else {
+								throw new IllegalMatrixFormatException("Number of rows in file differs from expected!");
+							}
+
+						}
+						break;
+					case sparse:
+						while ((s = in.readLine()) != null) {
+
+							values = StringsUtils.split(s, " ");
+
+							if (values.length > 1) {
+
+								final Integer param0 = Integer.valueOf(values[0]) - 1;
+								final Integer param1 = Integer.valueOf(values[1]) - 1;
+
+								if (values.length > 2) {
+									try {
+										final T param2 = matrix.getMatrixHelper().getValueFromString(values[2]);
+
+										matrix.set(param0, param1, param2);
+									} catch (IllegalArgumentException e) {
+										throw new IllegalMatrixFormatException(e);
+									}
+								} else {
+									if (defaultValue != null) {
+										matrix.set(param0, param1, defaultValue);
+									} else {
+										throw new IllegalMatrixFormatException("Default value has to be set!");
+									}
+								}
+							} else {
+								throw new IllegalMatrixFormatException("Number of columns in file differs from expected!");
+							}
+						}
+						break;
+				}
+			}
+
+		} catch (IOException e) {
+			Logger.getLogger(MatrixUtils.class).error(e.getMessage());
+			throw e;
+		} finally {
+			if (in != null) {
+				in.close();
+			}
+		}
+
+		return matrix;
 	}
 }

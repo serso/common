@@ -1,5 +1,6 @@
 package org.solovyev.common.math.matrix;
 
+import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.math.matrix.helpers.MatrixHelper;
 import org.solovyev.common.utils.TextDisplay;
 import org.solovyev.common.definitions.SimpleCloneable;
@@ -76,6 +77,9 @@ public interface Matrix<T> extends TextDisplay, SimpleCloneable<Matrix<T>> {
 	 * @return 'true' if matrix is symmetric, 'false' otherwise
 	 */
 	public boolean isSymmetric();
+
+	@NotNull
+	public MatrixHelper<T> getMatrixHelper();
 
 	// todo serso: think about removing from interface
 	public void save(String fName, MatrixFileFormat matrixFileFormat) throws IOException;

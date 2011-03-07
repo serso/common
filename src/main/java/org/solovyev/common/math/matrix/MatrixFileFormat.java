@@ -6,6 +6,6 @@ package org.solovyev.common.math.matrix;
  * Time: 10:04:09
  */
 public enum MatrixFileFormat {
-    SIMPLE,
-    SHORTED
+	dense,
+	sparse
 }

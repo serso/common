@@ -36,8 +36,16 @@ public class CollectionsUtils {
 		return sb.toString();
 	}
 
-	public static boolean notEmpty(Collection c) {
-		return c != null && !c.isEmpty();
+	public static boolean notEmpty(@Nullable Collection<?> c) {
+		return !isEmpty(c);
+	}
+
+	public static boolean isEmpty(@Nullable Collection<?> c) {
+		return c == null || c.isEmpty();
+	}
+
+	public static boolean isEmpty(@Nullable Object[] array) {
+		return array == null || array.length == 0;
 	}
 
 	@NotNull

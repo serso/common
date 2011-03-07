@@ -1,11 +1,9 @@
 package org.solovyev.common.math.matrix;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.LinkedNode;
 import org.solovyev.common.math.graph.Node;
-import org.solovyev.common.math.matrix.helpers.MatrixHelper;
 import org.solovyev.common.utils.StringsUtils;
 
 import java.io.*;
@@ -68,7 +66,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		if (fName != null) {
 			BufferedReader in = new BufferedReader(new FileReader(fName));
 			String s = in.readLine();
-			String[] params = StringsUtils.getParams(s, " ");
+			String[] params = StringsUtils.split(s, " ");
 
 			if (params != null && params.length > 0) {
 				if (params.length == 1) {
@@ -80,10 +78,10 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 					this.init(m, n);
 				}
 				switch (fileFormat) {
-					case SIMPLE:
+					case dense:
 						for (int i = 0; i < this.getNumberOfRows(); i++) {
 							s = in.readLine();
-							params = StringsUtils.getParams(s, " ");
+							params = StringsUtils.split(s, " ");
 							if (params != null && params.length == this.getNumberOfColumns()) {
 								for (int j = 0; j < this.getNumberOfColumns(); j++) {
 									this.set(i, j, this.getValueFromString(params[j]));
@@ -93,12 +91,12 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 							}
 						}
 						break;
-					case SHORTED:
+					case sparse:
 						Integer param0;
 						Integer param1;
 						T param2;
 						while ((s = in.readLine()) != null) {
-							params = StringsUtils.getParams(s, " ");
+							params = StringsUtils.split(s, " ");
 							if (params.length > 2) {
 								param0 = Integer.valueOf(params[0]) - 1;
 								param1 = Integer.valueOf(params[1]) - 1;
@@ -132,7 +130,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		out.newLine();
 
 		T value;
-		if (matrixFileFormat.equals(MatrixFileFormat.SHORTED)) {
+		if (matrixFileFormat.equals(MatrixFileFormat.sparse)) {
 			for (int i = 0; i < this.getNumberOfRows(); i++) {
 				for (int j = 0; j < this.getNumberOfColumns(); j++) {
 					value = this.get(i, j);
@@ -150,7 +148,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 					}
 				}
 			}
-		} else if (matrixFileFormat.equals(MatrixFileFormat.SIMPLE)) {
+		} else if (matrixFileFormat.equals(MatrixFileFormat.dense)) {
 			for (int i = 0; i < this.getNumberOfRows(); i++) {
 				for (int j = 0; j < this.getNumberOfColumns(); j++) {
 					value = this.get(i, j);
@@ -176,9 +174,6 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 	public final Class<T> getObjectClass() {
 		return this.getMatrixHelper().getObjectClass();
 	}
-
-	@NotNull
-	protected abstract MatrixHelper<T> getMatrixHelper();
 
 	public int getNumberOfRows() {
 		return this.m;

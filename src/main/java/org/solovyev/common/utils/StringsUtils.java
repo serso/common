@@ -14,7 +14,8 @@ import java.util.List;
  * Time: 10:23:29
  */
 public class StringsUtils {
-	public static String[] getParams(String source, String subString) {
+
+	public static String[] split(String source, String subString) {
 		String[] params = source.split(subString);
 		List<String> result = new ArrayList<String>();
 

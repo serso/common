@@ -3,12 +3,24 @@ package org.solovyev.common.math.matrix;
 import junit.framework.TestCase;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.InputStream;
+
 /**
  * User: serso
  * Date: 3/6/11
  * Time: 5:37 PM
  */
 public class MatrixUtilsTest extends TestCase {
+
+	public void testRead() throws Exception {
+		final InputStream inputStream = MatrixUtilsTest.class.getResourceAsStream("/org/solovyev/math/matrix/bcspwr01.mtx");
+		assertNotNull(inputStream);
+		try {
+			final Matrix<Double> matrix = MatrixUtils.read(new DoubleSparseMatrix(), inputStream, MatrixFileFormat.sparse, 1d);
+		} finally {
+			inputStream.close();
+		}
+	}
 
 	public void testMultiply() throws Exception {
 		Matrix<Double> l = new DoubleArrayMatrix(2, 3);
@@ -43,10 +55,18 @@ public class MatrixUtilsTest extends TestCase {
 
 		doMultiplyTest(l, r, result);
 		doMultiplyTest(l, rSparse, result);
+
+		doMultiplyTest(l, rSparse);
+		doMultiplyTest(l, r);
+
 		doEqualsTest(r, rSparse);
 	}
 
-	private void doEqualsTest(@NotNull Matrix<Double> l, @NotNull Matrix<Double> r) {
+	private <T> void doMultiplyTest(@NotNull Matrix<T> l, @NotNull Matrix<T> r) {
+		MatrixUtils.multiply(l, r);
+	}
+
+	private <T> void doEqualsTest(@NotNull Matrix<T> l, @NotNull Matrix<T> r) {
 		assertTrue(MatrixUtils.areEqual(l, r));
 	}
 

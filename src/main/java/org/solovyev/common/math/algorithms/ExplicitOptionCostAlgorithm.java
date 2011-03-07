@@ -76,7 +76,7 @@ public class ExplicitOptionCostAlgorithm extends AbstractAlgorithm<ExplicitOptio
 		Double sigma = Double.valueOf(in.readLine());
 		Double e = Double.valueOf(in.readLine());
 		Double r = Double.valueOf(in.readLine());
-		Matrix<Double> exactSolutionForU = new DoubleArrayMatrix(arg[1], MatrixFileFormat.SIMPLE);
+		Matrix<Double> exactSolutionForU = new DoubleArrayMatrix(arg[1], MatrixFileFormat.dense);
 
 		in.close();
 

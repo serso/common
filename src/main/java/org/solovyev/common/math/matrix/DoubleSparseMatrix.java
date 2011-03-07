@@ -34,7 +34,7 @@ public class DoubleSparseMatrix extends AbstractSparseMatrix<Double> implements 
 
 	@NotNull
 	@Override
-	protected MatrixHelper<Double> getMatrixHelper() {
+	public MatrixHelper<Double> getMatrixHelper() {
 		return MatrixHelper.Helper.double_.getHelper();
 	}
 }

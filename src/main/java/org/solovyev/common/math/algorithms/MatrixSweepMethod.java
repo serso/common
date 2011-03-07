@@ -55,8 +55,8 @@ public class MatrixSweepMethod extends AbstractAlgorithm<MatrixSweepMethod.Input
 
 	public static void main(String[] args) {
 		try {
-			Matrix<Double> a = new DoubleArrayMatrix("test_sweep.txt", MatrixFileFormat.SHORTED);
-			Matrix<Double> b = new DoubleArrayMatrix("test_sweep_2.txt", MatrixFileFormat.SIMPLE);
+			Matrix<Double> a = new DoubleArrayMatrix("test_sweep.txt", MatrixFileFormat.sparse);
+			Matrix<Double> b = new DoubleArrayMatrix("test_sweep_2.txt", MatrixFileFormat.dense);
 
 			MatrixSweepMethod msm = new MatrixSweepMethod();
 			msm.init(new Input(a, b));

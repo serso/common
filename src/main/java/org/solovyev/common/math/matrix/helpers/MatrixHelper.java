@@ -26,7 +26,7 @@ public interface MatrixHelper<T> {
 	}
 
 	@Nullable
-	T getValueFromString(String value);
+	T getValueFromString(String value) throws IllegalArgumentException;
 
 	@Nullable
 	T getEmptyValue();
