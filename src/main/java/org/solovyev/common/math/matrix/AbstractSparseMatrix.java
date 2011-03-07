@@ -21,9 +21,6 @@ public abstract class AbstractSparseMatrix<T> extends AbstractMatrix<T> {
 
     List<List<Property<T, Integer>>> rows;
 
-    protected final static int DEFAULT_M_SIZE = 2;
-    protected final static int DEFAULT_N_SIZE = 2;
-
     public AbstractSparseMatrix(String fName, MatrixFileFormat fileFormat) throws IOException, IllegalArgumentException {
         super(fName, fileFormat);
     }
@@ -66,25 +63,7 @@ public abstract class AbstractSparseMatrix<T> extends AbstractMatrix<T> {
         return result;
     }
 
-    //todo serso: implement
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public int getNumberOfRows() {
-        return this.m;
-    }
-
-    public int getNumberOfColumns() {
-        return this.n;
-    }
-
     public void transpose() {
-
-    }
-
-    public boolean isSymmetric() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 	public void setChecked(int i, int j, T value) {
