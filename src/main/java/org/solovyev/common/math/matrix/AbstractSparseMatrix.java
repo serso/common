@@ -147,48 +147,4 @@ public abstract class AbstractSparseMatrix<T> extends AbstractMatrix<T> {
     public List<List<Property<T, Integer>>> getRows() {
         return rows;
     }
-
-    public void save(String fName, MatrixFileFormat matrixFileFormat) throws IOException {
-        BufferedWriter out = new BufferedWriter(new FileWriter(fName));
-
-        out.write(String.valueOf(this.getNumberOfRows()));
-        out.write(" ");
-        out.write(String.valueOf(this.getNumberOfColumns()));
-        out.newLine();
-
-        if (matrixFileFormat.equals(MatrixFileFormat.sparse)) {
-            for (int i = 0; i < this.getNumberOfRows(); i++) {
-                List<Property<T, Integer>> row = this.getRows().get(i);
-                if (row != null) {
-                    for (Property<T, Integer> element : row) {
-                        out.write((i+1) + " " + (element.getId()+1) + " " + element.getValue());
-                        out.newLine();
-                    }
-                }
-            }
-        } else if (matrixFileFormat.equals(MatrixFileFormat.dense)) {
-            int index;
-            for (int i = 0; i < this.getNumberOfRows(); i++) {
-                List<Property<T, Integer>> row = this.getRows().get(i);
-                if (row != null) {
-                    index = 0;
-                    for (Property<T, Integer> element : row) {
-                        while (index < element.getId()) {
-                            out.write(0d + " ");
-                            index++;
-                        }
-                        out.write(element.getValue() + " ");
-                        index++;
-                    }
-                } else {
-                    for (int j = 0; j < this.getNumberOfColumns(); j++) {
-                        out.write(0d + " ");
-                    }
-                }
-                out.newLine();
-            }
-        }
-
-        out.close();
-    }
 }

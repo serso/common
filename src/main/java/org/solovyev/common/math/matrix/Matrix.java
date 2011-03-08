@@ -81,8 +81,5 @@ public interface Matrix<T> extends TextDisplay, SimpleCloneable<Matrix<T>> {
 	@NotNull
 	public MatrixHelper<T> getMatrixHelper();
 
-	// todo serso: think about removing from interface
-	public void save(String fName, MatrixFileFormat matrixFileFormat) throws IOException;
-
 	public Class<T> getObjectClass();
 }

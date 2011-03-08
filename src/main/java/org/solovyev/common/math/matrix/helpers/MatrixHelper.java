@@ -10,6 +10,8 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface MatrixHelper<T> {
 
+	String getStringValue(T t);
+
 	public static enum Helper {
 
 		double_(new DoubleMatrixHelper());

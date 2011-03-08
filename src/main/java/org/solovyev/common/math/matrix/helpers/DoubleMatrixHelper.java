@@ -9,6 +9,11 @@ import org.jetbrains.annotations.NotNull;
  */
 class DoubleMatrixHelper implements MatrixHelper<Double>{
 
+	@Override
+	public String getStringValue(Double value) {
+		return String.valueOf(value);
+	}
+
 	@NotNull
 	@Override
 	public Double getValueFromString(String value) {

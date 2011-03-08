@@ -121,48 +121,6 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		return (this.m * this.n == 0d);
 	}
 
-	public void save(String fName, MatrixFileFormat matrixFileFormat) throws IOException {
-		BufferedWriter out = new BufferedWriter(new FileWriter(fName));
-
-		out.write(String.valueOf(this.getNumberOfRows()));
-		out.write(" ");
-		out.write(String.valueOf(this.getNumberOfColumns()));
-		out.newLine();
-
-		T value;
-		if (matrixFileFormat.equals(MatrixFileFormat.sparse)) {
-			for (int i = 0; i < this.getNumberOfRows(); i++) {
-				for (int j = 0; j < this.getNumberOfColumns(); j++) {
-					value = this.get(i, j);
-					if (value != null) {
-						if (value instanceof Number) {
-							if (((Number) value).doubleValue() > 0) {
-								out.write((i + 1) + " " + (j + 1) + " " + value.toString());
-							}
-						} else {
-							if (!value.toString().equals("")) {
-								out.write((i + 1) + " " + (j + 1) + " " + value.toString());
-							}
-						}
-						out.newLine();
-					}
-				}
-			}
-		} else if (matrixFileFormat.equals(MatrixFileFormat.dense)) {
-			for (int i = 0; i < this.getNumberOfRows(); i++) {
-				for (int j = 0; j < this.getNumberOfColumns(); j++) {
-					value = this.get(i, j);
-					if (value != null) {
-						out.write(value.toString() + " ");
-					}
-				}
-				out.newLine();
-			}
-		}
-
-		out.close();
-	}
-
 	protected final T getValueFromString(String value) {
 		return this.getMatrixHelper().getValueFromString(value);
 	}

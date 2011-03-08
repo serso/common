@@ -281,105 +281,184 @@ public class MatrixUtils {
 
 	public static <T> Matrix<T> read(@NotNull Matrix<T> matrix, @NotNull InputStream inputStream, @NotNull MatrixFileFormat fileFormat, @Nullable T defaultValue) throws IOException, IllegalMatrixFormatException {
 
-		BufferedReader in = null;
-		try {
-			in = new BufferedReader(new InputStreamReader(inputStream));
+		final BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 
-			String s = in.readLine();
+		String s = in.readLine();
 
-			// skip comments
-			while (s.startsWith("%")) {
-				s = in.readLine();
+		// skip comments
+		while (s.startsWith("%")) {
+			s = in.readLine();
+		}
+
+		String[] values = StringsUtils.split(s, " ");
+
+		if (!CollectionsUtils.isEmpty(values)) {
+
+			if (values.length == 1) {
+				Integer size = Integer.valueOf(values[0]);
+				matrix.init(size, size);
+			} else if (values.length > 1) {
+				Integer m = Integer.valueOf(values[0]);
+				Integer n = Integer.valueOf(values[1]);
+				matrix.init(m, n);
+			} else {
+				throw new IllegalMatrixFormatException("Matrix dimensions have to be specified!");
 			}
 
-			String[] values = StringsUtils.split(s, " ");
+			switch (fileFormat) {
+				case dense:
 
-			if (!CollectionsUtils.isEmpty(values)) {
+					for (int i = 0; i < matrix.getNumberOfRows(); i++) {
 
-				if (values.length == 1) {
-					Integer size = Integer.valueOf(values[0]);
-					matrix.init(size, size);
-				} else if (values.length > 1) {
-					Integer m = Integer.valueOf(values[0]);
-					Integer n = Integer.valueOf(values[1]);
-					matrix.init(m, n);
-				} else {
-					throw new IllegalMatrixFormatException("Matrix dimensions have to be specified!");
-				}
+						s = in.readLine();
 
-				switch (fileFormat) {
-					case dense:
+						if (s != null) {
+							values = StringsUtils.split(in.readLine(), " ");
 
-						for (int i = 0; i < matrix.getNumberOfRows(); i++) {
+							if (values != null && values.length == matrix.getNumberOfColumns()) {
 
-							s = in.readLine();
+								try {
+									for (int j = 0; j < matrix.getNumberOfColumns(); j++) {
 
-							if (s != null) {
-								values = StringsUtils.split(in.readLine(), " ");
+										matrix.set(i, j, matrix.getMatrixHelper().getValueFromString(values[j]));
 
-								if (values != null && values.length == matrix.getNumberOfColumns()) {
-
-									try {
-										for (int j = 0; j < matrix.getNumberOfColumns(); j++) {
-
-											matrix.set(i, j, matrix.getMatrixHelper().getValueFromString(values[j]));
-
-										}
-									} catch (IllegalArgumentException e) {
-										throw new IllegalMatrixFormatException(e);
 									}
-
-								} else {
-									throw new IllegalMatrixFormatException("Number of columns in file differs from expected!");
+								} catch (IllegalArgumentException e) {
+									throw new IllegalMatrixFormatException(e);
 								}
-							} else {
-								throw new IllegalMatrixFormatException("Number of rows in file differs from expected!");
-							}
 
-						}
-						break;
-					case sparse:
-						while ((s = in.readLine()) != null) {
-
-							values = StringsUtils.split(s, " ");
-
-							if (values.length > 1) {
-
-								final Integer param0 = Integer.valueOf(values[0]) - 1;
-								final Integer param1 = Integer.valueOf(values[1]) - 1;
-
-								if (values.length > 2) {
-									try {
-										final T param2 = matrix.getMatrixHelper().getValueFromString(values[2]);
-
-										matrix.set(param0, param1, param2);
-									} catch (IllegalArgumentException e) {
-										throw new IllegalMatrixFormatException(e);
-									}
-								} else {
-									if (defaultValue != null) {
-										matrix.set(param0, param1, defaultValue);
-									} else {
-										throw new IllegalMatrixFormatException("Default value has to be set!");
-									}
-								}
 							} else {
 								throw new IllegalMatrixFormatException("Number of columns in file differs from expected!");
 							}
+						} else {
+							throw new IllegalMatrixFormatException("Number of rows in file differs from expected!");
 						}
-						break;
-				}
-			}
 
-		} catch (IOException e) {
-			Logger.getLogger(MatrixUtils.class).error(e.getMessage());
-			throw e;
-		} finally {
-			if (in != null) {
-				in.close();
+					}
+					break;
+				case sparse:
+					while ((s = in.readLine()) != null) {
+
+						values = StringsUtils.split(s, " ");
+
+						if (values.length > 1) {
+
+							final Integer param0 = Integer.valueOf(values[0]) - 1;
+							final Integer param1 = Integer.valueOf(values[1]) - 1;
+
+							if (values.length > 2) {
+								try {
+									final T param2 = matrix.getMatrixHelper().getValueFromString(values[2]);
+
+									matrix.set(param0, param1, param2);
+								} catch (IllegalArgumentException e) {
+									throw new IllegalMatrixFormatException(e);
+								}
+							} else {
+								if (defaultValue != null) {
+									matrix.set(param0, param1, defaultValue);
+								} else {
+									throw new IllegalMatrixFormatException("Default value has to be set!");
+								}
+							}
+						} else {
+							throw new IllegalMatrixFormatException("Number of columns in file differs from expected!");
+						}
+					}
+					break;
 			}
 		}
 
 		return matrix;
 	}
+
+	public static <T> void write(@NotNull Matrix<T> matrix, @NotNull String fileName, @NotNull MatrixFileFormat matrixFileFormat) throws IOException {
+		FileOutputStream fileOutputStream = null;
+
+		try {
+			fileOutputStream = new FileOutputStream(fileName);
+			write(matrix, fileOutputStream, matrixFileFormat);
+		} finally {
+			if (fileOutputStream != null) {
+				fileOutputStream.close();
+			}
+		}
+	}
+
+	public static <T> OutputStream write(@NotNull Matrix<T> matrix, @NotNull OutputStream outputStream, @NotNull MatrixFileFormat matrixFileFormat) throws IOException {
+		final PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
+
+		out.print(String.valueOf(matrix.getNumberOfRows()));
+		out.print(" ");
+		out.println(String.valueOf(matrix.getNumberOfColumns()));
+
+		T value;
+		if (matrixFileFormat.equals(MatrixFileFormat.sparse)) {
+
+			for (int i = 0; i < matrix.getNumberOfRows(); i++) {
+				for (int j = 0; j < matrix.getNumberOfColumns(); j++) {
+					out.println((i + 1) + " " + (j + 1) + " " + matrix.getMatrixHelper().getStringValue(matrix.get(i, j)));
+				}
+			}
+
+		} else if (matrixFileFormat.equals(MatrixFileFormat.dense)) {
+			for (int i = 0; i < matrix.getNumberOfRows(); i++) {
+				for (int j = 0; j < matrix.getNumberOfColumns(); j++) {
+					out.print(matrix.getMatrixHelper().getStringValue(matrix.get(i, j)) + " ");
+				}
+				out.println();
+			}
+		}
+
+		out.flush();
+
+		return outputStream;
+	}
+
+	/*
+		public void save(String fName, MatrixFileFormat matrixFileFormat) throws IOException {
+		BufferedWriter out = new BufferedWriter(new FileWriter(fName));
+
+		out.write(String.valueOf(this.getNumberOfRows()));
+		out.write(" ");
+		out.write(String.valueOf(this.getNumberOfColumns()));
+		out.newLine();
+
+		if (matrixFileFormat.equals(MatrixFileFormat.sparse)) {
+			for (int i = 0; i < this.getNumberOfRows(); i++) {
+				List<Property<T, Integer>> row = this.getRows().get(i);
+				if (row != null) {
+					for (Property<T, Integer> element : row) {
+						out.write((i+1) + " " + (element.getId()+1) + " " + element.getValue());
+						out.newLine();
+					}
+				}
+			}
+		} else if (matrixFileFormat.equals(MatrixFileFormat.dense)) {
+			int index;
+			for (int i = 0; i < this.getNumberOfRows(); i++) {
+				List<Property<T, Integer>> row = this.getRows().get(i);
+				if (row != null) {
+					index = 0;
+					for (Property<T, Integer> element : row) {
+						while (index < element.getId()) {
+							out.write(0d + " ");
+							index++;
+						}
+						out.write(element.getValue() + " ");
+						index++;
+					}
+				} else {
+					for (int j = 0; j < this.getNumberOfColumns(); j++) {
+						out.write(0d + " ");
+					}
+				}
+				out.newLine();
+			}
+		}
+
+		out.close();
+	}
+
+	*/
 }
