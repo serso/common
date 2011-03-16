@@ -17,10 +17,10 @@ import org.jetbrains.annotations.NotNull;
 public class Button implements Cloneable{
 
 	@NotNull
-	private String value = "";
+	private final String value;
 
 	@NotNull
-	private String action = "";
+	private final String action;
 
 	public Button(@NotNull String value, @NotNull String action) {
 		this.value = value;
@@ -32,17 +32,9 @@ public class Button implements Cloneable{
 		return value;
 	}
 
-	public void setValue(@NotNull String value) {
-		this.value = value;
-	}
-
 	@NotNull
 	public String getAction() {
 		return action;
-	}
-
-	public void setAction(@NotNull String action) {
-		this.action = action;
 	}
 
 	@Override
