@@ -13,7 +13,10 @@ public class Identity<T> implements Identifiable<T>, Cloneable, Serializable {
 
     private T id = null;
 
-    public Identity(T id) {
+	public Identity() {
+	}
+
+	public Identity(T id) {
         this.id = id;
     }
 
@@ -25,7 +28,7 @@ public class Identity<T> implements Identifiable<T>, Cloneable, Serializable {
         this.id = id;
     }
 
-    @Override
+	@Override
     @SuppressWarnings("unchecked")
     public Identifiable<T> clone() {
         Identifiable<T> clone = null;
