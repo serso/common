@@ -45,7 +45,7 @@ public class StringsUtils {
 		String[] result = new String[enums.length];
 		LoopData ld = new LoopData(enums);
 		for (Enum anEnum : enums) {
-			result[ld.next()] = anEnum.name();
+			result[(int)ld.next()] = anEnum.name();
 		}
 		return result;
 	}

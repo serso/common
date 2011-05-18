@@ -1,4 +1,13 @@
+/*
+* Copyright (c) Short Consulting AG 2000-2008. All rights reserved.
+*/
+
 package org.solovyev.common.utils;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Collection;
 
 /*
  * User: serso
@@ -93,5 +102,73 @@ public class MathUtils {
 
 	private static double getMaxPreciseAmount(int precision) {
 		return Math.pow(0.1d, precision) / 2;
+	}
+
+	@Nullable
+	public static <T extends Number> T min(T... numbers) {
+		return min(CollectionsUtils.asList(numbers));
+	}
+
+	@Nullable
+	public static <T extends Number> T min(Collection<T> numbers) {
+		return minMax(numbers, ComparisonType.min);
+	}
+
+	public static double getNotNull ( @Nullable Double value ) {
+		return value != null ? value : 0d;
+	}
+
+	@Nullable
+	public static <T extends Number> T max(T... numbers) {
+		return max(CollectionsUtils.asList(numbers));
+	}
+
+		@Nullable
+	public static <T extends Number> T max(Collection<T> numbers) {
+		return minMax(numbers, ComparisonType.max);
+	}
+
+	public static enum ComparisonType {
+		min,
+		max
+	}
+
+	@Nullable
+	public static <T extends Number> T minMax(@Nullable Collection<T> numbers, @NotNull ComparisonType comparisonType) {
+		T result = null;
+		if (!CollectionsUtils.isEmpty(numbers)) {
+			for (T number : numbers) {
+				if (number != null) {
+					if (result == null) {
+						result = number;
+					} else {
+						result = minMax(number, result, comparisonType);
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	@NotNull
+	public static <T extends Number> T minMax(@NotNull T first, @NotNull T second, @NotNull ComparisonType comparisonType) {
+		T result = first;
+
+		switch (comparisonType) {
+			case min:
+				if (CompareTools.comparePreparedObjects(first, second) > 0) {
+					result = second;
+				}
+				break;
+			case max:
+				if ( CompareTools.comparePreparedObjects(first, second) < 0 ) {
+					result = second;
+				}
+				break;
+		   default:
+			   throw new UnsupportedOperationException("Comparison type " + comparisonType + " is not supported in minMax() method!");
+		}
+
+		return result;
 	}
 }

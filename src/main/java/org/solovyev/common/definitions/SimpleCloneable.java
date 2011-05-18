@@ -15,6 +15,7 @@ public interface SimpleCloneable<T> extends Cloneable{
 	/**
 	 * @return cloned object of current object
 	 */
+	@SuppressWarnings({"CloneDoesntDeclareCloneNotSupportedException"})
 	public T clone();
 	
 }
