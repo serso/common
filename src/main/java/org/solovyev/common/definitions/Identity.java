@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Date: Oct 15, 2009
  * Time: 12:02:52 AM
  */
-public class Identity<T> implements Identifiable<T>, Cloneable, Serializable {
+public class Identity<T extends Serializable> implements Identifiable<T>, Cloneable, Serializable {
 
     private T id = null;
 
