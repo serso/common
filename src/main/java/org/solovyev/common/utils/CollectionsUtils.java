@@ -48,8 +48,8 @@ public class CollectionsUtils {
 	}
 
 	@NotNull
-	public static <T> List<T> setNotNull(@Nullable List<T> c, @NotNull List<T> defaultValue) {
-		List<T> result;
+	public static <T> Collection<T> setNotNull(@Nullable Collection<T> c, @NotNull Collection<T> defaultValue) {
+		Collection<T> result;
 
 		if (c != null) {
 			result = c;
