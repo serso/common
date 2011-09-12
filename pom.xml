@@ -8,7 +8,7 @@
 		<additionalLibs>${basedir}/src/misc/lib</additionalLibs>
 	</properties>
 
-	<groupId>org.solovyev.common</groupId>
+	<groupId>org.solovyev</groupId>
 	<artifactId>common</artifactId>
 	<version>0.1</version>
 
