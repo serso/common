@@ -7,23 +7,23 @@ package org.solovyev.common.utils;
  */
 public class Interval {
 
-    private double start;
-    private double end;
+	private double start;
+	private double end;
 
-    public Interval(double start, double end) {
-        this.start = start;
-        this.end = end;
-    }
+	public Interval(double start, double end) {
+		this.start = start;
+		this.end = end;
+	}
 
-    public double getEnd() {
-        return end;
-    }
+	public double getEnd() {
+		return end;
+	}
 
-    public double getStart() {
-        return start;
-    }
+	public double getStart() {
+		return start;
+	}
 
-    public double dist() {
-        return this.end - this.start;
-    }
+	public double dist() {
+		return this.end - this.start;
+	}
 }
