@@ -10,7 +10,7 @@ import org.solovyev.common.math.algorithms.matrix.BinaryMatrixOperationInput;
 import org.solovyev.common.math.algorithms.matrix.MatrixEquals;
 import org.solovyev.common.math.algorithms.matrix.MatrixMultiplication;
 import org.solovyev.common.utils.CollectionsUtils;
-import org.solovyev.common.utils.StringsUtils;
+import org.solovyev.common.utils.StringUtils;
 
 import java.io.*;
 import java.util.List;
@@ -290,7 +290,7 @@ public class MatrixUtils {
 			s = in.readLine();
 		}
 
-		String[] values = StringsUtils.split(s, " ");
+		String[] values = StringUtils.split(s, " ");
 
 		if (!CollectionsUtils.isEmpty(values)) {
 
@@ -313,7 +313,7 @@ public class MatrixUtils {
 						s = in.readLine();
 
 						if (s != null) {
-							values = StringsUtils.split(in.readLine(), " ");
+							values = StringUtils.split(in.readLine(), " ");
 
 							if (values != null && values.length == matrix.getNumberOfColumns()) {
 
@@ -339,7 +339,7 @@ public class MatrixUtils {
 				case sparse:
 					while ((s = in.readLine()) != null) {
 
-						values = StringsUtils.split(s, " ");
+						values = StringUtils.split(s, " ");
 
 						if (values.length > 1) {
 

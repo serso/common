@@ -10,7 +10,7 @@
 
 	<groupId>org.solovyev</groupId>
 	<artifactId>common</artifactId>
-	<version>0.1</version>
+	<version>0.2</version>
 
 	<dependencies>
 

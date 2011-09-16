@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.List;
 
 /*
  * User: serso
@@ -17,22 +18,21 @@ import java.util.Collection;
 public class MathUtils {
 
 	/**
-	 *
 	 * @param nominal nominal
-	 * @param value value
+	 * @param value   value
 	 * @return nearest value to specified value that can be divided by nominal value without remainder
 	 */
-	public static double getRoundedAmount( double nominal, double value) {
+	public static double getRoundedAmount(double nominal, double value) {
 		double result;
-		int numberOfTimes = (int) ( value / nominal );
+		int numberOfTimes = (int) (value / nominal);
 		result = numberOfTimes * nominal;
 		return result;
 	}
 
 	/**
-	 * @param l first number
+	 * @param l	first number
 	 * @param sign sign
-	 * @param r second number
+	 * @param r	second number
 	 * @return sum or difference of two numbers (supposed: null = 0)
 	 */
 	public static double sumUp(Double l, int sign, Double r) {
@@ -52,7 +52,7 @@ public class MathUtils {
 	 * @param r second number
 	 * @return sum of tow numbers (supposed: null = 0)
 	 */
-	public static double sumUp (Double l, Double r) {
+	public static double sumUp(Double l, Double r) {
 		return sumUp(l, 1, r);
 	}
 
@@ -61,26 +61,28 @@ public class MathUtils {
 	 * @param r second number
 	 * @return difference of two numbers (supposed: null = 0)
 	 */
-	public static double subtract (Double l, Double r) {
+	public static double subtract(Double l, Double r) {
 		return sumUp(l, -1, r);
 	}
 
 	/**
 	 * Method compares two double values with specified precision
-	 * @param d1 first value to compare
-	 * @param d2 second value for compare
+	 *
+	 * @param d1		first value to compare
+	 * @param d2		second value for compare
 	 * @param precision number of digits after dot
 	 * @return 'true' if values are equal with specified precision
 	 */
-	public static boolean equals ( double d1, double d2, int precision ) {
+	public static boolean equals(double d1, double d2, int precision) {
 		assert precision >= 1;
 		return Math.abs(d1 - d2) < getMaxPreciseAmount(precision);
 	}
 
 	/**
 	 * Method tests if first value is less than second with specified precision
-	 * @param d1 first value to compare
-	 * @param d2 second value for compare
+	 *
+	 * @param d1		first value to compare
+	 * @param d2		second value for compare
 	 * @param precision number of digits after dot
 	 * @return 'true' if first value is less than second with specified precision
 	 */
@@ -114,7 +116,7 @@ public class MathUtils {
 		return minMax(numbers, ComparisonType.min);
 	}
 
-	public static double getNotNull ( @Nullable Double value ) {
+	public static double getNotNull(@Nullable Double value) {
 		return value != null ? value : 0d;
 	}
 
@@ -123,7 +125,7 @@ public class MathUtils {
 		return max(CollectionsUtils.asList(numbers));
 	}
 
-		@Nullable
+	@Nullable
 	public static <T extends Number> T max(Collection<T> numbers) {
 		return minMax(numbers, ComparisonType.max);
 	}
@@ -161,14 +163,107 @@ public class MathUtils {
 				}
 				break;
 			case max:
-				if ( CompareTools.comparePreparedObjects(first, second) < 0 ) {
+				if (CompareTools.comparePreparedObjects(first, second) < 0) {
 					result = second;
 				}
 				break;
-		   default:
-			   throw new UnsupportedOperationException("Comparison type " + comparisonType + " is not supported in minMax() method!");
+			default:
+				throw new UnsupportedOperationException("Comparison type " + comparisonType + " is not supported in minMax() method!");
 		}
 
 		return result;
+	}
+
+	public static final float MIN_AMOUNT = 0.05f;
+
+	public static double round(@NotNull Double value, int numberOfFractionDigits) {
+		double roundFactor = Math.pow(10, numberOfFractionDigits);
+
+		if (value < Double.MAX_VALUE / roundFactor) {
+			return ((double) Math.round(value * roundFactor)) / roundFactor;
+		} else {
+			return value;
+		}
+	}
+
+	public static float getDistance(@NotNull Point2d startPoint,
+									@NotNull Point2d endPoint) {
+		return getNorm(subtract(endPoint, startPoint));
+	}
+
+	public static Point2d subtract(@NotNull Point2d p1, @NotNull Point2d p2) {
+		return new Point2d(p1.getX() - p2.getX(), p1.getY() - p2.getY());
+	}
+
+	public static Point2d sum(@NotNull Point2d p1, @NotNull Point2d p2) {
+		return new Point2d(p1.getX() + p2.getX(), p1.getY() + p2.getY());
+	}
+
+	public static float getNorm(@NotNull Point2d point) {
+		return (float) Math.pow(
+				Math.pow(point.getX(), 2) + Math.pow(point.getY(), 2), 0.5);
+	}
+
+	public static float getAngle(@NotNull Point2d startPoint,
+								 @NotNull Point2d axisEndPoint, @NotNull Point2d endPoint) {
+		final Point2d axisVector = subtract(axisEndPoint, startPoint);
+		final Point2d vector = subtract(endPoint, startPoint);
+
+		double a_2 = Math.pow(getDistance(vector, axisVector), 2);
+		double b = getNorm(vector);
+		double b_2 = Math.pow(b, 2);
+		double c = getNorm(axisVector);
+		double c_2 = Math.pow(c, 2);
+
+		return (float) Math.acos((-a_2 + b_2 + c_2) / (2 * b * c));
+	}
+
+	public static double countMean(@NotNull List<Double> objects) {
+
+		double sum = 0d;
+		for (Double object : objects) {
+			sum += object;
+		}
+
+		return objects.size() == 0 ? 0d : (sum / objects.size());
+	}
+
+	public static double countStandardDeviation(@NotNull Double mean, @NotNull List<Double> objects) {
+		double sum = 0d;
+
+		for (Double object : objects) {
+			sum += Math.pow(object - mean, 2);
+		}
+
+		return objects.size() == 0 ? 0d : Math.sqrt(sum / objects.size());
+	}
+
+	public static StatData getStatData(@NotNull List<Double> objects) {
+
+		final double mean = countMean(objects);
+		final double standardDeviation = countStandardDeviation(mean, objects);
+
+		return new StatData(mean, standardDeviation);
+	}
+
+	public static class StatData {
+
+		private final double mean;
+
+		private final double standardDeviation;
+
+		public StatData(double mean, double standardDeviation) {
+			this.mean = mean;
+			this.standardDeviation = standardDeviation;
+		}
+
+		public double getMean() {
+			return mean;
+		}
+
+		public double getStandardDeviation() {
+			return standardDeviation;
+		}
+
 	}
 }

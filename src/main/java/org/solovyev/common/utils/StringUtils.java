@@ -13,7 +13,7 @@ import java.util.List;
  * Date: 27.04.2009
  * Time: 10:23:29
  */
-public class StringsUtils {
+public class StringUtils {
 
 	public static String[] split(String source, String subString) {
 		String[] params = source.split(subString);
@@ -38,14 +38,23 @@ public class StringsUtils {
 	}
 
 	public static boolean notEmpty(@Nullable String s) {
-		return s != null && s.length() > 0;
+		return !isEmpty(s);
+	}
+
+	public static boolean isEmpty(@Nullable CharSequence s) {
+		return s == null || s.length() == 0;
+	}
+
+	@NotNull
+	public static String getNotEmpty(@Nullable CharSequence s, @NotNull String defaultValue) {
+		return isEmpty(s) ? defaultValue : s.toString();
 	}
 
 	public static String[] toString(@NotNull Enum... enums) {
 		String[] result = new String[enums.length];
 		LoopData ld = new LoopData(enums);
 		for (Enum anEnum : enums) {
-			result[(int)ld.next()] = anEnum.name();
+			result[(int) ld.next()] = anEnum.name();
 		}
 		return result;
 	}
