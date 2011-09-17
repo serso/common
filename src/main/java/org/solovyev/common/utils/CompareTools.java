@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2000-2006 Short Consulting AG. All Rights Reserved.
- */
 package org.solovyev.common.utils;
 
 import org.jetbrains.annotations.Nullable;

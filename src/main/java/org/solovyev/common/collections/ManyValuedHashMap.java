@@ -1,7 +1,3 @@
-/*
-* Copyright (c) Short Consulting AG 2000-2008. All rights reserved.
-*/
-
 package org.solovyev.common.collections;
 
 import org.apache.log4j.Logger;

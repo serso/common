@@ -275,7 +275,11 @@ public class CollectionsUtils {
 	}
 
 	public static <T> boolean contains(@NotNull T value, @Nullable Collection<T> list, @NotNull FilterType filterType, @Nullable Equalizer<T> equalizer) {
-		boolean found = get(value, list, equalizer) != null;
+		return contains(list, filterType, new EqualsFinder<T>(value, equalizer));
+	}
+
+	public static <T> boolean contains(@Nullable Collection<T> list, @NotNull FilterType filterType, @NotNull Finder<T> finder) {
+		boolean found = get(list, finder) != null;
 
 		final boolean result;
 		if (filterType == FilterType.included) {
@@ -289,11 +293,15 @@ public class CollectionsUtils {
 
 	@Nullable
 	public static <T> T get(@NotNull T value, @Nullable Collection<T> list, @Nullable Equalizer<T> equalizer) {
+		return get(list, new EqualsFinder<T>(value, equalizer));
+	}
+
+	public static <T> T get( @Nullable Collection<T> list, @NotNull Finder<T> finder) {
 		T result = null;
 
 		if (!isEmpty(list)) {
 			for (T t : list) {
-				if (EqualsTool.areEqual(value, t, equalizer)) {
+				if (finder.isFound(t)) {
 					result = t;
 					break;
 				}
