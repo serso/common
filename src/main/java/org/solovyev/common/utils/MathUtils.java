@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 /*
@@ -261,5 +262,106 @@ public class MathUtils {
 			return standardDeviation;
 		}
 
+	}
+
+	/**
+	 * Method returns intersection of 2 intervals.
+	 *
+	 * @param interval1 first interval
+	 * @param interval2 second interval
+	 * @param ih		interval helper object which will compare borders
+	 * @param <T>       border type
+	 * @return intersection of 2 intervals
+	 */
+	public static <T> Interval<T> intersection(@NotNull Interval<T> interval1, @NotNull Interval<T> interval2, @NotNull IntervalHelper<T> ih) {
+		Interval<T> result = null;
+
+		final Interval<T> int1 = interval1.clone().normalReverse(ih);
+		final Interval<T> int2 = interval2.clone().normalReverse(ih);
+
+		if (earlier(int1.getLeftBorder(), true, int2.getLeftBorder(), true, ih) ||
+				(int1.isLeftBorderIn() && int2.isLeftBorderIn() && ih.compare(int1.getLeftBorder(), int2.getLeftBorder()) == 0)) {
+
+			if (earlier(int2.getLeftBorder(), true, int1.getRightBorder(), false, ih) ||
+					(int1.isLeftBorderIn() && int2.isLeftBorderIn() && ih.compare(int2.getLeftBorder(), int1.getRightBorder()) == 0)) {
+
+				result = ih.createInstance();
+
+				result.setLeftBorder(int2.getLeftBorder());
+				result.setLeftBorderIn(int2.isLeftBorderIn());
+
+				if (earlier(int1.getRightBorder(), false, int2.getRightBorder(), false, ih) || (int1.isLeftBorderIn() && int2.isLeftBorderIn() && ih.compare(int1.getRightBorder(), int2.getRightBorder()) == 0)) {
+					result.setRightBorder(int1.getRightBorder());
+					result.setRightBorderIn(int1.isRightBorderIn());
+				} else if (ih.compare(int1.getRightBorder(), int2.getRightBorder()) == 0) {
+					result.setRightBorder(int2.getRightBorder());
+					result.setRightBorderIn(int2.isRightBorderIn() && int1.isRightBorderIn());
+				} else {
+					result.setRightBorder(int2.getRightBorder());
+					result.setRightBorderIn(int2.isRightBorderIn());
+				}
+			}
+
+		} else {
+
+			if (earlier(int1.getLeftBorder(), true, int2.getRightBorder(), false, ih) ||
+					(int1.isLeftBorderIn() && int2.isLeftBorderIn() && ih.compare(int1.getLeftBorder(), int2.getRightBorder()) == 0)) {
+
+				result = ih.createInstance();
+
+				// Set result's left border as a maximum of 2 left borders
+				if (ih.compare(int1.getLeftBorder(), int2.getLeftBorder()) == 0) {
+					result.setLeftBorder(int1.getLeftBorder());
+					result.setLeftBorderIn(int1.isLeftBorderIn() && int2.isLeftBorderIn());
+				} else if (!earlier(int1.getLeftBorder(), true, int2.getLeftBorder(), true, ih) && int1.isLeftBorderIn()) {
+					result.setLeftBorder(int1.getLeftBorder());
+					result.setLeftBorderIn(int1.isLeftBorderIn());
+				} else {
+					result.setLeftBorder(int2.getLeftBorder());
+					result.setLeftBorderIn(int2.isLeftBorderIn());
+				}
+
+				if (earlier(int2.getRightBorder(), false, int1.getRightBorder(), false, ih) ||
+						(int1.isLeftBorderIn() && int2.isLeftBorderIn() && ih.compare(int2.getRightBorder(), int1.getRightBorder()) == 0)) {
+
+					result.setRightBorder(int2.getRightBorder());
+					result.setRightBorderIn(int2.isRightBorderIn());
+				} else {
+
+					// Set result's right border as a minimum of 2 right borders
+					if (ih.compare(int1.getRightBorder(), int2.getRightBorder()) == 0) {
+						result.setRightBorder(int1.getRightBorder());
+						result.setRightBorderIn(int1.isRightBorderIn() && int2.isRightBorderIn());
+					} else if (earlier(int1.getRightBorder(), false, int2.getRightBorder(), false, ih)) {
+						result.setRightBorder(int1.getRightBorder());
+						result.setRightBorderIn(int1.isRightBorderIn());
+					} else {
+						result.setRightBorder(int2.getRightBorder());
+						result.setRightBorderIn(int2.isRightBorderIn());
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
+	private static <T> boolean earlier(@Nullable T d1, boolean isNegativeInf1, @Nullable T d2, boolean isNegativeInf2, @NotNull Comparator<T> c) {
+		boolean result;
+
+		if (d1 == null && d2 == null && (isNegativeInf1 == isNegativeInf2)) {
+			// -inf and -inf or +inf and +inf
+			result = false;
+		} else if (d1 == null) {
+			// anything bigger then -inf if left
+			result = isNegativeInf1;
+		} else if (d2 == null) {
+			// anything lower then +inf if right
+			result = !isNegativeInf2;
+		} else {
+			result = c.compare(d1, d2) < 0;
+		}
+
+		return result;
 	}
 }

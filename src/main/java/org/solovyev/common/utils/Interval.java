@@ -1,29 +1,53 @@
 package org.solovyev.common.utils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Comparator;
+
 /**
  * User: serso
- * Date: 18.05.2009
- * Time: 0:54:37
+ * Date: 9/19/11
+ * Time: 4:52 PM
  */
-public class Interval {
+public interface Interval<T> extends Cloneable {
 
-	private double start;
-	private double end;
+    @Nullable
+    public T getLeftBorder();
 
-	public Interval(double start, double end) {
-		this.start = start;
-		this.end = end;
-	}
+    @Nullable
+    public T getRightBorder();
 
-	public double getEnd() {
-		return end;
-	}
+    public void setLeftBorder(@Nullable T leftBorder);
 
-	public double getStart() {
-		return start;
-	}
+    public void setRightBorder(@Nullable T rightBorder);
 
-	public double dist() {
-		return this.end - this.start;
-	}
+    public boolean isInInterval(@Nullable T value, @NotNull Comparator<T> comparator);
+
+    public boolean isInInterval(@NotNull Interval<T> interval, @NotNull IntervalHelper<T> intervalHelper);
+
+    public boolean isEmptyInterval(@NotNull Comparator<T> comparator);
+
+    public boolean isReversed(@NotNull Comparator<T> comparator);
+
+    public boolean isClosedInterval();
+
+    public boolean isInfinityInterval();
+
+    public boolean isHalfClosedInterval();
+
+    public Interval<T> normalReverse(@NotNull Comparator<T> comparator);
+
+    public void setLeftBorderIn(boolean leftBorderIn);
+
+    public void setRightBorderIn(boolean rightBorderIn);
+
+    public boolean isRightBorderIn();
+
+    public boolean isLeftBorderIn();
+
+    @NotNull
+    public Interval<T> clone();
+
+    boolean equals(Object obj, @NotNull Comparator<T> comparator);
 }

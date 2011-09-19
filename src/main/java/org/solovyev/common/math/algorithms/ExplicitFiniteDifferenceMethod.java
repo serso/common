@@ -6,7 +6,7 @@ import org.solovyev.common.math.Function;
 import org.solovyev.common.math.matrix.DoubleArrayMatrix;
 import org.solovyev.common.math.matrix.Matrix;
 import org.solovyev.common.math.matrix.MatrixUtils;
-import org.solovyev.common.utils.Interval;
+import org.solovyev.common.utils.SimpleInterval;
 
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -29,15 +29,15 @@ public class ExplicitFiniteDifferenceMethod extends AbstractAlgorithm<ExplicitFi
 
 		private final int xNum;
 		private final int tNum;
-		private final Interval xInterval;
-		private final Interval tInterval;
+		private final SimpleInterval xInterval;
+		private final SimpleInterval tInterval;
 		private final Double xStep;
 		private final Double tStep;
 		private final Conditions conditions;
 		private final Function addFunction;
 		private final Matrix<Double> exactSolutionForU;
 
-		public Input(int xNum, int tNum, Interval xInterval, Interval tInterval, Conditions conditions, Function addFunction, Matrix<Double> exactSolutionForU) {
+		public Input(int xNum, int tNum, SimpleInterval xInterval, SimpleInterval tInterval, Conditions conditions, Function addFunction, Matrix<Double> exactSolutionForU) {
 			this.xNum = xNum;
 			this.tNum = tNum;
 			this.xInterval = xInterval;
@@ -116,8 +116,8 @@ public class ExplicitFiniteDifferenceMethod extends AbstractAlgorithm<ExplicitFi
 
 		BufferedReader in = new BufferedReader(new FileReader(arg[0]));
 
-		Interval xInt = new Interval(Double.valueOf(in.readLine()), Double.valueOf(in.readLine()));
-		Interval tInt = new Interval(Double.valueOf(in.readLine()), Double.valueOf(in.readLine()));
+		SimpleInterval xInt = new SimpleInterval(Double.valueOf(in.readLine()), Double.valueOf(in.readLine()));
+		SimpleInterval tInt = new SimpleInterval(Double.valueOf(in.readLine()), Double.valueOf(in.readLine()));
 
 		ExplicitFiniteDifferenceMethod efdm = new ExplicitFiniteDifferenceMethod();
 		efdm.init(new Input(Double.valueOf(in.readLine()).intValue(), Double.valueOf(in.readLine()).intValue(), xInt, tInt,

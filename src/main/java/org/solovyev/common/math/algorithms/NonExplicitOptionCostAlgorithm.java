@@ -2,7 +2,7 @@ package org.solovyev.common.math.algorithms;
 
 import org.solovyev.common.math.Function;
 import org.solovyev.common.math.matrix.*;
-import org.solovyev.common.utils.Interval;
+import org.solovyev.common.utils.SimpleInterval;
 
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -18,13 +18,13 @@ public class NonExplicitOptionCostAlgorithm extends AbstractAlgorithm<NonExplici
 	public static class Input {
 		private final int sNum;
 		private final int tNum;
-		private final Interval sInterval;
-		private final Interval tInterval;
+		private final SimpleInterval sInterval;
+		private final SimpleInterval tInterval;
 		private final Double sigma;
 		private final Double e;
 		private final Matrix<Double> exactSolutionForU;
 
-		public Input(int sNum, int tNum, Interval sInterval, Interval tInterval, Double sigma, Double e, Matrix<Double> exactSolutionForU) {
+		public Input(int sNum, int tNum, SimpleInterval sInterval, SimpleInterval tInterval, Double sigma, Double e, Matrix<Double> exactSolutionForU) {
 			this.sNum = sNum;
 			this.tNum = tNum;
 			this.sInterval = sInterval;
@@ -38,8 +38,8 @@ public class NonExplicitOptionCostAlgorithm extends AbstractAlgorithm<NonExplici
 	public Matrix<Double> doAlgorithm() {
 		int xNum = input.sNum;
 		int tauNum = input.tNum;
-		Interval xInterval = new Interval(Math.log(input.sInterval.getStart() / input.e), Math.log(input.sInterval.getEnd()) / input.e);
-		Interval tauInterval = new Interval(0d, (input.tInterval.getEnd() - input.tInterval.getStart()) * Math.pow(input.sigma, 2) / 2d);
+		SimpleInterval xInterval = new SimpleInterval(Math.log(input.sInterval.getStart() / input.e), Math.log(input.sInterval.getEnd()) / input.e);
+		SimpleInterval tauInterval = new SimpleInterval(0d, (input.tInterval.getEnd() - input.tInterval.getStart()) * Math.pow(input.sigma, 2) / 2d);
 		//Conditions conditions = new Conditions(new EntryCondition(k), new StartCondition0(), new StartCondition1());
 
 		NonExplicitFiniteDifferenceMethod nefdm = new NonExplicitFiniteDifferenceMethod();
@@ -67,8 +67,8 @@ public class NonExplicitOptionCostAlgorithm extends AbstractAlgorithm<NonExplici
 	public static void main(String[] arg) throws IOException {
 		BufferedReader in = new BufferedReader(new FileReader(arg[0]));
 
-		Interval xInt = new Interval(Double.valueOf(in.readLine()), Double.valueOf(in.readLine()));
-		Interval tInt = new Interval(Double.valueOf(in.readLine()), Double.valueOf(in.readLine()));
+		SimpleInterval xInt = new SimpleInterval(Double.valueOf(in.readLine()), Double.valueOf(in.readLine()));
+		SimpleInterval tInt = new SimpleInterval(Double.valueOf(in.readLine()), Double.valueOf(in.readLine()));
 		Integer sNum = Double.valueOf(in.readLine()).intValue();
 		Integer tNum = Double.valueOf(in.readLine()).intValue();
 		Double sigma = Double.valueOf(in.readLine());
