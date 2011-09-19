@@ -8,10 +8,7 @@ package org.solovyev.common.utils;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
@@ -36,11 +33,13 @@ public class Announcer<T extends EventListener> {
 				}));
 	}
 
-	public void add(@NotNull T listener) {
-		listeners.add(listener);
+	public void addListener(@NotNull T listener) {
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
+		}
 	}
 
-	public void remove(@NotNull T listener) {
+	public void removeListener(@NotNull T listener) {
 		listeners.remove(listener);
 	}
 
@@ -54,7 +53,7 @@ public class Announcer<T extends EventListener> {
 				m.invoke(listener, args);
 			}
 		} catch (IllegalAccessException e) {
-			throw new IllegalArgumentException("could not invoke listener", e);
+			throw new IllegalArgumentException("Could not invoke listener!", e);
 		} catch (InvocationTargetException e) {
 			Throwable cause = e.getCause();
 
@@ -63,7 +62,7 @@ public class Announcer<T extends EventListener> {
 			} else if (cause instanceof Error) {
 				throw (Error) cause;
 			} else {
-				throw new UnsupportedOperationException("listener threw exception", cause);
+				throw new UnsupportedOperationException("Listener threw exception!", cause);
 			}
 		}
 	}
