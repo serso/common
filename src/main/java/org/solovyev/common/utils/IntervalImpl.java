@@ -246,15 +246,15 @@ public class IntervalImpl<T> implements Interval<T>, Cloneable {
 			sb.append("(");
 		}
 		if (this.leftBorder != null) {
-			sb.append(" ").append(this.leftBorder).append(", ");
+			sb.append(this.leftBorder).append(", ");
 		} else {
-			sb.append(" ").append("-INF, ");
+			sb.append("-INF, ");
 		}
 
 		if (this.rightBorder != null) {
-			sb.append(this.rightBorder).append(" ");
+			sb.append(this.rightBorder);
 		} else {
-			sb.append("INF ");
+			sb.append("INF");
 		}
 
 		if (this.isRightBorderIn) {

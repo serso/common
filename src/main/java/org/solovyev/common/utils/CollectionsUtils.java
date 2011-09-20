@@ -119,20 +119,20 @@ public class CollectionsUtils {
 	/**
 	 * @param string	- string where stored list of objects separated by delimiter
 	 * @param delimiter - delimiter with which string will be split
-	 * @param mapper	- object that will create objects of specified type
+	 * @param parser	- object that will create objects of specified type
 	 * @param <T>       - type of object
 	 * @return list of objects, not null
 	 */
 	@NotNull
-	public static <T> List<T> split(@Nullable String string, @NotNull String delimiter, @NotNull Mapper<T> mapper) {
+	public static <T> List<T> split(@Nullable String string, @NotNull String delimiter, @NotNull Parser<T> parser) {
 		final List<T> result = new ArrayList<T>();
 
-		if (string != null && !string.isEmpty()) {
+		if (!StringUtils.isEmpty(string)) {
 			@SuppressWarnings({"ConstantConditions"}) final String[] parts = string.split(delimiter);
 
 			if (!CollectionsUtils.isEmpty(parts)) {
 				for (String part : parts) {
-					result.add(mapper.parseValue(part));
+					result.add(parser.parseValue(part));
 				}
 			}
 		}
@@ -151,14 +151,14 @@ public class CollectionsUtils {
 	}
 
 	@Nullable
-	public static <T> String formatValue(@Nullable List<T> values, @NotNull String delimiter, @NotNull Mapper<T> inputDataType) {
+	public static <T> String formatValue(@Nullable List<T> values, @NotNull String delimiter, @NotNull Formatter<T> formatter) {
 		String result = null;
 		if (!isEmpty(values)) {
 			final StringBuilder sb = new StringBuilder();
 
 			final LoopData ld = new LoopData(values);
 			for (T value : values) {
-				sb.append(inputDataType.formatValue(value));
+				sb.append(formatter.formatValue(value));
 				if (!ld.isLastAndNext()) {
 					sb.append(delimiter);
 				}
