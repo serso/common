@@ -7,7 +7,6 @@ package org.solovyev.common.utils;
  */
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Interface converts one object to another
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface Converter<FROM, TO> {
 
-	@Nullable
+	@NotNull
 	TO convert(@NotNull FROM from);
 }
 
