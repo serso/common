@@ -43,6 +43,10 @@ public class Announcer<T extends EventListener> {
 		listeners.remove(listener);
 	}
 
+	public void clear() {
+		listeners.clear();
+	}
+
 	public T announce() {
 		return proxy;
 	}
