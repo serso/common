@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Date: 10/4/11
  * Time: 11:36 PM
  */
-public class IdentityImpl<T extends Serializable & Comparable<Comparable>> extends Identity<T> {
+public class IdentityImpl<T extends Serializable & Comparable<T>> extends Identity<T> {
 
 	public IdentityImpl() {
 		super();
