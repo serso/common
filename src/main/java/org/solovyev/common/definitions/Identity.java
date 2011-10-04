@@ -1,6 +1,7 @@
 package org.solovyev.common.definitions;
 
-import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.solovyev.common.utils.CompareTools;
 
 import java.io.Serializable;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
  * Date: Oct 15, 2009
  * Time: 12:02:52 AM
  */
-public class Identity<T extends Serializable> implements Identifiable<T>, Cloneable, Serializable {
+abstract class Identity<T extends Serializable & Comparable<T>> implements Identifiable<T>, Cloneable, Serializable, Comparable<Identity<T>> {
 
     private T id = null;
 
@@ -29,25 +30,33 @@ public class Identity<T extends Serializable> implements Identifiable<T>, Clonea
     }
 
 	@Override
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "CloneDoesntDeclareCloneNotSupportedException"})
+	@NotNull
     public Identifiable<T> clone() {
-        Identifiable<T> clone = null;
-        try {
+        final Identifiable<T> clone;
+
+		try {
             clone = (Identifiable<T>)super.clone();
         } catch (CloneNotSupportedException e) {
-            Logger.getLogger(this.getClass()).error(e.getMessage(), e);
+            throw new AssertionError(e);
         }
+
         return clone;
     }
 
 	@Override
+	public int compareTo(@NotNull Identity<T> that) {
+		return CompareTools.compareIdentifiableObjects(this, that);
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (!(o instanceof Identity)) return false;
 
-		Identity identity = (Identity) o;
+		Identity that = (Identity) o;
 
-		if (id != null ? !id.equals(identity.id) : identity.id != null) return false;
+		if (id != null ? !id.equals(that.id) : that.id != null) return false;
 
 		return true;
 	}
@@ -55,10 +64,10 @@ public class Identity<T extends Serializable> implements Identifiable<T>, Clonea
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();
+
 		sb.append("Identity");
-		sb.append("{id=").append(id);
-		sb.append('}');
-		sb.append('\'').append("super class:").append('\'').append(super.toString());
+		sb.append("{id=").append(id).append('}');
+
 		return sb.toString();
 	}
 }

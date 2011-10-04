@@ -14,10 +14,9 @@ package org.solovyev.common.definitions;
 import junit.framework.*;
 
 public class IdentityTest extends TestCase {
-	Identity identity;
 
 	public void testToString() throws Exception {
-		Identity<Integer> id = new Identity<Integer>(3434);
+		Identity<Integer> id = new IdentityImpl<Integer>(3434);
 
 		System.out.print(id.toString());
 		assertTrue(id.toString().length() > 0);

@@ -103,7 +103,8 @@ public final class CompareTools {
 		return result;
 	}
 
-	public static int comparePreparedObjects(Identifiable<Comparable<Comparable>> i1, Identifiable<Comparable> i2) {
+	public static <T extends Comparable<T>> int compareIdentifiableObjects(@Nullable Identifiable<T> i1,
+																					@Nullable Identifiable<T>  i2) {
 		Integer result = compareObjectsOnNullness(i1, i2);
 
 		if (result == null) {
