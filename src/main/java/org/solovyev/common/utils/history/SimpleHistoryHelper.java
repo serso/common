@@ -56,9 +56,7 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 		if ( history.isEmpty() ) {
 			result = true;
 		} else {
-			final T lastHistoryState = history.get(history.size() - 1);
-
-			result = !EqualsTool.areEqual(lastHistoryState, currentState);
+			result = !EqualsTool.areEqual( getLastHistoryState(), currentState);
 		}
 
 		return result;
@@ -67,6 +65,17 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 	@Override
 	public boolean isEmpty() {
 		return history.isEmpty();
+	}
+
+	@Override
+	public T getLastHistoryState() {
+		T result = null;
+
+		if ( !history.isEmpty() ){
+			result = history.get(history.size() - 1);
+		}
+
+		return result;
 	}
 
 	@Override

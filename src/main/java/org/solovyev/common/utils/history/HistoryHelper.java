@@ -7,6 +7,9 @@ public interface HistoryHelper<T> {
 
 	boolean isEmpty();
 
+	@Nullable
+	T getLastHistoryState();
+
 	boolean isUndoAvailable();
 	
 	@Nullable
