@@ -5,6 +5,8 @@ import org.jetbrains.annotations.Nullable;
 
 public interface HistoryHelper<T> {
 
+	boolean isEmpty();
+
 	boolean isUndoAvailable();
 	
 	@Nullable

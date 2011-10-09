@@ -2,6 +2,7 @@ package org.solovyev.common.utils.history;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.utils.EqualsTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +35,38 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 
 	@Override
 	public void addState(@Nullable T currentState) {
-		if (currentStateIndex == history.size() - 1) {
-			currentStateIndex++;
-			history.add(currentState);
-		} else {
-			assert currentStateIndex < history.size() - 1 : "Invalid history state index!";
-			currentStateIndex++;
-			history.set(currentStateIndex, currentState);
-			while( history.size() > currentStateIndex + 1 ) {
-				history.remove(history.size() - 1);
+		if (needToAdd(currentState)) {
+			if (currentStateIndex == history.size() - 1) {
+				currentStateIndex++;
+				history.add(currentState);
+			} else {
+				assert currentStateIndex < history.size() - 1 : "Invalid history state index!";
+				currentStateIndex++;
+				history.set(currentStateIndex, currentState);
+				while( history.size() > currentStateIndex + 1 ) {
+					history.remove(history.size() - 1);
+				}
 			}
 		}
+	}
+
+	private boolean needToAdd(@Nullable T currentState) {
+		boolean result;
+
+		if ( history.isEmpty() ) {
+			result = true;
+		} else {
+			final T lastHistoryState = history.get(history.size() - 1);
+
+			result = !EqualsTool.areEqual(lastHistoryState, currentState);
+		}
+
+		return result;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return history.isEmpty();
 	}
 
 	@Override
