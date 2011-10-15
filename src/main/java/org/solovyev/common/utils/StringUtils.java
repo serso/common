@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class StringUtils {
 
+	public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
+
 	public static String[] split(String source, String subString) {
 		String[] params = source.split(subString);
 		List<String> result = new ArrayList<String>();
@@ -55,6 +57,20 @@ public class StringUtils {
 		LoopData ld = new LoopData(enums);
 		for (Enum anEnum : enums) {
 			result[(int) ld.next()] = anEnum.name();
+		}
+		return result;
+	}
+
+	@NotNull
+	public static Character[] toObject(char[] array) {
+		if (array == null || array.length == 0) {
+			return EMPTY_CHARACTER_OBJECT_ARRAY;
+		}
+
+		final Character[] result = new Character[array.length];
+
+		for (int i = 0; i < array.length; i++) {
+			result[i] = new Character(array[i]);
 		}
 		return result;
 	}

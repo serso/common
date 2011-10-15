@@ -1,8 +1,8 @@
 package org.solovyev.common.math.graph;
 
-import com.mxgraph.view.mxGraph;
-
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * User: serso
@@ -10,7 +10,7 @@ import java.util.*;
  * Time: 2:55:14
  */
 public class Graphs {
-    public static mxGraph toMxGraph(Graph<?, ?> g, int displayWidth, int displayHeight, int xStartPos, int yStartPos) {
+  /*  public static mxGraph toMxGraph(Graph<?, ?> g, int displayWidth, int displayHeight, int xStartPos, int yStartPos) {
         mxGraph graph = new mxGraph();
         setMxGraph(g, displayWidth, displayHeight, xStartPos, yStartPos, graph);
         return graph;
@@ -51,7 +51,7 @@ public class Graphs {
 
     public static void addGraphToMxGraph( mxGraph mx, Graph<?, ?> g, int displayWidth, int displayHeight, int xStartPos, int yStartPos) {
         setMxGraph(g, displayWidth, displayHeight, xStartPos,yStartPos, mx);
-    }
+    }*/
 
 
 

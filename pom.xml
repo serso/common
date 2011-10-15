@@ -14,13 +14,13 @@
 
 	<dependencies>
 
-		<dependency>
+<!--		<dependency>
 			<groupId>jgraphx</groupId>
 			<artifactId>jgraphx</artifactId>
 			<version>0.0</version>
 			<scope>system</scope>
 			<systemPath>${additionalLibs}/jgraphx.jar</systemPath>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>date4j</groupId>

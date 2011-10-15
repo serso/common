@@ -1,14 +1,6 @@
 package org.solovyev.common.math.algorithms;
 
 
-import java.io.PrintWriter;
-import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.util.List;
-import java.util.ArrayList;
-
-import com.mxgraph.view.mxGraph;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.GraphFrame;
@@ -16,6 +8,13 @@ import org.solovyev.common.math.graph.Graphs;
 import org.solovyev.common.math.graph.Node;
 import org.solovyev.common.math.matrix.*;
 import org.solovyev.common.utils.Timer;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: SerSo
@@ -129,9 +128,9 @@ public class CutHillMcKeeAlgorithm extends AbstractAlgorithm<CutHillMcKeeAlgorit
             }
             if (input.drawGraphs) {
                 GraphFrame graphFrame = new GraphFrame();
-                mxGraph mx = Graphs.toMxGraph(input.g, 800, 600, 0, 100);
+/*                mxGraph mx = Graphs.toMxGraph(input.g, 800, 600, 0, 100);
                 Graphs.addGraphToMxGraph(mx, result, 800, 600, 0, 800);
-                graphFrame.addGraphComponent(mx);
+                graphFrame.addGraphComponent(mx);*/
                 graphFrame.draw();
             }
         }
