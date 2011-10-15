@@ -3,6 +3,8 @@ package org.solovyev.common.utils.history;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface HistoryHelper<T> {
 
 	boolean isEmpty();
@@ -26,4 +28,7 @@ public interface HistoryHelper<T> {
 	T doAction(@NotNull HistoryAction historyAction, @Nullable T currentState);
 	
 	void addState(@Nullable T currentState);
+
+	@NotNull
+	List<T> getStates();
 }

@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.utils.EqualsTool;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
@@ -118,5 +119,11 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 		}
 		
 		return result;
+	}
+
+	@NotNull
+	@Override
+	public List<T> getStates() {
+		return Collections.unmodifiableList(this.history);
 	}
 }
