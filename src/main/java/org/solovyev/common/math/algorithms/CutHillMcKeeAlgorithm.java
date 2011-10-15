@@ -1,6 +1,7 @@
 package org.solovyev.common.math.algorithms;
 
 
+import com.mxgraph.view.mxGraph;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.GraphFrame;
@@ -128,9 +129,9 @@ public class CutHillMcKeeAlgorithm extends AbstractAlgorithm<CutHillMcKeeAlgorit
             }
             if (input.drawGraphs) {
                 GraphFrame graphFrame = new GraphFrame();
-/*                mxGraph mx = Graphs.toMxGraph(input.g, 800, 600, 0, 100);
+                mxGraph mx = Graphs.toMxGraph(input.g, 800, 600, 0, 100);
                 Graphs.addGraphToMxGraph(mx, result, 800, 600, 0, 800);
-                graphFrame.addGraphComponent(mx);*/
+                graphFrame.addGraphComponent(mx);
                 graphFrame.draw();
             }
         }
