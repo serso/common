@@ -10,10 +10,23 @@ import java.util.List;
 
 public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 
-	private List<T> history = new ArrayList<T>();
+	private static final int HISTORY_CAPACITY = 100;
+
+	private List<T> history;
 	
 	private int currentStateIndex = -1;
-	
+
+	private int historyCapacity;
+
+	public SimpleHistoryHelper() {
+		this(HISTORY_CAPACITY);
+	}
+
+	public SimpleHistoryHelper(int historyCapacity) {
+		this.historyCapacity = historyCapacity;
+		this.history = new ArrayList<T> (historyCapacity);
+	}
+
 	@Override
 	public T undo(@Nullable T currentState) {
 		if ( !isUndoAvailable() ) { 
@@ -38,8 +51,13 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 	public void addState(@Nullable T currentState) {
 		if (needToAdd(currentState)) {
 			if (currentStateIndex == history.size() - 1) {
-				currentStateIndex++;
-				history.add(currentState);
+				if (currentStateIndex < historyCapacity - 1) {
+					currentStateIndex++;
+					history.add(currentState);
+				} else {
+					history.remove(0);
+					history.add(currentState);
+				}
 			} else {
 				assert currentStateIndex < history.size() - 1 : "Invalid history state index!";
 				currentStateIndex++;
@@ -125,5 +143,10 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 	@Override
 	public List<T> getStates() {
 		return Collections.unmodifiableList(this.history);
+	}
+
+	@Override
+	public void clear() {
+		this.history.clear();
 	}
 }

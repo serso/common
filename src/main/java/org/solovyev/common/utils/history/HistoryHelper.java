@@ -31,4 +31,6 @@ public interface HistoryHelper<T> {
 
 	@NotNull
 	List<T> getStates();
+
+	void clear();
 }
