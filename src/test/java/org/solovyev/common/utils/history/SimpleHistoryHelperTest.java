@@ -51,4 +51,26 @@ public class SimpleHistoryHelperTest {
 		history.addState(4);
 		Assert.assertEquals("[1, 2, 3, 4]", history.getStates().toString());
 	}
+
+	@Test
+	public void testGetLastHistoryState() throws Exception {
+		final HistoryHelper<Integer> history = new SimpleHistoryHelper<Integer>(4);
+		history.addState(1);
+		history.addState(2);
+		history.addState(3);
+		history.addState(4);
+
+		Assert.assertEquals(new Integer(4), history.getLastHistoryState());
+		history.undo(4);
+		Assert.assertEquals(new Integer(3), history.getLastHistoryState());
+		history.redo(4);
+		Assert.assertEquals(new Integer(4), history.getLastHistoryState());
+
+		history.undo(4);
+		Assert.assertEquals(new Integer(3), history.getLastHistoryState());
+		history.undo(3);
+		Assert.assertEquals(new Integer(2), history.getLastHistoryState());
+		history.undo(2);
+		Assert.assertEquals(new Integer(1), history.getLastHistoryState());
+	}
 }

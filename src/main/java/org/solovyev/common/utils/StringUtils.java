@@ -13,7 +13,12 @@ import java.util.List;
  * Date: 27.04.2009
  * Time: 10:23:29
  */
-public class StringUtils {
+public final class StringUtils {
+
+	// not intended for instantiation
+	private StringUtils() {
+		throw new AssertionError();
+	}
 
 	public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
 
@@ -73,5 +78,20 @@ public class StringUtils {
 			result[i] = new Character(array[i]);
 		}
 		return result;
+	}
+
+	@NotNull
+	public static String fromStackTrace(@Nullable StackTraceElement... stackTraceElements) {
+		final StringBuilder sb = new StringBuilder();
+
+		if ( !CollectionsUtils.isEmpty(stackTraceElements) ){
+			for (StackTraceElement stackTraceElement : stackTraceElements) {
+				sb.append(" at ");
+				sb.append(stackTraceElement.toString());
+				sb.append(System.getProperty("line.separator"));
+			}
+		}
+
+		return sb.toString();
 	}
 }

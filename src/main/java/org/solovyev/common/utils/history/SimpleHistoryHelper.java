@@ -90,8 +90,8 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 	public T getLastHistoryState() {
 		T result = null;
 
-		if ( !history.isEmpty() ){
-			result = history.get(history.size() - 1);
+		if ( currentStateIndex >= 0 && currentStateIndex < history.size() ){
+			result = history.get(currentStateIndex);
 		}
 
 		return result;
