@@ -147,6 +147,7 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 
 	@Override
 	public void clear() {
+		this.currentStateIndex = -1;
 		this.history.clear();
 	}
 }

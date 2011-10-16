@@ -33,4 +33,22 @@ public class SimpleHistoryHelperTest {
 		history.addState(9);
 		Assert.assertEquals("[4, 5, 6, 8, 9]", history.getStates().toString());
 	}
+
+	@Test
+	public void testClear() throws Exception {
+		final HistoryHelper<Integer> history = new SimpleHistoryHelper<Integer>(4);
+		history.addState(1);
+		history.addState(2);
+		history.addState(3);
+		history.addState(4);
+		Assert.assertEquals("[1, 2, 3, 4]", history.getStates().toString());
+		history.clear();
+		Assert.assertFalse(history.isRedoAvailable());
+		Assert.assertFalse(history.isUndoAvailable());
+		history.addState(1);
+		history.addState(2);
+		history.addState(3);
+		history.addState(4);
+		Assert.assertEquals("[1, 2, 3, 4]", history.getStates().toString());
+	}
 }
