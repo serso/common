@@ -18,7 +18,7 @@ public class EqualsTool {
 		return new Result<T>(o1, o2, null).areEqual();
 	}
 
-	public static <T> boolean areEqual (@Nullable T o1, @Nullable T o2, @Nullable Equalizer<T> equalizer ) {
+	public static <T> boolean areEqual (@Nullable T o1, @Nullable T o2, @Nullable Equalizer<? super T> equalizer ) {
 		return new Result<T>(o1, o2, equalizer).areEqual();
 	}
 
@@ -36,9 +36,9 @@ public class EqualsTool {
 		private final T o2;
 
 		@Nullable
-		private final Equalizer<T> equalizer;
+		private final Equalizer<? super T> equalizer;
 
-		private Result(@Nullable T o1, @Nullable T o2, @Nullable Equalizer<T> equalizer) {
+		private Result(@Nullable T o1, @Nullable T o2, @Nullable Equalizer<? super T> equalizer) {
 			this.equalizer = equalizer;
 			if (o1 == null && o2 == null) {
 				result = Result.BOTH_NULLS_CONST;

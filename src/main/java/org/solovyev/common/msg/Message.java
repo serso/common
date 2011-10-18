@@ -4,24 +4,30 @@
  * For more information, please, contact serso1988@gmail.com.
  */
 
-package org.solovyev.common.definitions;
+package org.solovyev.common.msg;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * User: serso
  * Date: Mar 29, 2010
  * Time: 10:45:56 PM
  */
-public interface Message {
+public interface Message<T> {
 
 	@NotNull
-	public String getMessageCode();
+	public T getMessageCode();
 
 	@Nullable
-	public Object[] getArguments();
+	public List<Object> getArguments();
 
 	@NotNull
 	public MessageType getMessageType();
+
+	@NotNull
+	public String formatMessage(@NotNull String messagePattern, @NotNull Locale locale);
 }

@@ -4,7 +4,7 @@
  * For more information, please, contact serso1988@gmail.com.
  */
 
-package org.solovyev.common.definitions;
+package org.solovyev.common.msg;
 
 /**
  * User: serso
