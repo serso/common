@@ -176,7 +176,8 @@ public class MathUtils {
 	public static final float MIN_AMOUNT = 0.05f;
 
 	public static double round(@NotNull Double value, int precision) {
-		return new BigDecimal(value).round(new MathContext(precision)).doubleValue();
+		double factor = Math.pow(10, precision);
+		return ((double) Math.round(value * factor)) / factor;
 	}
 
 	public static float getDistance(@NotNull Point2d startPoint,
