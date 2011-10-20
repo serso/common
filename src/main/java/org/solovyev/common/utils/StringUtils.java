@@ -27,7 +27,7 @@ public final class StringUtils {
 		List<String> result = new ArrayList<String>();
 
 		for (String s : params) {
-			if (!s.isEmpty() && !s.equals(subString)) {
+			if (!isEmpty(s) && !s.equals(subString)) {
 				result.add(s);
 			}
 		}
