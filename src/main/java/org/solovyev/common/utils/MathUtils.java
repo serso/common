@@ -3,6 +3,8 @@ package org.solovyev.common.utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -173,14 +175,8 @@ public class MathUtils {
 
 	public static final float MIN_AMOUNT = 0.05f;
 
-	public static double round(@NotNull Double value, int numberOfFractionDigits) {
-		double roundFactor = Math.pow(10, numberOfFractionDigits);
-
-		if (value < Double.MAX_VALUE / roundFactor) {
-			return ((double) Math.round(value * roundFactor)) / roundFactor;
-		} else {
-			return value;
-		}
+	public static double round(@NotNull Double value, int precision) {
+		return new BigDecimal(value).round(new MathContext(precision)).doubleValue();
 	}
 
 	public static float getDistance(@NotNull Point2d startPoint,
