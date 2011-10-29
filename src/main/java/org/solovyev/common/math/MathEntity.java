@@ -17,9 +17,6 @@ public interface MathEntity {
 	@NotNull
 	String getName();
 
-	@NotNull
-	String getDescription();
-
 	boolean isSystem();
 
 	void copy(@NotNull MathEntity that);
