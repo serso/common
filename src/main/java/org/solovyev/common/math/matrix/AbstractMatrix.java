@@ -224,7 +224,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 	protected abstract void setChecked(int i, int j, T value);
 
 	/**
-	 * Same as get(), but i, j are checked on bounds
+	 * Same as find(), but i, j are checked on bounds
 	 *
 	 * @param i row index already checked for bounds
 	 * @param j column index already checked for bounds

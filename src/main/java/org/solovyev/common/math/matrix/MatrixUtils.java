@@ -426,7 +426,7 @@ public class MatrixUtils {
 
 		if (matrixFileFormat.equals(MatrixFileFormat.sparse)) {
 			for (int i = 0; i < this.getNumberOfRows(); i++) {
-				List<Property<T, Integer>> row = this.getRows().get(i);
+				List<Property<T, Integer>> row = this.getRows().find(i);
 				if (row != null) {
 					for (Property<T, Integer> element : row) {
 						out.write((i+1) + " " + (element.getId()+1) + " " + element.getValue());
@@ -437,7 +437,7 @@ public class MatrixUtils {
 		} else if (matrixFileFormat.equals(MatrixFileFormat.dense)) {
 			int index;
 			for (int i = 0; i < this.getNumberOfRows(); i++) {
-				List<Property<T, Integer>> row = this.getRows().get(i);
+				List<Property<T, Integer>> row = this.getRows().find(i);
 				if (row != null) {
 					index = 0;
 					for (Property<T, Integer> element : row) {

@@ -279,7 +279,7 @@ public class CollectionsUtils {
 	}
 
 	public static <T> boolean contains(@Nullable Collection<T> list, @NotNull FilterType filterType, @NotNull Finder<T> finder) {
-		boolean found = get(list, finder) != null;
+		boolean found = find(list, finder) != null;
 
 		final boolean result;
 		if (filterType == FilterType.included) {
@@ -292,11 +292,11 @@ public class CollectionsUtils {
 	}
 
 	@Nullable
-	public static <T> T get(@NotNull T value, @Nullable Collection<T> list, @Nullable Equalizer<T> equalizer) {
-		return get(list, new EqualsFinder<T>(value, equalizer));
+	public static <T> T find(@NotNull T value, @Nullable Collection<T> list, @Nullable Equalizer<T> equalizer) {
+		return find(list, new EqualsFinder<T>(value, equalizer));
 	}
 
-	public static <T> T get( @Nullable Collection<T> list, @NotNull Finder<T> finder) {
+	public static <T> T find(@Nullable Collection<T> list, @NotNull Finder<T> finder) {
 		T result = null;
 
 		if (!isEmpty(list)) {
@@ -304,6 +304,41 @@ public class CollectionsUtils {
 				if (finder.isFound(t)) {
 					result = t;
 					break;
+				}
+			}
+		}
+
+		return result;
+	}
+
+	@Nullable
+	public static <T> T removeFirst(@Nullable Collection<T> list, @NotNull Finder<T> finder) {
+		T result = null;
+
+		if (!isEmpty(list)) {
+			for (Iterator<T> it = list.iterator(); it.hasNext(); ) {
+				final T t = it.next();
+				if (finder.isFound(t)) {
+					result = t;
+					it.remove();
+					break;
+				}
+			}
+		}
+
+		return result;
+	}
+
+	@NotNull
+	public static <T> List<T> removeAll(@Nullable Collection<T> list, @NotNull Finder<T> finder) {
+		final List<T> result = new ArrayList<T>();
+
+		if (!isEmpty(list)) {
+			for (Iterator<T> it = list.iterator(); it.hasNext(); ) {
+				final T t = it.next();
+				if (finder.isFound(t)) {
+					result.add(t);
+					it.remove();
 				}
 			}
 		}

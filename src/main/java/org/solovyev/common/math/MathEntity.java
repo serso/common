@@ -1,6 +1,7 @@
 package org.solovyev.common.math;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
 
@@ -11,7 +12,7 @@ import java.util.Comparator;
  */
 public interface MathEntity {
 
-	public static final MathEntityComparator mathEntityComparator = new MathEntityComparator();
+	public static final MathEntityNameComparator MATH_ENTITY_NAME_COMPARATOR = new MathEntityNameComparator();
 
 	@NotNull
 	String getName();
@@ -20,14 +21,29 @@ public interface MathEntity {
 
 	void copy(@NotNull MathEntity that);
 
-	static class MathEntityComparator implements Comparator<String> {
+	static class MathEntityNameComparator implements Comparator<String> {
 
-		private MathEntityComparator() {
+		private MathEntityNameComparator() {
 		}
 
 		@Override
 		public int compare(String s, String s1) {
 			return s1.length() - s.length();
+		}
+	}
+
+	public static class Finder<T extends MathEntity> implements org.solovyev.common.utils.Finder<T> {
+
+		@NotNull
+		private final String name;
+
+		public Finder(@NotNull String name) {
+			this.name = name;
+		}
+
+		@Override
+		public boolean isFound(@Nullable T entity) {
+			return entity != null && name.equals(entity.getName());
 		}
 	}
 }

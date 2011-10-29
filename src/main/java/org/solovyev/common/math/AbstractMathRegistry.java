@@ -10,9 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.definitions.IBuilder;
 import org.solovyev.common.utils.CollectionsUtils;
-import org.solovyev.common.utils.Finder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * User: serso
@@ -22,10 +23,10 @@ import java.util.*;
 public abstract class AbstractMathRegistry<T extends MathEntity> implements MathRegistry<T> {
 
 	@NotNull
-	private final List<T> entities = new ArrayList<T>();
+	protected final List<T> entities = new ArrayList<T>();
 
 	@NotNull
-	private final List<T> systemEntities = new ArrayList<T>();
+	protected final List<T> systemEntities = new ArrayList<T>();
 
 	protected AbstractMathRegistry() {
 	}
@@ -72,9 +73,8 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 
 	@Override
 	public void remove(@NotNull T entity) {
-		// todo serso: remove by name
-		while (contains(entity.getName(), this.entities)) {
-			this.entities.remove(entity);
+		if (!entity.isSystem()) {
+			CollectionsUtils.removeFirst(this.entities, new MathEntity.Finder<T>(entity.getName()));
 		}
 	}
 
@@ -87,7 +87,7 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 			result.add(entity.getName());
 		}
 
-		Collections.sort(result, MathEntity.mathEntityComparator);
+		Collections.sort(result, MathEntity.MATH_ENTITY_NAME_COMPARATOR);
 
 		return result;
 	}
@@ -95,26 +95,15 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	@Override
 	@Nullable
 	public T get(@NotNull final String name) {
-		return CollectionsUtils.get(entities, new Finder<T>() {
-			@Override
-			public boolean isFound(@Nullable T entity) {
-				return entity != null && name.equals(entity.getName());
-			}
-		});
+		return CollectionsUtils.find(entities, new MathEntity.Finder<T>(name));
 	}
 
 	@Override
 	public boolean contains(@NotNull final String name) {
 		return contains(name, this.entities);
 	}
-
 	private boolean contains(final String name, @NotNull List<T> entities) {
-		return CollectionsUtils.get(entities, new Finder<T>() {
-			@Override
-			public boolean isFound(@Nullable T entity) {
-				return entity != null && name.equals(entity.getName());
-			}
-		}) != null;
+		return CollectionsUtils.find(entities, new MathEntity.Finder(name)) != null;
 	}
 
 }
