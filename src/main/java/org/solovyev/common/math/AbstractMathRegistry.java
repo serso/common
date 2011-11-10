@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.definitions.IBuilder;
 import org.solovyev.common.utils.CollectionsUtils;
+import org.solovyev.common.utils.Finder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +22,9 @@ import java.util.List;
  * Time: 4:57 PM
  */
 public abstract class AbstractMathRegistry<T extends MathEntity> implements MathRegistry<T> {
+
+	@NotNull
+	private static Integer counter = 0;
 
 	@NotNull
 	protected final List<T> entities = new ArrayList<T>();
@@ -48,22 +52,32 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 			if (contains(entity.getName(), this.systemEntities)) {
 				throw new IllegalArgumentException("Trying to add two system entities with same name: " + entity.getName());
 			}
-			this.systemEntities.add(entity);
+
+			addEntity(entity, this.systemEntities);
 		}
 
 		if (!contains(entity.getName(), this.entities)) {
-			this.entities.add(entity);
+			addEntity(entity, this.entities);
 		}
 	}
 
+	private void addEntity(@NotNull T entity, @NotNull List<T> list) {
+		entity.setId(count());
+		list.add(entity);
+	}
+
 	@Override
-	public T add(@Nullable String name, @NotNull IBuilder<T> IBuilder) {
+	public T add(@Nullable String name, @NotNull IBuilder<? extends T> IBuilder) {
 		final T entity = IBuilder.create();
 
 		T varFromRegister = get(name == null ? entity.getName() : name);
 		if (varFromRegister == null) {
 			varFromRegister = entity;
-			entities.add(entity);
+
+			addEntity(entity, this.entities);
+			if (entity.isSystem() && !contains(entity.getName(), this.systemEntities)) {
+				addEntity(entity, this.systemEntities);
+			}
 		} else {
 			varFromRegister.copy(entity);
 		}
@@ -99,11 +113,28 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	}
 
 	@Override
+	public T getById(@NotNull final Integer id) {
+		return CollectionsUtils.find(entities, new Finder<T>() {
+			@Override
+			public boolean isFound(@Nullable T t) {
+				return t != null && t.getId().equals(id);
+			}
+		});
+	}
+
+	@Override
 	public boolean contains(@NotNull final String name) {
 		return contains(name, this.entities);
 	}
+
 	private boolean contains(final String name, @NotNull List<T> entities) {
-		return CollectionsUtils.find(entities, new MathEntity.Finder(name)) != null;
+		return CollectionsUtils.find(entities, new MathEntity.Finder<T>(name)) != null;
 	}
 
+	@NotNull
+	private static synchronized Integer count() {
+		final Integer result = counter;
+		counter++;
+		return result;
+	}
 }

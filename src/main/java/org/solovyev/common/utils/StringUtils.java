@@ -57,6 +57,11 @@ public final class StringUtils {
 		return isEmpty(s) ? defaultValue : s.toString();
 	}
 
+	@NotNull
+	public static <T> String getNotEmpty(@Nullable T t, @NotNull String defaultValue) {
+		return t == null ? defaultValue : t.toString();
+	}
+
 	public static String[] toString(@NotNull Enum... enums) {
 		String[] result = new String[enums.length];
 		LoopData ld = new LoopData(enums);

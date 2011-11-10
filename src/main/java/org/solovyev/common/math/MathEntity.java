@@ -19,6 +19,13 @@ public interface MathEntity {
 
 	boolean isSystem();
 
+	@NotNull
+	Integer getId();
+
+	void setId(@NotNull Integer id);
+
+	public boolean same(@Nullable MathEntity mathEntity);
+
 	void copy(@NotNull MathEntity that);
 
 	static class MathEntityNameComparator implements Comparator<String> {
