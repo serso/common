@@ -12,9 +12,7 @@ import org.solovyev.common.definitions.IBuilder;
 import org.solovyev.common.utils.CollectionsUtils;
 import org.solovyev.common.utils.Finder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: serso
@@ -23,14 +21,31 @@ import java.util.List;
  */
 public abstract class AbstractMathRegistry<T extends MathEntity> implements MathRegistry<T> {
 
+	private static final MathEntityComparator<MathEntity> MATH_ENTITY_COMPARATOR = new MathEntityComparator<MathEntity>();
+
+	static class MathEntityComparator<T extends MathEntity> implements Comparator<T> {
+
+		private MathEntityComparator() {
+		}
+
+		@Override
+		public int compare(T l, T r) {
+			int result = r.getName().length() - l.getName().length();
+			if (result == 0) {
+				result = l.getName().compareTo(r.getName());
+			}
+			return result;
+		}
+	}
+
 	@NotNull
 	private static Integer counter = 0;
 
 	@NotNull
-	protected final List<T> entities = new ArrayList<T>();
+	protected final Collection<T> entities = new PriorityQueue<T>(10, MATH_ENTITY_COMPARATOR);
 
 	@NotNull
-	protected final List<T> systemEntities = new ArrayList<T>();
+	protected final Collection<T> systemEntities = new PriorityQueue<T>(10, MATH_ENTITY_COMPARATOR);
 
 	protected AbstractMathRegistry() {
 	}
@@ -38,13 +53,13 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	@NotNull
 	@Override
 	public List<T> getEntities() {
-		return Collections.unmodifiableList(entities);
+		return Collections.unmodifiableList(new ArrayList<T>(entities));
 	}
 
 	@NotNull
 	@Override
 	public List<T> getSystemEntities() {
-		return Collections.unmodifiableList(systemEntities);
+		return Collections.unmodifiableList(new ArrayList<T>(systemEntities));
 	}
 
 	protected void add(@NotNull T entity) {
@@ -53,7 +68,7 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 				throw new IllegalArgumentException("Trying to add two system entities with same name: " + entity.getName());
 			}
 
-			addEntity(entity, this.systemEntities);
+			this.systemEntities.add(entity);
 		}
 
 		if (!contains(entity.getName(), this.entities)) {
@@ -61,7 +76,7 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 		}
 	}
 
-	private void addEntity(@NotNull T entity, @NotNull List<T> list) {
+	private void addEntity(@NotNull T entity, @NotNull Collection<T> list) {
 		entity.setId(count());
 		list.add(entity);
 	}
@@ -76,8 +91,9 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 
 			addEntity(entity, this.entities);
 			if (entity.isSystem() && !contains(entity.getName(), this.systemEntities)) {
-				addEntity(entity, this.systemEntities);
+				this.systemEntities.add(entity);
 			}
+
 		} else {
 			varFromRegister.copy(entity);
 		}
@@ -100,8 +116,6 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 		for (T entity : entities) {
 			result.add(entity.getName());
 		}
-
-		Collections.sort(result, MathEntity.MATH_ENTITY_NAME_COMPARATOR);
 
 		return result;
 	}
@@ -127,7 +141,7 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 		return contains(name, this.entities);
 	}
 
-	private boolean contains(final String name, @NotNull List<T> entities) {
+	private boolean contains(final String name, @NotNull Collection<T> entities) {
 		return CollectionsUtils.find(entities, new MathEntity.Finder<T>(name)) != null;
 	}
 
