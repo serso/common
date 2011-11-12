@@ -25,7 +25,7 @@ public interface MathRegistry<T extends MathEntity> {
 	@NotNull
 	List<T> getSystemEntities();
 
-	T add(@Nullable String name, @NotNull IBuilder<? extends T> IBuilder);
+	T add(@NotNull IBuilder<? extends T> IBuilder);
 
 	void remove(@NotNull T var);
 

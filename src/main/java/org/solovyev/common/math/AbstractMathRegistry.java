@@ -82,15 +82,22 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	}
 
 	@Override
-	public T add(@Nullable String name, @NotNull IBuilder<? extends T> IBuilder) {
+	public T add(@NotNull IBuilder<? extends T> IBuilder) {
 		final T entity = IBuilder.create();
 
-		T varFromRegister = get(name == null ? entity.getName() : name);
+		T varFromRegister;
+
+		if (entity.isIdDefined()) {
+			varFromRegister = getById(entity.getId());
+		} else {
+			varFromRegister = get(entity.getName());
+		}
+
 		if (varFromRegister == null) {
 			varFromRegister = entity;
 
 			addEntity(entity, this.entities);
-			if (entity.isSystem() && !contains(entity.getName(), this.systemEntities)) {
+			if (entity.isSystem()) {
 				this.systemEntities.add(entity);
 			}
 

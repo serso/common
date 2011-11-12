@@ -18,6 +18,8 @@ public interface MathEntity {
 	@NotNull
 	Integer getId();
 
+	boolean isIdDefined();
+
 	void setId(@NotNull Integer id);
 
 	void copy(@NotNull MathEntity that);
