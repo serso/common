@@ -8,6 +8,7 @@ package org.solovyev.common.math;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.collections.SortedList;
 import org.solovyev.common.definitions.IBuilder;
 import org.solovyev.common.utils.CollectionsUtils;
 import org.solovyev.common.utils.Finder;
@@ -25,7 +26,7 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 
 	static class MathEntityComparator<T extends MathEntity> implements Comparator<T> {
 
-		private MathEntityComparator() {
+		MathEntityComparator() {
 		}
 
 		@Override
@@ -42,10 +43,10 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	private static Integer counter = 0;
 
 	@NotNull
-	protected final Collection<T> entities = new PriorityQueue<T>(10, MATH_ENTITY_COMPARATOR);
+	protected final List<T> entities = new SortedList<T>(new ArrayList<T>(30), MATH_ENTITY_COMPARATOR);
 
 	@NotNull
-	protected final Collection<T> systemEntities = new PriorityQueue<T>(10, MATH_ENTITY_COMPARATOR);
+	protected final List<T> systemEntities = new SortedList<T>(new ArrayList<T>(30), MATH_ENTITY_COMPARATOR);
 
 	protected AbstractMathRegistry() {
 	}
@@ -76,7 +77,7 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 		}
 	}
 
-	private void addEntity(@NotNull T entity, @NotNull Collection<T> list) {
+	private void addEntity(@NotNull T entity, @NotNull List<T> list) {
 		entity.setId(count());
 		list.add(entity);
 	}
@@ -103,6 +104,8 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 
 		} else {
 			varFromRegister.copy(entity);
+			Collections.sort(this.entities, MATH_ENTITY_COMPARATOR);
+			Collections.sort(this.systemEntities, MATH_ENTITY_COMPARATOR);
 		}
 
 		return varFromRegister;
