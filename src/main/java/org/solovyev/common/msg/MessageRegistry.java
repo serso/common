@@ -7,12 +7,12 @@ import org.jetbrains.annotations.NotNull;
  * Date: 10/18/11
  * Time: 11:18 PM
  */
-public interface MessageRegistry<T extends Message<?>> {
+public interface MessageRegistry {
 
-	void addMessage(@NotNull T message);
+	void addMessage(@NotNull Message message);
 
 	@NotNull
-	T getMessage();
+	Message getMessage();
 
 	boolean hasMessage();
 }

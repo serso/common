@@ -7,7 +7,6 @@
 package org.solovyev.common.msg;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -17,17 +16,20 @@ import java.util.Locale;
  * Date: Mar 29, 2010
  * Time: 10:45:56 PM
  */
-public interface Message<T> {
+public interface Message {
 
 	@NotNull
-	public T getMessageCode();
+	public String getMessageCode();
 
-	@Nullable
-	public List<Object> getArguments();
+	@NotNull
+	public List<Object> getParameters();
 
 	@NotNull
 	public MessageType getMessageType();
 
 	@NotNull
-	public String formatMessage(@NotNull String messagePattern, @NotNull Locale locale);
+	public String getLocalizedMessage(@NotNull Locale locale);
+
+	@NotNull
+	public String getLocalizedMessage();
 }

@@ -25,30 +25,37 @@ import java.util.Locale;
  * Date: Mar 29, 2010
  * Time: 10:44:26 PM
  */
-public abstract class AbstractMessage<T> implements Message<T> {
+public abstract class AbstractMessage implements Message {
 
-	private @Nullable List<?> arguments = null;
-	private @NotNull T messageCode;
-	private @NotNull MessageType messageType;
+	@NotNull
+	private final String messageCode;
 
-	protected AbstractMessage(@NotNull T messageCode, @NotNull MessageType messageType, @Nullable Object... arguments) {
-		this(messageCode, messageType, CollectionsUtils.asList(arguments));
+	@NotNull
+	private final List<?> parameters;
+
+	@NotNull
+	private final MessageType messageType;
+
+	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageType messageType, @Nullable Object... parameters) {
+		this(messageCode, messageType, CollectionsUtils.asList(parameters));
 	}
 
-	protected AbstractMessage(@NotNull T messageCode, @NotNull MessageType messageType, @Nullable List<?> arguments) {
+	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageType messageType, @NotNull List<?> parameters) {
 		this.messageCode = messageCode;
-		this.arguments = (arguments == null ? Collections.EMPTY_LIST : new ArrayList<Object>(arguments));
+		this.parameters = new ArrayList<Object>(parameters);
 		this.messageType = messageType;
 	}
 
 	@Override
-	public @NotNull T getMessageCode() {
+	@NotNull
+	public String getMessageCode() {
 		return this.messageCode;
 	}
 
+	@NotNull
 	@Override
-	public @Nullable List<Object> getArguments() {
-		return Collections.unmodifiableList(this.arguments);
+	public List<Object> getParameters() {
+		return Collections.unmodifiableList(this.parameters);
 	}
 
 	@NotNull
@@ -64,7 +71,7 @@ public abstract class AbstractMessage<T> implements Message<T> {
 
 		AbstractMessage abstractMessage = (AbstractMessage) o;
 
-		if (!EqualsTool.areEqual(arguments, abstractMessage.arguments, new ListEqualizer(true, null))) return false;
+		if (!EqualsTool.areEqual(parameters, abstractMessage.parameters, new ListEqualizer(true, null))) return false;
 		if (!messageCode.equals(abstractMessage.messageCode)) return false;
 		if (messageType != abstractMessage.messageType) return false;
 
@@ -77,7 +84,7 @@ public abstract class AbstractMessage<T> implements Message<T> {
 
 		hcb.append(messageCode);
 		hcb.append(messageType);
-		hcb.append(arguments);
+		hcb.append(parameters);
 
 		return hcb.toHashCode();
 	}
@@ -85,23 +92,36 @@ public abstract class AbstractMessage<T> implements Message<T> {
 	/**
 	 * Method converts message to string setting passed message parameters and translating some of them.
 	 *
-	 * @param messagePattern pattern of message
-	 * @param locale		 language to which parameters should be translated (if possible)
+	 * @param locale language to which parameters should be translated (if possible)
 	 * @return message as string with properly translated and set parameters
 	 */
 	@NotNull
-	public String formatMessage(@NotNull String messagePattern, @NotNull Locale locale) {
+	public String getLocalizedMessage(@NotNull Locale locale) {
 		String result = null;
 
+		final String messagePattern = getMessagePattern(locale);
 		if (!StringUtils.isEmpty(messagePattern)) {
-			final MessageFormat format = new MessageFormat(messagePattern);
+			if (CollectionsUtils.isEmpty(parameters)) {
+				result = messagePattern;
+			} else {
+				final MessageFormat format = new MessageFormat(messagePattern);
 
-			format.setLocale(locale);
-			format.applyPattern(messagePattern);
+				format.setLocale(locale);
+				format.applyPattern(messagePattern);
 
-			result = format.format(arguments.toArray(new Object[arguments.size()]));
+				result = format.format(parameters.toArray(new Object[parameters.size()]));
+			}
 		}
 
-		return StringUtils.getNotEmpty(result, "");
+		return StringUtils.getNotEmpty(result, messageType.getStringValue() + ": message code = " + messageCode);
 	}
+
+	@NotNull
+	@Override
+	public String getLocalizedMessage() {
+		return this.getLocalizedMessage(Locale.getDefault());
+	}
+
+	@Nullable
+	protected abstract String getMessagePattern(@NotNull Locale locale);
 }

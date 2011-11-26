@@ -6,39 +6,46 @@
 
 package org.solovyev.common.msg;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * User: serso
  * Date: Mar 29, 2010
  * Time: 12:43:22 AM
  */
 public enum MessageType {
-	error(10),
-	warning(5),
-	info(1);
 
-	private int errorLevel;
+	error(1000, "ERROR"),
 
-	MessageType(int errorLevel) {
+	warning(500, "WARNING"),
+
+	info(100, "INFO");
+
+	private final int errorLevel;
+
+	@NotNull
+	private final String stringValue;
+
+	MessageType(int errorLevel, @NotNull String stringValue) {
 		this.errorLevel = errorLevel;
+		this.stringValue = stringValue;
 	}
 
-	public int getErrorLevel() {
-		return errorLevel;
+	@NotNull
+	public String getStringValue() {
+		return stringValue;
 	}
 
-	public static MessageType getMessageTypeWithHigherLevel( MessageType mt1, MessageType mt2 ) {
+	@NotNull
+	public static MessageType getMessageTypeWithHigherLevel( @NotNull MessageType l, @NotNull MessageType r ) {
 		MessageType result;
-		if ( mt1 == null ) {
-			result = mt2;
-		} else if ( mt2 == null ) {
-			result = mt1;
+
+		if ( l.errorLevel > r.errorLevel  ) {
+			result = l;
 		} else {
-			if ( mt1.getErrorLevel() > mt2.getErrorLevel() ) {
-				result = mt1;
-			} else {
-				result = mt2;
-			}
+			result = r;
 		}
+
 		return result;
 	}
 }

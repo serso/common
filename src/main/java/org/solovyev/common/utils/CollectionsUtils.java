@@ -378,6 +378,7 @@ public class CollectionsUtils {
 		return result;
 	}
 
+	@NotNull
 	public static <T> List<T> asList(T... ts) {
 		final List<T> result = new ArrayList<T>();
 

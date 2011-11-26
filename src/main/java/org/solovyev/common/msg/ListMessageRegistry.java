@@ -10,13 +10,13 @@ import java.util.List;
  * Date: 10/18/11
  * Time: 11:22 PM
  */
-public class ListMessageRegistry<T extends Message<?>> implements MessageRegistry<T> {
+public class ListMessageRegistry implements MessageRegistry {
 
 	@NotNull
-	private final List<T> messages = new ArrayList<T>();
+	private final List<Message> messages = new ArrayList<Message>();
 
 	@Override
-	public void addMessage(@NotNull T message) {
+	public void addMessage(@NotNull Message message) {
 		if ( !messages.contains(message) ) {
 			messages.add(message);
 		}
@@ -24,7 +24,7 @@ public class ListMessageRegistry<T extends Message<?>> implements MessageRegistr
 
 	@NotNull
 	@Override
-	public T getMessage() {
+	public Message getMessage() {
 		return this.messages.remove(0);
 	}
 
