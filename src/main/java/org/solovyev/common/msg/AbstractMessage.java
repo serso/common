@@ -109,11 +109,31 @@ public abstract class AbstractMessage implements Message {
 				format.setLocale(locale);
 				format.applyPattern(messagePattern);
 
-				result = format.format(parameters.toArray(new Object[parameters.size()]));
+				result = format.format(prepareParameters(parameters, locale));
 			}
 		}
 
 		return StringUtils.getNotEmpty(result, messageType.getStringValue() + ": message code = " + messageCode);
+	}
+
+	@NotNull
+	private static Object[] prepareParameters(@NotNull List<?> parameters, @NotNull Locale locale) {
+		final Object[] result = new Object[parameters.size()];
+
+		for (int i = 0; i<parameters.size(); i++){
+			result[i] = substituteParameter(parameters.get(i), locale);
+		}
+
+		return result;
+	}
+
+	@Nullable
+	private static Object substituteParameter(@Nullable Object object, @NotNull Locale locale) {
+		if (object instanceof Message) {
+			return ((Message) object).getLocalizedMessage(locale);
+		} else {
+			return object;
+		}
 	}
 
 	@NotNull

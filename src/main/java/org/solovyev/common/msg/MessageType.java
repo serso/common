@@ -48,4 +48,9 @@ public enum MessageType {
 
 		return result;
 	}
+
+	@NotNull
+	public static MessageType getLowestMessageType() {
+		return info;
+	}
 }
