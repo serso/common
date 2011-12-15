@@ -20,10 +20,16 @@ public class AbstractMathRegistryTest {
 		list.add(new MathEntityImpl("tanh"));
 		list.add(new MathEntityImpl("atan"));
 		list.add(new MathEntityImpl("atanh"));
+		list.add(new MathEntityImpl("!"));
+		list.add(new MathEntityImpl("!!"));
+		list.add(new MathEntityImpl("!!!"));
 		Collections.sort(list, new AbstractMathRegistry.MathEntityComparator());
 		Assert.assertEquals("atanh", list.get(0).getName());
 		Assert.assertEquals("atan", list.get(1).getName());
 		Assert.assertEquals("tanh", list.get(2).getName());
+		Assert.assertEquals("!!!", list.get(3).getName());
+		Assert.assertEquals("!!", list.get(4).getName());
+		Assert.assertEquals("!", list.get(5).getName());
 	}
 
 	private class MathEntityImpl implements MathEntity {
