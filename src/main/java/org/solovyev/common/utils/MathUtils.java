@@ -3,8 +3,6 @@ package org.solovyev.common.utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -194,12 +192,13 @@ public class MathUtils {
 	}
 
 	public static float getNorm(@NotNull Point2d point) {
-		return (float) Math.pow(
-				Math.pow(point.getX(), 2) + Math.pow(point.getY(), 2), 0.5);
+		return (float) Math.pow(Math.pow(point.getX(), 2) + Math.pow(point.getY(), 2), 0.5);
 	}
 
 	public static float getAngle(@NotNull Point2d startPoint,
-								 @NotNull Point2d axisEndPoint, @NotNull Point2d endPoint) {
+								 @NotNull Point2d axisEndPoint,
+								 @NotNull Point2d endPoint,
+								 @Nullable MutableObject<Boolean> left) {
 		final Point2d axisVector = subtract(axisEndPoint, startPoint);
 		final Point2d vector = subtract(endPoint, startPoint);
 
@@ -208,6 +207,10 @@ public class MathUtils {
 		double b_2 = Math.pow(b, 2);
 		double c = getNorm(axisVector);
 		double c_2 = Math.pow(c, 2);
+
+		if (left != null) {
+			left.setObject(axisVector.getX() * vector.getY() - axisVector.getY() * vector.getX() < 0);
+		}
 
 		return (float) Math.acos((-a_2 + b_2 + c_2) / (2 * b * c));
 	}
