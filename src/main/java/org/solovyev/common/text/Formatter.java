@@ -1,4 +1,4 @@
-package org.solovyev.common.utils;
+package org.solovyev.common.text;
 
 import org.jetbrains.annotations.Nullable;
 

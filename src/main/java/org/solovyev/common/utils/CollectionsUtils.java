@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.definitions.Identifiable;
 import org.solovyev.common.html.Selectable;
+import org.solovyev.common.text.*;
 
 import java.util.*;
 
@@ -151,7 +152,7 @@ public class CollectionsUtils {
 	}
 
 	@Nullable
-	public static <T> String formatValue(@Nullable List<T> values, @NotNull String delimiter, @NotNull Formatter<T> formatter) {
+	public static <T> String formatValue(@Nullable List<T> values, @NotNull String delimiter, @NotNull org.solovyev.common.text.Formatter<T> formatter) {
 		String result = null;
 		if (!isEmpty(values)) {
 			final StringBuilder sb = new StringBuilder();

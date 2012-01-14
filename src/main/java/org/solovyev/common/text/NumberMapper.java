@@ -4,14 +4,11 @@
  * or visit http://se.solovyev.org
  */
 
-package org.solovyev.common;
+package org.solovyev.common.text;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.math.ValueOfFormatter;
-import org.solovyev.common.utils.Formatter;
-import org.solovyev.common.utils.Mapper;
-import org.solovyev.common.utils.Parser;
 
 /**
  * User: serso

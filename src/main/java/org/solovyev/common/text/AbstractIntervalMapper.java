@@ -4,11 +4,12 @@
  * or visit http://se.solovyev.org
  */
 
-package org.solovyev.common;
+package org.solovyev.common.text;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.*;
+import org.solovyev.common.utils.CollectionsUtils;
+import org.solovyev.common.utils.Interval;
 
 import java.util.Arrays;
 import java.util.List;

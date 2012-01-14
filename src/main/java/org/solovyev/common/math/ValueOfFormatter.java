@@ -7,14 +7,14 @@
 package org.solovyev.common.math;
 
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Formatter;
+import org.solovyev.common.text.Formatter;
 
 /**
  * User: serso
  * Date: 9/20/11
  * Time: 10:52 PM
  */
-public class ValueOfFormatter<T> implements Formatter<T>{
+public class ValueOfFormatter<T> implements Formatter<T> {
 
 	private final boolean processNulls;
 
