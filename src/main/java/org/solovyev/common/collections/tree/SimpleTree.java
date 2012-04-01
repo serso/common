@@ -1,10 +1,11 @@
 package org.solovyev.common.collections.tree;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.utils.StringUtils;
-
-import java.util.Arrays;
 
 /**
  * User: serso
@@ -34,10 +35,27 @@ public class SimpleTree<T> implements MutableTree<T> {
         return this.root;
     }
 
+    @Override
+    public int getSize() {
+        // root + children
+        int result = 1 + this.root.getOwnChildren().size();
+
+        for (MutableTreeNode<T> child : root.getOwnChildren()) {
+            result += child.getSize();
+        }
+
+        return result;
+    }
+
+    @Override
+    public void removeNodeIf(@NotNull Predicate<TreeNode<T>> filter) {
+        Iterables.removeIf(this, filter);
+    }
+
     @NotNull
     @Override
     public DepthTreeIterator<T> iterator() {
-        return new DepthTreeIterator<T>(Arrays.asList(this.root));
+        return new DepthTreeIterator<T>(Lists.<MutableTreeNode<T>>newArrayList(this.root));
     }
 
     @NotNull
@@ -51,8 +69,8 @@ public class SimpleTree<T> implements MutableTree<T> {
         final StringBuilder result = new StringBuilder();
 
         for ( DepthTreeIterator<T> it = iterator(); it.hasNext(); ) {
-            result.append(StringUtils.repeat(" ", it.getDepth()));
             final TreeNode<T> node = it.next();
+            result.append(StringUtils.repeat(" ", it.getDepth()));
             result.append(node.getData());
             result.append("\n");
         }

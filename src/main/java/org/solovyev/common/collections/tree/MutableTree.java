@@ -1,5 +1,6 @@
 package org.solovyev.common.collections.tree;
 
+import com.google.common.base.Predicate;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -11,4 +12,6 @@ public interface MutableTree<T> extends Tree<T> {
 
     @NotNull
     MutableTreeNode<T> getRoot();
+
+    void removeNodeIf(@NotNull Predicate<TreeNode<T>> filter);
 }

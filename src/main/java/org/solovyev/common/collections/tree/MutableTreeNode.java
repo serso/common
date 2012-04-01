@@ -1,8 +1,10 @@
 package org.solovyev.common.collections.tree;
 
+import com.google.common.base.Predicate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * User: serso
@@ -12,7 +14,10 @@ import java.util.Collection;
 public interface MutableTreeNode<T> extends TreeNode<T> {
 
     @NotNull
-    Collection<? extends MutableTreeNode<T>> getChildren();
+    Collection<? extends MutableTreeNode<T>> getOwnChildren();
+
+    @NotNull
+    Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator();
 
     /**
      * @param node node to be added
@@ -25,4 +30,8 @@ public interface MutableTreeNode<T> extends TreeNode<T> {
      */
     @NotNull
     MutableTreeNode<T> addChild(@NotNull T data);
+
+    void removeOwnChildIf(@NotNull Predicate<TreeNode<T>> predicate);
+
+    void removeChildIf(@NotNull Predicate<TreeNode<T>> predicate);
 }

@@ -14,6 +14,8 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
     @NotNull
     TreeNode<T> getRoot();
 
+    int getSize();
+
     @NotNull
     @Override
     Iterator<TreeNode<T>> iterator();

@@ -27,38 +27,53 @@ public final class DepthTreeIterator<T> implements Iterator<TreeNode<T>> {
 
     private final int depth;
 
+    @Nullable
+    private TreeNode<T> lastSelfResult;
+
     public DepthTreeIterator(@NotNull Collection<? extends TreeNode<T>> nodes) {
         this(nodes, 0);
     }
 
     private DepthTreeIterator(@NotNull Collection<? extends TreeNode<T>> nodes, int depth) {
-        this.iterator = nodes.iterator();
+        this(nodes.iterator(), depth);
+    }
+
+    private DepthTreeIterator(@NotNull Iterator<? extends TreeNode<T>> iterator, int depth) {
+        this.iterator = iterator;
         this.depth = depth;
     }
 
     @Override
     public boolean hasNext() {
-        return iterator.hasNext() || (childIterator != null && childIterator.hasNext());
+        return iterator.hasNext() || selfHasNext() || childrenHasNext();
+    }
+
+    private boolean childrenHasNext() {
+        return childIterator != null && childIterator.hasNext();
+    }
+
+    private boolean selfHasNext() {
+        return lastSelfResult != null && !lastSelfResult.getOwnChildren().isEmpty();
     }
 
     @Override
     public TreeNode<T> next() {
-        if (childIterator != null) {
-            final TreeNode<T> result = this.childIterator.next();
-
-            if (!this.childIterator.hasNext()) {
-                this.childIterator = null;
+        if (selfHasNext()) {
+            if (lastSelfResult instanceof MutableTreeNode) {
+                childIterator = new DepthTreeIterator<T>(((MutableTreeNode<T>) lastSelfResult).getOwnChildrenIterator(), depth + 1);
+            } else {
+                childIterator = new DepthTreeIterator<T>(lastSelfResult.getOwnChildren(), depth + 1);
             }
-
-            return result;
+        }
+        
+        if (childrenHasNext()) {
+            lastSelfResult = null;
+            return this.childIterator.next();
         } else {
-            final TreeNode<T> result = iterator.next();
+            childIterator = null;
+            lastSelfResult = iterator.next();
 
-            if (!result.getChildren().isEmpty()) {
-                childIterator = new DepthTreeIterator<T>(result.getChildren(), depth + 1);
-            }
-
-            return result;
+            return lastSelfResult;
         }
     }
 

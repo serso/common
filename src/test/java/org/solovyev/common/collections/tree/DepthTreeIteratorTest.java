@@ -12,7 +12,7 @@ public class DepthTreeIteratorTest {
 
     @Test
     public void testToString() throws Exception {
-        Assert.assertEquals(createMockTree().toString(), "1\n" +
+        Assert.assertEquals("1\n" +
                 " 2\n" +
                 "  3\n" +
                 "   4\n" +
@@ -25,48 +25,12 @@ public class DepthTreeIteratorTest {
                 " 11\n" +
                 "  12\n" +
                 "   13\n" +
-                "    14\n");
+                "    14\n", SimpleTreeTest.createMockTree().toString());
     }
 
     @Test
     public void testHasNext() throws Exception {
-        createMockTree();
-    }
-
-    /*
-
-1
-├──── 2
-│     ├──── 3
-│     │     ├──── 4
-│     │     └──── 5
-│     └───── 6
-├──── 7
-├──── 8
-│     ├──── 9
-│     └──── 10
-└──── 11
-      └──── 12
-            └──── 13
-                  └──── 14
-     */
-    private Tree<Integer> createMockTree() {
-        final MutableTree<Integer> result = SimpleTree.newInstance(1);
-
-        MutableTreeNode<Integer> root = result.getRoot();
-        MutableTreeNode<Integer> child2 = root.addChild(2);
-        MutableTreeNode<Integer> child3 = child2.addChild(3);
-        child3.addChild(4);
-        child3.addChild(5);
-        child2.addChild(6);
-        root.addChild(7);
-        MutableTreeNode<Integer> child8 = root.addChild(8);
-        child8.addChild(9);
-        child8.addChild(10);
-        root.addChild(11).addChild(12).addChild(13).addChild(14);
-
-
-        return result;
+        SimpleTreeTest.createMockTree();
     }
 
     @Test
