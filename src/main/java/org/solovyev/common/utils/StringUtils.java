@@ -15,6 +15,13 @@ import java.util.List;
  */
 public final class StringUtils {
 
+    private static final String EMPTY = "";
+
+    /**
+     * <p>The maximum size to which the padding constant(s) can expand.</p>
+     */
+    private static final int PAD_LIMIT = 8192;
+
 	// not intended for instantiation
 	private StringUtils() {
 		throw new AssertionError();
@@ -99,4 +106,50 @@ public final class StringUtils {
 
 		return sb.toString();
 	}
+
+    @NotNull
+    public static String repeat(@NotNull String str, int repeat) {
+        // Performance tuned for 2.0 (JDK1.4)
+
+        if (repeat <= 0) {
+            return EMPTY;
+        }
+        int inputLength = str.length();
+        if (repeat == 1 || inputLength == 0) {
+            return str;
+        }
+        if (inputLength == 1 && repeat <= PAD_LIMIT) {
+            return repeat(str.charAt(0), repeat);
+        }
+
+        int outputLength = inputLength * repeat;
+        switch (inputLength) {
+            case 1:
+                return repeat(str.charAt(0), repeat);
+            case 2:
+                char ch0 = str.charAt(0);
+                char ch1 = str.charAt(1);
+                char[] output2 = new char[outputLength];
+                for (int i = repeat * 2 - 2; i >= 0; i--, i--) {
+                    output2[i] = ch0;
+                    output2[i + 1] = ch1;
+                }
+                return new String(output2);
+            default:
+                StringBuilder buf = new StringBuilder(outputLength);
+                for (int i = 0; i < repeat; i++) {
+                    buf.append(str);
+                }
+                return buf.toString();
+        }
+    }
+
+    @NotNull
+    public static String repeat(char ch, int repeat) {
+        char[] buf = new char[repeat];
+        for (int i = repeat - 1; i >= 0; i--) {
+            buf[i] = ch;
+        }
+        return new String(buf);
+    }
 }

@@ -10,7 +10,7 @@
 
 	<groupId>org.solovyev</groupId>
 	<artifactId>common</artifactId>
-	<version>0.3</version>
+	<version>0.3.1</version>
 
 	<dependencies>
 
@@ -34,19 +34,35 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.2</version>
+            <scope>test</scope>
 		</dependency>
 
+        <!--
+        NotNull & Nullable annotations
+        -->
 		<dependency>
 			<groupId>com.intellij</groupId>
 			<artifactId>annotations</artifactId>
 			<version>7.0.3</version>
 		</dependency>
 
+        <!--
+            Simple logger
+        -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
 		</dependency>
+
+        <!--
+            Google Collection and functional programming
+        -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>11.0.2</version>
+        </dependency>
 
 	</dependencies>
 
