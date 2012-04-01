@@ -16,10 +16,18 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
 
     int getSize();
 
+    /**
+     * NOTE: returned iterator supports remove() BUT root cannot be removed in any case
+     * @return iterator which iterates over all elements in the tree
+     */
     @NotNull
     @Override
     Iterator<TreeNode<T>> iterator();
 
+    /**
+     * NOTE: returned iterator supports remove() BUT root cannot be removed in any case
+     * @return iterator which iterates over all elements in the tree
+     */
     @NotNull
     Iterator<TreeNode<T>> getIterator();
 }
