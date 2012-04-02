@@ -1,7 +1,7 @@
 package org.solovyev.common.collections.tree;
 
 import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,8 +48,8 @@ public class SimpleTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public void removeNodeIf(@NotNull Predicate<TreeNode<T>> filter) {
-        Iterables.removeIf(this, filter);
+    public void removeNodeIf(@NotNull Predicate<? super TreeNode<T>> filter) {
+        Iterators.removeIf(this.iterator(), filter);
     }
 
     @NotNull

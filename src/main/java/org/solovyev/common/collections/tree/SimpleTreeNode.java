@@ -20,13 +20,17 @@ public class SimpleTreeNode<T> implements MutableTreeNode<T> {
     @Nullable
     private T data;
 
+    @Nullable
+    private TreeNode<T> parent;
+
+    @NotNull
     private Collection<MutableTreeNode<T>> children = new ArrayList<MutableTreeNode<T>>();
 
     private SimpleTreeNode() {
     }
 
     @NotNull
-    public static <T> SimpleTreeNode<T> newInstance (@Nullable T data) {
+    public static <T> SimpleTreeNode<T> newInstance(@Nullable T data) {
         final SimpleTreeNode<T> result = new SimpleTreeNode<T>();
 
         result.data = data;
@@ -48,6 +52,7 @@ public class SimpleTreeNode<T> implements MutableTreeNode<T> {
 
     @Override
     public void addChild(@NotNull MutableTreeNode<T> node) {
+        node.setParent(this);
         this.children.add(node);
     }
 
@@ -98,10 +103,39 @@ public class SimpleTreeNode<T> implements MutableTreeNode<T> {
     }
 
     @Override
+    public boolean isRoot() {
+        return this.parent == null;
+    }
+
+    @Override
+    public int getDepth() {
+        int depth = 0;
+
+        TreeNode<?> parent = this.parent;
+        while( parent != null ) {
+            parent = parent.getParent();
+            depth++;
+        }
+
+        return depth;
+    }
+
+    @Override
     public String toString() {
         return "SimpleTreeNode{" +
                 "data=" + data +
                 ", number of own children=" + children.size() +
                 '}';
+    }
+
+    @Override
+    @Nullable
+    public TreeNode<T> getParent() {
+        return parent;
+    }
+
+    @Override
+    public void setParent(@Nullable TreeNode<T> parent) {
+        this.parent = parent;
     }
 }

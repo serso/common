@@ -11,13 +11,19 @@ import java.util.Iterator;
  */
 public interface Tree<T> extends Iterable<TreeNode<T>> {
 
+    /**
+     * @return root of the tree (one unique tree node without parent)
+     */
     @NotNull
     TreeNode<T> getRoot();
 
+    /**
+     * @return total number of elements in the tree
+     */
     int getSize();
 
     /**
-     * NOTE: returned iterator supports remove() BUT root cannot be removed in any case
+     * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
      * @return iterator which iterates over all elements in the tree
      */
     @NotNull
@@ -25,7 +31,7 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
     Iterator<TreeNode<T>> iterator();
 
     /**
-     * NOTE: returned iterator supports remove() BUT root cannot be removed in any case
+     * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
      * @return iterator which iterates over all elements in the tree
      */
     @NotNull

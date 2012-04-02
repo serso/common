@@ -13,5 +13,5 @@ public interface MutableTree<T> extends Tree<T> {
     @NotNull
     MutableTreeNode<T> getRoot();
 
-    void removeNodeIf(@NotNull Predicate<TreeNode<T>> filter);
+    void removeNodeIf(@NotNull Predicate<? super TreeNode<T>> filter);
 }
