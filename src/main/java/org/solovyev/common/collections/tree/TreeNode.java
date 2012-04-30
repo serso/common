@@ -48,6 +48,13 @@ public interface TreeNode<T> extends Iterable<TreeNode<T>> {
     @NotNull
     Iterator<TreeNode<T>> iterator();
 
+    @NotNull
+    Iterator<? extends TreeNode<T>> getIterator();
+
+    @NotNull
+    Collection<? extends TreeNode<T>> getAllChildren();
+
+
     /**
      * @return number of ALL children of current node
      */

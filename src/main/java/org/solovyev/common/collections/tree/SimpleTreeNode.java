@@ -50,6 +50,18 @@ public class SimpleTreeNode<T> implements MutableTreeNode<T> {
         return this.children.iterator();
     }
 
+    @NotNull
+    @Override
+    public Collection<? extends MutableTreeNode<T>> getAllChildren() {
+        final Collection<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>();
+
+        for (MutableTreeNode<T> child : children) {
+            result.addAll(child.getAllChildren());
+        }
+
+        return result;
+    }
+
     @Override
     public void addChild(@NotNull MutableTreeNode<T> node) {
         node.setParent(this);
@@ -84,6 +96,12 @@ public class SimpleTreeNode<T> implements MutableTreeNode<T> {
     @Override
     public Iterator<TreeNode<T>> iterator() {
         return new DepthTreeIterator<T>(this.children);
+    }
+
+    @NotNull
+    @Override
+    public Iterator<? extends TreeNode<T>> getIterator() {
+        return iterator();
     }
 
     @Override

@@ -24,6 +24,9 @@ public interface MutableTreeNode<T> extends TreeNode<T> {
     @NotNull
     Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator();
 
+    @NotNull
+    Collection<? extends MutableTreeNode<T>> getAllChildren();
+
     /**
      * @param node node to be added. The parent specified in the node will be overwritten by this tree node
      */
