@@ -38,6 +38,11 @@ public class SimpleTreeNode<T> implements MutableTreeNode<T> {
         return result;
     }
 
+    @Override
+    public void setData(@Nullable T data) {
+        this.data = data;
+    }
+
     @NotNull
     @Override
     public Collection<MutableTreeNode<T>> getOwnChildren() {

@@ -18,6 +18,8 @@ import java.util.Iterator;
  */
 public interface MutableTreeNode<T> extends TreeNode<T> {
 
+    void setData(@Nullable T data);
+
     @NotNull
     Collection<? extends MutableTreeNode<T>> getOwnChildren();
 
