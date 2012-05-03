@@ -18,6 +18,9 @@ import java.util.Iterator;
  */
 public interface MutableTreeNode<T> extends TreeNode<T> {
 
+    @Nullable
+    MutableTreeNode<T> findOwnChild(@NotNull Predicate<TreeNode<T>> finder);
+
     void setData(@Nullable T data);
 
     @NotNull
@@ -40,6 +43,9 @@ public interface MutableTreeNode<T> extends TreeNode<T> {
      */
     @NotNull
     MutableTreeNode<T> addChild(@NotNull T data);
+
+    @NotNull
+    MutableTreeNode<T>  addChildIfNotExists(@NotNull T data);
 
     /**
      * Method removes from OWN children elements which are applied by predicate

@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<properties>
-		<additionalLibs>${basedir}/src/misc/lib</additionalLibs>
-	</properties>
+    <properties>
+        <additionalLibs>${basedir}/src/misc/lib</additionalLibs>
+    </properties>
 
-	<groupId>org.solovyev</groupId>
-	<artifactId>common</artifactId>
-	<version>0.3.1</version>
+    <groupId>org.solovyev</groupId>
+    <artifactId>common</artifactId>
+    <version>0.3.1</version>
 
-	<dependencies>
+    <dependencies>
 
-		<dependency>
-			<groupId>jgraphx</groupId>
-			<artifactId>jgraphx</artifactId>
-			<version>0.0</version>
-			<scope>system</scope>
-			<systemPath>${additionalLibs}/jgraphx.jar</systemPath>
-		</dependency>
+        <dependency>
+            <groupId>jgraphx</groupId>
+            <artifactId>jgraphx</artifactId>
+            <version>0.0</version>
+            <scope>system</scope>
+            <systemPath>${additionalLibs}/jgraphx.jar</systemPath>
+        </dependency>
 
-		<dependency>
-			<groupId>date4j</groupId>
-			<artifactId>date4j</artifactId>
-			<version>0.0</version>
-			<scope>system</scope>
-			<systemPath>${additionalLibs}/date4j.jar</systemPath>
-		</dependency>
+        <dependency>
+            <groupId>date4j</groupId>
+            <artifactId>date4j</artifactId>
+            <version>0.0</version>
+            <scope>system</scope>
+            <systemPath>${additionalLibs}/date4j.jar</systemPath>
+        </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
             <scope>test</scope>
-		</dependency>
+        </dependency>
 
         <!--
         NotNull & Nullable annotations
         -->
-		<dependency>
-			<groupId>com.intellij</groupId>
-			<artifactId>annotations</artifactId>
-			<version>7.0.3</version>
-		</dependency>
+        <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>annotations</artifactId>
+            <version>7.0.3</version>
+        </dependency>
 
         <!--
             Simple logger
         -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
-		</dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
 
         <!--
             Google Collection and functional programming
@@ -64,7 +64,24 @@
             <version>11.0.2</version>
         </dependency>
 
-	</dependencies>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

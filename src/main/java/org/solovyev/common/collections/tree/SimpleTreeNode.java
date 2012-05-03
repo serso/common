@@ -5,10 +5,7 @@ import com.google.common.collect.Iterables;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * User: serso
@@ -36,6 +33,16 @@ public class SimpleTreeNode<T> implements MutableTreeNode<T> {
         result.data = data;
 
         return result;
+    }
+
+    @Nullable
+    @Override
+    public MutableTreeNode<T> findOwnChild(@NotNull Predicate<TreeNode<T>> finder) {
+        try {
+            return Iterables.find(children, finder);
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 
     @Override
@@ -79,6 +86,23 @@ public class SimpleTreeNode<T> implements MutableTreeNode<T> {
         final SimpleTreeNode<T> node = SimpleTreeNode.newInstance(data);
         addChild(node);
         return node;
+    }
+
+    @NotNull
+    @Override
+    public MutableTreeNode<T> addChildIfNotExists(@NotNull final T data) {
+        MutableTreeNode<T> result = this.findOwnChild(new Predicate<TreeNode<T>>() {
+            @Override
+            public boolean apply(@javax.annotation.Nullable TreeNode<T> input) {
+                return input != null && data.equals(input.getData());
+            }
+        });
+
+        if ( result == null ) {
+            result = this.addChild(data);
+        }
+
+        return result;
     }
 
     @Override

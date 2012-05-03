@@ -7,6 +7,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.utils.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * User: serso
  * Date: 4/1/12
@@ -50,6 +53,15 @@ public class SimpleTree<T> implements MutableTree<T> {
     @Override
     public void removeNodeIf(@NotNull Predicate<? super TreeNode<T>> filter) {
         Iterators.removeIf(this.iterator(), filter);
+    }
+
+    @NotNull
+    @Override
+    public List<? extends MutableTreeNode<T>> getAllNodes() {
+        final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>();
+        result.add(this.root);
+        result.addAll(this.root.getAllChildren());
+        return result;
     }
 
     @NotNull

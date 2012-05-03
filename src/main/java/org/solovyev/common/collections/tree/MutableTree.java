@@ -3,6 +3,8 @@ package org.solovyev.common.collections.tree;
 import com.google.common.base.Predicate;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * User: serso
  * Date: 4/1/12
@@ -14,4 +16,8 @@ public interface MutableTree<T> extends Tree<T> {
     MutableTreeNode<T> getRoot();
 
     void removeNodeIf(@NotNull Predicate<? super TreeNode<T>> filter);
+
+    @NotNull
+    @Override
+    List<? extends MutableTreeNode<T>> getAllNodes();
 }

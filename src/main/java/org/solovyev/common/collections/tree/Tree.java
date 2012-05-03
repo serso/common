@@ -2,6 +2,8 @@ package org.solovyev.common.collections.tree;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * User: serso
  * Date: 4/1/12
@@ -34,4 +36,7 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
      */
     @NotNull
     TreeIterator<T> getIterator();
+
+    @NotNull
+    List<? extends TreeNode<T>> getAllNodes();
 }

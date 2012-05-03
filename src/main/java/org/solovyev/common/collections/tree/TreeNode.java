@@ -1,5 +1,6 @@
 package org.solovyev.common.collections.tree;
 
+import com.google.common.base.Predicate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,6 +17,9 @@ import java.util.Iterator;
  * Class representing the element of the tree
  */
 public interface TreeNode<T> extends Iterable<TreeNode<T>> {
+
+    @Nullable
+    TreeNode<T> findOwnChild(@NotNull Predicate<TreeNode<T>> finder);
 
     /**
      * NOTE: immutable collection is returned
