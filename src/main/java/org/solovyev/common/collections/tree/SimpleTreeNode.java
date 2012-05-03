@@ -58,7 +58,7 @@ public class SimpleTreeNode<T> implements MutableTreeNode<T> {
     @NotNull
     @Override
     public Collection<? extends MutableTreeNode<T>> getAllChildren() {
-        final Collection<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>();
+        final Collection<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(children);
 
         for (MutableTreeNode<T> child : children) {
             result.addAll(child.getAllChildren());
