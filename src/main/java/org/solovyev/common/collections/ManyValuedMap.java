@@ -12,15 +12,22 @@ import java.util.*;
 /*
 * Providers easily work with maps of lists
 * */
-public interface ManyValuedMap<K, V> extends Cloneable, Map<K, List<V>>, Serializable{
+public interface ManyValuedMap<K, V> extends Cloneable, Map<K, List<V>>, Serializable {
 
-	public List<V> put(K key, V... values);
-	public void clear(K key);
+    public List<V> put(K key, V... values);
+
+    public void clear(K key);
+
     public ManyValuedMap<K, V> clone();
-	public void sort(Comparator<? super V> c);
-	public List<V> getAllValues();
-	public Collection<List<V>> values(Comparator<? super K> c);
-	public void lock();
-	public Map<K, List<V>> toMap();
+
+    public void sort(Comparator<? super V> c);
+
+    public List<V> getAllValues();
+
+    public Collection<List<V>> values(Comparator<? super K> c);
+
+    public void lock();
+
+    public Map<K, List<V>> toMap();
 
 }
