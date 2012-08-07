@@ -10,6 +10,7 @@
     <name>Common Java Library</name>
 
     <packaging>pom</packaging>
+
     <modules>
         <module>other</module>
         <module>text</module>
@@ -18,6 +19,8 @@
     </modules>
 
     <dependencies>
+
+        <!-- TEST -->
 
         <dependency>
             <groupId>junit</groupId>
