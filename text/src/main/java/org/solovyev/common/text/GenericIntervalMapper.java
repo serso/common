@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 9/26/11
  * Time: 10:45 PM
  */
-public abstract class GenericIntervalMapper<T> extends AbstractIntervalMapper<T> {
+public abstract class GenericIntervalMapper<T extends Comparable<T>> extends AbstractIntervalMapper<T> {
 
 	@NotNull
 	private final Mapper<T> mapper;

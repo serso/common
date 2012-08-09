@@ -18,12 +18,12 @@ import java.util.List;
  * Date: 9/21/11
  * Time: 12:02 AM
  */
-public abstract class AbstractIntervalMapper<T> implements Mapper<Interval<T>> {
+public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements Mapper<Interval<T>> {
 
 	@Override
 	public String formatValue(@Nullable Interval<T> interval) throws IllegalArgumentException {
 		if (interval != null) {
-			return CollectionTransformations.formatValue(Arrays.asList(interval.getLeftBorder(), interval.getRightBorder()), ";", getFormatter());
+			return CollectionTransformations.formatValue(Arrays.asList(interval.getLeftLimit(), interval.getRightLimit()), ";", getFormatter());
 		} else {
 			return null;
 		}

@@ -34,6 +34,8 @@ public class NumberParser<T extends Number> implements Parser<T> {
 				result = (T) Float.valueOf(value);
 			} else if (this.clazz.equals(Long.class)) {
 				result = (T) Long.valueOf(value);
+            } else if (this.clazz.equals(Double.class)) {
+                result = (T) Double.valueOf(value);
 			} else {
 				throw new UnsupportedOperationException(this.clazz + " is not supported!");
 			}

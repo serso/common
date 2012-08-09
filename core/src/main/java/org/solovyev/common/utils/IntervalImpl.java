@@ -2,311 +2,180 @@ package org.solovyev.common.utils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Comparator;
+import org.solovyev.common.JObject;
+import org.solovyev.common.utils.history.IntervalLimit;
+import org.solovyev.common.utils.history.IntervalLimitImpl;
 
 /**
  * User: serso
  * Date: 9/19/11
  * Time: 4:51 PM
  */
-public abstract class IntervalImpl<T> implements Interval<T>, Cloneable {
+public class IntervalImpl<T extends Comparable<T>>
+        extends JObject
+        implements Interval<T>, Cloneable {
 
-	@Nullable
-	protected T leftBorder;
+    @NotNull
+    protected IntervalLimit<T> left;
 
-	@Nullable
-	protected T rightBorder;
+    @NotNull
+    protected IntervalLimit<T> right;
 
-	protected boolean isLeftBorderIn;
+    // for JAXB
+    protected IntervalImpl() {
+    }
 
-	protected boolean isRightBorderIn;
+    public IntervalImpl(@NotNull IntervalLimit<T> left,
+                        @NotNull IntervalLimit<T> right) {
+        int c = left.compareTo(right);
+        if (c > 0) {
+            throw new IllegalArgumentException("Left limit must <= than right!");
+        } else if (c == 0) {
+            if (left.isOpened() && right.isOpened()) {
+                throw new IllegalArgumentException("Empty interval (x, x) is not possible!");
+            }
+        }
 
-	// for JAXB
-	protected IntervalImpl() {
-	}
+        this.left = left;
+        this.right = right;
+    }
 
-	public IntervalImpl(@Nullable T leftBorder, @Nullable T rightBorder) {
-		this(leftBorder, true, rightBorder, true);
-	}
+    @NotNull
+    public static <T extends Comparable<T>> Interval<T> newPoint(@NotNull T point) {
+        return new IntervalImpl<T>(IntervalLimitImpl.newInstance(point, true), IntervalLimitImpl.newInstance(point, true));
+    }
 
-	public IntervalImpl(@Nullable T leftBorder, boolean leftBorderIn, @Nullable T rightBorder, boolean rightBorderIn) {
-		this.leftBorder = leftBorder;
-		this.rightBorder = rightBorder;
-		isLeftBorderIn = leftBorderIn;
-		isRightBorderIn = rightBorderIn;
-	}
+    @NotNull
+    public static <T extends Comparable<T>> Interval<T> newClosed(@NotNull T left, @NotNull T right) {
+        return new IntervalImpl<T>(IntervalLimitImpl.newInstance(left, true), IntervalLimitImpl.newInstance(right, true));
+    }
 
-	/**
-	 * @return left border
-	 */
-	@Nullable
-	public T getLeftBorder() {
-		return leftBorder;
-	}
+    /**
+     * @return left border
+     */
+    @Nullable
+    public T getLeftLimit() {
+        return left.getValue();
+    }
 
-	/**
-	 * Method sets left border.
-	 *
-	 * @param leftBorder - new left border value.
-	 */
-	public void setLeftBorder(@Nullable T leftBorder) {
-		this.leftBorder = leftBorder;
-	}
+    /**
+     * @return right border
+     */
+    @Nullable
+    public T getRightLimit() {
+        return this.right.getValue();
+    }
 
-	/**
-	 * @return right border
-	 */
-	@Nullable
-	public T getRightBorder() {
-		return rightBorder;
-	}
+    @NotNull
+    @Override
+    public IntervalLimit<T> getRight() {
+        return this.right;
+    }
 
-	/**
-	 * Method sets right border.
-	 *
-	 * @param rightBorder - new right border value.
-	 */
-	public void setRightBorder(@Nullable T rightBorder) {
-		this.rightBorder = rightBorder;
-	}
+    @NotNull
+    @Override
+    public IntervalLimit<T> getLeft() {
+        return this.left;
+    }
 
-	/**
-	 * @return true if left border date included into interval, false otherwise.
-	 */
-	public boolean isLeftBorderIn() {
-		return isLeftBorderIn;
-	}
+    /**
+     * @param value value
+     * @return true if single value inside interval, false otherwise
+     */
+    @Override
+    public boolean contains(@NotNull T value) {
+        return this.left.isLowerOrEqualsThan(value) && this.right.isHigherOrEqualsThan(value);
+    }
 
-	/**
-	 * Method sets left border included into interval.
-	 *
-	 * @param leftBorderIn new isLeftBorderIn.
-	 */
-	public void setLeftBorderIn(boolean leftBorderIn) {
-		isLeftBorderIn = leftBorderIn;
-	}
+    /**
+     * @param that interval.
+     * @return true if interval inside interval, false otherwise
+     */
+    @Override
+    public boolean contains(@NotNull Interval<T> that) {
+        return this.left.isLowerOrEqualsThan(that.getLeft()) && this.right.isHigherOrEqualsThan(that.getRight());
+    }
 
-	/**
-	 * @return true if right border date included into interval, false otherwise.
-	 */
-	public boolean isRightBorderIn() {
-		return isRightBorderIn;
-	}
 
-	/**
-	 * Method sets right border included into interval.
-	 *
-	 * @param rightBorderIn new isRightBorderIn.
-	 */
-	public void setRightBorderIn(boolean rightBorderIn) {
-		isRightBorderIn = rightBorderIn;
-	}
+    /**
+     * @return true if interval is closed (borders != null), false otherwise.
+     */
+    @Override
+    public boolean isClosed() {
+        return this.left.isClosed() && this.right.isClosed();
+    }
 
-	/**
-	 * @param value date.
-	 * @return true if single value inside interval, false otherwise
-	 */
-	@Override
-	public boolean isInInterval(@Nullable T value, @NotNull Comparator<T> c) {
-		boolean result;
+    /**
+     * @return true if interval is infinity (borders == null), false otherwise.
+     */
+    @Override
+    public boolean isInfinite() {
+        return this.left.isLowest() && this.right.isHighest();
+    }
 
-		Interval<T> interval = this.clone().normalReverse(c);
+    /**
+     * @return true if only one border is closed, false otherwise.
+     */
+    @Override
+    public boolean isHalfClosed() {
+        return (this.left.isClosed() && !this.right.isClosed()) || (!this.left.isClosed() && this.right.isClosed());
+    }
 
-		if (value == null) {
-			result = false;
-		} else if (interval.getLeftBorder() == null && interval.getRightBorder() != null) {
-			result = isRightBorderRestriction(value, c, interval);
-		} else if (interval.getLeftBorder() != null && interval.getRightBorder() == null) {
-			result = isLeftBorderRestriction(value, c, interval);
-		} else if (interval.getLeftBorder() == null && interval.getRightBorder() == null) {
-			result = true;
-		} else {
-			result = isLeftBorderRestriction(value, c, interval) && isRightBorderRestriction(value, c, interval);
-		}
+    @NotNull
+    @Override
+    public IntervalImpl<T> clone() {
+        final IntervalImpl<T> clone = (IntervalImpl<T>) super.clone();
 
-		return result;
-	}
+        clone.left = this.left.clone();
+        clone.right = this.right.clone();
 
-	private boolean isLeftBorderRestriction(@NotNull T value, @NotNull Comparator<T> c, @NotNull Interval<T> interval) {
-		boolean result;
-		int compareResult = c.compare(value, interval.getLeftBorder());
-		if (compareResult == 0) {
-			result = interval.isLeftBorderIn();
-		} else {
-			result = compareResult > 0;
-		}
-		return result;
-	}
+        return clone;
+    }
 
-	private boolean isRightBorderRestriction(@NotNull T value, @NotNull Comparator<T> c, @NotNull Interval<T> interval) {
-		boolean result;
-		int compareResult = c.compare(value, interval.getRightBorder());
-		if (compareResult == 0) {
-			result = interval.isRightBorderIn();
-		} else {
-			result = compareResult < 0;
-		}
-		return result;
-	}
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
 
-	/**
-	 * @param interval interval.
-	 * @return true if interval inside interval, false otherwise
-	 */
-	@Override
-	public boolean isInInterval(@NotNull Interval<T> interval, @NotNull IntervalHelper<T> intervalHelper) {
-		return interval.equals(MathUtils.intersection(this, interval, intervalHelper));
-	}
+        if (this.left.isClosed()) {
+            sb.append("[");
+        } else {
+            sb.append("(");
+        }
 
-	/**
-	 * @return true if interval is empty, false otherwise
-	 */
-	@Override
-	public boolean isEmptyInterval(@NotNull Comparator<T> comparator) {
-		return isClosedInterval() && comparator.compare(leftBorder, rightBorder) == 0;
-	}
+        sb.append(this.left).append(", ");
+        sb.append(this.right);
 
-	/**
-	 * @return true if interval has reversed borders order, false otherwise
-	 */
-	@Override
-	public boolean isReversed(@NotNull Comparator<T> comparator) {
-		//return isClosedInterval() && comparator.earlier(rightBorder, leftBorder);
-		return isClosedInterval() && comparator.compare(rightBorder, leftBorder) < 0;
-	}
+        if (this.right.isClosed()) {
+            sb.append("]");
+        } else {
+            sb.append(")");
+        }
 
-	/**
-	 * @return true if interval is closed (borders != null), false otherwise.
-	 */
-	@Override
-	public boolean isClosedInterval() {
-		return leftBorder != null && rightBorder != null;
-	}
+        return sb.toString();
+    }
 
-	/**
-	 * @return true if interval is infinity (borders == null), false otherwise.
-	 */
-	@Override
-	public boolean isInfinityInterval() {
-		return leftBorder == null && rightBorder == null;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof IntervalImpl)) return false;
 
-	/**
-	 * @return true if only one border is closed, false otherwise.
-	 */
-	@Override
-	public boolean isHalfClosedInterval() {
-		return (leftBorder != null && rightBorder == null) || (leftBorder == null && rightBorder != null);
-	}
+        final IntervalImpl that = (IntervalImpl) o;
 
-	/**
-	 * @return date interval with normal order of borders.
-	 */
-	@Override
-	public IntervalImpl<T> normalReverse(@NotNull Comparator<T> comparator) {
-		if (isReversed(comparator)) {
-			reverse();
-		}
+        if (!this.left.equals(that.left)) return false;
+        if (!this.right.equals(that.right)) return false;
 
-		return this;
-	}
+        return true;
+    }
 
-	protected void reverse() {
-		T tmp = this.getLeftBorder();
-		this.leftBorder = this.getRightBorder();
-		this.rightBorder = tmp;
+    protected boolean equals(@NotNull T thisBorder, @Nullable Object thatBorder) {
+        return thisBorder.equals(thatBorder);
+    }
 
-		boolean tmp1 = this.isLeftBorderIn;
-		this.isLeftBorderIn = this.isRightBorderIn;
-		this.isRightBorderIn = tmp1;
-	}
-
-	@SuppressWarnings({"CloneDoesntDeclareCloneNotSupportedException"})
-	@NotNull
-	@Override
-	public IntervalImpl<T> clone() {
-		IntervalImpl<T> clone;
-		try {
-			//noinspection unchecked
-			clone = (IntervalImpl<T>) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new UnsupportedOperationException("Cannot be cloned!");
-		}
-		return clone;
-	}
-
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder();
-
-		if (this.isLeftBorderIn) {
-			sb.append("[");
-		} else {
-			sb.append("(");
-		}
-		if (this.leftBorder != null) {
-			sb.append(this.leftBorder).append(", ");
-		} else {
-			sb.append("-INF, ");
-		}
-
-		if (this.rightBorder != null) {
-			sb.append(this.rightBorder);
-		} else {
-			sb.append("INF");
-		}
-
-		if (this.isRightBorderIn) {
-			sb.append("]");
-		} else {
-			sb.append(")");
-		}
-
-		return sb.toString();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		IntervalImpl interval = (IntervalImpl) o;
-
-		if (isLeftBorderIn != interval.isLeftBorderIn) return false;
-		if (isRightBorderIn != interval.isRightBorderIn) return false;
-		if (leftBorder != null ? !equals(leftBorder, interval.leftBorder) : interval.leftBorder != null) return false;
-		if (rightBorder != null ? !equals(rightBorder, interval.rightBorder) : interval.rightBorder != null)
-			return false;
-
-		return true;
-	}
-
-	protected boolean equals(@NotNull T thisBorder, @Nullable Object thatBorder) {
-		return thisBorder.equals(thatBorder);
-	}
-
-	@Override
-	public int hashCode() {
-		int result = leftBorder != null ? leftBorder.hashCode() : 0;
-		result = 31 * result + (rightBorder != null ? rightBorder.hashCode() : 0);
-		result = 31 * result + (isLeftBorderIn ? 1 : 0);
-		result = 31 * result + (isRightBorderIn ? 1 : 0);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj, @NotNull Comparator<T> comparator) {
-		boolean result = false;
-		if (obj instanceof IntervalImpl) {
-			final IntervalImpl<T> int1 = this.clone().normalReverse(comparator);
-			final IntervalImpl<T> int2 = ((IntervalImpl<T>) obj).clone().normalReverse(comparator);
-
-			result = comparator.compare(int1.leftBorder, int2.leftBorder) == 0 && comparator.compare(int1.rightBorder, int2.rightBorder) == 0
-					&& int1.isLeftBorderIn() == int2.isLeftBorderIn() && int1.isRightBorderIn() == int2.isRightBorderIn();
-
-		}
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = left.hashCode();
+        result = 31 * result + right.hashCode();
+        return result;
+    }
 }
 
