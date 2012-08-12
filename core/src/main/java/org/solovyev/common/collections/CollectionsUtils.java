@@ -365,7 +365,7 @@ public class CollectionsUtils {
 
     // copied from guava: com.google.common.collect.Iterators.removeIf()
     public static <T> boolean removeIf(@NotNull Iterator<T> removeFrom,
-                                       org.solovyev.common.IPredicate predicate) {
+                                       @NotNull IPredicate<? super T> predicate) {
         boolean modified = false;
         while (removeFrom.hasNext()) {
             if (predicate.apply(removeFrom.next())) {
@@ -377,7 +377,8 @@ public class CollectionsUtils {
     }
 
     @Nullable
-    public static <T> T find(@NotNull Iterator<T> iterator, @NotNull org.solovyev.common.IPredicate predicate) {
+    public static <T> T find(@NotNull Iterator<T> iterator,
+                             @NotNull IPredicate<? super T> predicate) {
         while (iterator.hasNext()) {
             final T next = iterator.next();
             if ( predicate.apply(next) ) {

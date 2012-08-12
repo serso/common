@@ -1,4 +1,4 @@
-package org.solovyev.common.time;
+package org.solovyev.common.datetime;
 
 import java.util.HashMap;
 import java.util.Calendar;
