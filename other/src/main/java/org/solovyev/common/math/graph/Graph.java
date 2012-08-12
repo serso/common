@@ -6,8 +6,8 @@ import org.solovyev.common.definitions.MultiIdentity;
 import org.solovyev.common.definitions.Property;
 import org.solovyev.common.math.matrix.AbstractSparseMatrix;
 import org.solovyev.common.math.matrix.Matrix;
-import org.solovyev.common.utils.CloneUtils;
-import org.solovyev.common.utils.TextDisplay;
+import org.solovyev.common.clone.CloneUtils;
+import org.solovyev.common.text.TextDisplay;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;

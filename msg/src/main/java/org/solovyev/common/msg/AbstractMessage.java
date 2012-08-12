@@ -8,10 +8,10 @@ package org.solovyev.common.msg;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.CollectionsUtils;
-import org.solovyev.common.utils.EqualsTool;
-import org.solovyev.common.utils.ListEqualizer;
-import org.solovyev.common.utils.StringUtils;
+import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.equals.EqualsTool;
+import org.solovyev.common.equals.ListEqualizer;
+import org.solovyev.common.text.StringUtils;
 import org.solovyev.common.HashCodeBuilder;
 
 import java.text.MessageFormat;

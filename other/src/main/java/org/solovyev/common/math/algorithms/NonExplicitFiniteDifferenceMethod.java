@@ -7,7 +7,7 @@ import org.solovyev.common.math.Function;
 import org.solovyev.common.math.matrix.DoubleArrayMatrix;
 import org.solovyev.common.math.matrix.Matrix;
 import org.solovyev.common.math.matrix.MatrixUtils;
-import org.solovyev.common.utils.SimpleInterval;
+import org.solovyev.common.interval.SimpleInterval;
 
 import java.io.*;
 

@@ -3,7 +3,7 @@ package org.solovyev.common.math.calculators;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.math.MathConstants;
-import org.solovyev.common.utils.DoubleEqualizer;
+import org.solovyev.common.equals.DoubleEqualizer;
 
 /**
  * User: serso

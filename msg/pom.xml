@@ -11,14 +11,13 @@
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-msg</artifactId>
-    <name>Common Java Message</name>
+    <name>Common Java Library Message</name>
     <version>1.0.0</version>
 
     <dependencies>
         <dependency>
             <groupId>org.solovyev</groupId>
             <artifactId>common-core</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

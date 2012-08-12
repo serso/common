@@ -1,0 +1,29 @@
+package org.solovyev.common.equals;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.IPredicate;
+
+/**
+ * User: serso
+ * Date: 9/17/11
+ * Time: 10:16 PM
+ */
+public class EqualsFinder<T> implements IPredicate<T> {
+
+	@NotNull
+	private final T modelObject;
+
+	@Nullable
+	private final Equalizer<T> equalizer;
+
+	public EqualsFinder(@NotNull T modelObject, @Nullable Equalizer<T> equalizer) {
+		this.modelObject = modelObject;
+		this.equalizer = equalizer;
+	}
+
+	@Override
+	public boolean apply(@Nullable T object) {
+		return EqualsTool.areEqual(modelObject, object, equalizer);
+	}
+}

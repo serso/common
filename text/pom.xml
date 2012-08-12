@@ -12,13 +12,12 @@
     <groupId>org.solovyev</groupId>
     <artifactId>common-text</artifactId>
     <version>1.0.1</version>
-    <name>Common Java Text</name>
+    <name>Common Java Library Text</name>
 
     <dependencies>
         <dependency>
             <groupId>org.solovyev</groupId>
             <artifactId>common-core</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

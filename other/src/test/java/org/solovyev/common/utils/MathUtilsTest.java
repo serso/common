@@ -2,6 +2,9 @@ package org.solovyev.common.utils;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.solovyev.common.MutableObject;
+import org.solovyev.common.math.MathUtils;
+import org.solovyev.common.math.Point2d;
 
 /**
  * User: serso

@@ -3,7 +3,7 @@ package org.solovyev.common.math.matrix;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.JCloneable;
 import org.solovyev.common.math.matrix.helpers.MatrixHelper;
-import org.solovyev.common.utils.TextDisplay;
+import org.solovyev.common.text.TextDisplay;
 
 /**
  * User: serso

@@ -1,7 +1,7 @@
 package org.solovyev.common.math.calculators;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.utils.Equalizer;
+import org.solovyev.common.equals.Equalizer;
 
 /**
  * User: serso

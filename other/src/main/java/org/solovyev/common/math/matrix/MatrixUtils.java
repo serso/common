@@ -9,8 +9,8 @@ import org.solovyev.common.exceptions.IllegalMatrixFormatException;
 import org.solovyev.common.math.algorithms.matrix.BinaryMatrixOperationInput;
 import org.solovyev.common.math.algorithms.matrix.MatrixEquals;
 import org.solovyev.common.math.algorithms.matrix.MatrixMultiplication;
-import org.solovyev.common.utils.CollectionsUtils;
-import org.solovyev.common.utils.StringUtils;
+import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.text.StringUtils;
 
 import java.io.*;
 import java.util.List;

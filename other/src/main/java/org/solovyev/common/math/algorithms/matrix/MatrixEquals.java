@@ -3,7 +3,7 @@ package org.solovyev.common.math.algorithms.matrix;
 import org.solovyev.common.math.algorithms.AbstractAlgorithm;
 import org.solovyev.common.math.calculators.Calculator;
 import org.solovyev.common.math.calculators.CalculatorFactory;
-import org.solovyev.common.utils.EqualsUtils;
+import org.solovyev.common.equals.EqualsUtils;
 
 /**
  * User: serso

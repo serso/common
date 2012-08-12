@@ -8,10 +8,10 @@ package org.solovyev.common.math;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.IPredicate;
+import org.solovyev.common.collections.CollectionsUtils;
 import org.solovyev.common.collections.SortedList;
 import org.solovyev.common.definitions.IBuilder;
-import org.solovyev.common.utils.CollectionsUtils;
-import org.solovyev.common.utils.Finder;
 
 import java.util.*;
 
@@ -138,9 +138,9 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 
 	@Override
 	public T getById(@NotNull final Integer id) {
-		return CollectionsUtils.find(entities, new Finder<T>() {
+		return CollectionsUtils.find(entities, new IPredicate<T>() {
 			@Override
-			public boolean isFound(@Nullable T t) {
+			public boolean apply(@Nullable T t) {
 				return t != null && t.getId().equals(id);
 			}
 		});

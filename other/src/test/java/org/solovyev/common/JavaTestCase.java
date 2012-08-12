@@ -8,7 +8,7 @@ package org.solovyev.common;
 
 import junit.framework.TestCase;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Timer;
+import org.solovyev.common.time.Timer;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -8,14 +8,13 @@ package org.solovyev.common;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Finder;
 
 /**
 * User: serso
 * Date: 10/3/11
 * Time: 12:49 AM
 */
-public class StartsWithFinder implements Finder<String> {
+public class StartsWithFinder implements IPredicate<String> {
 
 	private int i;
 
@@ -28,7 +27,7 @@ public class StartsWithFinder implements Finder<String> {
 	}
 
 	@Override
-	public boolean isFound(@Nullable String s) {
+	public boolean apply(@Nullable String s) {
 		return targetString.startsWith(s, i);
 	}
 

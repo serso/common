@@ -8,7 +8,7 @@ import org.solovyev.common.math.graph.GraphFrame;
 import org.solovyev.common.math.graph.Graphs;
 import org.solovyev.common.math.graph.Node;
 import org.solovyev.common.math.matrix.*;
-import org.solovyev.common.utils.Timer;
+import org.solovyev.common.time.Timer;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

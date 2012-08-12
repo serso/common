@@ -8,7 +8,7 @@ package org.solovyev.common;
 
 
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Equalizer;
+import org.solovyev.common.equals.Equalizer;
 
 /**
  * User: serso

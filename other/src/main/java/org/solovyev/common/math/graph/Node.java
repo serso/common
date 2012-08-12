@@ -3,7 +3,7 @@ package org.solovyev.common.math.graph;
 import org.solovyev.common.JCloneable;
 import org.solovyev.common.definitions.IsMarked;
 import org.solovyev.common.definitions.MultiIdentity;
-import org.solovyev.common.utils.TextDisplay;
+import org.solovyev.common.text.TextDisplay;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;

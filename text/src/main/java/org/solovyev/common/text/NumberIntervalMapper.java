@@ -8,10 +8,10 @@ package org.solovyev.common.text;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Interval;
-import org.solovyev.common.utils.IntervalImpl;
-import org.solovyev.common.utils.history.IntervalLimit;
-import org.solovyev.common.utils.history.IntervalLimitImpl;
+import org.solovyev.common.interval.Interval;
+import org.solovyev.common.interval.IntervalImpl;
+import org.solovyev.common.interval.IntervalLimit;
+import org.solovyev.common.interval.IntervalLimitImpl;
 
 /**
  * User: serso

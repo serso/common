@@ -8,7 +8,7 @@ package org.solovyev.common.text;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Interval;
+import org.solovyev.common.interval.Interval;
 
 import java.util.Arrays;
 import java.util.List;

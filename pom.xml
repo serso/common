@@ -16,7 +16,51 @@
         <module>text</module>
         <module>core</module>
         <module>msg</module>
+        <module>collections-tree</module>
+        <module>collections-multimap</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-core</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-msg</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-text</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-other</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-collections-multimap</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-collections-tree</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 

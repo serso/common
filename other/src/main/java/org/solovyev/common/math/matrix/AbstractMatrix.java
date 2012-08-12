@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.LinkedNode;
 import org.solovyev.common.math.graph.Node;
-import org.solovyev.common.utils.StringUtils;
+import org.solovyev.common.text.StringUtils;
 
 import java.io.*;
 

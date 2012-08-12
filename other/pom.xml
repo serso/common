@@ -12,7 +12,7 @@
     <groupId>org.solovyev</groupId>
     <artifactId>common-other</artifactId>
     <version>1.0.0</version>
-    <name>Common Java Other</name>
+    <name>Common Java Library Other</name>
 
     <properties>
         <additionalLibs>${basedir}/src/misc/lib</additionalLibs>
@@ -24,7 +24,6 @@
         <dependency>
             <groupId>org.solovyev</groupId>
             <artifactId>common-core</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>

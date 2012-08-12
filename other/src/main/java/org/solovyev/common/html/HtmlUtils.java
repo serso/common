@@ -8,7 +8,7 @@ package org.solovyev.common.html;
 
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.definitions.Pair;
-import org.solovyev.common.utils.LoopData;
+import org.solovyev.common.collections.LoopData;
 
 /**
  * User: serso

@@ -2,7 +2,7 @@ package org.solovyev.common.math.algorithms;
 
 import org.solovyev.common.math.Function;
 import org.solovyev.common.math.matrix.*;
-import org.solovyev.common.utils.SimpleInterval;
+import org.solovyev.common.interval.SimpleInterval;
 
 import java.io.IOException;
 import java.io.BufferedReader;
