@@ -19,6 +19,7 @@
         <module>collections-tree</module>
         <module>collections-multimap</module>
         <module>core-jodatime</module>
+        <module>security</module>
     </modules>
 
     <properties>
