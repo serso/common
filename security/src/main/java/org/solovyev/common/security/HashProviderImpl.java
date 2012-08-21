@@ -27,14 +27,15 @@ public class HashProviderImpl implements HashProvider {
     }
 
     @NotNull
-    public static HashProvider defaultInstance() {
+    public static HashProvider newAndroidDefaultInstance() {
         return new HashProviderImpl(HASH_ALGORITHM, PROVIDER);
     }
 
+    @Override
     @NotNull
-    public String getHash(@NotNull String password, @NotNull String salt) throws CiphererException {
+    public String getHash(@NotNull String text, @NotNull String salt) throws CiphererException {
         try {
-            final String input = password + salt;
+            final String input = text + salt;
             final MessageDigest md = MessageDigest.getInstance(hashAlgorithm, provider);
             return HexUtils.toHex(md.digest(input.getBytes("UTF-8")));
         } catch (Exception e) {

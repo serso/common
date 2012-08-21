@@ -16,5 +16,8 @@ public interface SecurityService {
     SecretKeyProvider getSecretKeyProvider();
 
     @NotNull
+    HashProvider getHashProvider();
+
+    @NotNull
     Cipherer getCipherer();
 }

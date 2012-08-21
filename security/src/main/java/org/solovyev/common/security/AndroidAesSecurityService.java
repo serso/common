@@ -18,10 +18,14 @@ public class AndroidAesSecurityService implements SecurityService {
     @NotNull
     private final SaltGenerator saltGenerator;
 
+    @NotNull
+    private final HashProvider hashProvider;
+
     public AndroidAesSecurityService() {
         cipherer = CiphererImpl.newAndroidAesCipherer();
         secretKeyProvider = PbeSecretKeyProvider.newAndroidDefaultInstance();
         saltGenerator = SaltGeneratorImpl.newAndroidDefaultInstance();
+        hashProvider = HashProviderImpl.newAndroidDefaultInstance();
     }
 
 
@@ -35,6 +39,12 @@ public class AndroidAesSecurityService implements SecurityService {
     @Override
     public SecretKeyProvider getSecretKeyProvider() {
         return secretKeyProvider;
+    }
+
+    @NotNull
+    @Override
+    public HashProvider getHashProvider() {
+        return hashProvider;
     }
 
     @NotNull
