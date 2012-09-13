@@ -11,7 +11,7 @@
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-msg</artifactId>
-    <name>Common Java Library Message</name>
+    <name>Java Common Library Message</name>
     <version>1.0.0</version>
 
     <dependencies>

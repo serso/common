@@ -12,7 +12,7 @@
     <groupId>org.solovyev</groupId>
     <artifactId>common-core-jodatime</artifactId>
     <version>1.0.0</version>
-    <name>Common Java Library Core (with Joda Time dependencies)</name>
+    <name>Java Common Library Core (with Joda Time dependencies)</name>
 
     <dependencies>
 

@@ -11,7 +11,7 @@
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-core</artifactId>
-    <name>Common Java Library Core</name>
+    <name>Java Common Library Core</name>
     <version>1.0.0</version>
 
 </project>

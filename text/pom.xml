@@ -12,7 +12,7 @@
     <groupId>org.solovyev</groupId>
     <artifactId>common-text</artifactId>
     <version>1.0.1</version>
-    <name>Common Java Library Text</name>
+    <name>Java Common Library Text</name>
 
     <dependencies>
         <dependency>

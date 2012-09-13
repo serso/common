@@ -11,7 +11,7 @@
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-collections-tree</artifactId>
-    <name>Common Java Library Collections Tree</name>
+    <name>Java Common Library Collections Tree</name>
     <version>1.0.0</version>
 
     <dependencies>

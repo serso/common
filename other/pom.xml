@@ -12,7 +12,7 @@
     <groupId>org.solovyev</groupId>
     <artifactId>common-other</artifactId>
     <version>1.0.0</version>
-    <name>Common Java Library Other</name>
+    <name>Java Common Library Other</name>
 
     <properties>
         <system.libs.path>${basedir}/src/misc/lib</system.libs.path>

@@ -12,7 +12,7 @@
     <groupId>org.solovyev</groupId>
     <artifactId>common-security</artifactId>
     <version>1.0.0</version>
-    <name>Common Java Library Security</name>
+    <name>Java Common Library Security</name>
 
     <dependencies>
         <dependency>

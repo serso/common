@@ -11,7 +11,7 @@
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-collections-multimap</artifactId>
-    <name>Common Java Library Collections Multimap</name>
+    <name>Java Common Library Collections Multimap</name>
     <version>1.0.0</version>
 
     <dependencies>
