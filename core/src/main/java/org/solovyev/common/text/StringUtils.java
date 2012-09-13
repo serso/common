@@ -8,7 +8,9 @@ import org.solovyev.common.collections.LoopData;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * User: serso
@@ -24,7 +26,10 @@ public final class StringUtils {
      */
     private static final int PAD_LIMIT = 8192;
 
-	// not intended for instantiation
+    // random variable: must be synchronized in usage
+    private static final Random RANDOM = new Random(new Date().getTime());
+
+    // not intended for instantiation
 	private StringUtils() {
 		throw new AssertionError();
 	}
@@ -153,5 +158,23 @@ public final class StringUtils {
             buf[i] = ch;
         }
         return new String(buf);
+    }
+
+    @NotNull
+    public static String generateRandomString(int length) {
+
+        final StringBuilder result = new StringBuilder(length);
+        for ( int i = 0; i < length; i++ ) {
+            final char ch;
+
+            synchronized (RANDOM) {
+                // 'A' = 65
+                ch = (char) (RANDOM.nextInt(52) + 65);
+            }
+
+            result.append(ch);
+        }
+
+        return result.toString();
     }
 }

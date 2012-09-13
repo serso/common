@@ -33,26 +33,30 @@ public class PbeSecretKeyProvider implements SecretKeyProvider {
     @NotNull
     private final String secretKeyAlgorithm;
 
+    private final int keyLength;
+
     public PbeSecretKeyProvider(int iterationCount,
                                 @NotNull String algorithm,
+                                @NotNull String secretKeyAlgorithm,
                                 @Nullable String provider,
-                                @NotNull String secretKeyAlgorithm) {
+                                int keyLength) {
         this.iterationCount = iterationCount;
         this.algorithm = algorithm;
         this.provider = provider;
         this.secretKeyAlgorithm = secretKeyAlgorithm;
+        this.keyLength = keyLength;
     }
 
     @NotNull
     public static SecretKeyProvider newAndroidDefaultInstance() {
-        return new PbeSecretKeyProvider(PBE_ITERATION_COUNT, PBE_ALGORITHM, PROVIDER, SECRET_KEY_ALGORITHM);
+        return new PbeSecretKeyProvider(PBE_ITERATION_COUNT, PBE_ALGORITHM, SECRET_KEY_ALGORITHM, PROVIDER, PBE_KEY_LENGTH);
     }
 
     @Override
     @NotNull
     public SecretKey getSecretKey(@NotNull String password, @NotNull String salt) throws CiphererException {
         try {
-            final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), HexUtils.toBytes(salt), iterationCount, PBE_KEY_LENGTH);
+            final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), HexUtils.toBytes(salt), iterationCount, keyLength);
             final SecretKeyFactory factory;
             if (provider != null) {
                 factory = SecretKeyFactory.getInstance(algorithm, provider);

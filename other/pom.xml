@@ -15,7 +15,7 @@
     <name>Common Java Library Other</name>
 
     <properties>
-        <additionalLibs>${basedir}/src/misc/lib</additionalLibs>
+        <system.libs.path>${basedir}/src/misc/lib</system.libs.path>
     </properties>
 
 
@@ -31,7 +31,7 @@
             <artifactId>jgraphx</artifactId>
             <version>0.0</version>
             <scope>system</scope>
-            <systemPath>${additionalLibs}/jgraphx.jar</systemPath>
+            <systemPath>${system.libs.path}/jgraphx.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -39,7 +39,7 @@
             <artifactId>date4j</artifactId>
             <version>0.0</version>
             <scope>system</scope>
-            <systemPath>${additionalLibs}/date4j.jar</systemPath>
+            <systemPath>${system.libs.path}/date4j.jar</systemPath>
         </dependency>
 
         <!--

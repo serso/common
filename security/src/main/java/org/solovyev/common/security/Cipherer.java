@@ -12,8 +12,17 @@ import javax.crypto.SecretKey;
 public interface Cipherer {
 
     @NotNull
-    String encrypt(@NotNull SecretKey secret, @NotNull String plainText) throws CiphererException;
+    String encrypt(@NotNull SecretKey secret,
+                   @NotNull String plainText) throws CiphererException;
+
+    @NotNull
+    String encrypt(@NotNull SecretKey secret,
+                   @NotNull String plainText,
+                   @NotNull String ivHex) throws CiphererException;
 
     @NotNull
     String decrypt(@NotNull SecretKey secret, @NotNull String encryptedText) throws CiphererException;
+
+    @NotNull
+    String getIvHexFromEncrypted(@NotNull String encryptedText) throws CiphererException;
 }
