@@ -1,0 +1,12 @@
+DESCRIPTION
+
+This Java library contains different utilities, tools, etc
+
+INSTALLATION
+
+The project is based on Maven 3. In order to build it you need to install Apache Maven and run 'mvn install' command.
+
+Some modules of project contain dependencies not included in Maven Central - to build such modules you need first install
+these dependencies in local repository. Such libraries are located under misc/libs folders.
+For example, one can install jgraphx.jar using next command (assuming other/misc/libs is current folder):
+mvn install:install-file -Dfile=jgraphx.jar -DgroupId=jgraphx -DartifactId=jgraphx -Dversion=1.0 -Dpackaging=jar

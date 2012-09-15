@@ -14,10 +14,6 @@
     <version>1.0.0</version>
     <name>Java Common Library Other</name>
 
-    <properties>
-        <system.libs.path>${basedir}/lib</system.libs.path>
-    </properties>
-
 
     <dependencies>
 
@@ -29,9 +25,7 @@
         <dependency>
             <groupId>jgraphx</groupId>
             <artifactId>jgraphx</artifactId>
-            <version>0.0</version>
-            <scope>system</scope>
-            <systemPath>${system.libs.path}/jgraphx.jar</systemPath>
+            <version>1.0</version>
         </dependency>
 
         <dependency>
