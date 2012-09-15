@@ -8,7 +8,7 @@ package org.solovyev.common.math;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.definitions.IBuilder;
+import org.solovyev.common.JBuilder;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public interface MathRegistry<T extends MathEntity> {
 	@NotNull
 	List<T> getSystemEntities();
 
-	T add(@NotNull IBuilder<? extends T> IBuilder);
+	T add(@NotNull JBuilder<? extends T> JBuilder);
 
 	void remove(@NotNull T var);
 

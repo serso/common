@@ -6,10 +6,10 @@
 
 package org.solovyev.common.utils;
 
-import hirondelle.date4j.DateTime;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * User: serso
@@ -19,9 +19,6 @@ import java.util.TimeZone;
 public class DateUtils {
 
 	public static int deltaDays(Date l, Date r) {
-		final DateTime lDateTime = DateTime.forInstant(l.getTime(), TimeZone.getDefault());
-		final DateTime rDateTime = DateTime.forInstant(r.getTime(), TimeZone.getDefault());
-
-		return lDateTime.numDaysFrom(rDateTime);
+		return Days.daysBetween(new DateTime(l), new DateTime(r)).getDays();
 	}
 }

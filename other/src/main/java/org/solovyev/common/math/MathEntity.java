@@ -2,7 +2,7 @@ package org.solovyev.common.math;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 
 /**
  * User: serso
@@ -25,7 +25,7 @@ public interface MathEntity {
 
 	void copy(@NotNull MathEntity that);
 
-	public static class Finder<T extends MathEntity> implements IPredicate<T> {
+	public static class Finder<T extends MathEntity> implements JPredicate<T> {
 
 		@NotNull
 		private final String name;

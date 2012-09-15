@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Predicate, copy of Guava's {@link com.google.common.base.Predicate}
  */
-public interface IPredicate<T> {
+public interface JPredicate<T> {
 
     boolean apply(@Nullable T t);
 }

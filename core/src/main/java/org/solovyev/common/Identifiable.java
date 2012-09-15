@@ -1,4 +1,4 @@
-package org.solovyev.common.definitions;
+package org.solovyev.common;
 
 /**
  * User: serso

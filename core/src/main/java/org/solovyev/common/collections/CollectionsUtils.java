@@ -8,9 +8,9 @@ package org.solovyev.common.collections;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 import org.solovyev.common.Selectable;
-import org.solovyev.common.definitions.Identifiable;
+import org.solovyev.common.Identifiable;
 import org.solovyev.common.equals.Equalizer;
 import org.solovyev.common.equals.EqualsFinder;
 import org.solovyev.common.filter.FilterType;
@@ -228,7 +228,7 @@ public class CollectionsUtils {
         return contains(list, filterType, new EqualsFinder<T>(value, equalizer));
     }
 
-    public static <T> boolean contains(@Nullable Collection<T> list, @NotNull FilterType filterType, @NotNull IPredicate<T> finder) {
+    public static <T> boolean contains(@Nullable Collection<T> list, @NotNull FilterType filterType, @NotNull JPredicate<T> finder) {
         boolean found = find(list, finder) != null;
 
         final boolean result;
@@ -246,7 +246,7 @@ public class CollectionsUtils {
         return find(list, new EqualsFinder<T>(value, equalizer));
     }
 
-    public static <T> T find(@Nullable Collection<T> list, @NotNull IPredicate<T> finder) {
+    public static <T> T find(@Nullable Collection<T> list, @NotNull JPredicate<T> finder) {
         T result = null;
 
         if (!isEmpty(list)) {
@@ -262,7 +262,7 @@ public class CollectionsUtils {
     }
 
     @Nullable
-    public static <T> T removeFirst(@Nullable Collection<T> list, @NotNull IPredicate<T> finder) {
+    public static <T> T removeFirst(@Nullable Collection<T> list, @NotNull JPredicate<T> finder) {
         T result = null;
 
         if (!isEmpty(list)) {
@@ -280,7 +280,7 @@ public class CollectionsUtils {
     }
 
     @NotNull
-    public static <T> List<T> removeAll(@Nullable Collection<T> list, @NotNull IPredicate<T> finder) {
+    public static <T> List<T> removeAll(@Nullable Collection<T> list, @NotNull JPredicate<T> finder) {
         final List<T> result = new ArrayList<T>();
 
         if (!isEmpty(list)) {
@@ -365,7 +365,7 @@ public class CollectionsUtils {
 
     // copied from guava: com.google.common.collect.Iterators.removeIf()
     public static <T> boolean removeIf(@NotNull Iterator<T> removeFrom,
-                                       @NotNull IPredicate<? super T> predicate) {
+                                       @NotNull JPredicate<? super T> predicate) {
         boolean modified = false;
         while (removeFrom.hasNext()) {
             if (predicate.apply(removeFrom.next())) {
@@ -378,7 +378,7 @@ public class CollectionsUtils {
 
     @Nullable
     public static <T> T find(@NotNull Iterator<T> iterator,
-                             @NotNull IPredicate<? super T> predicate) {
+                             @NotNull JPredicate<? super T> predicate) {
         while (iterator.hasNext()) {
             final T next = iterator.next();
             if ( predicate.apply(next) ) {

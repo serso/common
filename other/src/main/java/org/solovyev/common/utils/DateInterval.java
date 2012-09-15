@@ -6,8 +6,6 @@
 
 package org.solovyev.common.utils;
 
-import org.apache.log4j.Logger;
-
 import java.util.Date;
 
 /**
@@ -173,7 +171,7 @@ public class DateInterval implements Cloneable {
                 clone.rightBorder = (Date) this.rightBorder.clone();
             }
         } catch (CloneNotSupportedException e) {
-            Logger.getLogger(this.getClass()).error(e.getMessage(), e);
+            throw new AssertionError(e);
         }
         return clone;
     }

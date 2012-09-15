@@ -2,14 +2,14 @@ package org.solovyev.common.equals;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 
 /**
  * User: serso
  * Date: 9/17/11
  * Time: 10:16 PM
  */
-public class EqualsFinder<T> implements IPredicate<T> {
+public class EqualsFinder<T> implements JPredicate<T> {
 
 	@NotNull
 	private final T modelObject;

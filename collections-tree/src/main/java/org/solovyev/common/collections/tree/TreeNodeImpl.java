@@ -2,7 +2,7 @@ package org.solovyev.common.collections.tree;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.CollectionsUtils;
 
 import java.util.*;
@@ -37,7 +37,7 @@ public class TreeNodeImpl<T> implements MutableTreeNode<T> {
 
     @Nullable
     @Override
-    public MutableTreeNode<T> findOwnChild(@NotNull IPredicate<TreeNode<T>> finder) {
+    public MutableTreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder) {
         return CollectionsUtils.find(children.iterator(), finder);
     }
 
@@ -87,7 +87,7 @@ public class TreeNodeImpl<T> implements MutableTreeNode<T> {
     @NotNull
     @Override
     public MutableTreeNode<T> addChildIfNotExists(@NotNull final T data) {
-        MutableTreeNode<T> result = this.findOwnChild(new IPredicate<TreeNode<T>>() {
+        MutableTreeNode<T> result = this.findOwnChild(new JPredicate<TreeNode<T>>() {
             @Override
             public boolean apply(@Nullable TreeNode<T> input) {
                 return input != null && data.equals(input.getData());
@@ -102,12 +102,12 @@ public class TreeNodeImpl<T> implements MutableTreeNode<T> {
     }
 
     @Override
-    public void removeOwnChildIf(@NotNull IPredicate<TreeNode<T>> predicate) {
+    public void removeOwnChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
         CollectionsUtils.removeIf(this.children.iterator(), predicate);
     }
 
     @Override
-    public void removeChildIf(@NotNull IPredicate<TreeNode<T>> predicate) {
+    public void removeChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
         CollectionsUtils.removeIf(this.iterator(), predicate);
     }
 

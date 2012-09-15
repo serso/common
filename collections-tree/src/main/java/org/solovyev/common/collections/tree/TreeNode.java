@@ -2,7 +2,7 @@ package org.solovyev.common.collections.tree;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,7 +19,7 @@ import java.util.Iterator;
 public interface TreeNode<T> extends Iterable<TreeNode<T>> {
 
     @Nullable
-    TreeNode<T> findOwnChild(@NotNull IPredicate<TreeNode<T>> finder);
+    TreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder);
 
     /**
      * NOTE: immutable collection is returned

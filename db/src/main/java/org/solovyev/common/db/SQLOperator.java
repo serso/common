@@ -1,4 +1,4 @@
-package org.solovyev.common.model.producers;
+package org.solovyev.common.db;
 
 /**
  * User: serso

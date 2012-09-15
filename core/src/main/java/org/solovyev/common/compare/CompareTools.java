@@ -1,7 +1,7 @@
 package org.solovyev.common.compare;
 
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.definitions.Identifiable;
+import org.solovyev.common.Identifiable;
 import org.solovyev.common.equals.EqualsTool;
 
 import java.util.Date;

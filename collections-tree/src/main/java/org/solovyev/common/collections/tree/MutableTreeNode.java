@@ -2,7 +2,7 @@ package org.solovyev.common.collections.tree;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,7 +19,7 @@ import java.util.Iterator;
 public interface MutableTreeNode<T> extends TreeNode<T> {
 
     @Nullable
-    MutableTreeNode<T> findOwnChild(@NotNull IPredicate<TreeNode<T>> finder);
+    MutableTreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder);
 
     void setData(@Nullable T data);
 
@@ -51,13 +51,13 @@ public interface MutableTreeNode<T> extends TreeNode<T> {
      * Method removes from OWN children elements which are applied by predicate
      * @param predicate removal condition
      */
-    void removeOwnChildIf(@NotNull IPredicate<TreeNode<T>> predicate);
+    void removeOwnChildIf(@NotNull JPredicate<TreeNode<T>> predicate);
 
     /**
      * Method removes from ALL children elements which are applied by predicate
      * @param predicate removal condition
      */
-    void removeChildIf(@NotNull IPredicate<TreeNode<T>> predicate);
+    void removeChildIf(@NotNull JPredicate<TreeNode<T>> predicate);
 
 
     /**

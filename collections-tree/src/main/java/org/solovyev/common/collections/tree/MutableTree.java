@@ -1,7 +1,7 @@
 package org.solovyev.common.collections.tree;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface MutableTree<T> extends Tree<T> {
     @NotNull
     MutableTreeNode<T> getRoot();
 
-    void removeNodeIf(@NotNull IPredicate<? super TreeNode<T>> filter);
+    void removeNodeIf(@NotNull JPredicate<? super TreeNode<T>> filter);
 
     @NotNull
     @Override

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 * Date: 10/3/11
 * Time: 12:49 AM
 */
-public class StartsWithFinder implements IPredicate<String> {
+public class StartsWithFinder implements JPredicate<String> {
 
 	private int i;
 

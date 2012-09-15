@@ -1,4 +1,4 @@
-package org.solovyev.common.definitions;
+package org.solovyev.common;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 10/29/11
  * Time: 12:36 PM
  */
-public interface IBuilder<T> {
+public interface JBuilder<T> {
 
 	@NotNull
 	T create();

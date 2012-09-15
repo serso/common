@@ -1,15 +1,14 @@
 package org.solovyev.common.math.matrix;
 
-import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.collections.CollectionsUtils;
 import org.solovyev.common.definitions.Property;
 import org.solovyev.common.exceptions.AnyRuntimeException;
 import org.solovyev.common.exceptions.IllegalMatrixFormatException;
 import org.solovyev.common.math.algorithms.matrix.BinaryMatrixOperationInput;
 import org.solovyev.common.math.algorithms.matrix.MatrixEquals;
 import org.solovyev.common.math.algorithms.matrix.MatrixMultiplication;
-import org.solovyev.common.collections.CollectionsUtils;
 import org.solovyev.common.text.StringUtils;
 
 import java.io.*;
@@ -64,10 +63,8 @@ public class MatrixUtils {
 		try {
 			result = klass.newInstance();
 		} catch (InstantiationException e) {
-			Logger.getLogger(MatrixUtils.class).error(e);
 			throw new AnyRuntimeException(e);
 		} catch (IllegalAccessException e) {
-			Logger.getLogger(MatrixUtils.class).error(e);
 			throw new AnyRuntimeException(e);
 		}
 

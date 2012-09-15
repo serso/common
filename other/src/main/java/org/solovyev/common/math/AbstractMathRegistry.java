@@ -8,10 +8,10 @@ package org.solovyev.common.math;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.CollectionsUtils;
 import org.solovyev.common.collections.SortedList;
-import org.solovyev.common.definitions.IBuilder;
+import org.solovyev.common.JBuilder;
 
 import java.util.*;
 
@@ -83,8 +83,8 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	}
 
 	@Override
-	public T add(@NotNull IBuilder<? extends T> IBuilder) {
-		final T entity = IBuilder.create();
+	public T add(@NotNull JBuilder<? extends T> JBuilder) {
+		final T entity = JBuilder.create();
 
 		T varFromRegister;
 
@@ -138,7 +138,7 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 
 	@Override
 	public T getById(@NotNull final Integer id) {
-		return CollectionsUtils.find(entities, new IPredicate<T>() {
+		return CollectionsUtils.find(entities, new JPredicate<T>() {
 			@Override
 			public boolean apply(@Nullable T t) {
 				return t != null && t.getId().equals(id);

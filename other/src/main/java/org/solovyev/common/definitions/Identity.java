@@ -1,6 +1,7 @@
 package org.solovyev.common.definitions;
 
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.common.Identifiable;
 import org.solovyev.common.compare.CompareTools;
 
 import java.io.Serializable;

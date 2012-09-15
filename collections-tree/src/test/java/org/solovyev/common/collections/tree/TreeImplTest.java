@@ -4,7 +4,7 @@ import junit.framework.Assert;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 
 
 /**
@@ -54,7 +54,7 @@ public class TreeImplTest {
     public void testRemoveNodeIf() throws Exception {
         // remove all even elements
         MutableTree<Integer> tree = createMockTree();
-        tree.removeNodeIf(new IPredicate<TreeNode<Integer>>() {
+        tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
             @Override
             public boolean apply(@Nullable TreeNode<Integer> input) {
                 return input.getData() % 2 == 0;
@@ -68,7 +68,7 @@ public class TreeImplTest {
 
         // remove all elements
         tree = createMockTree();
-        tree.removeNodeIf(new IPredicate<TreeNode<Integer>>() {
+        tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
             @Override
             public boolean apply(@Nullable TreeNode<Integer> input) {
                 return true;
@@ -80,7 +80,7 @@ public class TreeImplTest {
 
         // remove all odd elements
         tree = createMockTree();
-        tree.removeNodeIf(new IPredicate<TreeNode<Integer>>() {
+        tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
             @Override
             public boolean apply(@Nullable TreeNode<Integer> input) {
                 return input.getData() % 2 != 0;

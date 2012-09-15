@@ -6,7 +6,6 @@
 
 package org.solovyev.common.html;
 
-import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -43,7 +42,7 @@ public class Button implements Cloneable{
 		try {
 			clone = (Button)super.clone();
 		} catch (CloneNotSupportedException e) {
-			Logger.getLogger(this.getClass()).error(e);
+			throw new AssertionError(e);
 		}
 		return clone;
 	}

@@ -16,6 +16,7 @@
         <module>text</module>
         <module>core</module>
         <module>msg</module>
+        <module>db</module>
         <module>collections-tree</module>
         <module>collections-multimap</module>
         <module>core-jodatime</module>

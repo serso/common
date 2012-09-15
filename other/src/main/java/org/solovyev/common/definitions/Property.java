@@ -1,5 +1,7 @@
 package org.solovyev.common.definitions;
 
+import org.solovyev.common.Identifiable;
+
 /**
  * User: serso
  * Date: 29.04.2009
