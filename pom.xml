@@ -99,6 +99,24 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>com.electriccloud</groupId>
+                <artifactId>javac2-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <id>@NotNull Instrumentation</id>
+                        <goals>
+                            <goal>instrument</goal>
+                        </goals>
+                        <!--compile phase instead of process-classes because of proguard.
+                                                          @NotNull instrumentation will be done now after compilation and before proguard-->
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
