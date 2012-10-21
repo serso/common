@@ -5,14 +5,14 @@
     <parent>
         <artifactId>common</artifactId>
         <groupId>org.solovyev</groupId>
-        <version>1.0.0</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-msg</artifactId>
     <name>Java Common Library Message</name>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
