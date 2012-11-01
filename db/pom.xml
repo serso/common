@@ -5,12 +5,12 @@
     <parent>
         <groupId>org.solovyev</groupId>
         <artifactId>common</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-db</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <name>Java Common Library Database</name>
 
     <dependencies>
