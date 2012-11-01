@@ -11,7 +11,7 @@
 
     <groupId>org.solovyev</groupId>
     <artifactId>common</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>Java Common Library</name>
 
     <packaging>pom</packaging>
@@ -45,43 +45,43 @@
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-core</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-msg</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-text</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-other</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-collections-multimap</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-collections-tree</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-core-jodatime</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.3-SNAPSHOT</version>
             </dependency>
 
         </dependencies>
