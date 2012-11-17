@@ -9,30 +9,63 @@ package org.solovyev.common.text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * User: serso
  * Date: 9/26/11
  * Time: 11:10 PM
  */
-public class NumberMapper<T extends Number> implements Mapper<T>{
+public class NumberMapper<N extends Number> implements Mapper<N>{
 
 	@NotNull
-	private final Formatter<T> formatter = new ValueOfFormatter<T>();
+	private final Formatter<N> formatter = ValueOfFormatter.getNotNullFormatter();
 
 	@NotNull
-	private final Parser<T> parser;
+	private final Parser<? extends N> parser;
 
-	public NumberMapper(@NotNull Class<T> clazz) {
-		this.parser = new NumberParser<T>(clazz);
+    /**
+     * Use org.solovyev.common.text.NumberMapper#getMapper(java.lang.Class<N>) instead
+     * @param clazz class representing parsed object
+     */
+    @Deprecated
+	public NumberMapper(@NotNull Class<? extends N> clazz) {
+		this.parser = NumberParser.getParser(clazz);
 	}
 
 	@Override
-	public String formatValue(@Nullable T value) throws IllegalArgumentException {
+	public String formatValue(@Nullable N value) throws IllegalArgumentException {
 		return formatter.formatValue(value);
 	}
 
 	@Override
-	public T parseValue(@Nullable String value) throws IllegalArgumentException {
+	public N parseValue(@Nullable String value) throws IllegalArgumentException {
 		return this.parser.parseValue(value);
 	}
+
+        /*
+    **********************************************************************
+    *
+    *                           STATIC
+    *
+    **********************************************************************
+    */
+
+    private static final List<Class<? extends Number>> supportedClasses = NumberParser.supportedClasses;
+
+    private static final Map<Class<?>, Mapper<?>> mappers = new HashMap<Class<?>, Mapper<?>>(supportedClasses.size());
+
+    static {
+        for (Class<? extends Number> supportedClass : supportedClasses) {
+            mappers.put(supportedClass, new NumberMapper<Number>(supportedClass));
+        }
+    }
+
+    @NotNull
+    public static <N extends Number> Mapper<N> getMapper(@NotNull Class<N> clazz) {
+        assert supportedClasses.contains(clazz) : "Class " + clazz + " is not supported by " + NumberMapper.class;
+        return (Mapper<N>) mappers.get(clazz);
+    }
 }

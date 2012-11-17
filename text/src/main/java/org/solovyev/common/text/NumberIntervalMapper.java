@@ -21,7 +21,7 @@ import org.solovyev.common.interval.IntervalLimitImpl;
 public class NumberIntervalMapper<T extends Number & Comparable<T>> extends GenericIntervalMapper<T> {
 
     public NumberIntervalMapper(@NotNull Class<T> clazz) {
-        super(new NumberMapper<T>(clazz));
+        super(NumberMapper.getMapper(clazz));
     }
 
     @NotNull

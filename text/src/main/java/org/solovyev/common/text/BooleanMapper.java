@@ -16,10 +16,40 @@ import org.jetbrains.annotations.Nullable;
  */
 public class BooleanMapper implements Mapper<Boolean>{
 
-	@NotNull
-	private final Formatter<Boolean> formatter = new ValueOfFormatter<Boolean>();
+    /*
+    **********************************************************************
+    *
+    *                           STATIC
+    *
+    **********************************************************************
+    */
+    @NotNull
+    private final static Mapper<Boolean> instance = new BooleanMapper();
 
-	@Override
+    @NotNull
+    public static Mapper<Boolean> getInstance() {
+        return instance;
+    }
+
+    /*
+    **********************************************************************
+    *
+    *
+    *
+    **********************************************************************
+    */
+
+    @NotNull
+	private final Formatter<Boolean> formatter = ValueOfFormatter.getNotNullFormatter();
+
+    /**
+     * Use org.solovyev.common.text.BooleanMapper#getInstance() instead
+     */
+    @Deprecated
+    public BooleanMapper() {
+    }
+
+    @Override
 	public String formatValue(@Nullable Boolean value) throws IllegalArgumentException {
 		return formatter.formatValue(value);
 	}

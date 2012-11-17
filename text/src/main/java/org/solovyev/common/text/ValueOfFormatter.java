@@ -6,6 +6,7 @@
 
 package org.solovyev.common.text;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -15,8 +16,44 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ValueOfFormatter<T> implements Formatter<T> {
 
+    /*
+    **********************************************************************
+    *
+    *                           STATIC
+    *
+    **********************************************************************
+    */
+
+    @NotNull
+    private static final ValueOfFormatter<Object> notNullFormatter = new ValueOfFormatter<Object>(false);
+
+    @NotNull
+    private static final ValueOfFormatter<Object> nullableFormatter = new ValueOfFormatter<Object>(true);
+
+    @NotNull
+    public static <T> ValueOfFormatter<T> getNotNullFormatter() {
+        return (ValueOfFormatter<T>) notNullFormatter;
+    }
+
+    @NotNull
+    public static <T> ValueOfFormatter<T> getNullableFormatter() {
+        return (ValueOfFormatter<T>) nullableFormatter;
+    }
+
+    /*
+    **********************************************************************
+    *
+    *
+    *
+    **********************************************************************
+    */
+
 	private final boolean processNulls;
 
+    /**
+     *  Use org.solovyev.common.text.ValueOfFormatter#getNullableFormatter() or org.solovyev.common.text.ValueOfFormatter#getNotNullFormatter() instead
+     */
+    @Deprecated
 	public ValueOfFormatter() {
 		this(false);
 	}

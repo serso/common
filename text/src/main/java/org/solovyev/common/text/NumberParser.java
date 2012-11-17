@@ -9,33 +9,43 @@ package org.solovyev.common.text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * User: serso
  * Date: 9/26/11
  * Time: 11:07 PM
  */
-public class NumberParser<T extends Number> implements Parser<T> {
+public class NumberParser<N extends Number> implements Parser<N> {
 
 	@NotNull
-	private final Class<T> clazz;
+	private final Class<? extends N> clazz;
 
-	public NumberParser(@NotNull Class<T> clazz) {
+    /**
+     * Use org.solovyev.common.text.NumberParser#getParser(java.lang.Class<N>) instead
+     * @param clazz class representing parsing object
+     */
+    @Deprecated
+	public NumberParser(@NotNull Class<? extends N> clazz) {
 		this.clazz = clazz;
 	}
 
 	@Override
-	public T parseValue(@Nullable String value) throws IllegalArgumentException {
-		T result;
+	public N parseValue(@Nullable String value) throws IllegalArgumentException {
+		N result;
 
 		if (value != null) {
 			if (this.clazz.equals(Integer.class)) {
-				result = (T) Integer.valueOf(value);
+				result = (N) Integer.valueOf(value);
 			} else if (this.clazz.equals(Float.class)) {
-				result = (T) Float.valueOf(value);
+				result = (N) Float.valueOf(value);
 			} else if (this.clazz.equals(Long.class)) {
-				result = (T) Long.valueOf(value);
+				result = (N) Long.valueOf(value);
             } else if (this.clazz.equals(Double.class)) {
-                result = (T) Double.valueOf(value);
+                result = (N) Double.valueOf(value);
 			} else {
 				throw new UnsupportedOperationException(this.clazz + " is not supported!");
 			}
@@ -45,4 +55,28 @@ public class NumberParser<T extends Number> implements Parser<T> {
 
 		return result;
 	}
+
+            /*
+    **********************************************************************
+    *
+    *                           STATIC
+    *
+    **********************************************************************
+    */
+
+    static final List<Class<? extends Number>> supportedClasses = Arrays.<Class<? extends Number>>asList(Integer.class, Float.class, Long.class, Double.class);
+
+    private static final Map<Class<?>, Parser<?>> parsers = new HashMap<Class<?>, Parser<?>>(supportedClasses.size());
+
+    static {
+        for (Class<? extends Number> supportedClass : supportedClasses) {
+            parsers.put(supportedClass, new NumberParser<Number>(supportedClass));
+        }
+    }
+
+    @NotNull
+    public static <N extends Number> Parser<N> getParser(@NotNull Class<N> clazz) {
+        assert supportedClasses.contains(clazz) : "Class " + clazz + " is not supported by " + NumberParser.class;
+        return (Parser<N>) parsers.get(clazz);
+    }
 }
