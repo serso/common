@@ -3,13 +3,13 @@
     <parent>
         <groupId>org.solovyev</groupId>
         <artifactId>common</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-other</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
     <name>Java Common Library Other</name>
 
 

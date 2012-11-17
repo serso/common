@@ -3,13 +3,13 @@
     <parent>
         <artifactId>common</artifactId>
         <groupId>org.solovyev</groupId>
-        <version>1.0.3</version>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-core-jodatime</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
     <name>Java Common Library Core (with Joda Time dependencies)</name>
 
     <dependencies>
