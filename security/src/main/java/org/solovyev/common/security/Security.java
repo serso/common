@@ -20,13 +20,30 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common.db;
+package org.solovyev.common.security;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * User: serso
- * Date: Oct 16, 2009
- * Time: 12:36:29 AM
+ * Date: 8/20/12
+ * Time: 8:14 PM
  */
-public interface SqlProducer<T> extends Producer<T> {
-    public SqlQuery getQuery();
+public final class Security {
+
+    private Security() {
+        throw new AssertionError();
+    }
+
+    public static byte[] generateRandomBytes(@NotNull String randomAlgorithm, int length) throws NoSuchAlgorithmException, NoSuchProviderException {
+        final Random random = SecureRandom.getInstance(randomAlgorithm);
+        byte[] result = new byte[length];
+        random.nextBytes(result);
+        return result;
+    }
 }

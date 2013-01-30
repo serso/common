@@ -23,7 +23,7 @@
 package org.solovyev.common.equals;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.JObjects;
+import org.solovyev.common.Objects;
 import org.solovyev.common.JPredicate;
 
 /**
@@ -42,6 +42,6 @@ public class EqualsFilter<T> implements JPredicate<T> {
 
     @Override
     public boolean apply(T object) {
-        return JObjects.areEqual(filterObject, object);
+        return Objects.areEqual(filterObject, object);
     }
 }

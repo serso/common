@@ -25,8 +25,8 @@ package org.solovyev.common.collections.tree;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.JPredicate;
-import org.solovyev.common.collections.JCollections;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.collections.Collections;
+import org.solovyev.common.text.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +73,7 @@ public class TreeImpl<T> implements MutableTree<T> {
 
     @Override
     public void removeNodeIf(@NotNull JPredicate<? super TreeNode<T>> filter) {
-        JCollections.removeIf(this.iterator(), filter);
+        Collections.removeIf(this.iterator(), filter);
     }
 
     @NotNull
@@ -103,7 +103,7 @@ public class TreeImpl<T> implements MutableTree<T> {
 
         for ( DepthTreeIterator<T> it = iterator(); it.hasNext(); ) {
             final TreeNode<T> node = it.next();
-            result.append(JStrings.repeat(" ", it.getDepth()));
+            result.append(Strings.repeat(" ", it.getDepth()));
             result.append(node.getData());
             result.append("\n");
         }

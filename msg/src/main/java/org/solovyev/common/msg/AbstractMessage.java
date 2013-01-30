@@ -24,14 +24,13 @@ package org.solovyev.common.msg;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.collections.JCollections;
-import org.solovyev.common.JObjects;
+import org.solovyev.common.Objects;
+import org.solovyev.common.collections.Collections;
 import org.solovyev.common.equals.ListEqualizer;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 import org.solovyev.common.HashCodeBuilder;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,7 +51,7 @@ public abstract class AbstractMessage implements Message {
 	private final MessageType messageType;
 
 	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageType messageType, @Nullable Object... parameters) {
-		this(messageCode, messageType, JCollections.asList(parameters));
+		this(messageCode, messageType, Collections.asList(parameters));
 	}
 
 	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageType messageType, @NotNull List<?> parameters) {
@@ -70,7 +69,7 @@ public abstract class AbstractMessage implements Message {
 	@NotNull
 	@Override
 	public List<Object> getParameters() {
-		return Collections.unmodifiableList(this.parameters);
+		return java.util.Collections.unmodifiableList(this.parameters);
 	}
 
 	@NotNull
@@ -86,7 +85,7 @@ public abstract class AbstractMessage implements Message {
 
 		AbstractMessage abstractMessage = (AbstractMessage) o;
 
-		if (!JObjects.areEqual(parameters, abstractMessage.parameters, new ListEqualizer(true, null))) return false;
+		if (!Objects.areEqual(parameters, abstractMessage.parameters, new ListEqualizer(true, null))) return false;
 		if (!messageCode.equals(abstractMessage.messageCode)) return false;
 		if (messageType != abstractMessage.messageType) return false;
 
@@ -115,11 +114,11 @@ public abstract class AbstractMessage implements Message {
 		String result = null;
 
 		final String messagePattern = getMessagePattern(locale);
-		if (!JStrings.isEmpty(messagePattern)) {
+		if (!Strings.isEmpty(messagePattern)) {
             result = Messages.prepareMessage(locale, messagePattern, parameters);
         }
 
-		return JStrings.getNotEmpty(result, messageType.getStringValue() + ": message code = " + messageCode);
+		return Strings.getNotEmpty(result, messageType.getStringValue() + ": message code = " + messageCode);
 	}
 
     @NotNull

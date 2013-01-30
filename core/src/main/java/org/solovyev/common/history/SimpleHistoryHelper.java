@@ -24,7 +24,7 @@ package org.solovyev.common.history;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.JObjects;
+import org.solovyev.common.Objects;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -143,7 +143,7 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
         if (history.isEmpty()) {
             result = true;
         } else {
-            result = !JObjects.areEqual(getLastHistoryState(), currentState);
+            result = !Objects.areEqual(getLastHistoryState(), currentState);
         }
 
         return result;

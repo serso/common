@@ -24,8 +24,8 @@ package org.solovyev.common.text;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.JBytes;
-import org.solovyev.common.collections.JCollections;
+import org.solovyev.common.Bytes;
+import org.solovyev.common.collections.Collections;
 import org.solovyev.common.collections.LoopData;
 
 import java.io.IOException;
@@ -40,7 +40,8 @@ import java.util.Random;
  * Date: 27.04.2009
  * Time: 10:23:29
  */
-public final class JStrings {
+public final class Strings {
+
 
     private static final String EMPTY = "";
 
@@ -52,12 +53,12 @@ public final class JStrings {
     // random variable: must be synchronized in usage
     private static final Random RANDOM = new Random(new Date().getTime());
 
+    public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
+
     // not intended for instantiation
-    private JStrings() {
+    private Strings() {
         throw new AssertionError();
     }
-
-    public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
 
     public static String[] split(String source, String subString) {
         String[] params = source.split(subString);
@@ -126,7 +127,7 @@ public final class JStrings {
     public static String fromStackTrace(@Nullable StackTraceElement... stackTraceElements) {
         final StringBuilder sb = new StringBuilder();
 
-        if (!JCollections.isEmpty(stackTraceElements)) {
+        if (!Collections.isEmpty(stackTraceElements)) {
             for (StackTraceElement stackTraceElement : stackTraceElements) {
                 sb.append(" at ");
                 sb.append(stackTraceElement.toString());
@@ -203,11 +204,11 @@ public final class JStrings {
 
     @NotNull
     public static String toHex(@NotNull String s) {
-        return JBytes.toHex(s);
+        return Bytes.toHex(s);
     }
 
     @NotNull
     public static String fromHex(@NotNull String hex) {
-        return JBytes.fromHex(hex);
+        return Bytes.fromHex(hex);
     }
 }

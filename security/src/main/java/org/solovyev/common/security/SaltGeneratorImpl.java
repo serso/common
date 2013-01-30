@@ -23,7 +23,7 @@
 package org.solovyev.common.security;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.JBytes;
+import org.solovyev.common.Bytes;
 
 /**
  * User: serso
@@ -53,8 +53,8 @@ public class SaltGeneratorImpl implements SaltGenerator {
     @NotNull
     public String generateSalt() throws CiphererException {
         try {
-            byte[] salt = JSecurity.generateRandomBytes(randomAlgorithm, saltLength);
-            return JBytes.toHex(salt);
+            byte[] salt = Security.generateRandomBytes(randomAlgorithm, saltLength);
+            return Bytes.toHex(salt);
         } catch (Exception e) {
             throw new CiphererException("Unable to generate salt due to some errors!", e);
         }

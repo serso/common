@@ -34,7 +34,7 @@ import org.solovyev.common.equals.Equalizer;
 import java.util.Date;
 import java.util.List;
 
-public class JObjects {
+public class Objects {
 
     /*
     **********************************************************************

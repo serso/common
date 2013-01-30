@@ -20,30 +20,30 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common.security;
+package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
+import junit.framework.Assert;
+import org.junit.Test;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * User: serso
- * Date: 8/20/12
- * Time: 8:14 PM
+ * Date: 9/13/12
+ * Time: 8:48 PM
  */
-public final class JSecurity {
+public class StringsTest {
 
-    private JSecurity() {
-        throw new AssertionError();
-    }
+    @Test
+    public void testGenerateRandomString() throws Exception {
+        final Map<String, String> generatedStrings = new HashMap<String, String>(100);
 
-    public static byte[] generateRandomBytes(@NotNull String randomAlgorithm, int length) throws NoSuchAlgorithmException, NoSuchProviderException {
-        final Random random = SecureRandom.getInstance(randomAlgorithm);
-        byte[] result = new byte[length];
-        random.nextBytes(result);
-        return result;
+        for (int i = 0; i < 100; i++ ) {
+            final String newString = Strings.generateRandomString(100);
+            final String oldString = generatedStrings.get(newString);
+            Assert.assertNull("Iteration " + i + "\nNew string: " + newString + "\nOld string: " + oldString, oldString);
+            generatedStrings.put(newString, newString);
+        }
     }
 }

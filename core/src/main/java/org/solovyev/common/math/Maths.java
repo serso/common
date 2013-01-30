@@ -24,9 +24,9 @@ package org.solovyev.common.math;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.JObjects;
+import org.solovyev.common.Objects;
 import org.solovyev.common.MutableObject;
-import org.solovyev.common.collections.JCollections;
+import org.solovyev.common.collections.Collections;
 
 import java.util.Collection;
 import java.util.List;
@@ -129,7 +129,7 @@ public class Maths {
 
     @Nullable
     public static <T extends Number> T min(T... numbers) {
-        return min(JCollections.asList(numbers));
+        return min(Collections.asList(numbers));
     }
 
     @Nullable
@@ -143,7 +143,7 @@ public class Maths {
 
     @Nullable
     public static <T extends Number> T max(T... numbers) {
-        return max(JCollections.asList(numbers));
+        return max(Collections.asList(numbers));
     }
 
     @Nullable
@@ -159,7 +159,7 @@ public class Maths {
     @Nullable
     public static <T extends Number> T minMax(@Nullable Collection<T> numbers, @NotNull ComparisonType comparisonType) {
         T result = null;
-        if (!JCollections.isEmpty(numbers)) {
+        if (!Collections.isEmpty(numbers)) {
             for (T number : numbers) {
                 if (number != null) {
                     if (result == null) {
@@ -179,12 +179,12 @@ public class Maths {
 
         switch (comparisonType) {
             case min:
-                if (JObjects.compare(first, second) > 0) {
+                if (Objects.compare(first, second) > 0) {
                     result = second;
                 }
                 break;
             case max:
-                if (JObjects.compare(first, second) < 0) {
+                if (Objects.compare(first, second) < 0) {
                     result = second;
                 }
                 break;

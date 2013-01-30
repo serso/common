@@ -44,7 +44,7 @@ public class LoopData {
     private long index = 0;
 
     public LoopData(@Nullable Collection collection) {
-        if (JCollections.isEmpty(collection)) {
+        if (Collections.isEmpty(collection)) {
             this.length = (long) 0;
         } else {
             this.length = (long) collection.size();
@@ -52,7 +52,7 @@ public class LoopData {
     }
 
     public LoopData(@Nullable Object... objects) {
-        if (JCollections.isEmpty(objects)) {
+        if (Collections.isEmpty(objects)) {
             this.length = (long) 0;
         } else {
             this.length = (long) objects.length;

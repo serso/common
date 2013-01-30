@@ -7,11 +7,11 @@ import org.jetbrains.annotations.NotNull;
  * Date: 8/20/12
  * Time: 8:02 PM
  */
-public final class JBytes {
+public final class Bytes {
 
     private final static String HEX = "0123456789ABCDEF";
 
-    private JBytes() {
+    private Bytes() {
         throw new AssertionError();
     }
 

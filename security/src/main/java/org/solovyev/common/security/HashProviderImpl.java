@@ -23,7 +23,7 @@
 package org.solovyev.common.security;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.JBytes;
+import org.solovyev.common.Bytes;
 
 import java.security.MessageDigest;
 
@@ -59,7 +59,7 @@ public class HashProviderImpl implements HashProvider {
         try {
             final String input = text + salt;
             final MessageDigest md = MessageDigest.getInstance(hashAlgorithm, provider);
-            return JBytes.toHex(md.digest(input.getBytes("UTF-8")));
+            return Bytes.toHex(md.digest(input.getBytes("UTF-8")));
         } catch (Exception e) {
             throw new CiphererException("Unable to get hash due to some errors!", e);
         }

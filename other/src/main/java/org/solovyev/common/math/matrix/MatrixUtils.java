@@ -24,14 +24,14 @@ package org.solovyev.common.math.matrix;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.collections.JCollections;
+import org.solovyev.common.collections.Collections;
 import org.solovyev.common.definitions.Property;
 import org.solovyev.common.exceptions.AnyRuntimeException;
 import org.solovyev.common.exceptions.IllegalMatrixFormatException;
 import org.solovyev.common.math.algorithms.matrix.BinaryMatrixOperationInput;
 import org.solovyev.common.math.algorithms.matrix.MatrixEquals;
 import org.solovyev.common.math.algorithms.matrix.MatrixMultiplication;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 
 import java.io.*;
 import java.util.List;
@@ -309,9 +309,9 @@ public class MatrixUtils {
 			s = in.readLine();
 		}
 
-		String[] values = JStrings.split(s, " ");
+		String[] values = Strings.split(s, " ");
 
-		if (!JCollections.isEmpty(values)) {
+		if (!Collections.isEmpty(values)) {
 
 			if (values.length == 1) {
 				Integer size = Integer.valueOf(values[0]);
@@ -332,7 +332,7 @@ public class MatrixUtils {
 						s = in.readLine();
 
 						if (s != null) {
-							values = JStrings.split(in.readLine(), " ");
+							values = Strings.split(in.readLine(), " ");
 
 							if (values != null && values.length == matrix.getNumberOfColumns()) {
 
@@ -358,7 +358,7 @@ public class MatrixUtils {
 				case sparse:
 					while ((s = in.readLine()) != null) {
 
-						values = JStrings.split(s, " ");
+						values = Strings.split(s, " ");
 
 						if (values.length > 1) {
 

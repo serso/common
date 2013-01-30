@@ -24,7 +24,7 @@ package org.solovyev.common.msg;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.collections.JCollections;
+import org.solovyev.common.collections.Collections;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -64,7 +64,7 @@ public final class Messages {
     public static String prepareMessage(@NotNull Locale locale, @NotNull String messagePattern, @NotNull List<?> parameters) {
         String result;
 
-        if (JCollections.isEmpty(parameters)) {
+        if (Collections.isEmpty(parameters)) {
             result = messagePattern;
         } else {
             final MessageFormat format = new MessageFormat(messagePattern);

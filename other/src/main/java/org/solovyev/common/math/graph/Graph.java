@@ -24,7 +24,7 @@ package org.solovyev.common.math.graph;
 
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.JCloneable;
-import org.solovyev.common.clone.JCloneables;
+import org.solovyev.common.clone.Cloneables;
 import org.solovyev.common.definitions.Empty;
 import org.solovyev.common.definitions.MultiIdentity;
 import org.solovyev.common.definitions.Property;
@@ -195,7 +195,7 @@ public class Graph<T, N> implements TextDisplay, JCloneable<Graph<T, N>> {
             result = (Graph<T, N>) super.clone();
 
             //nodes list
-            result.setNodes(JCloneables.deepListCloning(this.getNodes()));
+            result.setNodes(Cloneables.deepListCloning(this.getNodes()));
 
             //adding linked nodes
             for (Node<T, N> node : this.nodes) {

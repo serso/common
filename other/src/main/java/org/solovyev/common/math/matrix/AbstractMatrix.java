@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.LinkedNode;
 import org.solovyev.common.math.graph.Node;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 
 import java.io.*;
 
@@ -89,7 +89,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		if (fName != null) {
 			BufferedReader in = new BufferedReader(new FileReader(fName));
 			String s = in.readLine();
-			String[] params = JStrings.split(s, " ");
+			String[] params = Strings.split(s, " ");
 
 			if (params != null && params.length > 0) {
 				if (params.length == 1) {
@@ -104,7 +104,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 					case dense:
 						for (int i = 0; i < this.getNumberOfRows(); i++) {
 							s = in.readLine();
-							params = JStrings.split(s, " ");
+							params = Strings.split(s, " ");
 							if (params != null && params.length == this.getNumberOfColumns()) {
 								for (int j = 0; j < this.getNumberOfColumns(); j++) {
 									this.set(i, j, this.getValueFromString(params[j]));
@@ -119,7 +119,7 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 						Integer param1;
 						T param2;
 						while ((s = in.readLine()) != null) {
-							params = JStrings.split(s, " ");
+							params = Strings.split(s, " ");
 							if (params.length > 2) {
 								param0 = Integer.valueOf(params[0]) - 1;
 								param1 = Integer.valueOf(params[1]) - 1;

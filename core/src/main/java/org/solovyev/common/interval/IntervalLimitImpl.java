@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.JCloneable;
 import org.solovyev.common.JObject;
-import org.solovyev.common.JObjects;
+import org.solovyev.common.Objects;
 
 /**
  * User: serso
@@ -238,7 +238,7 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
             }
         }
 
-        return JObjects.compare(this.value, that.getValue());
+        return Objects.compare(this.value, that.getValue());
     }
 
     @NotNull

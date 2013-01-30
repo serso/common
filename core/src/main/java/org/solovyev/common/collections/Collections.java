@@ -50,7 +50,11 @@ import java.util.TreeMap;
  * Date: Mar 29, 2010
  * Time: 10:54:18 PM
  */
-public class JCollections {
+public final class Collections {
+
+    private Collections() {
+        throw new AssertionError();
+    }
 
     @NotNull
     public static String toString(@NotNull Collection<Object> objects, @NotNull String separator) {
@@ -360,7 +364,7 @@ public class JCollections {
     public static <T> List<T> asList(T... ts) {
         final List<T> result = new ArrayList<T>();
 
-        if (!JCollections.isEmpty(ts)) {
+        if (!Collections.isEmpty(ts)) {
             for (T t : ts) {
                 result.add(t);
             }

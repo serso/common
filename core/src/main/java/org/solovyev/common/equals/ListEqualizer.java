@@ -24,7 +24,7 @@ package org.solovyev.common.equals;
 
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.EqualsResult;
-import org.solovyev.common.JObjects;
+import org.solovyev.common.Objects;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class ListEqualizer<T> implements Equalizer<List<T>> {
 
     @Override
     public boolean equals(@Nullable List<T> first, @Nullable List<T> second) {
-        final EqualsResult equalsResult = JObjects.getEqualsResult(first, second);
+        final EqualsResult equalsResult = Objects.getEqualsResult(first, second);
         boolean result = false;
         if (equalsResult.areBothNulls()) {
             result = true;
@@ -60,7 +60,7 @@ public class ListEqualizer<T> implements Equalizer<List<T>> {
                         final T el1 = first.get(i);
                         final T el2 = second.get(i);
 
-                        if (!JObjects.areEqual(el1, el2, nestedEqualizer)) {
+                        if (!Objects.areEqual(el1, el2, nestedEqualizer)) {
                             result = false;
                             break;
                         }
