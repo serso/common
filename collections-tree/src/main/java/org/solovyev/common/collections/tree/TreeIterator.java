@@ -10,8 +10,7 @@ import java.util.Iterator;
 public interface TreeIterator<T> extends Iterator<TreeNode<T>> {
 
     /**
-     *
-     * @return depth
+     * @return current depth in tree
      */
     int getDepth();
 }

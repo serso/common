@@ -23,10 +23,10 @@ public class TreeImpl<T> implements MutableTree<T> {
     }
 
     @NotNull
-    public static <T> MutableTree<T> newInstance(@Nullable T data) {
+    public static <T> MutableTree<T> newInstance(@Nullable T root) {
         final TreeImpl<T> result = new TreeImpl<T>();
 
-        result.root = TreeNodeImpl.newInstance(data);
+        result.root = TreeNodeImpl.newInstance(root);
 
         return result;
     }

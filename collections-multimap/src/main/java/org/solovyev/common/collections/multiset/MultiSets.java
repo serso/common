@@ -22,6 +22,8 @@
 
 package org.solovyev.common.collections.multiset;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -71,4 +73,14 @@ public final class MultiSets {
                     throw new IllegalStateException();
                 }
             };
+
+    @NotNull
+    public static <E> OneInstanceMultiSet<E> newOneInstanceMultiSet() {
+        return HashMapOneInstanceMultiSet.newInstance();
+    }
+
+    @NotNull
+    public static <E> ManyInstancesMultiSet<E> newManyInstancesMultiSet() {
+        return HashMapManyInstancesMultiSet.newInstance();
+    }
 }
