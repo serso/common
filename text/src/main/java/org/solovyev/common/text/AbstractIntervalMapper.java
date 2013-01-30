@@ -121,4 +121,14 @@ public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements
 
     @NotNull
     protected abstract Interval<T> newInstance(@Nullable T left, @Nullable T right);
+
+    @NotNull
+    public final Parser<T> getParser() {
+        return parser;
+    }
+
+    @NotNull
+    public final Formatter<T> getFormatter() {
+        return formatter;
+    }
 }
