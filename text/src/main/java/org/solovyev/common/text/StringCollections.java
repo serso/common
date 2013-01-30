@@ -50,7 +50,7 @@ public class StringCollections {
                                     @NotNull Parser<T> parser) {
         final List<T> result = new ArrayList<T>();
 
-        if (!StringUtils.isEmpty(string)) {
+        if (!JStrings.isEmpty(string)) {
             @SuppressWarnings({"ConstantConditions"}) final String[] parts = string.split(delimiter);
 
             if (!JCollections.isEmpty(parts)) {

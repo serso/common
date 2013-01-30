@@ -24,6 +24,7 @@
 package org.solovyev.common.filter;
 
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,18 +44,18 @@ import java.util.List;
 public class Filter<T> {
 
 	//filter rule used for filtration
-	protected final FilterRule<T> filterRule;
+	protected final JPredicate<T> filterRule;
 
 	private final boolean inverseFilter;
 
 	/**
 	 * @param filterRule rule according to which filtration will be done
 	 */
-	public Filter(FilterRule<T> filterRule) {
+	public Filter(JPredicate<T> filterRule) {
 		this(filterRule, false);
 	}
 
-	public Filter(FilterRule<T> filterRule, boolean inverseFilter) {
+	public Filter(JPredicate<T> filterRule, boolean inverseFilter) {
 		this.filterRule = filterRule;
 		this.inverseFilter = inverseFilter;
 	}
@@ -72,7 +73,7 @@ public class Filter<T> {
 
 		if (it != null && it.hasNext()) {
 			T element = it.next();
-			elementData = new FilterData<T>(element, filter(element, it));
+			elementData = FilterData.newInstance(element, filter(element, it));
 		}
 
 		return elementData;
@@ -100,7 +101,7 @@ public class Filter<T> {
 		boolean wasFiltered = false;
 
 		if (filterRule != null && it != null) {
-			wasFiltered = filterRule.isFiltered(element) != inverseFilter;
+			wasFiltered = filterRule.apply(element) != inverseFilter;
 			if (wasFiltered) {
 				it.remove();
 			}
@@ -127,7 +128,7 @@ public class Filter<T> {
 		while ( it != null && it.hasNext() ) {
 			el = it.next();
 			if ( filterRule != null ) {
-				if ( filterRule.isFiltered(el) ) {
+				if ( filterRule.apply(el) ) {
 					firstOccurrence = el;
 					break;
 				}
@@ -149,11 +150,11 @@ public class Filter<T> {
 	 *
 	 * @return copy of passed list filtered according to filter rule
 	 */
-	public static <T> List<T> filterCopy(@NotNull Collection<T> list, @NotNull FilterRule<T> filterRule) {
+	public static <T> List<T> filterCopy(@NotNull Collection<T> list, @NotNull JPredicate<T> filterRule) {
 		return filter(new ArrayList<T>(list), filterRule);
 	}
 
-	public static <T> void filter(@NotNull Iterator<T> it, final boolean inverseFilter, @NotNull FilterRule<T> filterRule) {
+	public static <T> void filter(@NotNull Iterator<T> it, final boolean inverseFilter, @NotNull JPredicate<T> filterRule) {
 		final Filter<T> filter = new Filter<T>(filterRule, inverseFilter);
 
 		filter.filter(it);
@@ -169,11 +170,11 @@ public class Filter<T> {
 	 *
 	 * @return passed list instance filtered according to filter rule
 	 */
-	public static <X extends Collection<T>, T> X filter (@NotNull X list, @NotNull FilterRule<T> filterRule) {
+	public static <X extends Collection<T>, T> X filter (@NotNull X list, @NotNull JPredicate<T> filterRule) {
 		return filter(list, false, filterRule);
 	}
 
-	public static <X extends Collection<T>, T> X filter (@NotNull X list, boolean inverseFilter, @NotNull FilterRule<T> filterRule) {
+	public static <X extends Collection<T>, T> X filter (@NotNull X list, boolean inverseFilter, @NotNull JPredicate<T> filterRule) {
 		filter(list.iterator(), inverseFilter, filterRule);
 		return list;
 	}

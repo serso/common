@@ -23,6 +23,7 @@
 package org.solovyev.common.filter;
 
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,24 +33,24 @@ import java.util.List;
  * Date: 10/15/11
  * Time: 2:03 PM
  */
-public class FilterRulesChain<T> implements FilterRule<T> {
+public class FilterRulesChain<T> implements JPredicate<T> {
 
 	@NotNull
-	private final List<FilterRule<T>> filters = new ArrayList<FilterRule<T>>();
+	private final List<JPredicate<T>> filters = new ArrayList<JPredicate<T>>();
 
 	public FilterRulesChain() {
 	}
 
-	public void addFilterRule(@NotNull FilterRule<T> filterRule) {
+	public void addFilterRule(@NotNull JPredicate<T> filterRule) {
 		filters.add(filterRule);
 	}
 
 	@Override
-	public boolean isFiltered(T object) {
+	public boolean apply(T object) {
 		boolean result = false;
 
-		for (FilterRule<T> filter : filters) {
-			if (filter.isFiltered(object)) {
+		for (JPredicate<T> filter : filters) {
+			if (filter.apply(object)) {
 				result = true;
 				break;
 			}

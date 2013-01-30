@@ -9,7 +9,7 @@ import org.solovyev.common.exceptions.IllegalMatrixFormatException;
 import org.solovyev.common.math.algorithms.matrix.BinaryMatrixOperationInput;
 import org.solovyev.common.math.algorithms.matrix.MatrixEquals;
 import org.solovyev.common.math.algorithms.matrix.MatrixMultiplication;
-import org.solovyev.common.text.StringUtils;
+import org.solovyev.common.text.JStrings;
 
 import java.io.*;
 import java.util.List;
@@ -287,7 +287,7 @@ public class MatrixUtils {
 			s = in.readLine();
 		}
 
-		String[] values = StringUtils.split(s, " ");
+		String[] values = JStrings.split(s, " ");
 
 		if (!JCollections.isEmpty(values)) {
 
@@ -310,7 +310,7 @@ public class MatrixUtils {
 						s = in.readLine();
 
 						if (s != null) {
-							values = StringUtils.split(in.readLine(), " ");
+							values = JStrings.split(in.readLine(), " ");
 
 							if (values != null && values.length == matrix.getNumberOfColumns()) {
 
@@ -336,7 +336,7 @@ public class MatrixUtils {
 				case sparse:
 					while ((s = in.readLine()) != null) {
 
-						values = StringUtils.split(s, " ");
+						values = JStrings.split(s, " ");
 
 						if (values.length > 1) {
 

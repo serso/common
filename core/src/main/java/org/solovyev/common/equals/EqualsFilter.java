@@ -23,14 +23,15 @@
 package org.solovyev.common.equals;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.filter.FilterRule;
+import org.solovyev.common.JObjects;
+import org.solovyev.common.JPredicate;
 
 /**
  * User: serso
  * Date: 9/9/11
  * Time: 2:38 PM
  */
-public class EqualsFilter<T> implements FilterRule<T> {
+public class EqualsFilter<T> implements JPredicate<T> {
 
 	@NotNull
 	private final T filterObject;
@@ -40,7 +41,7 @@ public class EqualsFilter<T> implements FilterRule<T> {
 	}
 
 	@Override
-	public boolean isFiltered(T object) {
-		return EqualsTool.areEqual(filterObject, object);
+	public boolean apply(T object) {
+		return JObjects.areEqual(filterObject, object);
 	}
 }

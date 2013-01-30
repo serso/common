@@ -20,7 +20,7 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common.equals;
+package org.solovyev.common;
 
 /**
  * User: serso
@@ -29,8 +29,9 @@ package org.solovyev.common.equals;
  */
 
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.equals.Equalizer;
 
-public class EqualsTool {
+public class JObjects {
 
 	public static Result getEqualsResult(@Nullable Object o1, @Nullable Object o2) {
 		return new Result<Object>(o1, o2, null);

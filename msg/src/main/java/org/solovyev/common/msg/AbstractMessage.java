@@ -9,9 +9,9 @@ package org.solovyev.common.msg;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.collections.JCollections;
-import org.solovyev.common.equals.EqualsTool;
+import org.solovyev.common.JObjects;
 import org.solovyev.common.equals.ListEqualizer;
-import org.solovyev.common.text.StringUtils;
+import org.solovyev.common.text.JStrings;
 import org.solovyev.common.HashCodeBuilder;
 
 import java.text.MessageFormat;
@@ -71,7 +71,7 @@ public abstract class AbstractMessage implements Message {
 
 		AbstractMessage abstractMessage = (AbstractMessage) o;
 
-		if (!EqualsTool.areEqual(parameters, abstractMessage.parameters, new ListEqualizer(true, null))) return false;
+		if (!JObjects.areEqual(parameters, abstractMessage.parameters, new ListEqualizer(true, null))) return false;
 		if (!messageCode.equals(abstractMessage.messageCode)) return false;
 		if (messageType != abstractMessage.messageType) return false;
 
@@ -100,7 +100,7 @@ public abstract class AbstractMessage implements Message {
 		String result = null;
 
 		final String messagePattern = getMessagePattern(locale);
-		if (!StringUtils.isEmpty(messagePattern)) {
+		if (!JStrings.isEmpty(messagePattern)) {
 			if (JCollections.isEmpty(parameters)) {
 				result = messagePattern;
 			} else {
@@ -113,7 +113,7 @@ public abstract class AbstractMessage implements Message {
 			}
 		}
 
-		return StringUtils.getNotEmpty(result, messageType.getStringValue() + ": message code = " + messageCode);
+		return JStrings.getNotEmpty(result, messageType.getStringValue() + ": message code = " + messageCode);
 	}
 
 	@NotNull

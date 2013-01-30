@@ -29,21 +29,29 @@ package org.solovyev.common.filter;
 * Time: 5:10:52 PM
 */
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Used in Filter
  * @param <T> type of element in iterator
  */
 public class FilterData<T> {
 
-	private T element = null;
-	private boolean wasFiltered = false;
+	private final T element;
 
-	public FilterData(T element, boolean wasFiltered) {
+	private final boolean wasFiltered;
+
+	private FilterData(T element, boolean wasFiltered) {
 		this.element = element;
 		this.wasFiltered = wasFiltered;
 	}
 
-	public T getElement() {
+    @NotNull
+    public static <T> FilterData<T> newInstance(T element, boolean wasFiltered) {
+        return new FilterData<T>(element, wasFiltered);
+    }
+
+    public T getElement() {
 		return element;
 	}
 
@@ -53,13 +61,5 @@ public class FilterData<T> {
 
 	public boolean wasFiltered() {
 		return wasFiltered;
-	}
-
-	public void setElement(T element) {
-		this.element = element;
-	}
-
-	public void setWasFiltered(boolean wasFiltered) {
-		this.wasFiltered = wasFiltered;
 	}
 }

@@ -23,9 +23,7 @@
 package org.solovyev.common.equals;
 
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.equals.Equalizer;
-import org.solovyev.common.equals.EqualsUtils;
-import org.solovyev.common.math.MathUtils;
+import org.solovyev.common.math.Maths;
 
 /**
  * User: serso
@@ -44,6 +42,6 @@ public class DoubleEqualizer implements Equalizer<Double> {
 	public boolean equals(@Nullable Double first, @Nullable Double second) {
 		final EqualsUtils.Result result =  EqualsUtils.getEqualsResult(first, second);
 		//noinspection ConstantConditions
-		return result.areBothNulls() || (result.areBothNotNulls() && MathUtils.equals(first, second, precision));
+		return result.areBothNulls() || (result.areBothNotNulls() && Maths.equals(first, second, precision));
 	}
 }

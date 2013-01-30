@@ -39,7 +39,7 @@ import java.util.Random;
  * Date: 27.04.2009
  * Time: 10:23:29
  */
-public final class StringUtils {
+public final class JStrings {
 
     private static final String EMPTY = "";
 
@@ -52,7 +52,7 @@ public final class StringUtils {
     private static final Random RANDOM = new Random(new Date().getTime());
 
     // not intended for instantiation
-	private StringUtils() {
+	private JStrings() {
 		throw new AssertionError();
 	}
 

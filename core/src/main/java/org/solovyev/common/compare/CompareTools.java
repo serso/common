@@ -24,7 +24,7 @@ package org.solovyev.common.compare;
 
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.Identifiable;
-import org.solovyev.common.equals.EqualsTool;
+import org.solovyev.common.JObjects;
 
 import java.util.Date;
 import java.util.List;
@@ -189,7 +189,7 @@ public final class CompareTools {
         Integer result;
 
         if (o1 == null && o2 == null) {
-            result = EqualsTool.Result.BOTH_NULLS_CONST;
+            result = JObjects.Result.BOTH_NULLS_CONST;
         } else if (o1 == null) {
             result = -1;
         } else if (o2 == null) {
@@ -209,7 +209,7 @@ public final class CompareTools {
      * @param o2 second compared object
      * @return if both objects are nulls then 0 (they are equal), if first is null then -1, if second is null then 1, otherwise - null
      */
-    public static EqualsTool.Result compareObjectsOnNullnessWithResult(Object o1, Object o2) {
-        return EqualsTool.getEqualsResult(o1, o2);
+    public static JObjects.Result compareObjectsOnNullnessWithResult(Object o1, Object o2) {
+        return JObjects.getEqualsResult(o1, o2);
     }
 }

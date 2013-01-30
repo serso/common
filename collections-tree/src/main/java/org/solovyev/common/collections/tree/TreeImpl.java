@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.JCollections;
-import org.solovyev.common.text.StringUtils;
+import org.solovyev.common.text.JStrings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +81,7 @@ public class TreeImpl<T> implements MutableTree<T> {
 
         for ( DepthTreeIterator<T> it = iterator(); it.hasNext(); ) {
             final TreeNode<T> node = it.next();
-            result.append(StringUtils.repeat(" ", it.getDepth()));
+            result.append(JStrings.repeat(" ", it.getDepth()));
             result.append(node.getData());
             result.append("\n");
         }

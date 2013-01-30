@@ -36,7 +36,7 @@ import java.util.List;
  * Date: 02.07.2009
  * Time: 13:32:29
  */
-public class MathUtils {
+public class Maths {
 
 	/**
 	 * @param nominal nominal
