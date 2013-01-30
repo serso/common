@@ -8,7 +8,7 @@ package org.solovyev.common.msg;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.collections.JCollections;
 import org.solovyev.common.equals.EqualsTool;
 import org.solovyev.common.equals.ListEqualizer;
 import org.solovyev.common.text.StringUtils;
@@ -37,7 +37,7 @@ public abstract class AbstractMessage implements Message {
 	private final MessageType messageType;
 
 	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageType messageType, @Nullable Object... parameters) {
-		this(messageCode, messageType, CollectionsUtils.asList(parameters));
+		this(messageCode, messageType, JCollections.asList(parameters));
 	}
 
 	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageType messageType, @NotNull List<?> parameters) {
@@ -80,7 +80,7 @@ public abstract class AbstractMessage implements Message {
 
 	@Override
 	public int hashCode() {
-		final HashCodeBuilder hcb = new HashCodeBuilder();
+		final HashCodeBuilder hcb = HashCodeBuilder.newInstance();
 
 		hcb.append(messageCode);
 		hcb.append(messageType);
@@ -101,7 +101,7 @@ public abstract class AbstractMessage implements Message {
 
 		final String messagePattern = getMessagePattern(locale);
 		if (!StringUtils.isEmpty(messagePattern)) {
-			if (CollectionsUtils.isEmpty(parameters)) {
+			if (JCollections.isEmpty(parameters)) {
 				result = messagePattern;
 			} else {
 				final MessageFormat format = new MessageFormat(messagePattern);

@@ -1,8 +1,30 @@
+/*
+ * Copyright 2013 serso aka se.solovyev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * ---------------------------------------------------------------------
+ * Contact details
+ *
+ * Email: se.solovyev@gmail.com
+ * Site:  http://se.solovyev.org
+ */
+
 package org.solovyev.common.math;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.collections.JCollections;
 import org.solovyev.common.compare.CompareTools;
 import org.solovyev.common.MutableObject;
 
@@ -107,7 +129,7 @@ public class MathUtils {
 
 	@Nullable
 	public static <T extends Number> T min(T... numbers) {
-		return min(CollectionsUtils.asList(numbers));
+		return min(JCollections.asList(numbers));
 	}
 
 	@Nullable
@@ -121,7 +143,7 @@ public class MathUtils {
 
 	@Nullable
 	public static <T extends Number> T max(T... numbers) {
-		return max(CollectionsUtils.asList(numbers));
+		return max(JCollections.asList(numbers));
 	}
 
 	@Nullable
@@ -137,7 +159,7 @@ public class MathUtils {
 	@Nullable
 	public static <T extends Number> T minMax(@Nullable Collection<T> numbers, @NotNull ComparisonType comparisonType) {
 		T result = null;
-		if (!CollectionsUtils.isEmpty(numbers)) {
+		if (!JCollections.isEmpty(numbers)) {
 			for (T number : numbers) {
 				if (number != null) {
 					if (result == null) {

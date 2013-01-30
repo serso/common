@@ -1,7 +1,23 @@
 /*
- * Copyright (c) 2009-2010. Created by serso.
+ * Copyright 2013 serso aka se.solovyev
  *
- * For more information, please, contact serso1988@gmail.com.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * ---------------------------------------------------------------------
+ * Contact details
+ *
+ * Email: se.solovyev@gmail.com
+ * Site:  http://se.solovyev.org
  */
 
 package org.solovyev.common;
@@ -15,7 +31,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Selectable<T> {
 
-	private Boolean selected = false;
+	private boolean selected = false;
+
 	@NotNull
 	final private T value;
 
@@ -33,12 +50,11 @@ public class Selectable<T> {
 		return value;
 	}
 
-	@NotNull
-	public Boolean getSelected() {
+	public boolean getSelected() {
 		return selected;
 	}
 
-	public void setSelected(@NotNull Boolean selected) {
+	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
 }

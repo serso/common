@@ -3,7 +3,7 @@ package org.solovyev.common.collections.tree;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.JPredicate;
-import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.collections.JCollections;
 
 import java.util.*;
 
@@ -38,7 +38,7 @@ public class TreeNodeImpl<T> implements MutableTreeNode<T> {
     @Nullable
     @Override
     public MutableTreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder) {
-        return CollectionsUtils.find(children.iterator(), finder);
+        return JCollections.find(children.iterator(), finder);
     }
 
     @Override
@@ -103,12 +103,12 @@ public class TreeNodeImpl<T> implements MutableTreeNode<T> {
 
     @Override
     public void removeOwnChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
-        CollectionsUtils.removeIf(this.children.iterator(), predicate);
+        JCollections.removeIf(this.children.iterator(), predicate);
     }
 
     @Override
     public void removeChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
-        CollectionsUtils.removeIf(this.iterator(), predicate);
+        JCollections.removeIf(this.iterator(), predicate);
     }
 
     @Nullable

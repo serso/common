@@ -3,7 +3,7 @@ package org.solovyev.common.collections.tree;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.JPredicate;
-import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.collections.JCollections;
 import org.solovyev.common.text.StringUtils;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class TreeImpl<T> implements MutableTree<T> {
 
     @Override
     public void removeNodeIf(@NotNull JPredicate<? super TreeNode<T>> filter) {
-        CollectionsUtils.removeIf(this.iterator(), filter);
+        JCollections.removeIf(this.iterator(), filter);
     }
 
     @NotNull

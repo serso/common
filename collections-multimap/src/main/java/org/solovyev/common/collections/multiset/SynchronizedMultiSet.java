@@ -12,7 +12,7 @@ import java.util.Set;
  * Date: 7/9/12
  * Time: 4:10 PM
  */
-public class SynchronizedMultiSet<E> extends SynchronizedObject implements MultiSet<E> {
+public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> implements MultiSet<E> {
 
     public SynchronizedMultiSet(@NotNull MultiSet<E> delegate) {
         super(delegate);
@@ -25,7 +25,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject implements Multi
     @NotNull
     @Override
     protected MultiSet<E> delegate() {
-        return (MultiSet<E>) super.delegate();
+        return super.delegate();
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.solovyev.common.math.matrix;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.collections.JCollections;
 import org.solovyev.common.definitions.Property;
 import org.solovyev.common.exceptions.AnyRuntimeException;
 import org.solovyev.common.exceptions.IllegalMatrixFormatException;
@@ -289,7 +289,7 @@ public class MatrixUtils {
 
 		String[] values = StringUtils.split(s, " ");
 
-		if (!CollectionsUtils.isEmpty(values)) {
+		if (!JCollections.isEmpty(values)) {
 
 			if (values.length == 1) {
 				Integer size = Integer.valueOf(values[0]);

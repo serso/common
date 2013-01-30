@@ -24,7 +24,7 @@ package org.solovyev.common.text;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.collections.JCollections;
 import org.solovyev.common.collections.LoopData;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class StringCollections {
         if (!StringUtils.isEmpty(string)) {
             @SuppressWarnings({"ConstantConditions"}) final String[] parts = string.split(delimiter);
 
-            if (!CollectionsUtils.isEmpty(parts)) {
+            if (!JCollections.isEmpty(parts)) {
                 for (String part : parts) {
                     result.add(parser.parseValue(part));
                 }
@@ -79,7 +79,7 @@ public class StringCollections {
                                          @NotNull org.solovyev.common.text.Formatter<T> formatter) {
         String result = null;
 
-        if (!CollectionsUtils.isEmpty(values)) {
+        if (!JCollections.isEmpty(values)) {
             final StringBuilder sb = new StringBuilder();
 
             final LoopData ld = new LoopData(values);

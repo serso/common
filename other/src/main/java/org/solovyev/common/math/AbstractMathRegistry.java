@@ -9,7 +9,7 @@ package org.solovyev.common.math;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.JPredicate;
-import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.collections.JCollections;
 import org.solovyev.common.collections.SortedList;
 import org.solovyev.common.JBuilder;
 
@@ -114,7 +114,7 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	@Override
 	public void remove(@NotNull T entity) {
 		if (!entity.isSystem()) {
-			CollectionsUtils.removeFirst(this.entities, new MathEntity.Finder<T>(entity.getName()));
+			JCollections.removeFirst(this.entities, new MathEntity.Finder<T>(entity.getName()));
 		}
 	}
 
@@ -133,17 +133,17 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	@Override
 	@Nullable
 	public T get(@NotNull final String name) {
-		return CollectionsUtils.find(entities, new MathEntity.Finder<T>(name));
+		return JCollections.find(entities, new MathEntity.Finder<T>(name));
 	}
 
 	@Override
 	public T getById(@NotNull final Integer id) {
-		return CollectionsUtils.find(entities, new JPredicate<T>() {
-			@Override
-			public boolean apply(@Nullable T t) {
-				return t != null && t.getId().equals(id);
-			}
-		});
+		return JCollections.find(entities, new JPredicate<T>() {
+            @Override
+            public boolean apply(@Nullable T t) {
+                return t != null && t.getId().equals(id);
+            }
+        });
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	}
 
 	private boolean contains(final String name, @NotNull Collection<T> entities) {
-		return CollectionsUtils.find(entities, new MathEntity.Finder<T>(name)) != null;
+		return JCollections.find(entities, new MathEntity.Finder<T>(name)) != null;
 	}
 
 	@NotNull
