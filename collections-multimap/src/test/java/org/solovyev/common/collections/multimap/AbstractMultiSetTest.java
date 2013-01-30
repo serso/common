@@ -394,20 +394,20 @@ public abstract class AbstractMultiSetTest {
     public void testEquals() {
         final MultiSet<String> m = createAndFill();
 
-        final MultiSet<String> m1 = fillMultiSet(new ArrayListMultiSet<String>());
-        final MultiSet<String> m2 = fillMultiSet(new HashMapManyInstancesMultiSet<String>());
-        final MultiSet<String> m3 = fillMultiSet(new HashMapOneInstanceMultiSet<String>());
+        final MultiSet<String> m1 = fillMultiSet(ArrayListMultiSet.<String>newInstance());
+        final MultiSet<String> m2 = fillMultiSet(HashMapManyInstancesMultiSet.<String>newInstance());
+        final MultiSet<String> m3 = fillMultiSet(HashMapOneInstanceMultiSet.<String>newInstance());
 
-        final MultiSet<Integer> m4 = new ArrayListMultiSet<Integer>();
+        final MultiSet<Integer> m4 = ArrayListMultiSet.newInstance();
         m4.add(1, 3);
         m4.add(2, 3);
         m4.add(3, 3);
 
-        final MultiSet<String> m5 = fillMultiSet(new HashMapOneInstanceMultiSet<String>());
+        final MultiSet<String> m5 = fillMultiSet(HashMapOneInstanceMultiSet.<String>newInstance());
         m5.remove("3", 1);
         m5.add("4", 1);
 
-        final MultiSet<String> m6 = fillMultiSet(new HashMapOneInstanceMultiSet<String>());
+        final MultiSet<String> m6 = fillMultiSet(HashMapOneInstanceMultiSet.<String>newInstance());
         m6.remove("3", 100);
         m6.add("4", 10);
 
@@ -424,27 +424,27 @@ public abstract class AbstractMultiSetTest {
     public void testHashCode() {
         final MultiSet<String> m = createAndFill();
 
-        final MultiSet<String> m1 = fillMultiSet(new ArrayListMultiSet<String>());
-        final MultiSet<String> m2 = fillMultiSet(new HashMapManyInstancesMultiSet<String>());
-        final MultiSet<String> m3 = fillMultiSet(new HashMapOneInstanceMultiSet<String>());
+        final MultiSet<String> m1 = fillMultiSet(ArrayListMultiSet.<String>newInstance());
+        final MultiSet<String> m2 = fillMultiSet(HashMapManyInstancesMultiSet.<String>newInstance());
+        final MultiSet<String> m3 = fillMultiSet(HashMapOneInstanceMultiSet.<String>newInstance());
 
         Assert.assertEquals(m1.hashCode(), m.hashCode());
         Assert.assertEquals(m2.hashCode(), m.hashCode());
         Assert.assertEquals(m3.hashCode(), m.hashCode());
 
-        final MultiSet<Integer> i1 = new HashMapManyInstancesMultiSet<Integer>();
+        final MultiSet<Integer> i1 = HashMapManyInstancesMultiSet.newInstance();
         i1.add(1);
         i1.add(2);
         i1.add(3);
         i1.hashCode();
 
-        final MultiSet<Integer> i2 = new HashMapManyInstancesMultiSet<Integer>();
+        final MultiSet<Integer> i2 = HashMapManyInstancesMultiSet.newInstance();
         i2.add(2);
         i2.add(1);
         i2.add(3);
         i2.hashCode();
 
-        final MultiSet<Integer> i3 = new HashMapManyInstancesMultiSet<Integer>();
+        final MultiSet<Integer> i3 = HashMapManyInstancesMultiSet.newInstance();
         i3.add(2);
         i3.add(3);
         i3.add(1);

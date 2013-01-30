@@ -14,6 +14,6 @@ public class HashMapManyInstancesMultiSetTest extends AbstractMultiSetTest {
     @NotNull
     @Override
     public <E> MultiSet<E> createMultiSet() {
-        return new HashMapManyInstancesMultiSet<E>();
+        return HashMapManyInstancesMultiSet.newInstance();
     }
 }

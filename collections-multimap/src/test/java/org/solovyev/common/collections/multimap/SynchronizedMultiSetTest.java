@@ -27,7 +27,7 @@ public class SynchronizedMultiSetTest {
     @Test
     public void testOperations() throws Exception {
         final Object mutex = new Object();
-        final MultiSet<String> m = new SynchronizedMultiSet<String>(new ArrayListMultiSet<String>(), mutex);
+        final MultiSet<String> m = SynchronizedMultiSet.wrap(ArrayListMultiSet.<String>newInstance(), mutex);
 
         final CountDownLatch startPoint = new CountDownLatch(1);
         final CountDownLatch finalPoint = new CountDownLatch(THREAD_NUMBER);

@@ -14,6 +14,6 @@ public class ArrayListMultiSetTest extends AbstractMultiSetTest {
     @NotNull
     @Override
     public <E> MultiSet<E> createMultiSet() {
-        return new ArrayListMultiSet<E>();
+        return ArrayListMultiSet.newInstance();
     }
 }

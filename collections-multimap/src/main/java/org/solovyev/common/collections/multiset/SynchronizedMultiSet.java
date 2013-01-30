@@ -1,3 +1,25 @@
+/*
+ * Copyright 2013 serso aka se.solovyev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * ---------------------------------------------------------------------
+ * Contact details
+ *
+ * Email: se.solovyev@gmail.com
+ * Site:  http://se.solovyev.org
+ */
+
 package org.solovyev.common.collections.multiset;
 
 import org.jetbrains.annotations.NotNull;
@@ -14,19 +36,39 @@ import java.util.Set;
  */
 public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> implements MultiSet<E> {
 
-    public SynchronizedMultiSet(@NotNull MultiSet<E> delegate) {
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
+    protected SynchronizedMultiSet(@NotNull MultiSet<E> delegate) {
         super(delegate);
     }
 
-    public SynchronizedMultiSet(@NotNull MultiSet<E> delegate, @NotNull Object mutex) {
+    protected SynchronizedMultiSet(@NotNull MultiSet<E> delegate, @NotNull Object mutex) {
         super(delegate, mutex);
     }
 
     @NotNull
-    @Override
-    protected MultiSet<E> delegate() {
-        return super.delegate();
+    public static <E> SynchronizedMultiSet<E> wrap(@NotNull MultiSet<E> delegate) {
+        return new SynchronizedMultiSet<E>(delegate);
     }
+
+    @NotNull
+    public static <E> SynchronizedMultiSet<E> wrap(@NotNull MultiSet<E> delegate, @NotNull Object mutex) {
+        return new SynchronizedMultiSet<E>(delegate, mutex);
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
 
     @Override
     public int count(E e) {
@@ -87,6 +129,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     }
 
     // must be manually synchronized (or may be NotSupportedOperationException should be thrown)
+    @NotNull
     @Override
     public Iterator<E> iterator() {
         synchronized (mutex) {
@@ -94,6 +137,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
         }
     }
 
+    @NotNull
     @Override
     public Object[] toArray() {
         synchronized (mutex) {
@@ -101,8 +145,9 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
         }
     }
 
+    @NotNull
     @Override
-    public <T> T[] toArray(T[] a) {
+    public <T> T[] toArray(@NotNull T[] a) {
         synchronized (mutex) {
             return delegate().toArray(a);
         }
@@ -123,28 +168,28 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
+    public boolean containsAll(@NotNull Collection<?> c) {
         synchronized (mutex) {
             return delegate().containsAll(c);
         }
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(@NotNull Collection<? extends E> c) {
         synchronized (mutex) {
             return delegate().addAll(c);
         }
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(@NotNull Collection<?> c) {
         synchronized (mutex) {
             return delegate().removeAll(c);
         }
     }
 
     @Override
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(@NotNull Collection<?> c) {
         synchronized (mutex) {
             return delegate().retainAll(c);
         }
