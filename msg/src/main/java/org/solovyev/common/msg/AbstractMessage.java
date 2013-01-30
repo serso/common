@@ -14,7 +14,6 @@ import org.solovyev.common.equals.ListEqualizer;
 import org.solovyev.common.text.JStrings;
 import org.solovyev.common.HashCodeBuilder;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -101,42 +100,13 @@ public abstract class AbstractMessage implements Message {
 
 		final String messagePattern = getMessagePattern(locale);
 		if (!JStrings.isEmpty(messagePattern)) {
-			if (JCollections.isEmpty(parameters)) {
-				result = messagePattern;
-			} else {
-				final MessageFormat format = new MessageFormat(messagePattern);
-
-				format.setLocale(locale);
-				format.applyPattern(messagePattern);
-
-				result = format.format(prepareParameters(parameters, locale));
-			}
-		}
+            result = Messages.prepareMessage(locale, messagePattern, parameters);
+        }
 
 		return JStrings.getNotEmpty(result, messageType.getStringValue() + ": message code = " + messageCode);
 	}
 
-	@NotNull
-	private static Object[] prepareParameters(@NotNull List<?> parameters, @NotNull Locale locale) {
-		final Object[] result = new Object[parameters.size()];
-
-		for (int i = 0; i<parameters.size(); i++){
-			result[i] = substituteParameter(parameters.get(i), locale);
-		}
-
-		return result;
-	}
-
-	@Nullable
-	private static Object substituteParameter(@Nullable Object object, @NotNull Locale locale) {
-		if (object instanceof Message) {
-			return ((Message) object).getLocalizedMessage(locale);
-		} else {
-			return object;
-		}
-	}
-
-	@NotNull
+    @NotNull
 	@Override
 	public String getLocalizedMessage() {
 		return this.getLocalizedMessage(Locale.getDefault());

@@ -20,20 +20,26 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common;
+package org.solovyev.common.equals;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.equals.Equalizer;
 
 /**
  * User: serso
  * Date: 12/17/11
  * Time: 11:11 PM
  */
-public enum SameEqualizer implements Equalizer {
+public class SameEqualizer implements Equalizer {
 
-    instance;
+    @NotNull
+    private static SameEqualizer instance = new SameEqualizer();
+
+    @NotNull
+    public static SameEqualizer getInstance() {
+        return instance;
+    }
 
     private SameEqualizer() {
     }

@@ -32,22 +32,68 @@ import java.util.List;
 
 public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 
-    private static final int HISTORY_CAPACITY = 100;
+    /*
+    **********************************************************************
+    *
+    *                           CONSTANTS
+    *
+    **********************************************************************
+    */
 
-    private List<T> history;
+    private static final int DEFAULT_HISTORY_CAPACITY = 100;
+    private static final int START_HISTORY_INDEX = -1;
 
-    private int currentStateIndex = -1;
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
 
-    private int historyCapacity;
+    @NotNull
+    private final List<T> history;
 
-    public SimpleHistoryHelper() {
-        this(HISTORY_CAPACITY);
+    private volatile int currentStateIndex = START_HISTORY_INDEX;
+
+    private final int historyCapacity;
+
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTOR
+    *
+    **********************************************************************
+    */
+
+    private SimpleHistoryHelper() {
+        this(DEFAULT_HISTORY_CAPACITY);
     }
 
-    public SimpleHistoryHelper(int historyCapacity) {
+    private SimpleHistoryHelper(int historyCapacity) {
         this.historyCapacity = historyCapacity;
         this.history = new ArrayList<T>(historyCapacity);
     }
+
+    @NotNull
+    public static <T> SimpleHistoryHelper<T> newInstance() {
+        return newInstance(DEFAULT_HISTORY_CAPACITY);
+    }
+
+    @NotNull
+    public static <T> SimpleHistoryHelper<T> newInstance(int historyCapacity) {
+        return new SimpleHistoryHelper<T>(historyCapacity);
+    }
+
+
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
 
     @Override
     public T undo(@Nullable T currentState) {
@@ -169,7 +215,7 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 
     @Override
     public void clear() {
-        this.currentStateIndex = -1;
+        this.currentStateIndex = START_HISTORY_INDEX;
         this.history.clear();
     }
 }

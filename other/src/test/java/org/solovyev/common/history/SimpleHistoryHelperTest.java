@@ -12,7 +12,7 @@ public class SimpleHistoryHelperTest {
 
 	@Test
 	public void testAddState() throws Exception {
-		final HistoryHelper<Integer> history = new SimpleHistoryHelper<Integer>(5);
+		final HistoryHelper<Integer> history = SimpleHistoryHelper.newInstance(5);
 		history.addState(1);
 		history.addState(2);
 		history.addState(3);
@@ -36,7 +36,7 @@ public class SimpleHistoryHelperTest {
 
 	@Test
 	public void testClear() throws Exception {
-		final HistoryHelper<Integer> history = new SimpleHistoryHelper<Integer>(4);
+		final HistoryHelper<Integer> history = SimpleHistoryHelper.newInstance(4);
 		history.addState(1);
 		history.addState(2);
 		history.addState(3);
@@ -54,7 +54,7 @@ public class SimpleHistoryHelperTest {
 
 	@Test
 	public void testGetLastHistoryState() throws Exception {
-		final HistoryHelper<Integer> history = new SimpleHistoryHelper<Integer>(4);
+		final HistoryHelper<Integer> history = SimpleHistoryHelper.newInstance(4);
 		history.addState(1);
 		history.addState(2);
 		history.addState(3);
