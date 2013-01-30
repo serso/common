@@ -64,8 +64,8 @@ public class JObjects {
     **********************************************************************
     */
 
-    public static int comparePreparedObjects(Object value1, Object value2) {
-        Integer result = compareObjectsOnNullness(value1, value2);
+    public static int compare(Object value1, Object value2) {
+        Integer result = compareOnNullness(value1, value2);
 
         if (result == null) {
             if (value1 instanceof Comparable && value2 instanceof Comparable) {
@@ -78,9 +78,9 @@ public class JObjects {
         return result;
     }
 
-    public static <T extends Comparable<T>> int comparePreparedObjects(@Nullable T l,
-                                                                       @Nullable T r) {
-        Integer result = compareObjectsOnNullness(l, r);
+    public static <T extends Comparable<T>> int compare(@Nullable T l,
+                                                        @Nullable T r) {
+        Integer result = compareOnNullness(l, r);
 
         if (result == null) {
             assert l != null;
@@ -90,14 +90,14 @@ public class JObjects {
         return result;
     }
 
-    public static int comparePreparedObjects(List list1, List list2) {
-        Integer result = compareObjectsOnNullness(list1, list2);
+    public static int compare(List list1, List list2) {
+        Integer result = compareOnNullness(list1, list2);
 
         if (result == null) {
             result = list1.size() - list2.size();
             if (result == 0) {
                 for (int i = 0; i < list1.size(); i++) {
-                    result = comparePreparedObjects(list1.get(i), list2.get(i));
+                    result = compare(list1.get(i), list2.get(i));
                     if (result != 0) {
                         break;
                     }
@@ -108,8 +108,8 @@ public class JObjects {
         return result;
     }
 
-    public static int comparePreparedObjects(Number value1, Number value2) {
-        Integer result = compareObjectsOnNullness(value1, value2);
+    public static int compare(Number value1, Number value2) {
+        Integer result = compareOnNullness(value1, value2);
 
         if (result == null) {
             if (value1 instanceof Comparable && value2 instanceof Comparable) {
@@ -123,8 +123,8 @@ public class JObjects {
         return result;
     }
 
-    public static int comparePreparedObjects(Date value1, Date value2) {
-        Integer result = compareObjectsOnNullness(value1, value2);
+    public static int compare(Date value1, Date value2) {
+        Integer result = compareOnNullness(value1, value2);
         if (result == null) {
             if (value1.before(value2)) {
                 result = -1;
@@ -137,7 +137,7 @@ public class JObjects {
         return result;
     }
 
-    public static int comparePreparedObjects(int value1, int value2) {
+    public static int compare(int value1, int value2) {
         if (value1 > value2) {
             return 1;
         } else if (value1 == value2) {
@@ -147,8 +147,8 @@ public class JObjects {
         }
     }
 
-    public static int comparePreparedObjects(String value1, String value2, boolean ignoreCase) {
-        Integer result = compareObjectsOnNullness(value1, value2);
+    public static int compare(String value1, String value2, boolean ignoreCase) {
+        Integer result = compareOnNullness(value1, value2);
 
         if (result == null) {
             if (ignoreCase) {
@@ -161,8 +161,8 @@ public class JObjects {
         return result;
     }
 
-    public static int comparePreparedObjects(Boolean value1, Boolean value2) {
-        Integer result = compareObjectsOnNullness(value1, value2);
+    public static int compare(Boolean value1, Boolean value2) {
+        Integer result = compareOnNullness(value1, value2);
 
         if (result == null) {
             result = value1.compareTo(value2);
@@ -171,12 +171,12 @@ public class JObjects {
         return result;
     }
 
-    public static <T extends Comparable<T>> int compareIdentifiableObjects(@Nullable Identifiable<T> i1,
-                                                                           @Nullable Identifiable<T> i2) {
-        Integer result = compareObjectsOnNullness(i1, i2);
+    public static <T extends Comparable<T>> int compareIdentifiables(@Nullable Identifiable<T> i1,
+                                                                     @Nullable Identifiable<T> i2) {
+        Integer result = compareOnNullness(i1, i2);
 
         if (result == null) {
-            result = compareObjectsOnNullness(i1.getId(), i2.getId());
+            result = compareOnNullness(i1.getId(), i2.getId());
             if (result == null) {
                 result = i1.getId().compareTo(i2.getId());
             }
@@ -193,7 +193,7 @@ public class JObjects {
      */
     public static boolean equals(Object o1, Object o2) {
         // first compare on nullness
-        Integer compareResult = compareObjectsOnNullness(o1, o2);
+        Integer compareResult = compareOnNullness(o1, o2);
 
         // by default objects are unequal
         boolean result = false;
@@ -217,7 +217,7 @@ public class JObjects {
      * @return if both objects are nulls then 0 (they are equal), if first is null then -1, if second is null then 1, otherwise - null
      */
     @Nullable
-    public static Integer compareObjectsOnNullness(Object o1, Object o2) {
+    public static Integer compareOnNullness(Object o1, Object o2) {
         Integer result;
 
         if (o1 == null && o2 == null) {
@@ -241,7 +241,7 @@ public class JObjects {
      * @param o2 second compared object
      * @return if both objects are nulls then 0 (they are equal), if first is null then -1, if second is null then 1, otherwise - null
      */
-    public static EqualsResult compareObjectsOnNullnessWithResult(Object o1, Object o2) {
+    public static EqualsResult compareOnNullnessWithResult(Object o1, Object o2) {
         return getEqualsResult(o1, o2);
     }
 }

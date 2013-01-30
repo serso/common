@@ -69,7 +69,7 @@ abstract class Identity<T extends Serializable & Comparable<T>> implements Ident
 
 	@Override
 	public int compareTo(@NotNull Identity<T> that) {
-		return JObjects.compareIdentifiableObjects(this, that);
+		return JObjects.compareIdentifiables(this, that);
 	}
 
 	@Override

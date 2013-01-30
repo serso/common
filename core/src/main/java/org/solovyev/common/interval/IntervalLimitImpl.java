@@ -238,7 +238,7 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
             }
         }
 
-        return JObjects.comparePreparedObjects(this.value, that.getValue());
+        return JObjects.compare(this.value, that.getValue());
     }
 
     @NotNull

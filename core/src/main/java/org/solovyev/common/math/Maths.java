@@ -179,12 +179,12 @@ public class Maths {
 
         switch (comparisonType) {
             case min:
-                if (JObjects.comparePreparedObjects(first, second) > 0) {
+                if (JObjects.compare(first, second) > 0) {
                     result = second;
                 }
                 break;
             case max:
-                if (JObjects.comparePreparedObjects(first, second) < 0) {
+                if (JObjects.compare(first, second) < 0) {
                     result = second;
                 }
                 break;
