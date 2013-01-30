@@ -27,10 +27,11 @@ package org.solovyev.common.filter;
  * Date: 5/18/11
  * Time: 11:22 AM
  */
+
 /**
  * Specifies common filter types
  */
 public enum FilterType {
-	included,
-	excluded
+    included,
+    excluded
 }

@@ -33,13 +33,13 @@ import org.solovyev.common.equals.Equalizer;
  */
 public enum SameEqualizer implements Equalizer {
 
-	instance;
+    instance;
 
-	private SameEqualizer() {
-	}
+    private SameEqualizer() {
+    }
 
-	@Override
-	public boolean equals(@Nullable Object first, @Nullable Object second) {
-		return first == second;
-	}
+    @Override
+    public boolean equals(@Nullable Object first, @Nullable Object second) {
+        return first == second;
+    }
 }

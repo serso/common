@@ -56,7 +56,7 @@ public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
 
     @NotNull
     public static <I> VersionedEntity<I> newVersion(@NotNull VersionedEntity<I> versionedEntity) {
-        return new VersionedEntityImpl<I>(versionedEntity.getId(),  versionedEntity.getVersion() + 1);
+        return new VersionedEntityImpl<I>(versionedEntity.getId(), versionedEntity.getVersion() + 1);
     }
 
     @NotNull
@@ -108,7 +108,7 @@ public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
 
         try {
             //noinspection unchecked
-            clone = (VersionedEntityImpl<I>)super.clone();
+            clone = (VersionedEntityImpl<I>) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError(e);
         }

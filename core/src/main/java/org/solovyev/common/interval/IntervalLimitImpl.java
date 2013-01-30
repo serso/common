@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.JCloneable;
 import org.solovyev.common.JObject;
-import org.solovyev.common.compare.CompareTools;
+import org.solovyev.common.JObjects;
 
 /**
  * User: serso
@@ -112,9 +112,9 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
 
     @Override
     public boolean isLowerThan(@NotNull T that) {
-        if ( this.isLowest() ) {
+        if (this.isLowest()) {
             return true;
-        } else if ( this.isHighest() ) {
+        } else if (this.isHighest()) {
             return false;
         } else {
             assert this.value != null;
@@ -124,9 +124,9 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
 
     @Override
     public boolean isLowerThan(@NotNull IntervalLimit<T> that) {
-        if ( this.isLowest() ) {
+        if (this.isLowest()) {
             return !that.isLowest();
-        } else if ( this.isHighest() ) {
+        } else if (this.isHighest()) {
             return false;
         } else {
             return this.compareTo(that) < 0;
@@ -135,9 +135,9 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
 
     @Override
     public boolean isLowerOrEqualsThan(@NotNull T that) {
-        if ( this.isLowest() ) {
+        if (this.isLowest()) {
             return true;
-        } else if ( this.isHighest() ) {
+        } else if (this.isHighest()) {
             return false;
         } else {
             assert this.value != null;
@@ -151,9 +151,9 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
 
     @Override
     public boolean isLowerOrEqualsThan(@NotNull IntervalLimit<T> that) {
-        if ( this.isLowest() ) {
+        if (this.isLowest()) {
             return that.isLowest();
-        } else if ( this.isHighest() ) {
+        } else if (this.isHighest()) {
             return that.isHighest();
         } else {
             if (this.isClosed()) {
@@ -166,9 +166,9 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
 
     @Override
     public boolean isHigherThan(@NotNull T that) {
-        if ( this.isHighest() ) {
+        if (this.isHighest()) {
             return true;
-        } else if ( this.isLowest() ) {
+        } else if (this.isLowest()) {
             return false;
         } else {
             assert this.value != null;
@@ -178,9 +178,9 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
 
     @Override
     public boolean isHigherThan(@NotNull IntervalLimit<T> that) {
-        if ( this.isHighest() ) {
+        if (this.isHighest()) {
             return !that.isHighest();
-        } else if ( this.isLowest() ) {
+        } else if (this.isLowest()) {
             return false;
         } else {
             return this.compareTo(that) > 0;
@@ -189,9 +189,9 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
 
     @Override
     public boolean isHigherOrEqualsThan(@NotNull T that) {
-        if ( this.isHighest() ) {
+        if (this.isHighest()) {
             return true;
-        } else if ( this.isLowest() ) {
+        } else if (this.isLowest()) {
             return false;
         } else {
             assert this.value != null;
@@ -205,9 +205,9 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
 
     @Override
     public boolean isHigherOrEqualsThan(@NotNull IntervalLimit<T> that) {
-        if ( this.isHighest() ) {
+        if (this.isHighest()) {
             return that.isHighest();
-        } else if ( this.isLowest() ) {
+        } else if (this.isLowest()) {
             return that.isLowest();
         } else {
             if (this.isClosed()) {
@@ -215,7 +215,8 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
             } else {
                 return this.compareTo(that) > 0;
             }
-        }    }
+        }
+    }
 
     @Override
     public int compareTo(@NotNull IntervalLimit<T> that) {
@@ -237,7 +238,7 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
             }
         }
 
-        return CompareTools.comparePreparedObjects(this.value, that.getValue());
+        return JObjects.comparePreparedObjects(this.value, that.getValue());
     }
 
     @NotNull
@@ -276,9 +277,9 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
 
     @Override
     public String toString() {
-        if ( this.isLowest() ) {
+        if (this.isLowest()) {
             return "-Inf";
-        } else if ( this.isHighest() ) {
+        } else if (this.isHighest()) {
             return "Inf";
         } else {
             return String.valueOf(this.value);

@@ -2,7 +2,7 @@ package org.solovyev.common.definitions;
 
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.Identifiable;
-import org.solovyev.common.compare.CompareTools;
+import org.solovyev.common.JObjects;
 
 import java.io.Serializable;
 
@@ -47,7 +47,7 @@ abstract class Identity<T extends Serializable & Comparable<T>> implements Ident
 
 	@Override
 	public int compareTo(@NotNull Identity<T> that) {
-		return CompareTools.compareIdentifiableObjects(this, that);
+		return JObjects.compareIdentifiableObjects(this, that);
 	}
 
 	@Override

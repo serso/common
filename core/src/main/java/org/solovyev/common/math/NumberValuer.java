@@ -29,11 +29,11 @@ import org.jetbrains.annotations.NotNull;
  * Date: 9/19/11
  * Time: 4:23 PM
  */
-public class NumberValuer<T extends Number> extends AbstractValuer<T>{
+public class NumberValuer<T extends Number> extends AbstractValuer<T> {
 
-	@Override
-	@NotNull
-	public Double getValue(@NotNull T item) {
-		return item.doubleValue();
-	}
+    @Override
+    @NotNull
+    public Double getValue(@NotNull T item) {
+        return item.doubleValue();
+    }
 }

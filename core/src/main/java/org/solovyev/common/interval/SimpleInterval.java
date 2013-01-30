@@ -29,23 +29,23 @@ package org.solovyev.common.interval;
  */
 public class SimpleInterval {
 
-	private double start;
-	private double end;
+    private double start;
+    private double end;
 
-	public SimpleInterval(double start, double end) {
-		this.start = start;
-		this.end = end;
-	}
+    public SimpleInterval(double start, double end) {
+        this.start = start;
+        this.end = end;
+    }
 
-	public double getEnd() {
-		return end;
-	}
+    public double getEnd() {
+        return end;
+    }
 
-	public double getStart() {
-		return start;
-	}
+    public double getStart() {
+        return start;
+    }
 
-	public double dist() {
-		return this.end - this.start;
-	}
+    public double dist() {
+        return this.end - this.start;
+    }
 }

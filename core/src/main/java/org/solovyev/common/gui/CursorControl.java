@@ -33,23 +33,23 @@ package org.solovyev.common.gui;
  */
 public interface CursorControl {
 
-	/**
-	 * Method sets the cursor to the beginning
-	 */
-	public void setCursorOnStart();
+    /**
+     * Method sets the cursor to the beginning
+     */
+    public void setCursorOnStart();
 
-	/**
-	 * Method sets the cursor to the end
-	 */
-	public void setCursorOnEnd();
+    /**
+     * Method sets the cursor to the end
+     */
+    public void setCursorOnEnd();
 
-	/**
-	 * Method moves cursor to the left of current position
-	 */
-	public void moveCursorLeft();
+    /**
+     * Method moves cursor to the left of current position
+     */
+    public void moveCursorLeft();
 
-	/**
-	 * Method moves cursor to the right of current position
-	 */
-	public void moveCursorRight();
+    /**
+     * Method moves cursor to the right of current position
+     */
+    public void moveCursorRight();
 }

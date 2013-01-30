@@ -25,26 +25,27 @@ package org.solovyev.common.filter;
 
 /**
  * User: serso
-* Date: Jan 18, 2010
-* Time: 5:10:52 PM
-*/
+ * Date: Jan 18, 2010
+ * Time: 5:10:52 PM
+ */
 
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Used in Filter
+ *
  * @param <T> type of element in iterator
  */
 public class FilterData<T> {
 
-	private final T element;
+    private final T element;
 
-	private final boolean wasFiltered;
+    private final boolean wasFiltered;
 
-	private FilterData(T element, boolean wasFiltered) {
-		this.element = element;
-		this.wasFiltered = wasFiltered;
-	}
+    private FilterData(T element, boolean wasFiltered) {
+        this.element = element;
+        this.wasFiltered = wasFiltered;
+    }
 
     @NotNull
     public static <T> FilterData<T> newInstance(T element, boolean wasFiltered) {
@@ -52,14 +53,14 @@ public class FilterData<T> {
     }
 
     public T getElement() {
-		return element;
-	}
+        return element;
+    }
 
-	public T getNotFiltered () {
-		return wasFiltered ? null : element;
-	}
+    public T getNotFiltered() {
+        return wasFiltered ? null : element;
+    }
 
-	public boolean wasFiltered() {
-		return wasFiltered;
-	}
+    public boolean wasFiltered() {
+        return wasFiltered;
+    }
 }

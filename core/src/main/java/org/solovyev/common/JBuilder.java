@@ -31,6 +31,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface JBuilder<T> {
 
-	@NotNull
-	T create();
+    @NotNull
+    T create();
 }

@@ -26,28 +26,28 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
-* User: serso
-* Date: 10/3/11
-* Time: 12:49 AM
-*/
+ * User: serso
+ * Date: 10/3/11
+ * Time: 12:49 AM
+ */
 public class StartsWithFinder implements JPredicate<String> {
 
-	private int i;
+    private int i;
 
-	@NotNull
-	private final String targetString;
+    @NotNull
+    private final String targetString;
 
-	public StartsWithFinder(@NotNull String targetString, int i) {
-		this.targetString = targetString;
-		this.i = i;
-	}
+    public StartsWithFinder(@NotNull String targetString, int i) {
+        this.targetString = targetString;
+        this.i = i;
+    }
 
-	@Override
-	public boolean apply(@Nullable String s) {
-		return targetString.startsWith(s, i);
-	}
+    @Override
+    public boolean apply(@Nullable String s) {
+        return targetString.startsWith(s, i);
+    }
 
-	public void setI(int i) {
-		this.i = i;
-	}
+    public void setI(int i) {
+        this.i = i;
+    }
 }

@@ -43,10 +43,10 @@ public abstract class AbstractMathRegistry<T extends MathEntity> implements Math
 	private static Integer counter = 0;
 
 	@NotNull
-	protected final List<T> entities = new SortedList<T>(new ArrayList<T>(30), MATH_ENTITY_COMPARATOR);
+	protected final List<T> entities = SortedList.newInstance(new ArrayList<T>(30), MATH_ENTITY_COMPARATOR);
 
 	@NotNull
-	protected final List<T> systemEntities = new SortedList<T>(new ArrayList<T>(30), MATH_ENTITY_COMPARATOR);
+	protected final List<T> systemEntities = SortedList.newInstance(new ArrayList<T>(30), MATH_ENTITY_COMPARATOR);
 
 	protected AbstractMathRegistry() {
 	}

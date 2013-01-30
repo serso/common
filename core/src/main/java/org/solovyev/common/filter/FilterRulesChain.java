@@ -35,27 +35,27 @@ import java.util.List;
  */
 public class FilterRulesChain<T> implements JPredicate<T> {
 
-	@NotNull
-	private final List<JPredicate<T>> filters = new ArrayList<JPredicate<T>>();
+    @NotNull
+    private final List<JPredicate<T>> filters = new ArrayList<JPredicate<T>>();
 
-	public FilterRulesChain() {
-	}
+    public FilterRulesChain() {
+    }
 
-	public void addFilterRule(@NotNull JPredicate<T> filterRule) {
-		filters.add(filterRule);
-	}
+    public void addFilterRule(@NotNull JPredicate<T> filterRule) {
+        filters.add(filterRule);
+    }
 
-	@Override
-	public boolean apply(T object) {
-		boolean result = false;
+    @Override
+    public boolean apply(T object) {
+        boolean result = false;
 
-		for (JPredicate<T> filter : filters) {
-			if (filter.apply(object)) {
-				result = true;
-				break;
-			}
-		}
+        for (JPredicate<T> filter : filters) {
+            if (filter.apply(object)) {
+                result = true;
+                break;
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

@@ -34,19 +34,19 @@ import org.solovyev.common.JPredicate;
  */
 public class EqualsFinder<T> implements JPredicate<T> {
 
-	@NotNull
-	private final T modelObject;
+    @NotNull
+    private final T modelObject;
 
-	@Nullable
-	private final Equalizer<T> equalizer;
+    @Nullable
+    private final Equalizer<T> equalizer;
 
-	public EqualsFinder(@NotNull T modelObject, @Nullable Equalizer<T> equalizer) {
-		this.modelObject = modelObject;
-		this.equalizer = equalizer;
-	}
+    public EqualsFinder(@NotNull T modelObject, @Nullable Equalizer<T> equalizer) {
+        this.modelObject = modelObject;
+        this.equalizer = equalizer;
+    }
 
-	@Override
-	public boolean apply(@Nullable T object) {
-		return JObjects.areEqual(modelObject, object, equalizer);
-	}
+    @Override
+    public boolean apply(@Nullable T object) {
+        return JObjects.areEqual(modelObject, object, equalizer);
+    }
 }

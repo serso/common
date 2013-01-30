@@ -47,14 +47,18 @@ public interface IntervalLimit<T extends Comparable<T>>
     boolean isHighest();
 
     boolean isLowerThan(@NotNull T that);
+
     boolean isLowerThan(@NotNull IntervalLimit<T> that);
 
     boolean isLowerOrEqualsThan(@NotNull T that);
+
     boolean isLowerOrEqualsThan(@NotNull IntervalLimit<T> that);
 
     boolean isHigherThan(@NotNull T that);
+
     boolean isHigherThan(@NotNull IntervalLimit<T> that);
 
     boolean isHigherOrEqualsThan(@NotNull T that);
+
     boolean isHigherOrEqualsThan(@NotNull IntervalLimit<T> that);
 }

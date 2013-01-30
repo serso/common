@@ -30,5 +30,5 @@ import java.io.PrintWriter;
  * Time: 18:32:54
  */
 public interface TextDisplay {
-    public void textDisplay( PrintWriter out );
+    public void textDisplay(PrintWriter out);
 }

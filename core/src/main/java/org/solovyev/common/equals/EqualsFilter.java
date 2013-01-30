@@ -33,15 +33,15 @@ import org.solovyev.common.JPredicate;
  */
 public class EqualsFilter<T> implements JPredicate<T> {
 
-	@NotNull
-	private final T filterObject;
+    @NotNull
+    private final T filterObject;
 
-	public EqualsFilter(@NotNull T filterObject) {
-		this.filterObject = filterObject;
-	}
+    public EqualsFilter(@NotNull T filterObject) {
+        this.filterObject = filterObject;
+    }
 
-	@Override
-	public boolean apply(T object) {
-		return JObjects.areEqual(filterObject, object);
-	}
+    @Override
+    public boolean apply(T object) {
+        return JObjects.areEqual(filterObject, object);
+    }
 }

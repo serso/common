@@ -29,7 +29,7 @@ package org.solovyev.common.math;
  */
 public interface Normalizer {
 
-	double normalize(double value);
+    double normalize(double value);
 
-	double denormalize(double value);
+    double denormalize(double value);
 }

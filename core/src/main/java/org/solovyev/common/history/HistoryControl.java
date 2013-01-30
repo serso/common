@@ -31,10 +31,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface HistoryControl<T> {
 
-	void doHistoryAction(@NotNull HistoryAction historyAction);
+    void doHistoryAction(@NotNull HistoryAction historyAction);
 
-	void setCurrentHistoryState(@NotNull T editorHistoryState);
+    void setCurrentHistoryState(@NotNull T editorHistoryState);
 
-	@NotNull
-	T getCurrentHistoryState();
+    @NotNull
+    T getCurrentHistoryState();
 }

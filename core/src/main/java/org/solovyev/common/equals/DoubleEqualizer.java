@@ -32,16 +32,16 @@ import org.solovyev.common.math.Maths;
  */
 public class DoubleEqualizer implements Equalizer<Double> {
 
-	private final int precision;
+    private final int precision;
 
-	public DoubleEqualizer(int precision) {
-		this.precision = precision;
-	}
+    public DoubleEqualizer(int precision) {
+        this.precision = precision;
+    }
 
-	@Override
-	public boolean equals(@Nullable Double first, @Nullable Double second) {
-		final EqualsUtils.Result result =  EqualsUtils.getEqualsResult(first, second);
-		//noinspection ConstantConditions
-		return result.areBothNulls() || (result.areBothNotNulls() && Maths.equals(first, second, precision));
-	}
+    @Override
+    public boolean equals(@Nullable Double first, @Nullable Double second) {
+        final EqualsUtils.Result result = EqualsUtils.getEqualsResult(first, second);
+        //noinspection ConstantConditions
+        return result.areBothNulls() || (result.areBothNotNulls() && Maths.equals(first, second, precision));
+    }
 }

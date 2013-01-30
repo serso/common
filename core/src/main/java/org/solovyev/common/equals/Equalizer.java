@@ -31,5 +31,5 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface Equalizer<T> {
 
-	boolean equals(@Nullable T first, @Nullable T second);
+    boolean equals(@Nullable T first, @Nullable T second);
 }

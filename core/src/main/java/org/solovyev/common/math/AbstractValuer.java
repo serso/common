@@ -32,9 +32,9 @@ import org.solovyev.common.Converter;
  */
 public abstract class AbstractValuer<T> implements Valuer<T>, Converter<T, Double> {
 
-	@NotNull
-	@Override
-	public Double convert(@NotNull T t) {
-		return getValue(t);
-	}
+    @NotNull
+    @Override
+    public Double convert(@NotNull T t) {
+        return getValue(t);
+    }
 }

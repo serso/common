@@ -34,11 +34,11 @@ import org.jetbrains.annotations.NotNull;
  * Interface converts one object to another
  *
  * @param <FROM> type of object to be converted
- * @param <TO> type of result object (converted object)
+ * @param <TO>   type of result object (converted object)
  */
 public interface Converter<FROM, TO> {
 
-	@NotNull
-	TO convert(@NotNull FROM from);
+    @NotNull
+    TO convert(@NotNull FROM from);
 }
 

@@ -31,30 +31,30 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Selectable<T> {
 
-	private boolean selected = false;
+    private boolean selected = false;
 
-	@NotNull
-	final private T value;
+    @NotNull
+    final private T value;
 
-	public Selectable(@NotNull T value) {
-		this.value = value;
-	}
+    public Selectable(@NotNull T value) {
+        this.value = value;
+    }
 
-	public Selectable(Boolean selected, @NotNull T value) {
-		this.selected = selected;
-		this.value = value;
-	}
+    public Selectable(Boolean selected, @NotNull T value) {
+        this.selected = selected;
+        this.value = value;
+    }
 
-	@NotNull
-	public T getValue() {
-		return value;
-	}
+    @NotNull
+    public T getValue() {
+        return value;
+    }
 
-	public boolean getSelected() {
-		return selected;
-	}
+    public boolean getSelected() {
+        return selected;
+    }
 
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 }

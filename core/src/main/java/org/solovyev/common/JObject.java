@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Class contains default clone implementation which suppresses {@link CloneNotSupportedException}
- *
+ * <p/>
  * NOTE: here we cannot use {@link JCloneable} interface as we might somewhere use it explicitly
  */
 public abstract class JObject implements Cloneable {

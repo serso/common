@@ -52,89 +52,89 @@ public final class JStrings {
     private static final Random RANDOM = new Random(new Date().getTime());
 
     // not intended for instantiation
-	private JStrings() {
-		throw new AssertionError();
-	}
+    private JStrings() {
+        throw new AssertionError();
+    }
 
-	public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
+    public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
 
-	public static String[] split(String source, String subString) {
-		String[] params = source.split(subString);
-		List<String> result = new ArrayList<String>();
+    public static String[] split(String source, String subString) {
+        String[] params = source.split(subString);
+        List<String> result = new ArrayList<String>();
 
-		for (String s : params) {
-			if (!isEmpty(s) && !s.equals(subString)) {
-				result.add(s);
-			}
-		}
+        for (String s : params) {
+            if (!isEmpty(s) && !s.equals(subString)) {
+                result.add(s);
+            }
+        }
 
-		return result.toArray(new String[result.size()]);
-	}
+        return result.toArray(new String[result.size()]);
+    }
 
-	public static String convertStream(InputStream in) throws IOException {
-		int i;
-		StringBuilder sb = new StringBuilder();
-		while ((i = in.read()) != -1) {
-			sb.append((char) i);
-		}
-		return sb.toString();
-	}
+    public static String convertStream(InputStream in) throws IOException {
+        int i;
+        StringBuilder sb = new StringBuilder();
+        while ((i = in.read()) != -1) {
+            sb.append((char) i);
+        }
+        return sb.toString();
+    }
 
-	public static boolean notEmpty(@Nullable String s) {
-		return !isEmpty(s);
-	}
+    public static boolean notEmpty(@Nullable String s) {
+        return !isEmpty(s);
+    }
 
-	public static boolean isEmpty(@Nullable CharSequence s) {
-		return s == null || s.length() == 0;
-	}
+    public static boolean isEmpty(@Nullable CharSequence s) {
+        return s == null || s.length() == 0;
+    }
 
-	@NotNull
-	public static String getNotEmpty(@Nullable CharSequence s, @NotNull String defaultValue) {
-		return isEmpty(s) ? defaultValue : s.toString();
-	}
+    @NotNull
+    public static String getNotEmpty(@Nullable CharSequence s, @NotNull String defaultValue) {
+        return isEmpty(s) ? defaultValue : s.toString();
+    }
 
-	@NotNull
-	public static <T> String getNotEmpty(@Nullable T t, @NotNull String defaultValue) {
-		return t == null ? defaultValue : t.toString();
-	}
+    @NotNull
+    public static <T> String getNotEmpty(@Nullable T t, @NotNull String defaultValue) {
+        return t == null ? defaultValue : t.toString();
+    }
 
-	public static String[] toString(@NotNull Enum... enums) {
-		String[] result = new String[enums.length];
-		LoopData ld = new LoopData(enums);
-		for (Enum anEnum : enums) {
-			result[(int) ld.next()] = anEnum.name();
-		}
-		return result;
-	}
+    public static String[] toString(@NotNull Enum... enums) {
+        String[] result = new String[enums.length];
+        LoopData ld = new LoopData(enums);
+        for (Enum anEnum : enums) {
+            result[(int) ld.next()] = anEnum.name();
+        }
+        return result;
+    }
 
-	@NotNull
-	public static Character[] toObject(char[] array) {
-		if (array == null || array.length == 0) {
-			return EMPTY_CHARACTER_OBJECT_ARRAY;
-		}
+    @NotNull
+    public static Character[] toObject(char[] array) {
+        if (array == null || array.length == 0) {
+            return EMPTY_CHARACTER_OBJECT_ARRAY;
+        }
 
-		final Character[] result = new Character[array.length];
+        final Character[] result = new Character[array.length];
 
-		for (int i = 0; i < array.length; i++) {
-			result[i] = new Character(array[i]);
-		}
-		return result;
-	}
+        for (int i = 0; i < array.length; i++) {
+            result[i] = new Character(array[i]);
+        }
+        return result;
+    }
 
-	@NotNull
-	public static String fromStackTrace(@Nullable StackTraceElement... stackTraceElements) {
-		final StringBuilder sb = new StringBuilder();
+    @NotNull
+    public static String fromStackTrace(@Nullable StackTraceElement... stackTraceElements) {
+        final StringBuilder sb = new StringBuilder();
 
-		if ( !JCollections.isEmpty(stackTraceElements) ){
-			for (StackTraceElement stackTraceElement : stackTraceElements) {
-				sb.append(" at ");
-				sb.append(stackTraceElement.toString());
-				sb.append(System.getProperty("line.separator"));
-			}
-		}
+        if (!JCollections.isEmpty(stackTraceElements)) {
+            for (StackTraceElement stackTraceElement : stackTraceElements) {
+                sb.append(" at ");
+                sb.append(stackTraceElement.toString());
+                sb.append(System.getProperty("line.separator"));
+            }
+        }
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
     @NotNull
     public static String repeat(@NotNull String str, int repeat) {
@@ -186,7 +186,7 @@ public final class JStrings {
     public static String generateRandomString(int length) {
 
         final StringBuilder result = new StringBuilder(length);
-        for ( int i = 0; i < length; i++ ) {
+        for (int i = 0; i < length; i++) {
             final char ch;
 
             synchronized (RANDOM) {

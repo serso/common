@@ -31,11 +31,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Valuer<T> {
 
-	/**
-	 * @param item object for which value is counted
-	 * @return value of the object
-	 */
-	@NotNull
-	public Double getValue (@NotNull T item);
+    /**
+     * @param item object for which value is counted
+     * @return value of the object
+     */
+    @NotNull
+    public Double getValue(@NotNull T item);
 
 }
