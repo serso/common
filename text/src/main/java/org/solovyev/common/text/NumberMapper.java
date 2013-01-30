@@ -50,7 +50,7 @@ public class NumberMapper<N extends Number> implements Mapper<N> {
 
     static {
         for (Class<? extends Number> supportedClass : supportedClasses) {
-            mappers.put(supportedClass, of(supportedClass));
+            mappers.put(supportedClass, newInstance(supportedClass));
         }
     }
 
@@ -95,6 +95,11 @@ public class NumberMapper<N extends Number> implements Mapper<N> {
     public static <N extends Number> Mapper<N> newInstance(@NotNull Parser<? extends N> parser,
                                                            @NotNull Formatter<N> formatter) {
         return new NumberMapper<N>(parser, formatter);
+    }
+
+    @NotNull
+    private static <N extends Number> Mapper<N> newInstance(@NotNull Class<? extends N> clazz) {
+        return new NumberMapper<N>(clazz);
     }
 
     @NotNull

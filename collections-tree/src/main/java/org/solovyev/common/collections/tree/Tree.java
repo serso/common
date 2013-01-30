@@ -45,6 +45,9 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
     TreeNode<T> getRoot();
 
     /**
+     * Note: this method might be not fast as iteration over
+     * all nodes in the tree might be done
+     *
      * @return total number of elements in the tree
      */
     int getSize();

@@ -40,7 +40,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>other</module>
         <module>text</module>
         <module>core</module>
         <module>msg</module>

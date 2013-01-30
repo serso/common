@@ -23,36 +23,11 @@
 package org.solovyev.common.text;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListMapper<T> implements Mapper<List<T>> {
-
-    /*
-    **********************************************************************
-    *
-    *                           CONSTANTS
-    *
-    **********************************************************************
-    */
-
-    @NotNull
-    private static final String DEFAULT_DELIMITER = ";";
-
-    /*
-    **********************************************************************
-    *
-    *                           STATIC
-    *
-    **********************************************************************
-    */
-
-    @NotNull
-    private final Mapper<T> nestedMapper;
-
-    @NotNull
-    private final String delimiter;
+public class ListMapper<E> extends CollectionMapper<List<E>, E> {
 
     /*
     **********************************************************************
@@ -62,20 +37,40 @@ public class ListMapper<T> implements Mapper<List<T>> {
     **********************************************************************
     */
 
-    private ListMapper(@NotNull Mapper<T> nestedMapper,
-                       @NotNull String delimiter) {
-        this.nestedMapper = nestedMapper;
-        this.delimiter = delimiter;
+    private ListMapper(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter, @NotNull String delimiter) {
+        super(parser, formatter, delimiter);
+    }
+
+    private ListMapper(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter) {
+        super(parser, formatter);
+    }
+
+    private ListMapper(@NotNull Mapper<E> mapper, @NotNull String delimiter) {
+        super(mapper, delimiter);
+    }
+
+    private ListMapper(@NotNull Mapper<E> mapper) {
+        super(mapper);
     }
 
     @NotNull
-    public static <T> Mapper<List<T>> newInstance(@NotNull Mapper<T> nestedMapper) {
-        return new ListMapper<T>(nestedMapper, DEFAULT_DELIMITER);
+    public static <E> ListMapper<E> newInstance(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter, @NotNull String delimiter) {
+        return new ListMapper<E>(parser, formatter, delimiter);
     }
 
     @NotNull
-    public static <T> Mapper<List<T>> newInstance(@NotNull Mapper<T> nestedMapper, @NotNull String delimiter) {
-        return new ListMapper<T>(nestedMapper, delimiter);
+    public static <E> ListMapper<E> newInstance(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter) {
+        return new ListMapper<E>(parser, formatter);
+    }
+
+    @NotNull
+    public static <E> ListMapper<E> newInstance(@NotNull Mapper<E> mapper, @NotNull String delimiter) {
+        return new ListMapper<E>(mapper, delimiter);
+    }
+
+    @NotNull
+    public static <E> ListMapper<E> newInstance(@NotNull Mapper<E> mapper) {
+        return new ListMapper<E>(mapper);
     }
 
     /*
@@ -86,15 +81,9 @@ public class ListMapper<T> implements Mapper<List<T>> {
     **********************************************************************
     */
 
-    @Nullable
+    @NotNull
     @Override
-    public String formatValue(@Nullable List<T> value) throws IllegalArgumentException {
-        return StringCollections.formatValue(value, delimiter, nestedMapper);
-    }
-
-    @Nullable
-    @Override
-    public List<T> parseValue(@Nullable String value) throws IllegalArgumentException {
-        return StringCollections.split(value, delimiter, nestedMapper);
+    protected List<E> newCollection() {
+        return new ArrayList<E>();
     }
 }

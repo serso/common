@@ -28,6 +28,7 @@ import org.solovyev.common.collections.Collections;
 import org.solovyev.common.collections.LoopData;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -50,6 +51,16 @@ public class StringCollections {
                                     @NotNull Parser<T> parser) {
         final List<T> result = new ArrayList<T>();
 
+        split(result, string, delimiter, parser);
+
+        return result;
+    }
+
+    @NotNull
+    public static <C extends Collection<T>, T> C split(@NotNull C result,
+                                                       @Nullable String string,
+                                                       @NotNull String delimiter,
+                                                       @NotNull Parser<T> parser) {
         if (!Strings.isEmpty(string)) {
             @SuppressWarnings({"ConstantConditions"}) final String[] parts = string.split(delimiter);
 
@@ -74,7 +85,7 @@ public class StringCollections {
     }
 
     @Nullable
-    public static <T> String formatValue(@Nullable List<T> values,
+    public static <T> String formatValue(@Nullable Collection<T> values,
                                          @NotNull String delimiter,
                                          @NotNull org.solovyev.common.text.Formatter<T> formatter) {
         String result = null;
