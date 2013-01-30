@@ -20,30 +20,89 @@ import java.util.List;
  */
 public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements Mapper<Interval<T>> {
 
-	@Override
-	public String formatValue(@Nullable Interval<T> interval) throws IllegalArgumentException {
-		if (interval != null) {
-			return CollectionTransformations.formatValue(Arrays.asList(interval.getLeftLimit(), interval.getRightLimit()), ";", getFormatter());
-		} else {
-			return null;
-		}
-	}
+    /*
+    **********************************************************************
+    *
+    *                           CONSTANTS
+    *
+    **********************************************************************
+    */
 
-	@NotNull
-	protected abstract Formatter<T> getFormatter();
+    @NotNull
+    private static final String DEFAULT_DELIMITER = ";";
 
-	@Override
-	public Interval<T> parseValue(@Nullable String s) throws IllegalArgumentException {
-		//Log.d(AbstractIntervalMapper.class.getName(), "Parsing: " + s);
-		final List<T> list = CollectionTransformations.split(s, ";", getParser());
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
 
-		assert list.size() == 2;
-		return newInstance(list.get(0), list.get(1));
-	}
+    @NotNull
+    private final Formatter<T> formatter;
 
-	@NotNull
-	protected abstract Interval<T> newInstance(@Nullable T left, @Nullable T right);
+    @NotNull
+    private final Parser<T> parser;
 
-	@NotNull
-	protected abstract Parser<T> getParser();
+    @NotNull
+    private final String delimiter;
+
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
+    protected AbstractIntervalMapper(@NotNull Formatter<T> formatter, @NotNull Parser<T> parser, @NotNull String delimiter) {
+        this.formatter = formatter;
+        this.parser = parser;
+        this.delimiter = delimiter;
+    }
+
+    protected AbstractIntervalMapper(@NotNull Mapper<T> mapper, @NotNull String delimiter) {
+        this.formatter = mapper;
+        this.parser = mapper;
+        this.delimiter = delimiter;
+    }
+
+    protected AbstractIntervalMapper(@NotNull Formatter<T> formatter, @NotNull Parser<T> parser) {
+        this(formatter, parser, DEFAULT_DELIMITER);
+    }
+
+    protected AbstractIntervalMapper(@NotNull Mapper<T> mapper) {
+        this(mapper, DEFAULT_DELIMITER);
+
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
+
+
+    @Override
+    public final String formatValue(@Nullable Interval<T> interval) throws IllegalArgumentException {
+        if (interval != null) {
+            return StringCollections.formatValue(Arrays.asList(interval.getLeftLimit(), interval.getRightLimit()), delimiter, this.formatter);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public final Interval<T> parseValue(@Nullable String s) throws IllegalArgumentException {
+        final List<T> list = StringCollections.split(s, delimiter, this.parser);
+
+        assert list.size() == 2 : "Interval contains more than 2 elements!";
+        return newInstance(list.get(0), list.get(1));
+    }
+
+    @NotNull
+    protected abstract Interval<T> newInstance(@Nullable T left, @Nullable T right);
 }

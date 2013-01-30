@@ -7,9 +7,11 @@ package org.solovyev.common.text;
  */
 
 /**
- * Class represents interface for mapping string value with typed object
+ * Class represents an interface for mapping string value to the typed object.
+ *
  * @param <T>
+ * @see Formatter
+ * @see Parser
  */
 public interface Mapper<T> extends Formatter<T>, Parser<T> {
-
 }

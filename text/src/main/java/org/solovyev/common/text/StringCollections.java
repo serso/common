@@ -13,17 +13,19 @@ import java.util.List;
  * Date: 8/7/12
  * Time: 8:24 PM
  */
-public class CollectionTransformations {
+public class StringCollections {
 
     /**
-     * @param string	- string where stored list of objects separated by delimiter
+     * @param string    - string where stored list of objects separated by delimiter
      * @param delimiter - delimiter with which string will be split
-     * @param parser	- object that will create objects of specified type
+     * @param parser    - object that will create objects of specified type
      * @param <T>       - type of object
      * @return list of objects, not null
      */
     @NotNull
-    public static <T> List<T> split(@Nullable String string, @NotNull String delimiter, @NotNull Parser<T> parser) {
+    public static <T> List<T> split(@Nullable String string,
+                                    @NotNull String delimiter,
+                                    @NotNull Parser<T> parser) {
         final List<T> result = new ArrayList<T>();
 
         if (!StringUtils.isEmpty(string)) {
@@ -40,18 +42,21 @@ public class CollectionTransformations {
     }
 
     /**
-     * @param string	- string where stored list of objects separated by delimiter
+     * @param string    - string where stored list of objects separated by delimiter
      * @param delimiter - delimiter with which string will be split
      * @return list of objects, not null
      */
     @NotNull
     public static List<String> split(@Nullable String string, @NotNull String delimiter) {
-        return split(string, delimiter, new StringMapper());
+        return split(string, delimiter, StringMapper.getInstance());
     }
 
     @Nullable
-    public static <T> String formatValue(@Nullable List<T> values, @NotNull String delimiter, @NotNull org.solovyev.common.text.Formatter<T> formatter) {
+    public static <T> String formatValue(@Nullable List<T> values,
+                                         @NotNull String delimiter,
+                                         @NotNull org.solovyev.common.text.Formatter<T> formatter) {
         String result = null;
+
         if (!CollectionsUtils.isEmpty(values)) {
             final StringBuilder sb = new StringBuilder();
 

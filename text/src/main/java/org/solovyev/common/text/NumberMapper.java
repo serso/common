@@ -18,34 +18,9 @@ import java.util.Map;
  * Date: 9/26/11
  * Time: 11:10 PM
  */
-public class NumberMapper<N extends Number> implements Mapper<N>{
+public class NumberMapper<N extends Number> implements Mapper<N> {
 
-	@NotNull
-	private final Formatter<N> formatter = ValueOfFormatter.getNotNullFormatter();
-
-	@NotNull
-	private final Parser<? extends N> parser;
-
-    /**
-     * Use org.solovyev.common.text.NumberMapper#getMapper(java.lang.Class<N>) instead
-     * @param clazz class representing parsed object
-     */
-    @Deprecated
-	public NumberMapper(@NotNull Class<? extends N> clazz) {
-		this.parser = NumberParser.getParser(clazz);
-	}
-
-	@Override
-	public String formatValue(@Nullable N value) throws IllegalArgumentException {
-		return formatter.formatValue(value);
-	}
-
-	@Override
-	public N parseValue(@Nullable String value) throws IllegalArgumentException {
-		return this.parser.parseValue(value);
-	}
-
-        /*
+    /*
     **********************************************************************
     *
     *                           STATIC
@@ -59,13 +34,74 @@ public class NumberMapper<N extends Number> implements Mapper<N>{
 
     static {
         for (Class<? extends Number> supportedClass : supportedClasses) {
-            mappers.put(supportedClass, new NumberMapper<Number>(supportedClass));
+            mappers.put(supportedClass, of(supportedClass));
         }
     }
 
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
+
     @NotNull
-    public static <N extends Number> Mapper<N> getMapper(@NotNull Class<N> clazz) {
+    private final Formatter<N> formatter;
+
+    @NotNull
+    private final Parser<? extends N> parser;
+
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
+    /**
+     * Use org.solovyev.common.text.NumberMapper#getMapper(java.lang.Class<N>) instead
+     *
+     * @param clazz class representing parsed object
+     */
+    private NumberMapper(@NotNull Class<? extends N> clazz) {
+        this(NumberParser.of(clazz), ValueOfFormatter.<N>getNotNullFormatter());
+    }
+
+    private NumberMapper(@NotNull Parser<? extends N> parser,
+                         @NotNull Formatter<N> formatter) {
+        this.parser = parser;
+        this.formatter = formatter;
+    }
+
+    @NotNull
+    public static <N extends Number> Mapper<N> newInstance(@NotNull Parser<? extends N> parser,
+                                                           @NotNull Formatter<N> formatter) {
+        return new NumberMapper<N>(parser, formatter);
+    }
+
+    @NotNull
+    public static <N extends Number> Mapper<N> of(@NotNull Class<? extends N> clazz) {
         assert supportedClasses.contains(clazz) : "Class " + clazz + " is not supported by " + NumberMapper.class;
         return (Mapper<N>) mappers.get(clazz);
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
+
+    @Override
+    public String formatValue(@Nullable N value) throws IllegalArgumentException {
+        return formatter.formatValue(value);
+    }
+
+    @Override
+    public N parseValue(@Nullable String value) throws IllegalArgumentException {
+        return this.parser.parseValue(value);
     }
 }

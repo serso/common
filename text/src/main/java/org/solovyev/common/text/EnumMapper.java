@@ -16,24 +16,49 @@ import org.jetbrains.annotations.Nullable;
  */
 public class EnumMapper<T extends Enum> implements Mapper<T> {
 
-	@NotNull
-	private final Class<T> enumClass;
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
 
-	public EnumMapper(@NotNull Class<T> enumClass) {
-		this.enumClass = enumClass;
-	}
+    @NotNull
+    private final Class<T> enumClass;
 
-	public static <T extends Enum> Mapper<T> newInstance(@NotNull Class<T> enumClass) {
-		return new EnumMapper<T>(enumClass);
-	}
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
 
-	@Override
-	public String formatValue(@Nullable T value) throws IllegalArgumentException {
-		return value == null ? null : value.name();
-	}
+    public EnumMapper(@NotNull Class<T> enumClass) {
+        this.enumClass = enumClass;
+    }
 
-	@Override
-	public T parseValue(@Nullable String value) throws IllegalArgumentException {
-		return value == null ? null : (T)Enum.valueOf(enumClass, value);
-	}
+    @NotNull
+    public static <T extends Enum> Mapper<T> newInstance(@NotNull Class<T> enumClass) {
+        return new EnumMapper<T>(enumClass);
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
+
+    @Override
+    public String formatValue(@Nullable T value) throws IllegalArgumentException {
+        return value == null ? null : value.name();
+    }
+
+    @Override
+    public T parseValue(@Nullable String value) throws IllegalArgumentException {
+        return value == null ? null : (T) Enum.valueOf(enumClass, value);
+    }
 }

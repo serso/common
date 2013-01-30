@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
  * Date: 9/26/11
  * Time: 11:27 PM
  */
-public class BooleanMapper implements Mapper<Boolean>{
+public class BooleanMapper implements Mapper<Boolean> {
 
     /*
     **********************************************************************
@@ -34,28 +34,40 @@ public class BooleanMapper implements Mapper<Boolean>{
     /*
     **********************************************************************
     *
-    *
+    *                           FIELDS
     *
     **********************************************************************
     */
 
     @NotNull
-	private final Formatter<Boolean> formatter = ValueOfFormatter.getNotNullFormatter();
+    private final Formatter<Boolean> formatter = ValueOfFormatter.getNotNullFormatter();
 
-    /**
-     * Use org.solovyev.common.text.BooleanMapper#getInstance() instead
-     */
-    @Deprecated
-    public BooleanMapper() {
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
+    private BooleanMapper() {
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
+
+    @Override
+    public String formatValue(@Nullable Boolean value) throws IllegalArgumentException {
+        return formatter.formatValue(value);
     }
 
     @Override
-	public String formatValue(@Nullable Boolean value) throws IllegalArgumentException {
-		return formatter.formatValue(value);
-	}
-
-	@Override
-	public Boolean parseValue(@Nullable String value) throws IllegalArgumentException {
-		return value == null ? null : Boolean.valueOf(value);
-	}
+    public Boolean parseValue(@Nullable String value) throws IllegalArgumentException {
+        return value == null ? null : Boolean.valueOf(value);
+    }
 }

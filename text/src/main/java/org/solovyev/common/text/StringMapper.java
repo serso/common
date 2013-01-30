@@ -10,6 +10,14 @@ import org.jetbrains.annotations.Nullable;
  */
 public class StringMapper implements Mapper<String> {
 
+    /*
+    **********************************************************************
+    *
+    *                           STATIC
+    *
+    **********************************************************************
+    */
+
     @NotNull
     private static final Mapper<String> instance = new StringMapper();
 
@@ -18,20 +26,32 @@ public class StringMapper implements Mapper<String> {
         return instance;
     }
 
-    /**
-     * Use org.solovyev.common.text.StringMapper#getInstance() method instead
-     */
-    @Deprecated
-    public StringMapper() {
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTOR
+    *
+    **********************************************************************
+    */
+
+    private StringMapper() {
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
+
+    @Override
+    public String formatValue(@Nullable String value) {
+        return value;
     }
 
     @Override
-	public String formatValue(@Nullable String value) {
-		return value;
-	}
-
-	@Override
-	public String parseValue(@Nullable String value) {
-		return value;
-	}
+    public String parseValue(@Nullable String value) {
+        return value;
+    }
 }

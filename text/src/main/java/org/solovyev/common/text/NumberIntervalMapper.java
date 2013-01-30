@@ -18,11 +18,41 @@ import org.solovyev.common.interval.IntervalLimitImpl;
  * Date: 9/20/11
  * Time: 11:56 PM
  */
-public class NumberIntervalMapper<T extends Number & Comparable<T>> extends GenericIntervalMapper<T> {
+public final class NumberIntervalMapper<T extends Number & Comparable<T>> extends AbstractIntervalMapper<T> {
 
-    public NumberIntervalMapper(@NotNull Class<T> clazz) {
-        super(NumberMapper.getMapper(clazz));
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
+    private NumberIntervalMapper(@NotNull Class<T> clazz) {
+        super(NumberMapper.of(clazz));
     }
+
+    private NumberIntervalMapper(@NotNull Class<T> clazz, @NotNull String delimiter) {
+        super(NumberMapper.of(clazz), delimiter);
+    }
+
+    @NotNull
+    public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> of(@NotNull Class<T> clazz) {
+        return new NumberIntervalMapper<T>(clazz);
+    }
+
+    @NotNull
+    public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> newInstance(@NotNull Class<T> clazz, @NotNull String delimiter) {
+        return new NumberIntervalMapper<T>(clazz, delimiter);
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
 
     @NotNull
     @Override

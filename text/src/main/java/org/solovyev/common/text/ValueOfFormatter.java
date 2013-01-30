@@ -43,28 +43,39 @@ public class ValueOfFormatter<T> implements Formatter<T> {
     /*
     **********************************************************************
     *
-    *
+    *                           FIELDS
     *
     **********************************************************************
     */
 
-	private final boolean processNulls;
+    private final boolean processNulls;
 
-    /**
-     *  Use org.solovyev.common.text.ValueOfFormatter#getNullableFormatter() or org.solovyev.common.text.ValueOfFormatter#getNotNullFormatter() instead
-     */
-    @Deprecated
-	public ValueOfFormatter() {
-		this(false);
-	}
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
 
-	public ValueOfFormatter(boolean processNulls) {
-		this.processNulls = processNulls;
-	}
+    private ValueOfFormatter() {
+        this(false);
+    }
 
+    private ValueOfFormatter(boolean processNulls) {
+        this.processNulls = processNulls;
+    }
 
-	@Override
-	public String formatValue(@Nullable T t) throws IllegalArgumentException {
-		return t == null ? (processNulls ? String.valueOf(t) : null) : String.valueOf(t);
-	}
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
+
+    @Override
+    public String formatValue(@Nullable T t) throws IllegalArgumentException {
+        return t == null ? (processNulls ? String.valueOf(t) : null) : String.valueOf(t);
+    }
 }
