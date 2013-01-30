@@ -1,12 +1,13 @@
 package org.solovyev.common.math.graph;
 
+import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.JCloneable;
+import org.solovyev.common.clone.Cloneables;
 import org.solovyev.common.definitions.Empty;
 import org.solovyev.common.definitions.MultiIdentity;
 import org.solovyev.common.definitions.Property;
 import org.solovyev.common.math.matrix.AbstractSparseMatrix;
 import org.solovyev.common.math.matrix.Matrix;
-import org.solovyev.common.clone.CloneUtils;
 import org.solovyev.common.text.TextDisplay;
 
 import java.io.PrintWriter;
@@ -164,6 +165,7 @@ public class Graph<T, N> implements TextDisplay, JCloneable<Graph<T, N>> {
         }
     }
 
+    @NotNull
     @SuppressWarnings("unchecked")
     public Graph<T, N> clone() {
         Graph<T, N> result = null;
@@ -171,7 +173,7 @@ public class Graph<T, N> implements TextDisplay, JCloneable<Graph<T, N>> {
             result = (Graph<T, N>) super.clone();
 
             //nodes list
-            result.setNodes(CloneUtils.deepListCloning(this.getNodes()));
+            result.setNodes(Cloneables.deepListCloning(this.getNodes()));
 
             //adding linked nodes
             for (Node<T, N> node : this.nodes) {

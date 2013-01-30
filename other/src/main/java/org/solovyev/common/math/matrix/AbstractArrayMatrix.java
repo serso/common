@@ -1,5 +1,6 @@
 package org.solovyev.common.math.matrix;
 
+import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.math.graph.Graph;
 
 import java.io.IOException;
@@ -72,6 +73,7 @@ public abstract class AbstractArrayMatrix<T> extends AbstractMatrix<T> implement
         this.array = array;
     }
 
+    @NotNull
     @SuppressWarnings("unchecked")
     public Matrix<T> clone() {
         final AbstractArrayMatrix<T> clone = (AbstractArrayMatrix<T>) super.clone();

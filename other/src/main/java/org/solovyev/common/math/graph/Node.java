@@ -1,5 +1,6 @@
 package org.solovyev.common.math.graph;
 
+import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.JCloneable;
 import org.solovyev.common.definitions.IsMarked;
 import org.solovyev.common.definitions.MultiIdentity;
@@ -132,6 +133,7 @@ public class Node<T, N> extends MultiIdentity<Integer> implements  Comparable<No
         this.isMarked = isMarked;
     }
 
+    @NotNull
     @SuppressWarnings("unchecked")
     public Node<T, N> clone() {
         Node<T, N> result = null;

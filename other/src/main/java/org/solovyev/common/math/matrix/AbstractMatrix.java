@@ -1,5 +1,6 @@
 package org.solovyev.common.math.matrix;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.LinkedNode;
@@ -191,7 +192,8 @@ public abstract class AbstractMatrix<T> implements Matrix<T> {
 		return MatrixUtils.areEqual(this, (AbstractMatrix)that);
 	}
 
-	public Matrix<T> clone() {
+	@NotNull
+    public Matrix<T> clone() {
 		Matrix<T> result;
 		try {
 			//noinspection unchecked

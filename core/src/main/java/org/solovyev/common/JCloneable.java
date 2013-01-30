@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
  */
 
 /**
- * Common interface for clonable objects. Suppresses {@link CloneNotSupportedException}, has a explicit
+ * Common interface for cloneable objects. Suppresses {@link CloneNotSupportedException}, has a explicit
  * {@link #clone()} method declaration and use type T for it's result
  * @param <T> type of cloned object
  */

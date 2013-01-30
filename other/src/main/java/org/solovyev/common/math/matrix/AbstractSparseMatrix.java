@@ -1,5 +1,6 @@
 package org.solovyev.common.math.matrix;
 
+import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.definitions.Property;
 import org.solovyev.common.math.graph.Graph;
 import org.solovyev.common.math.graph.LinkedNode;
@@ -120,6 +121,7 @@ public abstract class AbstractSparseMatrix<T> extends AbstractMatrix<T> {
         }
     }
 
+    @NotNull
     public Matrix<T> clone() {
         final AbstractSparseMatrix<T> result= (AbstractSparseMatrix<T>) super.clone();
 
