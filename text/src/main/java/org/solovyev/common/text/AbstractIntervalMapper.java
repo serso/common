@@ -64,6 +64,10 @@ public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements
     @NotNull
     private final String delimiter;
 
+    // used in getMapper method
+    @Nullable
+    private Mapper<T> mapper;
+
     /*
     **********************************************************************
     *
@@ -130,5 +134,28 @@ public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements
     @NotNull
     public final Formatter<T> getFormatter() {
         return formatter;
+    }
+
+    @NotNull
+    public final Mapper<T> getMapper() {
+        if (mapper == null) {
+            mapper = new MyMapper();
+        }
+        return mapper;
+    }
+
+    private class MyMapper implements Mapper<T> {
+
+        @Nullable
+        @Override
+        public String formatValue(@Nullable T value) throws IllegalArgumentException {
+            return formatter.formatValue(value);
+        }
+
+        @Nullable
+        @Override
+        public T parseValue(@Nullable String value) throws IllegalArgumentException {
+            return parser.parseValue(value);
+        }
     }
 }
