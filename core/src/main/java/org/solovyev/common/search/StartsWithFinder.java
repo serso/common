@@ -20,10 +20,11 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common;
+package org.solovyev.common.search;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.JPredicate;
 
 /**
  * User: serso
@@ -37,14 +38,24 @@ public class StartsWithFinder implements JPredicate<String> {
     @NotNull
     private final String targetString;
 
-    public StartsWithFinder(@NotNull String targetString, int i) {
+    private StartsWithFinder(@NotNull String targetString, int i) {
         this.targetString = targetString;
         this.i = i;
     }
 
+    @NotNull
+    public static StartsWithFinder newFrom(@NotNull String targetString, int i) {
+        return new StartsWithFinder(targetString, i);
+    }
+
+    @NotNull
+    public static StartsWithFinder newInstance(@NotNull String targetString) {
+        return newFrom(targetString, 0);
+    }
+
     @Override
     public boolean apply(@Nullable String s) {
-        return targetString.startsWith(s, i);
+        return s != null && targetString.startsWith(s, i);
     }
 
     public void setI(int i) {
