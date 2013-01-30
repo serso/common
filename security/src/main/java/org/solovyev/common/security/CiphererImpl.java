@@ -1,8 +1,30 @@
+/*
+ * Copyright 2013 serso aka se.solovyev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * ---------------------------------------------------------------------
+ * Contact details
+ *
+ * Email: se.solovyev@gmail.com
+ * Site:  http://se.solovyev.org
+ */
+
 package org.solovyev.common.security;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.HexUtils;
+import org.solovyev.common.JBytes;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -52,8 +74,8 @@ public class CiphererImpl implements Cipherer {
     public String encrypt(@NotNull SecretKey secret,
                           @NotNull String plainText) throws CiphererException {
         try {
-            final byte[] iv = SecurityUtils.generateRandomBytes(randomAlgorithm, ivLength);
-            final String ivHex = HexUtils.toHex(iv);
+            final byte[] iv = JSecurity.generateRandomBytes(randomAlgorithm, ivLength);
+            final String ivHex = JBytes.toHex(iv);
             return encrypt(secret, plainText, ivHex);
         } catch (Exception e) {
             throw new CiphererException("Unable to encrypt due to some errors!", e);
@@ -66,7 +88,7 @@ public class CiphererImpl implements Cipherer {
                           @NotNull String plainText,
                           @NotNull String ivHex) throws CiphererException {
         try {
-            final IvParameterSpec ivParameterSpec = new IvParameterSpec(HexUtils.toBytes(ivHex));
+            final IvParameterSpec ivParameterSpec = new IvParameterSpec(JBytes.toBytes(ivHex));
 
             final Cipher encryptionCipher;
             if (provider != null) {
@@ -77,7 +99,7 @@ public class CiphererImpl implements Cipherer {
             encryptionCipher.init(Cipher.ENCRYPT_MODE, secret, ivParameterSpec);
 
             final byte[] encrypted = encryptionCipher.doFinal(plainText.getBytes("UTF-8"));
-            final String encryptedHex = HexUtils.toHex(encrypted);
+            final String encryptedHex = JBytes.toHex(encrypted);
 
             return ivHex + encryptedHex;
         } catch (Exception e) {
@@ -91,7 +113,7 @@ public class CiphererImpl implements Cipherer {
         try {
             final String ivHex = getIvHexFromEncrypted(encryptedText);
             final String encryptedHex = encryptedText.substring(ivLength * 2);
-            final IvParameterSpec ivParameterSpec = new IvParameterSpec(HexUtils.toBytes(ivHex));
+            final IvParameterSpec ivParameterSpec = new IvParameterSpec(JBytes.toBytes(ivHex));
 
             final Cipher decryptionCipher;
             if (provider != null) {
@@ -101,7 +123,7 @@ public class CiphererImpl implements Cipherer {
             }
             decryptionCipher.init(Cipher.DECRYPT_MODE, secret, ivParameterSpec);
 
-            byte[] decrypted = decryptionCipher.doFinal(HexUtils.toBytes(encryptedHex));
+            byte[] decrypted = decryptionCipher.doFinal(JBytes.toBytes(encryptedHex));
             return new String(decrypted, "UTF-8");
         } catch (Exception e) {
             throw new CiphererException("Unable to decrypt due to some errors!", e);

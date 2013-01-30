@@ -7,17 +7,17 @@ import org.jetbrains.annotations.NotNull;
  * Date: 8/20/12
  * Time: 8:02 PM
  */
-public final class HexUtils {
+public final class JBytes {
 
     private final static String HEX = "0123456789ABCDEF";
 
-    private HexUtils() {
+    private JBytes() {
         throw new AssertionError();
     }
 
     @NotNull
-    public static String toHex(@NotNull String txt) {
-        return toHex(txt.getBytes());
+    public static String toHex(@NotNull String s) {
+        return toHex(s.getBytes());
     }
 
     @NotNull

@@ -24,6 +24,7 @@ package org.solovyev.common.text;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.JBytes;
 import org.solovyev.common.collections.JCollections;
 import org.solovyev.common.collections.LoopData;
 
@@ -198,5 +199,15 @@ public final class JStrings {
         }
 
         return result.toString();
+    }
+
+    @NotNull
+    public static String toHex(@NotNull String s) {
+        return JBytes.toHex(s);
+    }
+
+    @NotNull
+    public static String fromHex(@NotNull String hex) {
+        return JBytes.fromHex(hex);
     }
 }

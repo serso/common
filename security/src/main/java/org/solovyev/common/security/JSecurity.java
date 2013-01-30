@@ -20,42 +20,30 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common.definitions;
+package org.solovyev.common.security;
 
-import org.solovyev.common.Identifiable;
+import org.jetbrains.annotations.NotNull;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * User: serso
- * Date: 29.04.2009
- * Time: 23:48:39
+ * Date: 8/20/12
+ * Time: 8:14 PM
  */
-public class Property<VALUE, ID> implements Identifiable<ID> {
+public final class JSecurity {
 
-    private ID id = null;
-    private VALUE value = null;
-
-    public Property( VALUE value, ID id ) {
-        this.setValue(value);
-        this.setId(id);
+    private JSecurity() {
+        throw new AssertionError();
     }
 
-    public void setValue( VALUE value ) {
-        this.value = value;
+    public static byte[] generateRandomBytes(@NotNull String randomAlgorithm, int length) throws NoSuchAlgorithmException, NoSuchProviderException {
+        final Random random = SecureRandom.getInstance(randomAlgorithm);
+        byte[] result = new byte[length];
+        random.nextBytes(result);
+        return result;
     }
-
-    public VALUE getValue() {
-        return this.value;
-    }
-
-    public void setId( ID id ) {
-        this.id = id;
-    }
-
-    public ID getId() {
-        return this.id;
-    }
-
-	public static <VALUE, ID> Property<VALUE, ID> create (VALUE value, ID id) {
-		return new Property<VALUE, ID>(value, id);
-	}
 }
