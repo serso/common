@@ -36,6 +36,10 @@ import java.util.List;
 
 public class Objects {
 
+    protected Objects() {
+        throw new AssertionError();
+    }
+
     /*
     **********************************************************************
     *

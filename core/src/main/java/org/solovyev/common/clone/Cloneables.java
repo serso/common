@@ -39,9 +39,9 @@ import java.util.Map;
 /**
  * Class contains utility methods for cloning
  */
-public final class Cloneables {
+public class Cloneables {
 
-    private Cloneables() {
+    protected Cloneables() {
         throw new AssertionError("Not intended for instantiation!");
     }
 
