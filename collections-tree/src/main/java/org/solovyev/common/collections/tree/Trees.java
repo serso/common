@@ -25,19 +25,67 @@ package org.solovyev.common.collections.tree;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 public final class Trees {
 
     private Trees() {
         throw new AssertionError();
     }
 
+    /*
+    **********************************************************************
+    *
+    *                           PUBLIC
+    *
+    **********************************************************************
+    */
+
     @NotNull
-    public static <N> Tree<N> newTree(@Nullable N root) {
-        return TreeImpl.newInstance(root);
-    }
-    @NotNull
-    public static <N> MutableTree<N> newMutableTree(@Nullable N root) {
+    public static <N> MutableTree<N> newTree(@Nullable N root) {
         return TreeImpl.newInstance(root);
     }
 
+    @NotNull
+    public static <N> MutableTree<N> unmodifiableTree(@NotNull MutableTree<N> tree) {
+        return UnmodifiableTree.wrap(tree);
+    }
+
+    @NotNull
+    public static <N> MutableTree<N> unmodifiableTree(@NotNull Tree<N> tree) {
+        return UnmodifiableTree.wrap(tree);
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           PACKAGE LOCAL
+    *
+    **********************************************************************
+    */
+
+    @NotNull
+    static <T> List<? extends MutableTreeNode<T>> unmodifiableMutableTreeNodes(@NotNull Collection<? extends MutableTreeNode<T>> treeNodes) {
+        final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(treeNodes.size());
+
+        for (MutableTreeNode<T> treeNode : treeNodes) {
+            result.add(UnmodifiableTreeNode.wrap(treeNode));
+        }
+
+        return Collections.unmodifiableList(result);
+    }
+
+    @NotNull
+    static <T> List<? extends MutableTreeNode<T>> unmodifiableTreeNodes(@NotNull Collection<? extends TreeNode<T>> treeNodes) {
+        final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(treeNodes.size());
+
+        for (TreeNode<T> treeNode : treeNodes) {
+            result.add(UnmodifiableTreeNode.wrap(treeNode));
+        }
+
+        return Collections.unmodifiableList(result);
+    }
 }
