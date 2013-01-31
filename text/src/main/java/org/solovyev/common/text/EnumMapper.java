@@ -25,12 +25,26 @@ package org.solovyev.common.text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * User: serso
  * Date: 12/25/11
  * Time: 1:17 PM
  */
 public class EnumMapper<T extends Enum> implements Mapper<T> {
+
+    /*
+    **********************************************************************
+    *
+    *                           STATIC
+    *
+    **********************************************************************
+    */
+
+    @NotNull
+    private final static Map<Class<? extends Enum>, Mapper<?>> cachedMappers = new HashMap<Class<? extends Enum>, Mapper<?>>();
 
     /*
     **********************************************************************
@@ -51,13 +65,20 @@ public class EnumMapper<T extends Enum> implements Mapper<T> {
     **********************************************************************
     */
 
-    public EnumMapper(@NotNull Class<T> enumClass) {
+    private EnumMapper(@NotNull Class<T> enumClass) {
         this.enumClass = enumClass;
     }
 
     @NotNull
-    public static <T extends Enum> Mapper<T> newInstance(@NotNull Class<T> enumClass) {
-        return new EnumMapper<T>(enumClass);
+    public static <T extends Enum> Mapper<T> of(@NotNull Class<T> enumClass) {
+        Mapper<T> result = (Mapper<T>) cachedMappers.get(enumClass);
+        if (result == null) {
+            // do not care about synchronization
+            result = new EnumMapper<T>(enumClass);
+            cachedMappers.put(enumClass, result);
+        }
+
+        return result;
     }
 
     /*
