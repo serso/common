@@ -139,23 +139,8 @@ public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements
     @NotNull
     public final Mapper<T> getMapper() {
         if (mapper == null) {
-            mapper = new MyMapper();
+            mapper = CompositeMapper.newInstance(formatter, parser);
         }
         return mapper;
-    }
-
-    private class MyMapper implements Mapper<T> {
-
-        @Nullable
-        @Override
-        public String formatValue(@Nullable T value) throws IllegalArgumentException {
-            return formatter.formatValue(value);
-        }
-
-        @Nullable
-        @Override
-        public T parseValue(@Nullable String value) throws IllegalArgumentException {
-            return parser.parseValue(value);
-        }
     }
 }
