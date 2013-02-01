@@ -40,8 +40,15 @@ import java.util.Random;
  * Date: 27.04.2009
  * Time: 10:23:29
  */
-public final class Strings {
+public class Strings {
 
+    /*
+    **********************************************************************
+    *
+    *                           CONSTANTS
+    *
+    **********************************************************************
+    */
 
     private static final String EMPTY = "";
 
@@ -56,9 +63,17 @@ public final class Strings {
     public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
 
     // not intended for instantiation
-    private Strings() {
+    protected Strings() {
         throw new AssertionError();
     }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
 
     public static String[] split(String source, String subString) {
         String[] params = source.split(subString);

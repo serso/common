@@ -38,6 +38,10 @@ import java.util.List;
  */
 public class StringCollections {
 
+    protected StringCollections() {
+        throw new AssertionError();
+    }
+
     /**
      * @param string    - string where stored list of objects separated by delimiter
      * @param delimiter - delimiter with which string will be split

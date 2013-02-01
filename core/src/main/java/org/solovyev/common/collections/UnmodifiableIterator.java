@@ -20,31 +20,13 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common.text;
+package org.solovyev.common.collections;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
 
-/**
- * User: serso
- * Date: 12/25/11
- * Time: 1:17 PM
- */
-public class EnumMapper<T extends Enum> implements Mapper<T> {
-
-    /*
-    **********************************************************************
-    *
-    *                           STATIC
-    *
-    **********************************************************************
-    */
-
-    @NotNull
-    private final static Map<Class<? extends Enum>, Mapper<?>> cachedMappers = new HashMap<Class<? extends Enum>, Mapper<?>>();
+public final class UnmodifiableIterator<T> implements Iterator<T> {
 
     /*
     **********************************************************************
@@ -53,9 +35,8 @@ public class EnumMapper<T extends Enum> implements Mapper<T> {
     *
     **********************************************************************
     */
-
     @NotNull
-    private final Class<T> enumClass;
+    private final Iterator<? extends T> i;
 
     /*
     **********************************************************************
@@ -65,20 +46,12 @@ public class EnumMapper<T extends Enum> implements Mapper<T> {
     **********************************************************************
     */
 
-    private EnumMapper(@NotNull Class<T> enumClass) {
-        this.enumClass = enumClass;
+    private UnmodifiableIterator(@NotNull Iterator<? extends T> i) {
+        this.i = i;
     }
 
-    @NotNull
-    public static <T extends Enum> Mapper<T> of(@NotNull Class<T> enumClass) {
-        Mapper<T> result = (Mapper<T>) cachedMappers.get(enumClass);
-        if (result == null) {
-            // do not care about synchronization
-            result = new EnumMapper<T>(enumClass);
-            cachedMappers.put(enumClass, result);
-        }
-
-        return result;
+    public static <T> UnmodifiableIterator<T> wrap(@NotNull Iterator<? extends T> i) {
+        return new UnmodifiableIterator<T>(i);
     }
 
     /*
@@ -90,12 +63,17 @@ public class EnumMapper<T extends Enum> implements Mapper<T> {
     */
 
     @Override
-    public String formatValue(@Nullable T value) throws IllegalArgumentException {
-        return value == null ? null : value.name();
+    public boolean hasNext() {
+        return i.hasNext();
     }
 
     @Override
-    public T parseValue(@Nullable String value) throws IllegalArgumentException {
-        return value == null ? null : (T) Enum.valueOf(enumClass, value);
+    public T next() {
+        return i.next();
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
     }
 }

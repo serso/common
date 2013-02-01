@@ -50,9 +50,9 @@ import java.util.TreeMap;
  * Date: Mar 29, 2010
  * Time: 10:54:18 PM
  */
-public final class Collections {
+public class Collections {
 
-    private Collections() {
+    protected Collections() {
         throw new AssertionError();
     }
 

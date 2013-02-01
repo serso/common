@@ -54,7 +54,7 @@ public class TreeImplTest {
      */
     @NotNull
     static MutableTree<Integer> createMockTree() {
-        final MutableTree<Integer> result = Trees.newMutableTree(1);
+        final MutableTree<Integer> result = Trees.newTree(1);
 
         MutableTreeNode<Integer> root = result.getRoot();
         MutableTreeNode<Integer> child2 = root.addChild(2);
