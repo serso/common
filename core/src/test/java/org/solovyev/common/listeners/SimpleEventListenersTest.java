@@ -86,7 +86,20 @@ public class SimpleEventListenersTest {
 
     @Test
     public void testAddListener() throws Exception {
+        JEventListeners<JEventListener<?>, TestEvent2> listeners = Listeners.newHardRefEventListenersOf(TestEvent2.class);
 
+        final TestEventListener1 l1 = new TestEventListener1();
+        final TestEventListener2 l2 = new TestEventListener2();
+        final TestEventListener3 l3 = new TestEventListener3();
+
+        try {
+            listeners.addListener(l1);
+            Assert.fail();
+        } catch (IllegalArgumentException e) {
+            // ok
+        }
+        listeners.addListener(l2);
+        listeners.addListener(l3);
     }
 
     @Test

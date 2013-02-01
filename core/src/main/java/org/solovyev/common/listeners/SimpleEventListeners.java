@@ -37,11 +37,11 @@ class SimpleEventListeners<L extends JEventListener<?>, E extends JEvent> implem
     private final JListeners<L> listeners;
 
     @NotNull
-    private final Class<E> eventType;
+    private final Class<E> baseEventType;
 
-    private SimpleEventListeners(@NotNull JListeners<L> listeners, @NotNull Class<E> eventType) {
+    private SimpleEventListeners(@NotNull JListeners<L> listeners, @NotNull Class<E> baseEventType) {
         this.listeners = listeners;
-        this.eventType = eventType;
+        this.baseEventType = baseEventType;
     }
 
     @NotNull
@@ -50,8 +50,8 @@ class SimpleEventListeners<L extends JEventListener<?>, E extends JEvent> implem
     }
 
     @NotNull
-    public static <L extends JEventListener<?>, E extends JEvent> SimpleEventListeners<L, E> newInstance(@NotNull JListeners<L> listeners, @NotNull Class<E> eventType) {
-        return new SimpleEventListeners<L, E>(listeners, eventType);
+    public static <L extends JEventListener<?>, E extends JEvent> SimpleEventListeners<L, E> newInstance(@NotNull JListeners<L> listeners, @NotNull Class<E> baseEventType) {
+        return new SimpleEventListeners<L, E>(listeners, baseEventType);
     }
 
     @Override
@@ -65,6 +65,9 @@ class SimpleEventListeners<L extends JEventListener<?>, E extends JEvent> implem
 
     @Override
     public boolean addListener(@NotNull L listener) {
+        if ( !baseEventType.isAssignableFrom(listener.getEventType()) ) {
+            throw new IllegalArgumentException("Current listener cannot be added, because will never be fired!");
+        }
         return listeners.addListener(listener);
     }
 
