@@ -38,7 +38,7 @@ import java.util.List;
  * Date: 20.09.12
  * Time: 16:43
  */
-public class Listeners<L> {
+public class AbstractReferenceListeners<L> implements IListeners<L> {
 
     /*
     **********************************************************************
@@ -59,12 +59,12 @@ public class Listeners<L> {
     **********************************************************************
     */
 
-    private Listeners() {
+    private AbstractReferenceListeners() {
     }
 
     @NotNull
-    public static <L> Listeners<L> newInstance() {
-        return new Listeners<L>();
+    public static <L> IListeners<L> newInstance() {
+        return new AbstractReferenceListeners<L>();
     }
 
     /*
@@ -75,6 +75,7 @@ public class Listeners<L> {
     **********************************************************************
     */
 
+    @Override
     public void addListener(@NotNull final L listener) {
         synchronized (listeners) {
             boolean contains = Collections.contains(listeners, FilterType.included, new WeakReferencePredicate<L>(listener));
@@ -85,12 +86,14 @@ public class Listeners<L> {
         }
     }
 
+    @Override
     public void removeListener(@NotNull L listener) {
         synchronized (listeners) {
             Collections.removeIf(listeners.iterator(), new WeakReferencePredicate<L>(listener));
         }
     }
 
+    @Override
     @NotNull
     public List<L> getListeners() {
         final List<L> result;
