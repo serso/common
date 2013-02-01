@@ -28,7 +28,6 @@ import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.filter.FilterType;
 
-import java.lang.ref.HardReference;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ import java.util.List;
  * Date: 20.09.12
  * Time: 16:43
  */
-public final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<L> {
+final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<L> {
 
     /*
     **********************************************************************
@@ -89,8 +88,8 @@ public final class ReferenceListeners<R extends Reference<L>, L> implements JLis
     }
 
     @NotNull
-    public static <L> ReferenceListeners<HardReference<L>, L> newHardReferenceInstance() {
-        return new ReferenceListeners<HardReference<L>, L>(new HardReferenceProducer<L>());
+    public static <L> ReferenceListeners<WeakReference<L>, L> newHardReferenceInstance() {
+        return new ReferenceListeners<WeakReference<L>, L>(new HardReferenceProducer<L>());
     }
 
     /*
@@ -115,9 +114,24 @@ public final class ReferenceListeners<R extends Reference<L>, L> implements JLis
     }
 
     @Override
-    public boolean removeListener(@NotNull L listener) {
+    public boolean removeListener(@NotNull final L listener) {
         synchronized (listeners) {
-            return Collections.removeIf(listeners.iterator(), new ReferencePredicate<R, L>(listener));
+            if (referenceProducer instanceof HardReferenceProducer) {
+                return Collections.removeIf(listeners.iterator(), new JPredicate<R>() {
+                    @Override
+                    public boolean apply(@Nullable R r) {
+                        final L l = r != null ? r.get() : null;
+                        boolean removed = listener.equals(l);
+                        if ( removed ) {
+                            // we must clean reference in order to avoid memory leak
+                            ((HardReferenceProducer) referenceProducer).remove((WeakReference) r);
+                        }
+                        return removed;
+                    }
+                });
+            } else {
+                return Collections.removeIf(listeners.iterator(), new ReferencePredicate<R, L>(listener));
+            }
         }
     }
 
@@ -183,12 +197,6 @@ public final class ReferenceListeners<R extends Reference<L>, L> implements JLis
         }
     }
 
-    public static interface ReferenceProducer<R extends Reference<L>, L> {
-
-        @NotNull
-        R newReference(@NotNull L listener);
-    }
-
     private static class WeakReferenceProducer<L> implements ReferenceProducer<WeakReference<L>, L> {
 
         @NotNull
@@ -198,12 +206,48 @@ public final class ReferenceListeners<R extends Reference<L>, L> implements JLis
         }
     }
 
-    private static class HardReferenceProducer<L> implements ReferenceProducer<HardReference<L>, L> {
+    private static class HardReferenceProducer<L> implements ReferenceProducer<WeakReference<L>, L> {
+
+        @NotNull
+        private final List<ReferenceHolder<L>> references = new ArrayList<ReferenceHolder<L>>();
 
         @NotNull
         @Override
-        public HardReference<L> newReference(@NotNull L listener) {
-            return new HardReference<L>(listener);
+        public WeakReference<L> newReference(@NotNull L listener) {
+            final WeakReference<L> result = new WeakReference<L>(listener);
+
+            // store hard reference to prevent GC
+            references.add(ReferenceHolder.newInstance(result, listener));
+
+            return result;
+        }
+
+        public boolean remove(@NotNull final WeakReference<L> reference) {
+            return Collections.removeIf(references.iterator(), new JPredicate<ReferenceHolder<L>>() {
+                @Override
+                public boolean apply(@Nullable ReferenceHolder<L> referenceHolder) {
+                    return referenceHolder != null && referenceHolder.reference == reference;
+                }
+            });
+        }
+
+        private static class ReferenceHolder<R> {
+            @NotNull
+            private final WeakReference<R> reference;
+
+            // do not remove: this object should be stored here in order not to be garbage collected
+            @NotNull
+            private final R referent;
+
+            private ReferenceHolder(@NotNull WeakReference<R> reference, @NotNull R referent) {
+                this.reference = reference;
+                this.referent = referent;
+            }
+
+
+            private static <R> ReferenceHolder<R> newInstance(@NotNull WeakReference<R> reference, @NotNull R referent) {
+                return new ReferenceHolder<R>(reference, referent);
+            }
         }
     }
 

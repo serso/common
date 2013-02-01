@@ -24,12 +24,15 @@ package org.solovyev.common.listeners;
 
 import org.jetbrains.annotations.NotNull;
 
-/**
- * User: serso
- * Date: 2/1/13
- * Time: 9:17 PM
- */
-public interface EventListeners<L extends JEventListener<?>, E extends JEvent> extends JListeners<L> {
+import java.lang.ref.Reference;
 
-    void fireEvent(@NotNull E event);
+/**
+* User: serso
+* Date: 2/1/13
+* Time: 9:33 PM
+*/
+public interface ReferenceProducer<R extends Reference<L>, L> {
+
+    @NotNull
+    R newReference(@NotNull L listener);
 }

@@ -31,18 +31,27 @@ import java.util.Collection;
  * Date: 2/1/13
  * Time: 9:21 PM
  */
-public class SimpleEventListeners<L extends JEventListener<?>, E extends JEvent> implements EventListeners<L, E> {
+class SimpleEventListeners<L extends JEventListener<?>, E extends JEvent> implements JEventListeners<L, E> {
 
     @NotNull
     private final JListeners<L> listeners;
 
-    private SimpleEventListeners(@NotNull JListeners<L> listeners) {
+    @NotNull
+    private final Class<E> eventType;
+
+    private SimpleEventListeners(@NotNull JListeners<L> listeners, @NotNull Class<E> eventType) {
         this.listeners = listeners;
+        this.eventType = eventType;
     }
 
     @NotNull
-    public static <L extends JEventListener<?>, E extends JEvent> SimpleEventListeners<L, E> newInstance(@NotNull JListeners<L> listeners) {
-        return new SimpleEventListeners<L, E>(listeners);
+    public static <L extends JEventListener<?>> SimpleEventListeners<L, JEvent> newInstance(@NotNull JListeners<L> listeners) {
+        return new SimpleEventListeners<L, JEvent>(listeners, JEvent.class);
+    }
+
+    @NotNull
+    public static <L extends JEventListener<?>, E extends JEvent> SimpleEventListeners<L, E> newInstance(@NotNull JListeners<L> listeners, @NotNull Class<E> eventType) {
+        return new SimpleEventListeners<L, E>(listeners, eventType);
     }
 
     @Override
