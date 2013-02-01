@@ -24,32 +24,17 @@ package org.solovyev.common.listeners;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
+import java.util.EventListener;
 
 /**
  * User: serso
  * Date: 2/1/13
- * Time: 8:38 PM
+ * Time: 9:19 PM
  */
-public interface Listeners<L> {
-
-    /**
-     * Adds <var>listener</var> to container.
-     * After this method is called {@link Listeners#getListeners()} should return collection containing this <var>listener</var>.
-     *
-     * Note: implementation of this interface may accept or may not accept same listener objects
-     *
-     * @param listener  listener to be added to the collection.
-     * @return true if listener was added to the container, false otherwise
-     *
-     */
-    boolean addListener(@NotNull L listener);
-
-    boolean removeListener(@NotNull L listener);
+public interface JEventListener<E extends JEvent> extends EventListener {
 
     @NotNull
-    Collection<L> getListeners();
+    Class<E> getEventType();
 
-    @NotNull
-    <LE extends L> Collection<LE> getListenersOfType(@NotNull Class<LE> type);
+    void onEvent(@NotNull E event);
 }

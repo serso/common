@@ -40,7 +40,7 @@ import java.util.List;
  * Date: 20.09.12
  * Time: 16:43
  */
-public final class ReferenceListeners<R extends Reference<L>, L> implements Listeners<L> {
+public final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<L> {
 
     /*
     **********************************************************************
