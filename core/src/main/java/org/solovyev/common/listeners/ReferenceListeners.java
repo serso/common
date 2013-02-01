@@ -40,7 +40,7 @@ import java.util.List;
  * Date: 20.09.12
  * Time: 16:43
  */
-public class ReferenceListeners<R extends Reference<L>, L> implements Listeners<L> {
+public final class ReferenceListeners<R extends Reference<L>, L> implements Listeners<L> {
 
     /*
     **********************************************************************
@@ -102,20 +102,22 @@ public class ReferenceListeners<R extends Reference<L>, L> implements Listeners<
     */
 
     @Override
-    public void addListener(@NotNull final L listener) {
+    public boolean addListener(@NotNull final L listener) {
         synchronized (listeners) {
             boolean contains = Collections.contains(listeners, FilterType.included, new ReferencePredicate<R, L>(listener));
 
             if (!contains) {
                 listeners.add(referenceProducer.newReference(listener));
             }
+
+            return !contains;
         }
     }
 
     @Override
-    public void removeListener(@NotNull L listener) {
+    public boolean removeListener(@NotNull L listener) {
         synchronized (listeners) {
-            Collections.removeIf(listeners.iterator(), new ReferencePredicate<R, L>(listener));
+            return Collections.removeIf(listeners.iterator(), new ReferencePredicate<R, L>(listener));
         }
     }
 
@@ -137,6 +139,21 @@ public class ReferenceListeners<R extends Reference<L>, L> implements Listeners<
                     result.add(l);
                 }
             }
+        }
+
+        return result;
+    }
+
+    @NotNull
+    @Override
+    public <LE extends L> List<LE> getListenersOfType(@NotNull Class<LE> type) {
+        final List<L> listeners = getListeners();
+
+        final List<LE> result = new ArrayList<LE>(listeners.size());
+        for (L listener : listeners) {
+           if (type.isAssignableFrom(listener.getClass())) {
+                result.add((LE) listener);
+           }
         }
 
         return result;
