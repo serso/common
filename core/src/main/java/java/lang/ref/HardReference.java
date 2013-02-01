@@ -20,22 +20,31 @@
  * Site:  http://se.solovyev.org/java/jcl
  */
 
-package org.solovyev.common.listeners;
+package java.lang.ref;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * User: serso
- * Date: 2/1/13
- * Time: 8:38 PM
+* User: serso
+* Date: 2/1/13
+* Time: 8:52 PM
+*/
+
+/**
+ * This class represents reference which never will be cleared by GC.
+ *
+ * NOTE: located in java.lang.ref in order to access package local constructor
+ * @param <R> referent type
  */
-public interface IListeners<L> {
-    void addListener(@NotNull L listener);
+public class HardReference<R> extends Reference<R> {
 
-    void removeListener(@NotNull L listener);
+    // field is used in order to have reference to the referent object => this object will never be freed
+    @SuppressWarnings("FieldCanBeLocal")
+    @Nullable
+    private final R hardReferent;
 
-    @NotNull
-    List<L> getListeners();
+    public HardReference(@Nullable R referent) {
+        super(referent);
+        this.hardReferent = referent;
+    }
 }
