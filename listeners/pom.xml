@@ -34,6 +34,7 @@
 
     <groupId>org.solovyev</groupId>
     <artifactId>common-listeners</artifactId>
+    <name>Java Common Library Listeners</name>
     <version>1.0.4-SNAPSHOT</version>
 
     

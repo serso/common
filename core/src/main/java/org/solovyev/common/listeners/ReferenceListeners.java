@@ -136,6 +136,18 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
     }
 
     @Override
+    public void removeAll() {
+        synchronized (listeners) {
+
+            if (referenceProducer instanceof HardReferenceProducer) {
+                ((HardReferenceProducer) referenceProducer).removeAll();
+            }
+
+            listeners.clear();
+        }
+    }
+
+    @Override
     @NotNull
     public List<L> getListeners() {
         final List<L> result;
@@ -229,6 +241,10 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
                     return referenceHolder != null && referenceHolder.reference == reference;
                 }
             });
+        }
+
+        public void removeAll() {
+            references.clear();
         }
 
         private static class ReferenceHolder<R> {

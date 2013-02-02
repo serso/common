@@ -52,4 +52,10 @@ public interface JEventListeners<L extends JEventListener<? extends E>, E extend
      * @return true if listener was removed, false if listener was not in container
      */
     boolean removeListener(@NotNull L listener);
+
+
+    /**
+     * Removes all registered listeners
+     */
+    void removeAll();
 }

@@ -63,6 +63,11 @@ public interface JListeners<L> {
     boolean removeListener(@NotNull L listener);
 
     /**
+     * Removes all registered listeners
+     */
+    void removeAll();
+
+    /**
      * @return collection of listeners of container. This collection must be a mutable copy of original collection
      */
     @NotNull
