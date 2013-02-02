@@ -43,6 +43,7 @@
         <module>text</module>
         <module>core</module>
         <module>msg</module>
+        <module>listeners</module>
         <module>collections-tree</module>
         <module>collections-multiset</module>
         <module>core-jodatime</module>
@@ -72,6 +73,12 @@
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-msg</artifactId>
+                <version>1.0.4-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-listeners</artifactId>
                 <version>1.0.4-SNAPSHOT</version>
             </dependency>
 

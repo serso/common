@@ -52,28 +52,31 @@ public final class Listeners {
         return ReferenceListeners.newInstance(referenceProducer);
     }
 
+    /**
+     * Creates {@link JEventListeners} object which runs on ONE background thread, uses WEAK references and accepts all event types
+     * @return event bus
+     */
     @NotNull
-    public static <L extends JEventListener<?>> JEventListeners<L, JEvent> newWeakRefEventListeners() {
-        return SimpleEventListeners.newInstance(Listeners.<L>newWeakRefListeners());
+    public static JEventListeners<JEventListener<? extends JEvent>, JEvent> newEventBus() {
+        return JEventListenersBuilder.newForJEvent().withWeakReferences().onBackgroundThread().create();
+    }
+
+    /**
+     * Creates {@link JEventListeners} object which runs on ONE background thread, uses WEAK references and accepts only sub classes of <var>baseEventType</var>
+     * @return event bus
+     */
+    @NotNull
+    public static <E extends JEvent> JEventListeners<JEventListener<? extends E>, E> newEventBusFor(@NotNull Class<E> baseEventType) {
+        return JEventListenersBuilder.newFor(baseEventType).withWeakReferences().onBackgroundThread().create();
     }
 
     @NotNull
-    public static <L extends JEventListener<?>> JEventListeners<L, JEvent> newHardRefEventListeners() {
-        return SimpleEventListeners.newInstance(Listeners.<L>newHardRefListeners());
+    public static <L extends JEventListener<?>> JEventListenersBuilder<JEventListener<? extends JEvent>, JEvent> newEventListenersBuilder() {
+        return JEventListenersBuilder.newForJEvent();
     }
 
     @NotNull
-    public static <R extends Reference<L>, L extends JEventListener<?>> JEventListeners<L, JEvent> newRefEventListeners(@NotNull ReferenceProducer<R, L> referenceProducer) {
-        return SimpleEventListeners.newInstance(Listeners.<R, L>newRefListeners(referenceProducer));
-    }
-
-    @NotNull
-    public static <L extends JEventListener<?>, E extends JEvent> JEventListeners<L, E> newWeakRefEventListenersOf(@NotNull Class<E> eventType) {
-        return SimpleEventListeners.newInstance(Listeners.<L>newWeakRefListeners(), eventType);
-    }
-
-    @NotNull
-    public static <L extends JEventListener<?>, E extends JEvent> JEventListeners<L, E> newHardRefEventListenersOf(@NotNull Class<E> eventType) {
-        return SimpleEventListeners.newInstance(Listeners.<L>newHardRefListeners(), eventType);
+    public static <L extends JEventListener<?>, E extends JEvent> JEventListenersBuilder<JEventListener<? extends E>, E> newEventListenersBuilderFor(@NotNull Class<E> baseEventType) {
+        return JEventListenersBuilder.newFor(baseEventType);
     }
 }

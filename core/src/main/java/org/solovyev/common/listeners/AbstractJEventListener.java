@@ -24,25 +24,23 @@ package org.solovyev.common.listeners;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.EventListener;
-
 /**
  * User: serso
- * Date: 2/1/13
- * Time: 9:19 PM
+ * Date: 2/2/13
+ * Time: 2:05 PM
  */
-public interface JEventListener<E extends JEvent> extends EventListener {
+public abstract class AbstractJEventListener<E extends JEvent> implements JEventListener<E> {
 
-    /**
-     * @return type of supported event
-     */
     @NotNull
-    Class<E> getEventType();
+    private final Class<E> eventType;
 
-    /**
-     * Method which is called after {@link JEventListeners#fireEvent(E)} of the container is called
-     *
-     * @param event event to be processed by current listener
-     */
-    void onEvent(@NotNull E event);
+    protected AbstractJEventListener(@NotNull Class<E> eventType) {
+        this.eventType = eventType;
+    }
+
+    @NotNull
+    @Override
+    public final Class<E> getEventType() {
+        return this.eventType;
+    }
 }

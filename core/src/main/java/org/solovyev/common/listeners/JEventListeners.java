@@ -29,7 +29,27 @@ import org.jetbrains.annotations.NotNull;
  * Date: 2/1/13
  * Time: 9:17 PM
  */
-public interface JEventListeners<L extends JEventListener<?>, E extends JEvent> extends JListeners<L> {
+public interface JEventListeners<L extends JEventListener<? extends E>, E extends JEvent> {
 
     void fireEvent(@NotNull E event);
+
+    /**
+     * Adds <var>listener</var> to container.
+     *
+     * Note: implementation of this interface may accept or may not accept same listener objects
+     *
+     * @param listener  listener to be added to container
+     * @return true if listener was added to the container, false otherwise
+     *
+     */
+    boolean addListener(@NotNull L listener);
+
+    /**
+     * Removes <var>listener</var> from container.
+     *
+     * @param listener listener to be removed from container
+     *
+     * @return true if listener was removed, false if listener was not in container
+     */
+    boolean removeListener(@NotNull L listener);
 }

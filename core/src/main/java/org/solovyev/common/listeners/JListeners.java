@@ -31,6 +31,13 @@ import java.util.Collection;
  * Date: 2/1/13
  * Time: 8:38 PM
  */
+
+/**
+ * Listeners container.
+ * Note: all methods of implementation of this class should be synchronized.
+ *
+ * @param <L> listener type
+ */
 public interface JListeners<L> {
 
     /**
@@ -39,17 +46,31 @@ public interface JListeners<L> {
      *
      * Note: implementation of this interface may accept or may not accept same listener objects
      *
-     * @param listener  listener to be added to the collection.
+     * @param listener  listener to be added to container
      * @return true if listener was added to the container, false otherwise
      *
      */
     boolean addListener(@NotNull L listener);
 
+    /**
+     * Removes <var>listener</var> from container.
+     * After this method is called {@link JListeners#getListeners()} should return collection not containing this <var>listener</var>.
+     *
+     * @param listener listener to be removed from container
+     *
+     * @return true if listener was removed, false if listener was not in container
+     */
     boolean removeListener(@NotNull L listener);
 
+    /**
+     * @return collection of listeners of container. This collection must be a mutable copy of original collection
+     */
     @NotNull
     Collection<L> getListeners();
 
+    /**
+     * @return collection of listeners of specified <var>type</var> of container. This collection must be a mutable copy of original collection
+     */
     @NotNull
     <LE extends L> Collection<LE> getListenersOfType(@NotNull Class<LE> type);
 }

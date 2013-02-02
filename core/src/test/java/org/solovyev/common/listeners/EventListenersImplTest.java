@@ -33,11 +33,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Date: 2/1/13
  * Time: 9:40 PM
  */
-public class SimpleEventListenersTest {
+public class EventListenersImplTest {
 
     @Test
     public void testFireEvent() throws Exception {
-         JEventListeners<JEventListener<?>, JEvent> listeners = Listeners.newHardRefEventListeners();
+         JEventListeners<JEventListener<?>, JEvent> listeners = Listeners.newEventListenersBuilder().onCallerThread().withHardReferences().create();
 
         final TestEventListener1 l1 = new TestEventListener1();
         final TestEventListener2 l2 = new TestEventListener2();
@@ -86,18 +86,11 @@ public class SimpleEventListenersTest {
 
     @Test
     public void testAddListener() throws Exception {
-        JEventListeners<JEventListener<?>, TestEvent2> listeners = Listeners.newHardRefEventListenersOf(TestEvent2.class);
+        JEventListeners<JEventListener<? extends TestEvent2>, TestEvent2> listeners = Listeners.newEventListenersBuilderFor(TestEvent2.class).onCallerThread().withHardReferences().create();
 
-        final TestEventListener1 l1 = new TestEventListener1();
         final TestEventListener2 l2 = new TestEventListener2();
         final TestEventListener3 l3 = new TestEventListener3();
 
-        try {
-            listeners.addListener(l1);
-            Assert.fail();
-        } catch (IllegalArgumentException e) {
-            // ok
-        }
         listeners.addListener(l2);
         listeners.addListener(l3);
     }
@@ -121,10 +114,14 @@ public class SimpleEventListenersTest {
 
     }
 
-    private static abstract class AbstractTestEventListener {
+    private static abstract class AbstractTestEventListener<E extends JEvent> extends AbstractJEventListener<E> {
 
         @NotNull
         private final AtomicInteger counter = new AtomicInteger();
+
+        protected AbstractTestEventListener(@NotNull Class<E> eventType) {
+            super(eventType);
+        }
 
         protected void count() {
             counter.getAndIncrement();
@@ -136,12 +133,10 @@ public class SimpleEventListenersTest {
 
     }
 
-    private static class TestEventListener1 extends AbstractTestEventListener implements JEventListener<TestEvent1> {
+    private static class TestEventListener1 extends AbstractTestEventListener<TestEvent1>{
 
-        @NotNull
-        @Override
-        public Class<TestEvent1> getEventType() {
-            return TestEvent1.class;
+        public TestEventListener1() {
+            super(TestEvent1.class);
         }
 
         @Override
@@ -154,12 +149,10 @@ public class SimpleEventListenersTest {
 
     }
 
-    private static class TestEventListener2 extends AbstractTestEventListener  implements JEventListener<TestEvent2> {
+    private static class TestEventListener2 extends AbstractTestEventListener<TestEvent2> {
 
-        @NotNull
-        @Override
-        public Class<TestEvent2> getEventType() {
-            return TestEvent2.class;
+        private TestEventListener2() {
+            super(TestEvent2.class);
         }
 
         @Override
@@ -172,12 +165,10 @@ public class SimpleEventListenersTest {
 
     }
 
-    private static class TestEventListener3 extends AbstractTestEventListener  implements JEventListener<TestEvent3> {
+    private static class TestEventListener3 extends AbstractTestEventListener<TestEvent3> {
 
-        @NotNull
-        @Override
-        public Class<TestEvent3> getEventType() {
-            return TestEvent3.class;
+        protected TestEventListener3() {
+            super(TestEvent3.class);
         }
 
         @Override
