@@ -37,5 +37,12 @@
     <name>Java Common Library Listeners</name>
     <version>1.0.4-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.solovyev</groupId>
+            <artifactId>common-core</artifactId>
+        </dependency>
+    </dependencies>
+
     
 </project>
