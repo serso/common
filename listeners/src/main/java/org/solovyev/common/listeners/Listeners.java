@@ -37,16 +37,42 @@ public final class Listeners {
         throw new AssertionError();
     }
 
+    /**
+     * Creates instance of listeners container which uses weak references for listeners.
+     * That means next: listeners might not be removed after usage (sometimes it's even impossible)
+     * and if there are no any references to them in application they be removed by GC
+     *
+     * @param <L> type of listeners
+     * @return listeners container with weak references
+     */
     @NotNull
     public static <L> JListeners<L> newWeakRefListeners() {
         return ReferenceListeners.newWeakReferenceInstance();
     }
 
+    /**
+     * Creates instance of listeners container which uses hard references for listeners.
+     * Note: all unused listeners must be removed from container manually to prevent memory leaks
+     *
+     * @param <L> type of listeners
+     * @return listeners container with hard references
+     */
     @NotNull
     public static <L> JListeners<L> newHardRefListeners() {
         return ReferenceListeners.newHardReferenceInstance();
     }
 
+    /**
+     * Create instance of listeners container with custom logic for creating references to listeners.
+     * Ths usage example is next: suppose almost all listeners should use hard references except one or two,
+     * then reference producer may return weak references for those 'special' listeners
+     *
+     * @param referenceProducer reference producer
+     * @param <R> reference type
+     * @param <L> listener type
+     *
+     * @return listeners container with user-defined references
+     */
     @NotNull
     public static <R extends Reference<L>, L> JListeners<L> newRefListeners(@NotNull ReferenceProducer<R, L> referenceProducer) {
         return ReferenceListeners.newInstance(referenceProducer);
