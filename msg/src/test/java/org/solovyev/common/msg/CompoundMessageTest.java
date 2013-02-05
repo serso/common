@@ -36,7 +36,7 @@ import java.util.Locale;
  * Date: 11/30/11
  * Time: 10:48 PM
  */
-public class CompositeMessageTest {
+public class CompoundMessageTest {
 
 	@Test
 	public void testMessage() throws Exception {
@@ -47,15 +47,15 @@ public class CompositeMessageTest {
 		Message e = new MessageImpl("msg_4", MessageType.error);
 		messages.add(e);
 
-		CompositeMessage compositeMessage = CompositeMessage.newInstance(new MessageImpl("msg_16", MessageType.info), messages);
-		Assert.assertTrue(compositeMessage.getMessagePattern(Locale.ENGLISH).contains("{3}"));
-		Assert.assertFalse(compositeMessage.getMessagePattern(Locale.ENGLISH).contains("\\"));
-		Assert.assertTrue(compositeMessage.getMessagePattern(Locale.ENGLISH).contains("{2}"));
-		Assert.assertTrue(compositeMessage.getMessagePattern(Locale.ENGLISH).contains("{1}"));
-		Assert.assertTrue(compositeMessage.getMessagePattern(Locale.ENGLISH).contains("{0}"));
+		CompoundMessage compoundMessage = CompoundMessage.newInstance(new MessageImpl("msg_16", MessageType.info), messages);
+		Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{3}"));
+		Assert.assertFalse(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("\\"));
+		Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{2}"));
+		Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{1}"));
+		Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{0}"));
 
-		Assert.assertFalse(compositeMessage.getMessagePattern(Locale.ENGLISH).contains("{5}"));
-		Assert.assertTrue(compositeMessage.getLocalizedMessage(Locale.ENGLISH).contains(e.getLocalizedMessage(Locale.ENGLISH)));
+		Assert.assertFalse(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{5}"));
+		Assert.assertTrue(compoundMessage.getLocalizedMessage(Locale.ENGLISH).contains(e.getLocalizedMessage(Locale.ENGLISH)));
 	}
 
 	private class  MessageImpl extends AbstractMessage {
