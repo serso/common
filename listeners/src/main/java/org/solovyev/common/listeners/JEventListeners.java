@@ -31,6 +31,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface JEventListeners<L extends JEventListener<? extends E>, E extends JEvent> {
 
+    /**
+     * Calls {@link JEventListener#onEvent(E)} for every listener added to container.
+     * Note: method calls may be done on current thread or on some background thread depending on implementation
+     *
+     * @param event to be fired
+     */
     void fireEvent(@NotNull E event);
 
     /**
