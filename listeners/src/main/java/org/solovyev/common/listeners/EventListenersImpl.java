@@ -141,8 +141,8 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     }
 
     @Override
-    public void removeAll() {
-        this.listeners.removeAll();
+    public void removeListeners() {
+        this.listeners.removeListeners();
     }
 
     /*

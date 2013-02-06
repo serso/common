@@ -63,5 +63,5 @@ public interface JEventListeners<L extends JEventListener<? extends E>, E extend
     /**
      * Removes all registered listeners
      */
-    void removeAll();
+    void removeListeners();
 }

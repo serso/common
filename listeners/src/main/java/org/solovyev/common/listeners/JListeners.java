@@ -65,7 +65,7 @@ public interface JListeners<L> {
     /**
      * Removes all registered listeners
      */
-    void removeAll();
+    void removeListeners();
 
     /**
      * @return collection of listeners of container. This collection must be a mutable copy of original collection

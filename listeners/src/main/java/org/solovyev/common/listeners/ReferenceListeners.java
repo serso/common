@@ -136,7 +136,7 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
     }
 
     @Override
-    public void removeAll() {
+    public void removeListeners() {
         synchronized (listeners) {
 
             if (referenceProducer instanceof HardReferenceProducer) {

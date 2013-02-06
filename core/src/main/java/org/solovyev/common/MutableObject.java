@@ -29,7 +29,7 @@ package org.solovyev.common;
  */
 public class MutableObject<T> {
 
-    private T object;
+    private volatile T object;
 
     public MutableObject() {
     }
