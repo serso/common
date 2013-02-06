@@ -54,10 +54,10 @@ public interface Message {
 	public List<Object> getParameters();
 
     /**
-     * @return type of message
+     * @return message level
      */
 	@NotNull
-	public MessageType getMessageType();
+	public MessageLevel getMessageLevel();
 
     /**
      *

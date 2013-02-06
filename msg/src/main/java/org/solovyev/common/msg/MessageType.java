@@ -29,44 +29,42 @@ import org.jetbrains.annotations.NotNull;
  * Date: Mar 29, 2010
  * Time: 12:43:22 AM
  */
-public enum MessageType {
+public enum MessageType implements MessageLevel {
 
-	error(1000, "ERROR"),
+    error(ERROR_LEVEL, "ERROR"),
 
-	warning(500, "WARNING"),
+    warning(WARNING_LEVEL, "WARNING"),
 
-	info(100, "INFO");
+    info(INFO_LEVEL, "INFO");
 
-	private final int errorLevel;
+    private final int messageLevel;
 
-	@NotNull
-	private final String stringValue;
+    @NotNull
+    private final String stringValue;
 
-	MessageType(int errorLevel, @NotNull String stringValue) {
-		this.errorLevel = errorLevel;
-		this.stringValue = stringValue;
-	}
+    MessageType(int messageLevel, @NotNull String stringValue) {
+        this.messageLevel = messageLevel;
+        this.stringValue = stringValue;
+    }
 
-	@NotNull
-	public String getStringValue() {
-		return stringValue;
-	}
+    @NotNull
+    public String getStringValue() {
+        return stringValue;
+    }
 
-	@NotNull
-	public static MessageType getMessageTypeWithHigherLevel( @NotNull MessageType l, @NotNull MessageType r ) {
-		MessageType result;
+    @NotNull
+    public static MessageType getLowestMessageType() {
+        return info;
+    }
 
-		if ( l.errorLevel > r.errorLevel  ) {
-			result = l;
-		} else {
-			result = r;
-		}
+    @Override
+    public int getMessageLevel() {
+        return messageLevel;
+    }
 
-		return result;
-	}
-
-	@NotNull
-	public static MessageType getLowestMessageType() {
-		return info;
-	}
+    @NotNull
+    @Override
+    public String getName() {
+        return stringValue;
+    }
 }

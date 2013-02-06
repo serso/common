@@ -37,15 +37,15 @@ public class CompoundMessage extends AbstractMessage {
 	@NotNull
 	private final Message compoundMessage;
 
-	private CompoundMessage(@NotNull Message compoundMessage, @NotNull MessageType messageType, @NotNull List<?> parameters) {
-		super(compoundMessage.getMessageCode(), messageType, parameters);
+	private CompoundMessage(@NotNull Message compoundMessage, @NotNull MessageLevel messageLevel, @NotNull List<?> parameters) {
+		super(compoundMessage.getMessageCode(), messageLevel, parameters);
 		this.compoundMessage = compoundMessage;
 	}
 
 	public static CompoundMessage newInstance(@NotNull Message compoundMessage, @NotNull List<? extends Message> messages) {
-		MessageType messageType = MessageType.info;
+		MessageLevel messageType = MessageType.info;
 		for (Message message : messages) {
-			messageType = MessageType.getMessageTypeWithHigherLevel(messageType, message.getMessageType());
+			messageType = Messages.getMessageLevelWithHigherLevel(messageType, message.getMessageLevel());
 		}
 		return new CompoundMessage(compoundMessage, messageType, messages);
 	}

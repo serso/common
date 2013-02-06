@@ -67,6 +67,19 @@ public final class Messages {
         return new BundleMessageFactory(bundleName, Utf8Control.getInstance());
     }
 
+    @NotNull
+    public static MessageLevel getMessageLevelWithHigherLevel(@NotNull MessageLevel l, @NotNull MessageLevel r) {
+        MessageLevel result;
+
+        if (l.getMessageLevel() > r.getMessageLevel()) {
+            result = l;
+        } else {
+            result = r;
+        }
+
+        return result;
+    }
+
     /**
      *
      * @param locale locale for which default formatting will be applied

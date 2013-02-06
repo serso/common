@@ -48,16 +48,16 @@ public abstract class AbstractMessage implements Message {
 	private final List<?> parameters;
 
 	@NotNull
-	private final MessageType messageType;
+	private final MessageLevel messageLevel;
 
-	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageType messageType, @Nullable Object... parameters) {
+	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageLevel messageType, @Nullable Object... parameters) {
 		this(messageCode, messageType, Collections.asList(parameters));
 	}
 
-	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageType messageType, @NotNull List<?> parameters) {
+	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageLevel messageType, @NotNull List<?> parameters) {
 		this.messageCode = messageCode;
 		this.parameters = new ArrayList<Object>(parameters);
-		this.messageType = messageType;
+		this.messageLevel = messageType;
 	}
 
 	@Override
@@ -74,8 +74,8 @@ public abstract class AbstractMessage implements Message {
 
 	@NotNull
 	@Override
-	public MessageType getMessageType() {
-		return this.messageType;
+	public MessageLevel getMessageLevel() {
+		return this.messageLevel;
 	}
 
 	@Override
@@ -83,11 +83,11 @@ public abstract class AbstractMessage implements Message {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		AbstractMessage abstractMessage = (AbstractMessage) o;
+		final AbstractMessage that = (AbstractMessage) o;
 
-		if (!Objects.areEqual(parameters, abstractMessage.parameters, new ListEqualizer(true, null))) return false;
-		if (!messageCode.equals(abstractMessage.messageCode)) return false;
-		if (messageType != abstractMessage.messageType) return false;
+		if (!Objects.areEqual(parameters, that.parameters, new ListEqualizer(true, null))) return false;
+		if (!messageCode.equals(that.messageCode)) return false;
+		if (!messageLevel.equals(that.messageLevel)) return false;
 
 		return true;
 	}
@@ -97,7 +97,7 @@ public abstract class AbstractMessage implements Message {
 		final HashCodeBuilder hcb = HashCodeBuilder.newInstance();
 
 		hcb.append(messageCode);
-		hcb.append(messageType);
+		hcb.append(messageLevel);
 		hcb.append(parameters);
 
 		return hcb.toHashCode();
@@ -118,7 +118,7 @@ public abstract class AbstractMessage implements Message {
             result = Messages.prepareMessage(locale, messagePattern, parameters);
         }
 
-		return Strings.getNotEmpty(result, messageType.getStringValue() + ": message code = " + messageCode);
+		return Strings.getNotEmpty(result, messageLevel.getName() + ": message code = " + messageCode);
 	}
 
     @NotNull
