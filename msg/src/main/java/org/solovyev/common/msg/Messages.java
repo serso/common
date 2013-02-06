@@ -42,12 +42,12 @@ public final class Messages {
     }
 
     @NotNull
-    public static MessageRegistry toSynchronizedMessageRegistry(@NotNull MessageRegistry messageRegistry) {
+    public static MessageRegistry synchronizedMessageRegistry(@NotNull MessageRegistry messageRegistry) {
         return SynchronizedMessageRegistry.wrap(messageRegistry);
     }
 
     @NotNull
-    public static MessageRegistry toSynchronizedMessageRegistry(@NotNull MessageRegistry messageRegistry, @NotNull Object mutex) {
+    public static MessageRegistry synchronizedMessageRegistry(@NotNull MessageRegistry messageRegistry, @NotNull Object mutex) {
         return SynchronizedMessageRegistry.wrap(messageRegistry, mutex);
     }
 

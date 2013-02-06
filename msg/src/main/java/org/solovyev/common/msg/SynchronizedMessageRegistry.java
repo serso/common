@@ -25,7 +25,7 @@ package org.solovyev.common.msg;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.SynchronizedObject;
 
-public class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> implements MessageRegistry {
+class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> implements MessageRegistry {
 
     /*
     **********************************************************************
