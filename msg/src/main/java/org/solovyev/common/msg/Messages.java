@@ -29,6 +29,7 @@ import org.solovyev.common.collections.Collections;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public final class Messages {
 
@@ -49,6 +50,21 @@ public final class Messages {
     @NotNull
     public static MessageRegistry synchronizedMessageRegistry(@NotNull MessageRegistry messageRegistry, @NotNull Object mutex) {
         return SynchronizedMessageRegistry.wrap(messageRegistry, mutex);
+    }
+
+    @NotNull
+    public static MessageFactory newBundleMessageFactory(@NotNull String bundleName) {
+        return new BundleMessageFactory(bundleName, null);
+    }
+
+    @NotNull
+    public static MessageFactory newBundleMessageFactory(@NotNull String bundleName, @NotNull ResourceBundle.Control bundleControl) {
+        return new BundleMessageFactory(bundleName, bundleControl);
+    }
+
+    @NotNull
+    public static MessageFactory newUtf8BundleMessageFactory(@NotNull String bundleName) {
+        return new BundleMessageFactory(bundleName, Utf8Control.getInstance());
     }
 
     /**
