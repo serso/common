@@ -160,7 +160,6 @@ class CiphererImpl implements Cipherer {
     }
 
     @NotNull
-    @Override
     public HexString getIvHexFromEncrypted(@NotNull HexString encryptedText) throws CiphererException {
         try {
             if (initialVectorDef != null) {

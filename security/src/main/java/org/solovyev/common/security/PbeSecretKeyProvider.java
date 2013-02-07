@@ -24,8 +24,6 @@ package org.solovyev.common.security;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.Bytes;
-import org.solovyev.common.text.Strings;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -88,7 +86,7 @@ class PbeSecretKeyProvider implements SecretKeyProvider {
     @NotNull
     public SecretKey getSecretKey(@NotNull String password, @NotNull String salt) throws CiphererException {
         try {
-            final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), Bytes.hexToBytes(Strings.toHex(salt)), iterationCount, keyLength);
+            final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), salt.getBytes("UTF-8"), iterationCount, keyLength);
             final SecretKeyFactory factory;
             if (provider != null) {
                 factory = SecretKeyFactory.getInstance(algorithm, provider);

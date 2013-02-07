@@ -25,6 +25,7 @@ package org.solovyev.common;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.solovyev.common.text.HexString;
+import org.solovyev.common.text.Strings;
 
 public class BytesTest {
 
@@ -34,6 +35,10 @@ public class BytesTest {
         final HexString testHex = HexString.fromString(test);
 
         Assert.assertTrue(Objects.areEqual(test.getBytes(), testHex.getOriginal().getBytes(), ByteArrayEqualizer.getInstance()));
+        for (int i = 0; i < 1000; i++ ) {
+            final String text = Strings.generateRandomString(100);
+            Assert.assertTrue(Objects.areEqual(Bytes.hexToBytes(Bytes.toHex(text)), text.getBytes("UTF-8"), ByteArrayEqualizer.getInstance()));
+        }
     }
 
 }

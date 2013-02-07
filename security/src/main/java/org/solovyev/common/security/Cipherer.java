@@ -41,7 +41,4 @@ public interface Cipherer {
     @NotNull
     String decrypt(@NotNull SecretKey secret,
                    @NotNull HexString encryptedText) throws CiphererException;
-
-    @NotNull
-    HexString getIvHexFromEncrypted(@NotNull HexString encryptedText) throws CiphererException;
 }
