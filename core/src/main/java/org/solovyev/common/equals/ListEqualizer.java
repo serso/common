@@ -22,8 +22,8 @@
 
 package org.solovyev.common.equals;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.EqualsResult;
 import org.solovyev.common.Objects;
 
 import java.util.List;
@@ -46,29 +46,24 @@ public class ListEqualizer<T> implements Equalizer<List<T>> {
     }
 
     @Override
-    public boolean equals(@Nullable List<T> first, @Nullable List<T> second) {
-        final EqualsResult equalsResult = Objects.getEqualsResult(first, second);
+    public boolean equals(@NotNull List<T> first, @NotNull List<T> second) {
         boolean result = false;
-        if (equalsResult.areBothNulls()) {
-            result = true;
-        } else if (equalsResult.areBothNotNulls()) {
 
-            if (first.size() == second.size()) {
-                if (checkOrder) {
-                    result = true;
-                    for (int i = 0; i < first.size(); i++) {
-                        final T el1 = first.get(i);
-                        final T el2 = second.get(i);
+        if (first.size() == second.size()) {
+            if (checkOrder) {
+                result = true;
+                for (int i = 0; i < first.size(); i++) {
+                    final T el1 = first.get(i);
+                    final T el2 = second.get(i);
 
-                        if (!Objects.areEqual(el1, el2, nestedEqualizer)) {
-                            result = false;
-                            break;
-                        }
-
+                    if (!Objects.areEqual(el1, el2, nestedEqualizer)) {
+                        result = false;
+                        break;
                     }
-                } else {
-                    result = new CollectionEqualizer<T>(nestedEqualizer).equals(first, second);
+
                 }
+            } else {
+                result = Objects.areEqual(first, second, new CollectionEqualizer<T>(nestedEqualizer));
             }
         }
 

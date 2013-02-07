@@ -39,12 +39,8 @@ public interface Cipherer {
                       @NotNull String plainText) throws CiphererException;
 
     @NotNull
-    HexString encrypt(@NotNull SecretKey secret,
-                      @NotNull String plainText,
-                      @NotNull HexString ivHex) throws CiphererException;
-
-    @NotNull
-    String decrypt(@NotNull SecretKey secret, @NotNull HexString encryptedText) throws CiphererException;
+    String decrypt(@NotNull SecretKey secret,
+                   @NotNull HexString encryptedText) throws CiphererException;
 
     @NotNull
     HexString getIvHexFromEncrypted(@NotNull HexString encryptedText) throws CiphererException;

@@ -20,20 +20,27 @@
  * Site:  http://se.solovyev.org/java/jcl
  */
 
-package org.solovyev.common;
+package org.solovyev.common.text;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.solovyev.common.text.HexString;
+import org.solovyev.common.ByteArrayEqualizer;
+import org.solovyev.common.Bytes;
+import org.solovyev.common.Objects;
 
-public class BytesTest {
+/**
+ * User: serso
+ * Date: 2/7/13
+ * Time: 10:31 PM
+ */
+public class HexStringTest {
 
     @Test
-    public void testHexToBytes() throws Exception {
-        final String test = "test";
-        final HexString testHex = HexString.fromString(test);
+    public void testGetBytes() throws Exception {
+        final String s = "/]'23']324;32,4p9j;ret";
+        final HexString sHex = HexString.fromString(s);
 
-        Assert.assertTrue(Objects.areEqual(test.getBytes(), testHex.getOriginal().getBytes(), ByteArrayEqualizer.getInstance()));
+        Assert.assertTrue(Objects.areEqual(s, sHex.getOriginal(), null));
+        Assert.assertTrue(Objects.areEqual(Bytes.hexToBytes(sHex), sHex.getOriginal().getBytes(), ByteArrayEqualizer.getInstance()));
     }
-
 }

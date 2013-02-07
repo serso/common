@@ -22,7 +22,7 @@
 
 package org.solovyev.common.equals;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * User: serso
@@ -31,5 +31,5 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface Equalizer<T> {
 
-    boolean equals(@Nullable T first, @Nullable T second);
+    boolean equals(@NotNull T first, @NotNull T second);
 }

@@ -92,7 +92,6 @@ class CiphererImpl implements Cipherer {
         }
     }
 
-    @Override
     @NotNull
     public HexString encrypt(@NotNull SecretKey secret,
                              @NotNull String plainText,

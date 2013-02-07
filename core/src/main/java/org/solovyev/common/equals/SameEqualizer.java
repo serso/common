@@ -24,7 +24,6 @@ package org.solovyev.common.equals;
 
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * User: serso
@@ -45,7 +44,7 @@ public class SameEqualizer implements Equalizer {
     }
 
     @Override
-    public boolean equals(@Nullable Object first, @Nullable Object second) {
+    public boolean equals(@NotNull Object first, @NotNull Object second) {
         return first == second;
     }
 }

@@ -22,7 +22,9 @@
 
 package org.solovyev.common.equals;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.Objects;
 
 import java.util.Collection;
 
@@ -41,32 +43,25 @@ public class CollectionEqualizer<T> implements Equalizer<Collection<T>> {
     }
 
     @Override
-    public boolean equals(@Nullable Collection<T> first, @Nullable Collection<T> second) {
-        final EqualsUtils.Result equalsResult = EqualsUtils.getEqualsResult(first, second);
-
+    public boolean equals(@NotNull Collection<T> first, @NotNull Collection<T> second) {
         boolean result = false;
-        if (equalsResult.areBothNulls()) {
+
+        if (first.size() == second.size()) {
             result = true;
-        } else if (equalsResult.areBothNotNulls()) {
 
-            //noinspection ConstantConditions
-            if (first.size() == second.size()) {
-                result = true;
+            for (T el1 : first) {
+                boolean found = false;
 
-                for (T el1 : first) {
-                    boolean found = false;
-
-                    for (T el2 : second) {
-                        if (EqualsUtils.areEqual(el1, el2, nestedEqualizer)) {
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (!found) {
-                        result = false;
+                for (T el2 : second) {
+                    if (Objects.areEqual(el1, el2, nestedEqualizer)) {
+                        found = true;
                         break;
                     }
+                }
+
+                if (!found) {
+                    result = false;
+                    break;
                 }
             }
         }
