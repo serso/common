@@ -43,11 +43,11 @@ public class CompoundMessage extends AbstractMessage {
 	}
 
 	public static CompoundMessage newInstance(@NotNull Message compoundMessage, @NotNull List<? extends Message> messages) {
-		MessageLevel messageType = MessageType.info;
+		MessageLevel messageLevel = MessageType.info;
 		for (Message message : messages) {
-			messageType = Messages.getMessageLevelWithHigherLevel(messageType, message.getMessageLevel());
+			messageLevel = Messages.getMessageLevelWithHigherLevel(messageLevel, message.getMessageLevel());
 		}
-		return new CompoundMessage(compoundMessage, messageType, messages);
+		return new CompoundMessage(compoundMessage, messageLevel, messages);
 	}
 
 	@Override

@@ -21,13 +21,13 @@ class BundleMessageFactory implements MessageFactory {
 
     @NotNull
     @Override
-    public Message newMessage(@NotNull String messageCode, @NotNull MessageType messageType, @Nullable Object... parameters) {
-        return new BundleMessage(bundleName, bundleControl, messageCode, messageType, parameters);
+    public Message newMessage(@NotNull String messageCode, @NotNull MessageLevel messageLevel, @Nullable Object... parameters) {
+        return new BundleMessage(bundleName, bundleControl, messageCode, messageLevel, parameters);
     }
 
     @NotNull
     @Override
-    public Message newMessage(@NotNull String messageCode, @NotNull MessageType messageType, @NotNull List<?> parameters) {
-        return new BundleMessage(bundleName, bundleControl, messageCode, messageType, parameters);
+    public Message newMessage(@NotNull String messageCode, @NotNull MessageLevel messageLevel, @NotNull List<?> parameters) {
+        return new BundleMessage(bundleName, bundleControl, messageCode, messageLevel, parameters);
     }
 }

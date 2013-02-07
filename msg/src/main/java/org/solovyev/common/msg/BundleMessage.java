@@ -18,9 +18,9 @@ class BundleMessage extends AbstractMessage {
     BundleMessage(@NotNull String bundleName,
                             @Nullable ResourceBundle.Control bundleControl,
                             @NotNull String messageCode,
-                            @NotNull MessageType messageType,
+                            @NotNull MessageLevel messageLevel,
                             @Nullable Object... parameters) {
-        super(messageCode, messageType, parameters);
+        super(messageCode, messageLevel, parameters);
         this.bundleName = bundleName;
         this.bundleControl = bundleControl;
     }
@@ -28,9 +28,9 @@ class BundleMessage extends AbstractMessage {
     BundleMessage(@NotNull String bundleName,
                             @Nullable ResourceBundle.Control bundleControl,
                             @NotNull String messageCode,
-                            @NotNull MessageType messageType,
+                            @NotNull MessageLevel messageLevel,
                             @NotNull List<?> parameters) {
-        super(messageCode, messageType, parameters);
+        super(messageCode, messageLevel, parameters);
         this.bundleName = bundleName;
         this.bundleControl = bundleControl;
     }

@@ -60,8 +60,8 @@ public class CompoundMessageTest {
 
 	private class  MessageImpl extends AbstractMessage {
 
-		protected MessageImpl(@NotNull String messageCode, @NotNull MessageType messageType, @Nullable Object... parameters) {
-			super(messageCode, messageType, parameters);
+		protected MessageImpl(@NotNull String messageCode, @NotNull MessageLevel messageLevel, @Nullable Object... parameters) {
+			super(messageCode, messageLevel, parameters);
 		}
 
 		@Override
