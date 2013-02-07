@@ -30,6 +30,11 @@ import org.joda.time.DateTime;
  * Date: 4/29/12
  * Time: 9:52 PM
  */
+
+/**
+ * Version entity which stores creation date and last date of modification
+ * @param <I>
+ */
 public interface DateVersionedEntity<I> extends VersionedEntity<I> {
 
     @NotNull

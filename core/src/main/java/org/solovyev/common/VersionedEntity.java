@@ -31,11 +31,29 @@ import java.io.Serializable;
  * Date: 4/29/12
  * Time: 9:45 PM
  */
+
+/**
+ * Entity which stores version identifier
+ * @param <I>
+ */
 public interface VersionedEntity<I> extends Serializable, JCloneable<VersionedEntity<I>> {
 
     @NotNull
+    public static final Integer FIRST_VERSION = 1;
+
+    /**
+     * Identifier of the entity (unique for all entities of the same type)
+     *
+     * @return entity identifier
+     */
+    @NotNull
     I getId();
 
+    /**
+     * Sequential number of version starting from {@link VersionedEntity#FIRST_VERSION}
+     *
+     * @return version number
+     */
     @NotNull
     Integer getVersion();
 

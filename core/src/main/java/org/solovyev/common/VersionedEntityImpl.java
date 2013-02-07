@@ -32,9 +32,6 @@ import org.jetbrains.annotations.NotNull;
 public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
 
     @NotNull
-    public static final Integer FIRST_VERSION = 1;
-
-    @NotNull
     private I id;
 
     @NotNull
