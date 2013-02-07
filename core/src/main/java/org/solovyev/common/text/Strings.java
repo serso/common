@@ -223,7 +223,7 @@ public class Strings {
     }
 
     @NotNull
-    public static String fromHex(@NotNull String hex) {
+    public static String fromHex(@NotNull CharSequence hex) {
         return Bytes.fromHex(hex);
     }
 }

@@ -23,6 +23,7 @@
 package org.solovyev.common.security;
 
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.common.text.HexString;
 
 import javax.crypto.SecretKey;
 
@@ -34,17 +35,17 @@ import javax.crypto.SecretKey;
 public interface Cipherer {
 
     @NotNull
-    String encrypt(@NotNull SecretKey secret,
-                   @NotNull String plainText) throws CiphererException;
+    HexString encrypt(@NotNull SecretKey secret,
+                      @NotNull String plainText) throws CiphererException;
 
     @NotNull
-    String encrypt(@NotNull SecretKey secret,
-                   @NotNull String plainText,
-                   @NotNull String ivHex) throws CiphererException;
+    HexString encrypt(@NotNull SecretKey secret,
+                      @NotNull String plainText,
+                      @NotNull HexString ivHex) throws CiphererException;
 
     @NotNull
-    String decrypt(@NotNull SecretKey secret, @NotNull String encryptedText) throws CiphererException;
+    String decrypt(@NotNull SecretKey secret, @NotNull HexString encryptedText) throws CiphererException;
 
     @NotNull
-    String getIvHexFromEncrypted(@NotNull String encryptedText) throws CiphererException;
+    HexString getIvHexFromEncrypted(@NotNull HexString encryptedText) throws CiphererException;
 }

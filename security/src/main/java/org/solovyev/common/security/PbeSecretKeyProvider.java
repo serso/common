@@ -25,6 +25,7 @@ package org.solovyev.common.security;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.Bytes;
+import org.solovyev.common.text.Strings;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -36,7 +37,7 @@ import javax.crypto.spec.SecretKeySpec;
  * Date: 8/20/12
  * Time: 8:08 PM
  */
-public class PbeSecretKeyProvider implements SecretKeyProvider {
+class PbeSecretKeyProvider implements SecretKeyProvider {
 
     private static final int PBE_ITERATION_COUNT = 100;
     private static final String PBE_ALGORITHM = "PBEWithSHA256And256BitAES-CBC-BC";
@@ -57,11 +58,11 @@ public class PbeSecretKeyProvider implements SecretKeyProvider {
 
     private final int keyLength;
 
-    public PbeSecretKeyProvider(int iterationCount,
-                                @NotNull String algorithm,
-                                @NotNull String secretKeyAlgorithm,
-                                @Nullable String provider,
-                                int keyLength) {
+    private PbeSecretKeyProvider(int iterationCount,
+                                 @NotNull String algorithm,
+                                 @NotNull String secretKeyAlgorithm,
+                                 @Nullable String provider,
+                                 int keyLength) {
         this.iterationCount = iterationCount;
         this.algorithm = algorithm;
         this.provider = provider;
@@ -70,15 +71,24 @@ public class PbeSecretKeyProvider implements SecretKeyProvider {
     }
 
     @NotNull
-    public static SecretKeyProvider newAndroidDefaultInstance() {
-        return new PbeSecretKeyProvider(PBE_ITERATION_COUNT, PBE_ALGORITHM, SECRET_KEY_ALGORITHM, PROVIDER, PBE_KEY_LENGTH);
+    public static SecretKeyProvider newAndroidPbeSecretKeyProvider() {
+        return newInstance(PBE_ITERATION_COUNT, PBE_ALGORITHM, SECRET_KEY_ALGORITHM, PROVIDER, PBE_KEY_LENGTH);
+    }
+
+    @NotNull
+    public static SecretKeyProvider newInstance(int iterationCount,
+                                                @NotNull String algorithm,
+                                                @NotNull String secretKeyAlgorithm,
+                                                @Nullable String provider,
+                                                int keyLength) {
+        return new PbeSecretKeyProvider(iterationCount, algorithm, secretKeyAlgorithm, provider, keyLength);
     }
 
     @Override
     @NotNull
     public SecretKey getSecretKey(@NotNull String password, @NotNull String salt) throws CiphererException {
         try {
-            final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), Bytes.toBytes(salt), iterationCount, keyLength);
+            final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), Bytes.hexToBytes(Strings.toHex(salt)), iterationCount, keyLength);
             final SecretKeyFactory factory;
             if (provider != null) {
                 factory = SecretKeyFactory.getInstance(algorithm, provider);

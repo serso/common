@@ -53,7 +53,7 @@ public class SaltGeneratorImpl implements SaltGenerator {
     @NotNull
     public String generateSalt() throws CiphererException {
         try {
-            byte[] salt = Security.generateRandomBytes(randomAlgorithm, saltLength);
+            byte[] salt = Bytes.generateRandomBytes(randomAlgorithm, saltLength);
             return Bytes.toHex(salt);
         } catch (Exception e) {
             throw new CiphererException("Unable to generate salt due to some errors!", e);

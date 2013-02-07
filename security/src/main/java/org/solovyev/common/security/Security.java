@@ -23,11 +23,7 @@
 package org.solovyev.common.security;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
-import java.util.Random;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * User: serso
@@ -40,10 +36,30 @@ public final class Security {
         throw new AssertionError();
     }
 
-    public static byte[] generateRandomBytes(@NotNull String randomAlgorithm, int length) throws NoSuchAlgorithmException, NoSuchProviderException {
-        final Random random = SecureRandom.getInstance(randomAlgorithm);
-        byte[] result = new byte[length];
-        random.nextBytes(result);
-        return result;
+    @NotNull
+    public static Cipherer newAndroidAesCipherer() {
+        return CiphererImpl.newAndroidAesCipherer();
     }
+
+    @NotNull
+    public static Cipherer newCipherer(@Nullable InitialVectorDef initialVectorDef,
+                                       @NotNull String cipherAlgorithm,
+                                       @Nullable String provider) {
+        return CiphererImpl.newInstance(initialVectorDef, cipherAlgorithm, provider);
+    }
+
+    @NotNull
+    public static SecretKeyProvider newAndroidSecretKeyProvider() {
+        return PbeSecretKeyProvider.newAndroidPbeSecretKeyProvider();
+    }
+
+    @NotNull
+    public static SecretKeyProvider newSecretKeyProvider(int iterationCount,
+                                                         @NotNull String algorithm,
+                                                         @NotNull String secretKeyAlgorithm,
+                                                         @Nullable String provider,
+                                                         int keyLength) {
+        return PbeSecretKeyProvider.newInstance(iterationCount, algorithm, secretKeyAlgorithm, provider, keyLength);
+    }
+
 }
