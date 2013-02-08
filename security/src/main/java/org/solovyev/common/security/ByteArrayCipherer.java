@@ -25,11 +25,12 @@ package org.solovyev.common.security;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.Bytes;
-import org.solovyev.common.text.HexString;
+import org.solovyev.common.collections.Collections;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import java.util.Arrays;
 
 /**
  * User: serso
@@ -42,6 +43,7 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
     private static final int IV_LENGTH = 16;
 
     private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
+    private static final byte[] EMPTY = new byte[]{};
 
     @Nullable
     private InitialVectorDef initialVectorDef;
@@ -121,10 +123,7 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
             if ( ivHex.length == 0 ) {
                 return encrypted;
             } else {
-                final byte[] result = new byte[ivHex.length + encrypted.length];
-                System.arraycopy(ivHex, 0, result, 0, ivHex.length);
-                System.arraycopy(encrypted, 0, result, ivHex.length, encrypted.length);
-                return result;
+                return Collections.concat(ivHex, encrypted);
             }
         } catch (Exception e) {
             throw new CiphererException("Unable to encrypt due to some errors!", e);
@@ -135,14 +134,14 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
     @Override
     public byte[] decrypt(@NotNull SecretKey secret, @NotNull byte[] encrypted) throws CiphererException {
         try {
-/*            final HexString ivHex = getIvHexFromEncrypted(encryptedText);
+            final byte[] ivBytes = getIvHexFromEncrypted(encrypted);
 
-            final HexString encryptedHex;
+            final byte[] encryptedBytes;
             if (initialVectorDef != null) {
-                encryptedHex = encryptedText.substring(initialVectorDef.getHexLength());
+                encryptedBytes = Arrays.copyOfRange(encrypted, initialVectorDef.getLength(), encrypted.length);
             } else {
-                encryptedHex = encryptedText;
-            }*/
+                encryptedBytes = encrypted;
+            }
 
             final Cipher decryptionCipher;
             if (provider != null) {
@@ -151,27 +150,26 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
                 decryptionCipher = Cipher.getInstance(cipherAlgorithm);
             }
 
-            /*if (!ivHex.isEmpty()) {
-                final IvParameterSpec ivParameterSpec = new IvParameterSpec(ivHex.getOriginal().getBytes("UTF-8"));
+            if (ivBytes.length > 0) {
+                final IvParameterSpec ivParameterSpec = new IvParameterSpec(ivBytes);
                 decryptionCipher.init(Cipher.DECRYPT_MODE, secret, ivParameterSpec);
-            } else {*/
+            } else {
                 decryptionCipher.init(Cipher.DECRYPT_MODE, secret);
-            /*}*/
+            }
 
-            final byte[] decrypted = decryptionCipher.doFinal(encrypted/*encryptedHex.getBytes()*/);
-            return decrypted/*new String(decrypted, "UTF-8")*/;
+            return decryptionCipher.doFinal(encryptedBytes);
         } catch (Exception e) {
             throw new CiphererException("Unable to decrypt due to some errors!", e);
         }
     }
 
     @NotNull
-    public HexString getIvHexFromEncrypted(@NotNull HexString encryptedText) throws CiphererException {
+    public byte[] getIvHexFromEncrypted(@NotNull byte[] encrypted) throws CiphererException {
         try {
             if (initialVectorDef != null) {
-                return encryptedText.substring(0, initialVectorDef.getHexLength());
+                return Arrays.copyOfRange(encrypted, 0, initialVectorDef.getLength());
             } else {
-                return HexString.newEmpty();
+                return EMPTY;
             }
         } catch (Exception e) {
             throw new CiphererException("Unable to extract initial vector!", e);

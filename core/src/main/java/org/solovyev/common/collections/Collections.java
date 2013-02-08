@@ -449,5 +449,19 @@ public class Collections {
             };
         }
     }
+
+    @NotNull
+    public static <T> T[] concat(@NotNull T[] first, @NotNull T[] second) {
+        final T[] result = Arrays.copyOf(first, first.length + second.length);
+        System.arraycopy(second, 0, result, first.length, second.length);
+        return result;
+    }
+
+    @NotNull
+    public static byte[] concat(@NotNull byte[] first, @NotNull byte[] second) {
+        final byte[] result = Arrays.copyOf(first, first.length + second.length);
+        System.arraycopy(second, 0, result, first.length, second.length);
+        return result;
+    }
 }
 
