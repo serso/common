@@ -74,7 +74,7 @@ class PbeSecretKeyProvider implements SecretKeyProvider {
     }
 
     @NotNull
-    public static SecretKeyProvider newAndroidPbeSecretKeyProvider() {
+    static SecretKeyProvider newAndroidPbeSecretKeyProvider() {
         return newInstance(Android.PBE_ITERATION_COUNT, Android.PBE_ALGORITHM, Android.SECRET_KEY_ALGORITHM, Android.PROVIDER, Android.PBE_KEY_LENGTH);
     }
 

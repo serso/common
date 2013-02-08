@@ -37,14 +37,14 @@ import org.solovyev.common.text.hex.HexStringEncoder;
  * Date: 8/20/12
  * Time: 8:14 PM
  */
-public final class Security {
+public class Security {
 
-    private Security() {
+    protected Security() {
         throw new AssertionError();
     }
 
     @NotNull
-    public static Cipherer<byte[], byte[]> newAndroidAesCipherer() {
+    protected static Cipherer<byte[], byte[]> newAndroidAesCipherer() {
         return ByteArrayCipherer.newAndroidAesCipherer();
     }
 
@@ -56,7 +56,7 @@ public final class Security {
     }
 
     @NotNull
-    public static SecretKeyProvider newAndroidSecretKeyProvider() {
+    protected static SecretKeyProvider newAndroidSecretKeyProvider() {
         return PbeSecretKeyProvider.newAndroidPbeSecretKeyProvider();
     }
 
