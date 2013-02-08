@@ -47,7 +47,7 @@ public class AndroidAesSecurityService implements SecurityService {
         cipherer = ByteArrayCipherer.newAndroidAesCipherer();
         secretKeyProvider = PbeSecretKeyProvider.newAndroidPbeSecretKeyProvider();
         saltGenerator = SaltGeneratorImpl.newAndroidDefaultInstance();
-        hashProvider = HashProviderImpl.newAndroidDefaultInstance();
+        hashProvider = HashProviderImpl.newAndroidSha512HashProvider();
     }
 
 

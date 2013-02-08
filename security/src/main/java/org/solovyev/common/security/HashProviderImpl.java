@@ -49,7 +49,7 @@ public class HashProviderImpl implements HashProvider {
     }
 
     @NotNull
-    public static HashProvider newAndroidDefaultInstance() {
+    static HashProvider newAndroidSha512HashProvider() {
         return new HashProviderImpl(HASH_ALGORITHM, PROVIDER);
     }
 

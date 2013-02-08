@@ -39,10 +39,12 @@ import java.util.Arrays;
  */
 class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
 
-    private static final String PROVIDER = "BC";
-    private static final int IV_LENGTH = 16;
+    private static class Android {
+        private static final String PROVIDER = "BC";
+        private static final int IV_LENGTH = 16;
+        private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
+    }
 
-    private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
     private static final byte[] EMPTY = new byte[]{};
 
     @Nullable
@@ -63,8 +65,8 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
     }
 
     @NotNull
-    public static Cipherer<byte[], byte[]> newAndroidAesCipherer() {
-        return newInstance(InitialVectorDef.newSha1Prng(IV_LENGTH), CIPHER_ALGORITHM, PROVIDER);
+    static Cipherer<byte[], byte[]> newAndroidAesCipherer() {
+        return newInstance(InitialVectorDef.newSha1Prng(Android.IV_LENGTH), Android.CIPHER_ALGORITHM, Android.PROVIDER);
     }
 
     @NotNull
