@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * ---------------------------------------------------------------------
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Contact details
  *
  * Email: se.solovyev@gmail.com
@@ -22,22 +22,16 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
+import org.solovyev.common.text.HexString;
 
-import javax.crypto.SecretKey;
+public class AndroidStringCiphererTest extends AbstractStringCiphererTest {
 
-/**
- * User: serso
- * Date: 8/20/12
- * Time: 7:42 PM
- */
-public interface Cipherer<E, D> {
+    @Test
+    public void testRandomEncryptDecrypt() throws Exception {
+        final SecretKeyProvider secretKeyProvider = PbeSecretKeyProvider.newAndroidPbeSecretKeyProvider();
+        final Cipherer<String, String> cipherer = Security.newBase64StringCipherer(ByteArrayCipherer.newAndroidAesCipherer());
 
-    @NotNull
-    E encrypt(@NotNull SecretKey secret,
-              @NotNull D decrypted) throws CiphererException;
-
-    @NotNull
-    D decrypt(@NotNull SecretKey secret,
-              @NotNull E encrypted) throws CiphererException;
+        doRandomCiphererTest(secretKeyProvider, cipherer);
+    }
 }

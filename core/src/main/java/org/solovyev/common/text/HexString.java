@@ -3,7 +3,7 @@ package org.solovyev.common.text;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.Bytes;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 public final class HexString implements java.io.Serializable, Comparable<HexString>, CharSequence {
 
@@ -46,20 +46,12 @@ public final class HexString implements java.io.Serializable, Comparable<HexStri
 
     @NotNull
     public static HexString fromBytes(@NotNull byte[] bytes) {
-        try {
-            return newInstance(Bytes.toHex(bytes), new String(bytes, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            throw new AssertionError(e);
-        }
+        return newInstance(Bytes.toHex(bytes), new String(bytes, Charset.forName("UTF-8")));
     }
 
     @NotNull
     public static HexString fromHexBytes(@NotNull byte[] hexBytes) {
-        try {
-            return fromHexString(new String(hexBytes, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            throw new AssertionError(e);
-        }
+        return fromHexString(new String(hexBytes, Charset.forName("UTF-8")));
     }
 
 
@@ -149,11 +141,12 @@ public final class HexString implements java.io.Serializable, Comparable<HexStri
 
     @NotNull
     public byte[] getBytes() {
-        try {
-            return this.hex.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new AssertionError(e);
-        }
+        return this.hex.getBytes(Charset.forName("UTF-8"));
+    }
+
+    @NotNull
+    public byte[] getOriginalBytes() {
+        return Bytes.hexToBytes(this.hex);
     }
 
     @NotNull

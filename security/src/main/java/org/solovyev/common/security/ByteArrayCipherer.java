@@ -36,7 +36,7 @@ import javax.crypto.spec.IvParameterSpec;
  * Date: 8/20/12
  * Time: 7:44 PM
  */
-class CiphererImpl implements Cipherer {
+class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
 
     private static final String PROVIDER = "BC";
     private static final int IV_LENGTH = 16;
@@ -52,54 +52,53 @@ class CiphererImpl implements Cipherer {
     @Nullable
     private final String provider;
 
-    private CiphererImpl(@Nullable InitialVectorDef initialVectorDef,
-                         @NotNull String cipherAlgorithm,
-                         @Nullable String provider) {
+    private ByteArrayCipherer(@Nullable InitialVectorDef initialVectorDef,
+                              @NotNull String cipherAlgorithm,
+                              @Nullable String provider) {
         this.initialVectorDef = initialVectorDef;
         this.cipherAlgorithm = cipherAlgorithm;
         this.provider = provider;
     }
 
     @NotNull
-    public static Cipherer newAndroidAesCipherer() {
+    public static Cipherer<byte[], byte[]> newAndroidAesCipherer() {
         return newInstance(InitialVectorDef.newSha1Prng(IV_LENGTH), CIPHER_ALGORITHM, PROVIDER);
     }
 
     @NotNull
-    public static CiphererImpl newInstance(@Nullable InitialVectorDef initialVectorDef,
+    public static Cipherer<byte[], byte[]> newInstance(@Nullable InitialVectorDef initialVectorDef,
                                            @NotNull String cipherAlgorithm,
                                            @Nullable String provider) {
-        return new CiphererImpl(initialVectorDef, cipherAlgorithm, provider);
+        return new ByteArrayCipherer(initialVectorDef, cipherAlgorithm, provider);
     }
 
     @Override
     @NotNull
-    public HexString encrypt(@NotNull SecretKey secret,
-                             @NotNull String plainText) throws CiphererException {
+    public byte[] encrypt(@NotNull SecretKey secret,
+                             @NotNull byte[] decrypted) throws CiphererException {
         try {
-            final HexString ivHex;
+            final byte[] ivHex;
 
             if (initialVectorDef != null) {
-                final byte[] iv = Bytes.generateRandomBytes(initialVectorDef.getRandomAlgorithm(), initialVectorDef.getLength());
-                ivHex = HexString.fromBytes(iv);
+                ivHex = Bytes.generateRandomBytes(initialVectorDef.getRandomAlgorithm(), initialVectorDef.getLength());
             } else {
-                ivHex = HexString.newEmpty();
+                ivHex = new byte[]{};
             }
 
-            return encrypt(secret, plainText, ivHex);
+            return encrypt(secret, decrypted, ivHex);
         } catch (Exception e) {
             throw new CiphererException("Unable to encrypt due to some errors!", e);
         }
     }
 
     @NotNull
-    public HexString encrypt(@NotNull SecretKey secret,
-                             @NotNull String plainText,
-                             @NotNull HexString ivHex) throws CiphererException {
+    public byte[] encrypt(@NotNull SecretKey secret,
+                             @NotNull byte[] decrypted,
+                             @NotNull byte[] ivHex) throws CiphererException {
         try {
             final IvParameterSpec ivParameterSpec;
             if (initialVectorDef != null) {
-                ivParameterSpec = new IvParameterSpec(ivHex.getOriginal().getBytes("UTF-8"));
+                ivParameterSpec = new IvParameterSpec(ivHex);
             } else {
                 ivParameterSpec = null;
             }
@@ -117,9 +116,16 @@ class CiphererImpl implements Cipherer {
                 encryptionCipher.init(Cipher.ENCRYPT_MODE, secret);
             }
 
-            final byte[] encrypted = encryptionCipher.doFinal(plainText.getBytes("UTF-8"));
+            final byte[] encrypted = encryptionCipher.doFinal(decrypted);
 
-            return ivHex.concat(HexString.fromBytes(encrypted));
+            if ( ivHex.length == 0 ) {
+                return encrypted;
+            } else {
+                final byte[] result = new byte[ivHex.length + encrypted.length];
+                System.arraycopy(ivHex, 0, result, 0, ivHex.length);
+                System.arraycopy(encrypted, 0, result, ivHex.length, encrypted.length);
+                return result;
+            }
         } catch (Exception e) {
             throw new CiphererException("Unable to encrypt due to some errors!", e);
         }
@@ -127,16 +133,16 @@ class CiphererImpl implements Cipherer {
 
     @NotNull
     @Override
-    public String decrypt(@NotNull SecretKey secret, @NotNull HexString encryptedText) throws CiphererException {
+    public byte[] decrypt(@NotNull SecretKey secret, @NotNull byte[] encrypted) throws CiphererException {
         try {
-            final HexString ivHex = getIvHexFromEncrypted(encryptedText);
+/*            final HexString ivHex = getIvHexFromEncrypted(encryptedText);
 
             final HexString encryptedHex;
             if (initialVectorDef != null) {
                 encryptedHex = encryptedText.substring(initialVectorDef.getHexLength());
             } else {
                 encryptedHex = encryptedText;
-            }
+            }*/
 
             final Cipher decryptionCipher;
             if (provider != null) {
@@ -145,15 +151,15 @@ class CiphererImpl implements Cipherer {
                 decryptionCipher = Cipher.getInstance(cipherAlgorithm);
             }
 
-            if (!ivHex.isEmpty()) {
+            /*if (!ivHex.isEmpty()) {
                 final IvParameterSpec ivParameterSpec = new IvParameterSpec(ivHex.getOriginal().getBytes("UTF-8"));
                 decryptionCipher.init(Cipher.DECRYPT_MODE, secret, ivParameterSpec);
-            } else {
+            } else {*/
                 decryptionCipher.init(Cipher.DECRYPT_MODE, secret);
-            }
+            /*}*/
 
-            final byte[] decrypted = decryptionCipher.doFinal(encryptedHex.getOriginal().getBytes("UTF-8"));
-            return new String(decrypted, "UTF-8");
+            final byte[] decrypted = decryptionCipher.doFinal(encrypted/*encryptedHex.getBytes()*/);
+            return decrypted/*new String(decrypted, "UTF-8")*/;
         } catch (Exception e) {
             throw new CiphererException("Unable to decrypt due to some errors!", e);
         }

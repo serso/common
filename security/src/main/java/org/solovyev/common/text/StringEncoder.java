@@ -13,31 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * ---------------------------------------------------------------------
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Contact details
  *
  * Email: se.solovyev@gmail.com
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common.security;
+package org.solovyev.common.text;
 
+import org.apache.commons.codec.Charsets;
 import org.jetbrains.annotations.NotNull;
-
-import javax.crypto.SecretKey;
+import org.solovyev.common.Converter;
 
 /**
- * User: serso
- * Date: 8/20/12
- * Time: 7:42 PM
+ * Converter from bytes to String.
+ * Bytes must be a valid bytes which have been previously constructed through {@link String#getBytes()} method or by {@link StringDecoder} converter
  */
-public interface Cipherer<E, D> {
+public class StringEncoder implements Converter<byte[], String> {
 
     @NotNull
-    E encrypt(@NotNull SecretKey secret,
-              @NotNull D decrypted) throws CiphererException;
+    private static Converter<byte[], String> instance = new StringEncoder();
+
+    private StringEncoder() {
+    }
 
     @NotNull
-    D decrypt(@NotNull SecretKey secret,
-              @NotNull E encrypted) throws CiphererException;
+    public static Converter<byte[], String> getInstance() {
+        return instance;
+    }
+
+    @NotNull
+    @Override
+    public String convert(@NotNull byte[] bytes) {
+        return new String(bytes, Charsets.UTF_8);
+    }
 }

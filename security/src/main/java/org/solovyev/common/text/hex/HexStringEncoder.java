@@ -13,31 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * ---------------------------------------------------------------------
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Contact details
  *
  * Email: se.solovyev@gmail.com
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common.security;
+package org.solovyev.common.text.hex;
 
 import org.jetbrains.annotations.NotNull;
-
-import javax.crypto.SecretKey;
+import org.solovyev.common.Converter;
+import org.solovyev.common.text.HexString;
 
 /**
- * User: serso
- * Date: 8/20/12
- * Time: 7:42 PM
+ * Converter from bytes to base64 encoded String.
+ * NOTE: input bytes are NOT encoded
  */
-public interface Cipherer<E, D> {
+public class HexStringEncoder implements Converter<byte[], HexString> {
 
     @NotNull
-    E encrypt(@NotNull SecretKey secret,
-              @NotNull D decrypted) throws CiphererException;
+    private static Converter<byte[], HexString> instance = new HexStringEncoder();
+
+    private HexStringEncoder() {
+    }
 
     @NotNull
-    D decrypt(@NotNull SecretKey secret,
-              @NotNull E encrypted) throws CiphererException;
+    public static Converter<byte[], HexString> getInstance() {
+        return instance;
+    }
+
+    @NotNull
+    @Override
+    public HexString convert(@NotNull byte[] bytes) {
+        return HexString.fromBytes(bytes);
+    }
 }

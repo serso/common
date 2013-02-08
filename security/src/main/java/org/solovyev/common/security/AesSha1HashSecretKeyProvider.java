@@ -31,12 +31,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class AesSecretKeyProvider implements SecretKeyProvider {
+public class AesSha1HashSecretKeyProvider implements SecretKeyProvider {
 
     @NotNull
-    private static final SecretKeyProvider instance = new AesSecretKeyProvider();
+    private static final SecretKeyProvider instance = new AesSha1HashSecretKeyProvider();
 
-    private AesSecretKeyProvider() {
+    private AesSha1HashSecretKeyProvider() {
     }
 
     @NotNull
@@ -51,10 +51,10 @@ public class AesSecretKeyProvider implements SecretKeyProvider {
 
         try {
             final MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            byte[] secretKeyHash = sha.digest(secretKey.getBytes("UTF-8"));
+            secretKeyHash = Arrays.copyOf(secretKeyHash, 16); // use only first 128 bit
 
-            byte[] secretKeyBytes = sha.digest(secretKey.getBytes("UTF-8"));
-            secretKeyBytes = Arrays.copyOf(secretKeyBytes, 16); // use only first 128 bit
-            return new SecretKeySpec(secretKeyBytes, "AES");
+            return new SecretKeySpec(secretKeyHash, "AES");
         } catch (NoSuchAlgorithmException e) {
             throw new CiphererException(e);
         } catch (UnsupportedEncodingException e) {

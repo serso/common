@@ -13,31 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * ---------------------------------------------------------------------
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Contact details
  *
  * Email: se.solovyev@gmail.com
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.common.security;
+package org.solovyev.common.text.base64;
 
 import org.jetbrains.annotations.NotNull;
-
-import javax.crypto.SecretKey;
+import org.solovyev.common.Converter;
 
 /**
- * User: serso
- * Date: 8/20/12
- * Time: 7:42 PM
+ * Converter from base64 encoded String to bytes.
+ * Notes: resulted bytes are DECODED
  */
-public interface Cipherer<E, D> {
+public class Base64StringDecoder implements Converter<String, byte[]> {
 
     @NotNull
-    E encrypt(@NotNull SecretKey secret,
-              @NotNull D decrypted) throws CiphererException;
+    private static Converter<String, byte[]> instance = new Base64StringDecoder();
+
+    private Base64StringDecoder() {
+    }
 
     @NotNull
-    D decrypt(@NotNull SecretKey secret,
-              @NotNull E encrypted) throws CiphererException;
+    public static Converter<String, byte[]> getInstance() {
+        return instance;
+    }
+
+    @NotNull
+    @Override
+    public byte[] convert(@NotNull String s) {
+        return com.sun.org.apache.xerces.internal.impl.dv.util.Base64.decode(s);
+    }
 }

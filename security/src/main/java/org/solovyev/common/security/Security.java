@@ -24,6 +24,13 @@ package org.solovyev.common.security;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.text.HexString;
+import org.solovyev.common.text.base64.Base64StringDecoder;
+import org.solovyev.common.text.base64.Base64StringEncoder;
+import org.solovyev.common.text.StringDecoder;
+import org.solovyev.common.text.StringEncoder;
+import org.solovyev.common.text.hex.HexStringDecoder;
+import org.solovyev.common.text.hex.HexStringEncoder;
 
 /**
  * User: serso
@@ -37,15 +44,15 @@ public final class Security {
     }
 
     @NotNull
-    public static Cipherer newAndroidAesCipherer() {
-        return CiphererImpl.newAndroidAesCipherer();
+    public static Cipherer<byte[], byte[]> newAndroidAesCipherer() {
+        return ByteArrayCipherer.newAndroidAesCipherer();
     }
 
     @NotNull
-    public static Cipherer newCipherer(@Nullable InitialVectorDef initialVectorDef,
+    public static Cipherer<byte[], byte[]> newCipherer(@Nullable InitialVectorDef initialVectorDef,
                                        @NotNull String cipherAlgorithm,
                                        @Nullable String provider) {
-        return CiphererImpl.newInstance(initialVectorDef, cipherAlgorithm, provider);
+        return ByteArrayCipherer.newInstance(initialVectorDef, cipherAlgorithm, provider);
     }
 
     @NotNull
@@ -62,4 +69,13 @@ public final class Security {
         return PbeSecretKeyProvider.newInstance(iterationCount, algorithm, secretKeyAlgorithm, provider, keyLength);
     }
 
+    @NotNull
+    public static Cipherer<String, String> newBase64StringCipherer(@NotNull Cipherer<byte[], byte[]> byteCipherer) {
+        return TypedCipherer.newInstance(byteCipherer, StringDecoder.getInstance(), StringEncoder.getInstance(), Base64StringDecoder.getInstance(), Base64StringEncoder.getInstance());
+    }
+
+    @NotNull
+    public static Cipherer<HexString, String> newHexStringCipherer(@NotNull Cipherer<byte[], byte[]> byteCipherer) {
+        return TypedCipherer.newInstance(byteCipherer, StringDecoder.getInstance(), StringEncoder.getInstance(), HexStringDecoder.getInstance(), HexStringEncoder.getInstance());
+    }
 }

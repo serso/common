@@ -22,6 +22,7 @@
 
 package org.solovyev.common.security;
 
+import org.apache.commons.codec.Charsets;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,6 +30,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.MessageDigest;
+import java.util.Arrays;
 
 /**
  * User: serso
@@ -37,11 +40,13 @@ import javax.crypto.spec.SecretKeySpec;
  */
 class PbeSecretKeyProvider implements SecretKeyProvider {
 
-    private static final int PBE_ITERATION_COUNT = 100;
-    private static final String PBE_ALGORITHM = "PBEWithSHA256And256BitAES-CBC-BC";
-    private static final String PROVIDER = "BC";
-    private static final String SECRET_KEY_ALGORITHM = "AES";
-    private static final int PBE_KEY_LENGTH = 256;
+    private static class Android {
+        private static final int PBE_ITERATION_COUNT = 1024;
+        private static final String PBE_ALGORITHM = "PBEWITHSHAAND256BITAES-CBC-BC";
+        private static final String PROVIDER = "BC";
+        private static final String SECRET_KEY_ALGORITHM = "AES";
+        private static final int PBE_KEY_LENGTH = 256;
+    }
 
     private final int iterationCount;
 
@@ -70,7 +75,7 @@ class PbeSecretKeyProvider implements SecretKeyProvider {
 
     @NotNull
     public static SecretKeyProvider newAndroidPbeSecretKeyProvider() {
-        return newInstance(PBE_ITERATION_COUNT, PBE_ALGORITHM, SECRET_KEY_ALGORITHM, PROVIDER, PBE_KEY_LENGTH);
+        return newInstance(Android.PBE_ITERATION_COUNT, Android.PBE_ALGORITHM, Android.SECRET_KEY_ALGORITHM, Android.PROVIDER, Android.PBE_KEY_LENGTH);
     }
 
     @NotNull
@@ -86,7 +91,15 @@ class PbeSecretKeyProvider implements SecretKeyProvider {
     @NotNull
     public SecretKey getSecretKey(@NotNull String password, @NotNull String salt) throws CiphererException {
         try {
-            final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), salt.getBytes("UTF-8"), iterationCount, keyLength);
+            byte[] saltBytes = salt.getBytes(Charsets.UTF_8);
+            if ( saltBytes.length != 20 ) {
+                // we need to prolong/truncate our byte array
+                final MessageDigest sha = MessageDigest.getInstance("SHA-1");
+                saltBytes = sha.digest(saltBytes);
+                saltBytes = Arrays.copyOf(saltBytes, 20);
+            }
+
+            final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), saltBytes, iterationCount, keyLength);
             final SecretKeyFactory factory;
             if (provider != null) {
                 factory = SecretKeyFactory.getInstance(algorithm, provider);
