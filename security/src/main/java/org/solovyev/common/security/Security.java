@@ -39,34 +39,48 @@ import org.solovyev.common.text.hex.HexStringEncoder;
  */
 public class Security {
 
+    static final String CIPHERER_ALGORITHM_AES = "AES";
+
     protected Security() {
         throw new AssertionError();
     }
 
     @NotNull
-    protected static Cipherer<byte[], byte[]> newAndroidAesCipherer() {
-        return ByteArrayCipherer.newAndroidAesCipherer();
+    public static Cipherer<byte[], byte[]> newCipherer(@NotNull String ciphererAlgorithm,
+                                                       @Nullable String provider,
+                                                       @Nullable InitialVectorDef initialVectorDef) {
+        return ByteArrayCipherer.newInstance(initialVectorDef, ciphererAlgorithm, provider);
     }
 
     @NotNull
-    public static Cipherer<byte[], byte[]> newCipherer(@Nullable InitialVectorDef initialVectorDef,
-                                       @NotNull String cipherAlgorithm,
-                                       @Nullable String provider) {
-        return ByteArrayCipherer.newInstance(initialVectorDef, cipherAlgorithm, provider);
+    public static SecretKeyProvider newPbeSecretKeyProvider(int iterationCount,
+                                                            @NotNull String algorithm,
+                                                            @NotNull String ciphererAlgorithm,
+                                                            @NotNull String provider,
+                                                            int keyLength,
+                                                            int saltLength) {
+        return PbeSecretKeyProvider.newInstance(iterationCount, algorithm, ciphererAlgorithm, provider, keyLength, saltLength);
     }
 
     @NotNull
-    protected static SecretKeyProvider newAndroidSecretKeyProvider() {
-        return PbeSecretKeyProvider.newAndroidPbeSecretKeyProvider();
+    public static HashProvider newMessageDigestHashProvider(@NotNull String hashAlgorithm, @NotNull String provider) {
+        return MessageDigestHashProvider.newInstance(hashAlgorithm, provider);
     }
 
     @NotNull
-    public static SecretKeyProvider newSecretKeyProvider(int iterationCount,
-                                                         @NotNull String algorithm,
-                                                         @NotNull String secretKeyAlgorithm,
-                                                         @Nullable String provider,
-                                                         int keyLength) {
-        return PbeSecretKeyProvider.newInstance(iterationCount, algorithm, secretKeyAlgorithm, provider, keyLength);
+    public static SaltGenerator newSaltGenerator(@NotNull String randomAlgorithm, int saltLength) {
+        return SaltGeneratorImpl.newInstance(randomAlgorithm, saltLength);
+    }
+
+    @NotNull
+    public static SecretKeyProvider newAesSha1HashSecretKeyProvider() {
+        return AesSha1HashSecretKeyProvider.newInstance();
+    }
+
+
+    @NotNull
+    public static SecretKeyProvider newDesSha1HashSecretKeyProvider() {
+        return DesSha1HashSecretKeyProvider.newInstance();
     }
 
     @NotNull
@@ -77,5 +91,23 @@ public class Security {
     @NotNull
     public static Cipherer<HexString, String> newHexStringCipherer(@NotNull Cipherer<byte[], byte[]> byteCipherer) {
         return TypedCipherer.newInstance(byteCipherer, StringDecoder.getInstance(), StringEncoder.getInstance(), HexStringDecoder.getInstance(), HexStringEncoder.getInstance());
+    }
+
+    @NotNull
+    public static SecurityService<String, String> newBase64StringSecurityService(@NotNull SecurityService<byte[], byte[]> byteCipherer) {
+        return SecurityServiceConverter.wrap(byteCipherer, StringDecoder.getInstance(), StringEncoder.getInstance(), Base64StringDecoder.getInstance(), Base64StringEncoder.getInstance());
+    }
+
+    @NotNull
+    public static SecurityService<HexString, String> newHexStringSecurityService(@NotNull SecurityService<byte[], byte[]> byteCipherer) {
+        return SecurityServiceConverter.wrap(byteCipherer, StringDecoder.getInstance(), StringEncoder.getInstance(), HexStringDecoder.getInstance(), HexStringEncoder.getInstance());
+    }
+
+    @NotNull
+    public static <E, D> SecurityService<E, D> newSecurityService(@NotNull Cipherer<E, D> cipherer,
+                                                                  @NotNull SecretKeyProvider secretKeyProvider,
+                                                                  @NotNull SaltGenerator saltGenerator,
+                                                                  @NotNull HashProvider hashProvider) {
+        return SecurityServiceImpl.newInstance(cipherer, secretKeyProvider, saltGenerator, hashProvider);
     }
 }

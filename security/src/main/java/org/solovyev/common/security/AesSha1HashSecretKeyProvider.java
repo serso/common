@@ -22,11 +22,11 @@
 
 package org.solovyev.common.security;
 
+import org.apache.commons.codec.Charsets;
 import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -51,13 +51,11 @@ public class AesSha1HashSecretKeyProvider implements SecretKeyProvider {
 
         try {
             final MessageDigest sha = MessageDigest.getInstance("SHA-1");
-            byte[] secretKeyHash = sha.digest(secretKey.getBytes("UTF-8"));
+            byte[] secretKeyHash = sha.digest(secretKey.getBytes(Charsets.UTF_8));
             secretKeyHash = Arrays.copyOf(secretKeyHash, 16); // use only first 128 bit
 
-            return new SecretKeySpec(secretKeyHash, "AES");
+            return new SecretKeySpec(secretKeyHash, Security.CIPHERER_ALGORITHM_AES);
         } catch (NoSuchAlgorithmException e) {
-            throw new CiphererException(e);
-        } catch (UnsupportedEncodingException e) {
             throw new CiphererException(e);
         }
     }

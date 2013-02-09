@@ -29,25 +29,36 @@ import org.jetbrains.annotations.NotNull;
  * Date: 8/20/12
  * Time: 8:24 PM
  */
-public class AndroidAesSecurityService implements SecurityService {
+class SecurityServiceImpl<E, D> implements SecurityService<E, D> {
 
     @NotNull
-    private final Cipherer cipherer;
+    private Cipherer<E, D> cipherer;
 
     @NotNull
-    private final SecretKeyProvider secretKeyProvider;
+    private SecretKeyProvider secretKeyProvider;
 
     @NotNull
-    private final SaltGenerator saltGenerator;
+    private SaltGenerator saltGenerator;
 
     @NotNull
-    private final HashProvider hashProvider;
+    private HashProvider hashProvider;
 
-    public AndroidAesSecurityService() {
-        cipherer = ByteArrayCipherer.newAndroidAesCipherer();
-        secretKeyProvider = PbeSecretKeyProvider.newAndroidPbeSecretKeyProvider();
-        saltGenerator = SaltGeneratorImpl.newAndroidDefaultInstance();
-        hashProvider = HashProviderImpl.newAndroidSha512HashProvider();
+    private SecurityServiceImpl(@NotNull Cipherer<E, D> cipherer,
+                                @NotNull SecretKeyProvider secretKeyProvider,
+                                @NotNull SaltGenerator saltGenerator,
+                                @NotNull HashProvider hashProvider) {
+        this.cipherer = cipherer;
+        this.secretKeyProvider = secretKeyProvider;
+        this.saltGenerator = saltGenerator;
+        this.hashProvider = hashProvider;
+    }
+
+    @NotNull
+    static <E, D> SecurityService<E, D> newInstance(@NotNull Cipherer<E, D> cipherer,
+                                                           @NotNull SecretKeyProvider secretKeyProvider,
+                                                           @NotNull SaltGenerator saltGenerator,
+                                                           @NotNull HashProvider hashProvider) {
+        return new SecurityServiceImpl<E, D>(cipherer, secretKeyProvider, saltGenerator, hashProvider);
     }
 
 
@@ -71,7 +82,7 @@ public class AndroidAesSecurityService implements SecurityService {
 
     @NotNull
     @Override
-    public Cipherer getCipherer() {
+    public Cipherer<E, D> getCipherer() {
         return cipherer;
     }
 }

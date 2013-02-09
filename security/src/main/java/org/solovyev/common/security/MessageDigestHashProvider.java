@@ -22,6 +22,7 @@
 
 package org.solovyev.common.security;
 
+import org.apache.commons.codec.Charsets;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.Bytes;
 
@@ -32,10 +33,7 @@ import java.security.MessageDigest;
  * Date: 8/20/12
  * Time: 8:17 PM
  */
-public class HashProviderImpl implements HashProvider {
-
-    private static final String PROVIDER = "BC";
-    private static final String HASH_ALGORITHM = "SHA-512";
+class MessageDigestHashProvider implements HashProvider {
 
     @NotNull
     private final String hashAlgorithm;
@@ -43,14 +41,14 @@ public class HashProviderImpl implements HashProvider {
     @NotNull
     private final String provider;
 
-    public HashProviderImpl(@NotNull String hashAlgorithm, @NotNull String provider) {
+    private MessageDigestHashProvider(@NotNull String hashAlgorithm, @NotNull String provider) {
         this.hashAlgorithm = hashAlgorithm;
         this.provider = provider;
     }
 
     @NotNull
-    static HashProvider newAndroidSha512HashProvider() {
-        return new HashProviderImpl(HASH_ALGORITHM, PROVIDER);
+    static HashProvider newInstance(@NotNull String hashAlgorithm, @NotNull String provider) {
+        return new MessageDigestHashProvider(hashAlgorithm, provider);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class HashProviderImpl implements HashProvider {
         try {
             final String input = text + salt;
             final MessageDigest md = MessageDigest.getInstance(hashAlgorithm, provider);
-            return Bytes.toHex(md.digest(input.getBytes("UTF-8")));
+            return Bytes.toHex(md.digest(input.getBytes(Charsets.UTF_8)));
         } catch (Exception e) {
             throw new CiphererException("Unable to get hash due to some errors!", e);
         }

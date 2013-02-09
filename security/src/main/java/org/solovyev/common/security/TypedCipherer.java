@@ -17,7 +17,7 @@
  * Contact details
  *
  * Email: se.solovyev@gmail.com
- * Site:  http://se.solovyev.org
+ * Site:  http://se.solovyev.org/java/jcl
  */
 
 package org.solovyev.common.security;

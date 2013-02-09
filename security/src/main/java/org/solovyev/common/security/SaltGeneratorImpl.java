@@ -30,26 +30,21 @@ import org.solovyev.common.Bytes;
  * Date: 8/20/12
  * Time: 8:13 PM
  */
-public class SaltGeneratorImpl implements SaltGenerator {
-
-    private static class Android {
-        private static final int SALT_LENGTH = 20;
-        private static final String RANDOM_ALGORITHM = "SHA1PRNG";
-    }
+class SaltGeneratorImpl implements SaltGenerator {
 
     @NotNull
     private final String randomAlgorithm;
 
     private final int saltLength;
 
-    public SaltGeneratorImpl(@NotNull String randomAlgorithm, int saltLength) {
+    private SaltGeneratorImpl(@NotNull String randomAlgorithm, int saltLength) {
         this.randomAlgorithm = randomAlgorithm;
         this.saltLength = saltLength;
     }
 
     @NotNull
-    static SaltGenerator newAndroidDefaultInstance() {
-        return new SaltGeneratorImpl(Android.RANDOM_ALGORITHM, Android.SALT_LENGTH);
+    static SaltGenerator newInstance(@NotNull String randomAlgorithm, int saltLength) {
+        return new SaltGeneratorImpl(randomAlgorithm, saltLength);
     }
 
     @Override

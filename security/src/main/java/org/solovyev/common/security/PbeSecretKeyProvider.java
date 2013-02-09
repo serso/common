@@ -22,9 +22,8 @@
 
 package org.solovyev.common.security;
 
-import org.apache.commons.codec.Charsets;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.Bytes;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -40,75 +39,63 @@ import java.util.Arrays;
  */
 class PbeSecretKeyProvider implements SecretKeyProvider {
 
-    private static class Android {
-        private static final int PBE_ITERATION_COUNT = 1024;
-        private static final String PBE_ALGORITHM = "PBEWITHSHAAND256BITAES-CBC-BC";
-        private static final String PROVIDER = "BC";
-        private static final String SECRET_KEY_ALGORITHM = "AES";
-        private static final int PBE_KEY_LENGTH = 256;
-    }
-
     private final int iterationCount;
 
     @NotNull
     private final String algorithm;
 
-    @Nullable
+    @NotNull
     private final String provider;
 
     @NotNull
-    private final String secretKeyAlgorithm;
+    private final String ciphererAlgorithm;
 
     private final int keyLength;
 
+    private final int saltLength;
+
     private PbeSecretKeyProvider(int iterationCount,
                                  @NotNull String algorithm,
-                                 @NotNull String secretKeyAlgorithm,
-                                 @Nullable String provider,
-                                 int keyLength) {
+                                 @NotNull String ciphererAlgorithm,
+                                 @NotNull String provider,
+                                 int keyLength,
+                                 int saltLength) {
         this.iterationCount = iterationCount;
         this.algorithm = algorithm;
         this.provider = provider;
-        this.secretKeyAlgorithm = secretKeyAlgorithm;
+        this.ciphererAlgorithm = ciphererAlgorithm;
         this.keyLength = keyLength;
-    }
-
-    @NotNull
-    static SecretKeyProvider newAndroidPbeSecretKeyProvider() {
-        return newInstance(Android.PBE_ITERATION_COUNT, Android.PBE_ALGORITHM, Android.SECRET_KEY_ALGORITHM, Android.PROVIDER, Android.PBE_KEY_LENGTH);
+        this.saltLength = saltLength;
     }
 
     @NotNull
     public static SecretKeyProvider newInstance(int iterationCount,
                                                 @NotNull String algorithm,
-                                                @NotNull String secretKeyAlgorithm,
-                                                @Nullable String provider,
-                                                int keyLength) {
-        return new PbeSecretKeyProvider(iterationCount, algorithm, secretKeyAlgorithm, provider, keyLength);
+                                                @NotNull String ciphererAlgorithm,
+                                                @NotNull String provider,
+                                                int keyLength,
+                                                int saltLength) {
+        return new PbeSecretKeyProvider(iterationCount, algorithm, ciphererAlgorithm, provider, keyLength, saltLength);
     }
 
     @Override
     @NotNull
     public SecretKey getSecretKey(@NotNull String password, @NotNull String salt) throws CiphererException {
         try {
-            byte[] saltBytes = salt.getBytes(Charsets.UTF_8);
-            if ( saltBytes.length != 20 ) {
+            byte[] saltBytes = Bytes.hexToBytes(salt);
+            if ( saltBytes.length != saltLength ) {
                 // we need to prolong/truncate our byte array
                 final MessageDigest sha = MessageDigest.getInstance("SHA-1");
                 saltBytes = sha.digest(saltBytes);
-                saltBytes = Arrays.copyOf(saltBytes, 20);
+                saltBytes = Arrays.copyOf(saltBytes, saltLength);
             }
 
             final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), saltBytes, iterationCount, keyLength);
-            final SecretKeyFactory factory;
-            if (provider != null) {
-                factory = SecretKeyFactory.getInstance(algorithm, provider);
-            } else {
-                factory = SecretKeyFactory.getInstance(algorithm);
-            }
+            final SecretKeyFactory factory = SecretKeyFactory.getInstance(algorithm, provider);
+
             final SecretKey tmp = factory.generateSecret(pbeKeySpec);
 
-            return new SecretKeySpec(tmp.getEncoded(), secretKeyAlgorithm);
+            return new SecretKeySpec(tmp.getEncoded(), ciphererAlgorithm);
         } catch (Exception e) {
             throw new CiphererException("Unable to get secret key due to some errors!", e);
         }

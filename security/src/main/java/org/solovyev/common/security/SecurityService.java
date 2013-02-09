@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 8/20/12
  * Time: 8:22 PM
  */
-public interface SecurityService {
+public interface SecurityService<E, D> {
 
     @NotNull
     SaltGenerator getSaltGenerator();
@@ -41,5 +41,5 @@ public interface SecurityService {
     HashProvider getHashProvider();
 
     @NotNull
-    Cipherer getCipherer();
+    Cipherer<E, D> getCipherer();
 }

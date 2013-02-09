@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * ---------------------------------------------------------------------
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Contact details
  *
  * Email: se.solovyev@gmail.com
- * Site:  http://se.solovyev.org
+ * Site:  http://se.solovyev.org/java/jcl
  */
 
 package org.solovyev.common.security;
@@ -39,57 +39,51 @@ import java.util.Arrays;
  */
 class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
 
-    private static class Android {
-        private static final String PROVIDER = "BC";
-        private static final int IV_LENGTH = 16;
-        private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
-    }
-
     private static final byte[] EMPTY = new byte[]{};
 
-    @Nullable
-    private InitialVectorDef initialVectorDef;
-
     @NotNull
-    private final String cipherAlgorithm;
+    private final String ciphererAlgorithm;
 
     @Nullable
     private final String provider;
 
-    private ByteArrayCipherer(@Nullable InitialVectorDef initialVectorDef,
-                              @NotNull String cipherAlgorithm,
-                              @Nullable String provider) {
-        this.initialVectorDef = initialVectorDef;
-        this.cipherAlgorithm = cipherAlgorithm;
-        this.provider = provider;
-    }
+    @Nullable
+    private InitialVectorDef initialVectorDef;
 
-    @NotNull
-    static Cipherer<byte[], byte[]> newAndroidAesCipherer() {
-        return newInstance(InitialVectorDef.newSha1Prng(Android.IV_LENGTH), Android.CIPHER_ALGORITHM, Android.PROVIDER);
+    private ByteArrayCipherer(@NotNull String ciphererAlgorithm,
+                              @Nullable String provider,
+                              @Nullable InitialVectorDef initialVectorDef) {
+        this.ciphererAlgorithm = ciphererAlgorithm;
+        this.provider = provider;
+        this.initialVectorDef = initialVectorDef;
     }
 
     @NotNull
     public static Cipherer<byte[], byte[]> newInstance(@Nullable InitialVectorDef initialVectorDef,
-                                           @NotNull String cipherAlgorithm,
-                                           @Nullable String provider) {
-        return new ByteArrayCipherer(initialVectorDef, cipherAlgorithm, provider);
+                                                       @NotNull String ciphererAlgorithm,
+                                                       @Nullable String provider) {
+        return new ByteArrayCipherer(ciphererAlgorithm, provider, initialVectorDef);
     }
 
     @Override
     @NotNull
     public byte[] encrypt(@NotNull SecretKey secret,
-                             @NotNull byte[] decrypted) throws CiphererException {
+                          @NotNull byte[] decrypted) throws CiphererException {
         try {
-            final byte[] ivHex;
+            final byte[] ivBytes;
 
             if (initialVectorDef != null) {
-                ivHex = Bytes.generateRandomBytes(initialVectorDef.getRandomAlgorithm(), initialVectorDef.getLength());
+                final byte[] predefinedIvBytes = initialVectorDef.getBytes();
+                if ( predefinedIvBytes != null ) {
+                    ivBytes = predefinedIvBytes;
+                } else {
+                    ivBytes = Bytes.generateRandomBytes(initialVectorDef.getRandomAlgorithm(), initialVectorDef.getLength());
+                }
             } else {
-                ivHex = new byte[]{};
+                ivBytes = new byte[]{};
             }
 
-            return encrypt(secret, decrypted, ivHex);
+            return encrypt(secret, decrypted, ivBytes);
         } catch (Exception e) {
             throw new CiphererException("Unable to encrypt due to some errors!", e);
         }
@@ -97,21 +91,21 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
 
     @NotNull
     public byte[] encrypt(@NotNull SecretKey secret,
-                             @NotNull byte[] decrypted,
-                             @NotNull byte[] ivHex) throws CiphererException {
+                          @NotNull byte[] decrypted,
+                          @NotNull byte[] ivBytes) throws CiphererException {
         try {
             final IvParameterSpec ivParameterSpec;
             if (initialVectorDef != null) {
-                ivParameterSpec = new IvParameterSpec(ivHex);
+                ivParameterSpec = new IvParameterSpec(ivBytes);
             } else {
                 ivParameterSpec = null;
             }
 
             final Cipher encryptionCipher;
             if (provider != null) {
-                encryptionCipher = Cipher.getInstance(cipherAlgorithm, provider);
+                encryptionCipher = Cipher.getInstance(ciphererAlgorithm, provider);
             } else {
-                encryptionCipher = Cipher.getInstance(cipherAlgorithm);
+                encryptionCipher = Cipher.getInstance(ciphererAlgorithm);
             }
 
             if (ivParameterSpec != null) {
@@ -122,10 +116,10 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
 
             final byte[] encrypted = encryptionCipher.doFinal(decrypted);
 
-            if ( ivHex.length == 0 ) {
+            if (ivBytes.length == 0) {
                 return encrypted;
             } else {
-                return Collections.concat(ivHex, encrypted);
+                return Collections.concat(ivBytes, encrypted);
             }
         } catch (Exception e) {
             throw new CiphererException("Unable to encrypt due to some errors!", e);
@@ -136,7 +130,7 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
     @Override
     public byte[] decrypt(@NotNull SecretKey secret, @NotNull byte[] encrypted) throws CiphererException {
         try {
-            final byte[] ivBytes = getIvHexFromEncrypted(encrypted);
+            final byte[] ivBytes = getIvBytesFromEncrypted(encrypted);
 
             final byte[] encryptedBytes;
             if (initialVectorDef != null) {
@@ -147,9 +141,9 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
 
             final Cipher decryptionCipher;
             if (provider != null) {
-                decryptionCipher = Cipher.getInstance(cipherAlgorithm, provider);
+                decryptionCipher = Cipher.getInstance(ciphererAlgorithm, provider);
             } else {
-                decryptionCipher = Cipher.getInstance(cipherAlgorithm);
+                decryptionCipher = Cipher.getInstance(ciphererAlgorithm);
             }
 
             if (ivBytes.length > 0) {
@@ -166,7 +160,7 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
     }
 
     @NotNull
-    public byte[] getIvHexFromEncrypted(@NotNull byte[] encrypted) throws CiphererException {
+    public byte[] getIvBytesFromEncrypted(@NotNull byte[] encrypted) throws CiphererException {
         try {
             if (initialVectorDef != null) {
                 return Arrays.copyOfRange(encrypted, 0, initialVectorDef.getLength());
