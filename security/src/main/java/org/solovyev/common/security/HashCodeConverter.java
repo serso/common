@@ -13,26 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * ---------------------------------------------------------------------
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Contact details
  *
  * Email: se.solovyev@gmail.com
- * Site:  http://se.solovyev.org
+ * Site:  http://se.solovyev.org/java/jcl
  */
 
 package org.solovyev.common.security;
 
 import org.jetbrains.annotations.NotNull;
-
-import javax.crypto.SecretKey;
+import org.solovyev.common.Bytes;
+import org.solovyev.common.Converter;
 
 /**
  * User: serso
- * Date: 8/20/12
- * Time: 8:08 PM
+ * Date: 2/10/13
+ * Time: 1:45 PM
  */
-public interface SecretKeyProvider {
+class HashCodeConverter<T> implements Converter<T, byte[]> {
 
     @NotNull
-    SecretKey getSecretKey(@NotNull String secret, @NotNull byte[] salt) throws CiphererException;
+    private static final Converter<?, byte[]> instance = new HashCodeConverter<Object>();
+
+    private HashCodeConverter() {
+    }
+
+    @NotNull
+    static <T> Converter<T, byte[]> getInstance() {
+        return (Converter<T, byte[]>) instance;
+    }
+
+    @NotNull
+    @Override
+    public byte[] convert(@NotNull T t) {
+        return Bytes.intToBytes(t.hashCode());
+    }
 }

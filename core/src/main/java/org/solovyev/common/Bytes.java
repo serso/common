@@ -1,11 +1,14 @@
 package org.solovyev.common;
 
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.common.collections.Collections;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -16,6 +19,9 @@ import java.util.Random;
 public final class Bytes {
 
     private final static String HEX = "0123456789ABCDEF";
+
+    // random variable: must be synchronized in usage
+    private static final Random RANDOM = new Random(new Date().getTime());
 
     private Bytes() {
         throw new AssertionError();
@@ -65,12 +71,30 @@ public final class Bytes {
         return result;
     }
 
-    public static byte[] generateRandomBytes(@NotNull String randomAlgorithm, int length) throws NoSuchAlgorithmException, NoSuchProviderException {
+    public static byte[] generateRandomBytes(int length) throws NoSuchAlgorithmException, NoSuchProviderException {
+        assert length >= 0;
+
+        byte[] result = new byte[length];
+        synchronized (RANDOM) {
+            RANDOM.nextBytes(result);
+        }
+        return result;
+    }
+
+    public static byte[] generateSecureRandomBytes(@NotNull String randomAlgorithm, int length) throws NoSuchAlgorithmException, NoSuchProviderException {
         assert length >= 0;
 
         final Random random = SecureRandom.getInstance(randomAlgorithm);
         byte[] result = new byte[length];
         random.nextBytes(result);
         return result;
+    }
+
+    public static byte[] concat(byte[] first, byte[] second) {
+        return Collections.concat(first, second);
+    }
+
+    public static byte[] intToBytes(int value) {
+        return ByteBuffer.allocate(4).putInt(value).array();
     }
 }

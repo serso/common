@@ -49,10 +49,9 @@ class SaltGeneratorImpl implements SaltGenerator {
 
     @Override
     @NotNull
-    public String generateSalt() throws CiphererException {
+    public byte[] generateSalt() throws CiphererException {
         try {
-            byte[] salt = Bytes.generateRandomBytes(randomAlgorithm, saltLength);
-            return Bytes.toHex(salt);
+            return Bytes.generateSecureRandomBytes(randomAlgorithm, saltLength);
         } catch (Exception e) {
             throw new CiphererException("Unable to generate salt due to some errors!", e);
         }

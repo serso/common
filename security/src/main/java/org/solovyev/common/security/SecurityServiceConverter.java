@@ -30,35 +30,53 @@ import org.solovyev.common.Converter;
  * Date: 2/9/13
  * Time: 5:23 PM
  */
-public class SecurityServiceConverter<E, D> implements SecurityService<E, D> {
+public class SecurityServiceConverter<E, D, H> implements SecurityService<E, D, H> {
 
     @NotNull
-    private final SecurityService<byte[], byte[]> securityService;
+    private final SecurityService<byte[], byte[], byte[]> securityService;
 
     @NotNull
     private final Cipherer<E, D> cipherer;
 
-    private SecurityServiceConverter(@NotNull SecurityService<byte[], byte[]> securityService, @NotNull Cipherer<E, D> cipherer) {
+    @NotNull
+    private final HashProvider<D, H> hashProvider;
+
+    private SecurityServiceConverter(@NotNull SecurityService<byte[], byte[], byte[]> securityService,
+                                     @NotNull Cipherer<E, D> cipherer,
+                                     @NotNull HashProvider<D, H> hashProvider) {
         this.securityService = securityService;
         this.cipherer = cipherer;
+        this.hashProvider = hashProvider;
     }
 
     @NotNull
-    public static <T> SecurityServiceConverter<T, T> wrap(@NotNull SecurityService<byte[], byte[]> securityService,
-                                                   @NotNull Converter<T, byte[]> decoder,
-                                                   @NotNull Converter<byte[], T> encoder) {
+    public static <T> SecurityService<T, T, T> wrap(@NotNull SecurityService<byte[], byte[], byte[]> securityService,
+                                                    @NotNull Converter<T, byte[]> decoder,
+                                                    @NotNull Converter<byte[], T> encoder) {
         final Cipherer<T, T> cipherer = TypedCipherer.newInstance(securityService.getCipherer(), decoder, encoder);
-        return new SecurityServiceConverter<T, T>(securityService, cipherer);
+        final HashProvider<T, T> hashProvider = TypedHashProvider.newInstance(securityService.getHashProvider(), decoder, encoder);
+        return new SecurityServiceConverter<T, T, T>(securityService, cipherer, hashProvider);
     }
 
     @NotNull
-    public static <E, D> SecurityServiceConverter<E, D> wrap(@NotNull SecurityService<byte[], byte[]> securityService,
-                                                              @NotNull Converter<D, byte[]> decryptedDecoder,
-                                                              @NotNull Converter<byte[], D> decryptedEncoder,
-                                                              @NotNull Converter<E, byte[]> encryptedDecoder,
-                                                              @NotNull Converter<byte[], E> encryptedEncoder) {
+    public static <E, D> SecurityServiceConverter<E, D, E> wrap(@NotNull SecurityService<byte[], byte[], byte[]> securityService,
+                                                                @NotNull Converter<D, byte[]> decryptedDecoder,
+                                                                @NotNull Converter<byte[], D> decryptedEncoder,
+                                                                @NotNull Converter<E, byte[]> encryptedDecoder,
+                                                                @NotNull Converter<byte[], E> encryptedEncoder) {
+        return wrap(securityService, decryptedDecoder, decryptedEncoder, encryptedDecoder, encryptedEncoder, encryptedEncoder);
+    }
+
+    @NotNull
+    public static <E, D, H> SecurityServiceConverter<E, D, H> wrap(@NotNull SecurityService<byte[], byte[], byte[]> securityService,
+                                                                   @NotNull Converter<D, byte[]> decryptedDecoder,
+                                                                   @NotNull Converter<byte[], D> decryptedEncoder,
+                                                                   @NotNull Converter<E, byte[]> encryptedDecoder,
+                                                                   @NotNull Converter<byte[], E> encryptedEncoder,
+                                                                   @NotNull Converter<byte[], H> hashConverter) {
         final Cipherer<E, D> cipherer = TypedCipherer.newInstance(securityService.getCipherer(), decryptedDecoder, decryptedEncoder, encryptedDecoder, encryptedEncoder);
-        return new SecurityServiceConverter<E, D>(securityService, cipherer);
+        final HashProvider<D, H> hashProvider = TypedHashProvider.newInstance(securityService.getHashProvider(), decryptedDecoder, hashConverter);
+        return new SecurityServiceConverter<E, D, H>(securityService, cipherer, hashProvider);
     }
 
     @NotNull
@@ -75,8 +93,8 @@ public class SecurityServiceConverter<E, D> implements SecurityService<E, D> {
 
     @NotNull
     @Override
-    public HashProvider getHashProvider() {
-        return securityService.getHashProvider();
+    public HashProvider<D, H> getHashProvider() {
+        return hashProvider;
     }
 
     @NotNull

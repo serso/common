@@ -22,7 +22,6 @@
 
 package org.solovyev.common.security;
 
-import org.apache.commons.codec.Charsets;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.Bytes;
 
@@ -33,7 +32,7 @@ import java.security.MessageDigest;
  * Date: 8/20/12
  * Time: 8:17 PM
  */
-class MessageDigestHashProvider implements HashProvider {
+class ByteArrayHashProvider implements HashProvider<byte[], byte[]> {
 
     @NotNull
     private final String hashAlgorithm;
@@ -41,23 +40,22 @@ class MessageDigestHashProvider implements HashProvider {
     @NotNull
     private final String provider;
 
-    private MessageDigestHashProvider(@NotNull String hashAlgorithm, @NotNull String provider) {
+    private ByteArrayHashProvider(@NotNull String hashAlgorithm, @NotNull String provider) {
         this.hashAlgorithm = hashAlgorithm;
         this.provider = provider;
     }
 
     @NotNull
-    static HashProvider newInstance(@NotNull String hashAlgorithm, @NotNull String provider) {
-        return new MessageDigestHashProvider(hashAlgorithm, provider);
+    static HashProvider<byte[], byte[]> newInstance(@NotNull String hashAlgorithm, @NotNull String provider) {
+        return new ByteArrayHashProvider(hashAlgorithm, provider);
     }
 
     @Override
     @NotNull
-    public String getHash(@NotNull String text, @NotNull String salt) throws CiphererException {
+    public byte[] getHash(@NotNull byte[] object, @NotNull byte[] salt) throws CiphererException {
         try {
-            final String input = text + salt;
             final MessageDigest md = MessageDigest.getInstance(hashAlgorithm, provider);
-            return Bytes.toHex(md.digest(input.getBytes(Charsets.UTF_8)));
+            return md.digest(Bytes.concat(object, salt));
         } catch (Exception e) {
             throw new CiphererException("Unable to get hash due to some errors!", e);
         }

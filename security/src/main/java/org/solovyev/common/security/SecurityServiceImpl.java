@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 8/20/12
  * Time: 8:24 PM
  */
-class SecurityServiceImpl<E, D> implements SecurityService<E, D> {
+class SecurityServiceImpl<E, D, H> implements SecurityService<E, D, H> {
 
     @NotNull
     private Cipherer<E, D> cipherer;
@@ -41,12 +41,12 @@ class SecurityServiceImpl<E, D> implements SecurityService<E, D> {
     private SaltGenerator saltGenerator;
 
     @NotNull
-    private HashProvider hashProvider;
+    private HashProvider<D, H> hashProvider;
 
     private SecurityServiceImpl(@NotNull Cipherer<E, D> cipherer,
                                 @NotNull SecretKeyProvider secretKeyProvider,
                                 @NotNull SaltGenerator saltGenerator,
-                                @NotNull HashProvider hashProvider) {
+                                @NotNull HashProvider<D, H> hashProvider) {
         this.cipherer = cipherer;
         this.secretKeyProvider = secretKeyProvider;
         this.saltGenerator = saltGenerator;
@@ -54,11 +54,11 @@ class SecurityServiceImpl<E, D> implements SecurityService<E, D> {
     }
 
     @NotNull
-    static <E, D> SecurityService<E, D> newInstance(@NotNull Cipherer<E, D> cipherer,
-                                                           @NotNull SecretKeyProvider secretKeyProvider,
-                                                           @NotNull SaltGenerator saltGenerator,
-                                                           @NotNull HashProvider hashProvider) {
-        return new SecurityServiceImpl<E, D>(cipherer, secretKeyProvider, saltGenerator, hashProvider);
+    static <E, D, H> SecurityService<E, D, H> newInstance(@NotNull Cipherer<E, D> cipherer,
+                                                          @NotNull SecretKeyProvider secretKeyProvider,
+                                                          @NotNull SaltGenerator saltGenerator,
+                                                          @NotNull HashProvider<D, H> hashProvider) {
+        return new SecurityServiceImpl<E, D, H>(cipherer, secretKeyProvider, saltGenerator, hashProvider);
     }
 
 
@@ -76,7 +76,7 @@ class SecurityServiceImpl<E, D> implements SecurityService<E, D> {
 
     @NotNull
     @Override
-    public HashProvider getHashProvider() {
+    public HashProvider<D, H> getHashProvider() {
         return hashProvider;
     }
 

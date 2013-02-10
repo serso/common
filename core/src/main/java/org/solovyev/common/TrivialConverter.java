@@ -13,26 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * ---------------------------------------------------------------------
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Contact details
  *
  * Email: se.solovyev@gmail.com
- * Site:  http://se.solovyev.org
+ * Site:  http://se.solovyev.org/java/jcl
  */
 
-package org.solovyev.common.security;
+package org.solovyev.common;
 
 import org.jetbrains.annotations.NotNull;
 
-import javax.crypto.SecretKey;
-
 /**
  * User: serso
- * Date: 8/20/12
- * Time: 8:08 PM
+ * Date: 2/10/13
+ * Time: 1:38 PM
  */
-public interface SecretKeyProvider {
+public class TrivialConverter<T> implements Converter<T, T> {
+
+    private static final Converter<?, ?> instance = new TrivialConverter();
+
+    private TrivialConverter() {
+    }
 
     @NotNull
-    SecretKey getSecretKey(@NotNull String secret, @NotNull byte[] salt) throws CiphererException;
+    public static <T> Converter<T, T> getInstance() {
+        return (Converter<T, T>) instance;
+    }
+
+    @NotNull
+    @Override
+    public T convert(@NotNull T t) {
+        return t;
+    }
 }

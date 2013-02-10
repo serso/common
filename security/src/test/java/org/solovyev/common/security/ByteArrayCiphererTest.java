@@ -3,6 +3,7 @@ package org.solovyev.common.security;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.solovyev.common.ByteArrayEqualizer;
+import org.solovyev.common.Bytes;
 import org.solovyev.common.Objects;
 import org.solovyev.common.text.Strings;
 
@@ -24,8 +25,8 @@ public class ByteArrayCiphererTest {
         final Random random = new Random(new Date().getTime());
 
         for ( int i = 0; i < 1000; i++ ) {
-            final SecretKeyProvider secretKeyProvider = AesSha1HashSecretKeyProvider.newInstance();
-            final SecretKey sk = secretKeyProvider.getSecretKey(Strings.generateRandomString(10), Strings.generateRandomString(10));
+            final SecretKeyProvider secretKeyProvider = Sha1HashSecretKeyProvider.newAesInstance();
+            final SecretKey sk = secretKeyProvider.getSecretKey(Strings.generateRandomString(10), Bytes.generateRandomBytes(10));
 
             final Cipherer<byte[], byte[]> cipherer = ByteArrayCipherer.newInstance(null, "AES/ECB/PKCS5Padding", "BC");
             final byte[] expected = Strings.generateRandomString(100).getBytes("UTF-8");
@@ -36,8 +37,8 @@ public class ByteArrayCiphererTest {
             Assert.assertTrue(Objects.areEqual(expected, decrypted, ByteArrayEqualizer.getInstance()));
         }
 
-        final SecretKeyProvider secretKeyProvider = AesSha1HashSecretKeyProvider.newInstance();
-        final SecretKey sk = secretKeyProvider.getSecretKey("1234", "4321");
+        final SecretKeyProvider secretKeyProvider = Sha1HashSecretKeyProvider.newAesInstance();
+        final SecretKey sk = secretKeyProvider.getSecretKey("1234", new byte[]{78, 34, -1, 2});
 
         final Cipherer<byte[], byte[]> cipherer = ByteArrayCipherer.newInstance(null, "AES/ECB/PKCS5Padding", "BC");
         final byte[] expected = new byte[]{1, 2, 3, 4};

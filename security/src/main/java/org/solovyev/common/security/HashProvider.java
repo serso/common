@@ -29,8 +29,8 @@ import org.jetbrains.annotations.NotNull;
  * Date: 8/20/12
  * Time: 8:17 PM
  */
-public interface HashProvider {
+public interface HashProvider<T, H> {
 
     @NotNull
-    String getHash(@NotNull String text, @NotNull String salt) throws CiphererException;
+    H getHash(@NotNull T object, @NotNull byte[] salt) throws CiphererException;
 }

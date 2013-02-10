@@ -23,22 +23,25 @@
 package org.solovyev.common.security;
 
 import junit.framework.Assert;
+import org.solovyev.common.Bytes;
 import org.solovyev.common.text.Strings;
 
 import javax.crypto.SecretKey;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.Date;
 import java.util.Random;
 
 public abstract class AbstractStringCiphererTest {
 
-    protected static <E> void doRandomCiphererTest(SecretKeyProvider secretKeyProvider, Cipherer<E, String> cipherer) throws CiphererException {
+    protected static <E> void doRandomCiphererTest(SecretKeyProvider secretKeyProvider, Cipherer<E, String> cipherer) throws CiphererException, NoSuchProviderException, NoSuchAlgorithmException {
         java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
         final Random r = new Random(new Date().getTime());
         for ( int i = 0; i < 1000; i++ ) {
 
             final String expected = Strings.generateRandomString(r.nextInt(500) + 500);
 
-            final SecretKey sk = secretKeyProvider.getSecretKey(Strings.generateRandomString(10), Strings.generateRandomString(10));
+            final SecretKey sk = secretKeyProvider.getSecretKey(Strings.generateRandomString(10), Bytes.generateRandomBytes(10));
 
             final E encrypted = cipherer.encrypt(sk, expected);
             final String decrypted = cipherer.decrypt(sk, encrypted);

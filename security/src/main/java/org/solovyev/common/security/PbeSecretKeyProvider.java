@@ -23,14 +23,11 @@
 package org.solovyev.common.security;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.Bytes;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.MessageDigest;
-import java.util.Arrays;
 
 /**
  * User: serso
@@ -80,17 +77,13 @@ class PbeSecretKeyProvider implements SecretKeyProvider {
 
     @Override
     @NotNull
-    public SecretKey getSecretKey(@NotNull String password, @NotNull String salt) throws CiphererException {
+    public SecretKey getSecretKey(@NotNull String secret, @NotNull byte[] salt) throws CiphererException {
         try {
-            byte[] saltBytes = Bytes.hexToBytes(salt);
-            if ( saltBytes.length != saltLength ) {
-                // we need to prolong/truncate our byte array
-                final MessageDigest sha = MessageDigest.getInstance("SHA-1");
-                saltBytes = sha.digest(saltBytes);
-                saltBytes = Arrays.copyOf(saltBytes, saltLength);
+            if ( salt.length != saltLength ) {
+                throw new IllegalArgumentException("Salt size is not valid -  expected: " + saltLength + ", actual: " + salt.length);
             }
 
-            final PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), saltBytes, iterationCount, keyLength);
+            final PBEKeySpec pbeKeySpec = new PBEKeySpec(secret.toCharArray(), salt, iterationCount, keyLength);
             final SecretKeyFactory factory = SecretKeyFactory.getInstance(algorithm, provider);
 
             final SecretKey tmp = factory.generateSecret(pbeKeySpec);

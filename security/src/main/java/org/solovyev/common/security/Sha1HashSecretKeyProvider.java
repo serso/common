@@ -24,6 +24,7 @@ package org.solovyev.common.security;
 
 import org.apache.commons.codec.Charsets;
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.common.Bytes;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -31,30 +32,50 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class AesSha1HashSecretKeyProvider implements SecretKeyProvider {
+public class Sha1HashSecretKeyProvider implements SecretKeyProvider {
 
     @NotNull
-    private static final SecretKeyProvider instance = new AesSha1HashSecretKeyProvider();
+    private static final SecretKeyProvider aes = newInstance(Security.CIPHERER_ALGORITHM_AES, 16);
 
-    private AesSha1HashSecretKeyProvider() {
+    @NotNull
+    private static final SecretKeyProvider des = newInstance(Security.CIPHERER_ALGORITHM_DES, 16);
+
+    private final int saltLength;
+
+    @NotNull
+    private final String ciphererAlgorithm;
+
+    private Sha1HashSecretKeyProvider(@NotNull String ciphererAlgorithm, int saltLength) {
+        this.ciphererAlgorithm = ciphererAlgorithm;
+        this.saltLength = saltLength;
     }
 
     @NotNull
-    public static SecretKeyProvider newInstance() {
-        return instance;
+    public static SecretKeyProvider newAesInstance() {
+        return aes;
+    }
+
+    @NotNull
+    public static SecretKeyProvider newDesInstance() {
+        return des;
+    }
+
+    @NotNull
+    public static Sha1HashSecretKeyProvider newInstance(@NotNull String ciphererAlgorithm, int saltLength) {
+        return new Sha1HashSecretKeyProvider(ciphererAlgorithm, saltLength);
     }
 
     @NotNull
     @Override
-    public SecretKey getSecretKey(@NotNull String password, @NotNull String salt) throws CiphererException {
-        final String secretKey = password + salt;
+    public SecretKey getSecretKey(@NotNull String secret, @NotNull byte[] salt) throws CiphererException {
+        final String secretKey = secret + Bytes.toHex(salt);
 
         try {
             final MessageDigest sha = MessageDigest.getInstance("SHA-1");
             byte[] secretKeyHash = sha.digest(secretKey.getBytes(Charsets.UTF_8));
-            secretKeyHash = Arrays.copyOf(secretKeyHash, 16); // use only first 128 bit
+            secretKeyHash = Arrays.copyOf(secretKeyHash, saltLength);
 
-            return new SecretKeySpec(secretKeyHash, Security.CIPHERER_ALGORITHM_AES);
+            return new SecretKeySpec(secretKeyHash, ciphererAlgorithm);
         } catch (NoSuchAlgorithmException e) {
             throw new CiphererException(e);
         }
