@@ -87,6 +87,6 @@ public final class NumberIntervalMapper<T extends Number & Comparable<T>> extend
             rightLimit = IntervalLimitImpl.newInstance(right, true);
         }
 
-        return new IntervalImpl<T>(leftLimit, rightLimit);
+        return IntervalImpl.newInstance(leftLimit, rightLimit);
     }
 }

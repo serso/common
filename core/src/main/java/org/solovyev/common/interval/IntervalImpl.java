@@ -24,6 +24,7 @@ package org.solovyev.common.interval;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.JCloneable;
 import org.solovyev.common.JObject;
 
 /**
@@ -31,9 +32,7 @@ import org.solovyev.common.JObject;
  * Date: 9/19/11
  * Time: 4:51 PM
  */
-public class IntervalImpl<T extends Comparable<T>>
-        extends JObject
-        implements Interval<T>, Cloneable {
+public class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<T>, JCloneable<Interval<T>> {
 
     @NotNull
     protected IntervalLimit<T> left;
@@ -45,8 +44,8 @@ public class IntervalImpl<T extends Comparable<T>>
     protected IntervalImpl() {
     }
 
-    public IntervalImpl(@NotNull IntervalLimit<T> left,
-                        @NotNull IntervalLimit<T> right) {
+    private IntervalImpl(@NotNull IntervalLimit<T> left,
+                         @NotNull IntervalLimit<T> right) {
         int c = left.compareTo(right);
         if (c > 0) {
             throw new IllegalArgumentException("Left limit must <= than right!");
@@ -62,12 +61,18 @@ public class IntervalImpl<T extends Comparable<T>>
 
     @NotNull
     public static <T extends Comparable<T>> Interval<T> newPoint(@NotNull T point) {
-        return new IntervalImpl<T>(IntervalLimitImpl.newInstance(point, true), IntervalLimitImpl.newInstance(point, true));
+        return newInstance(IntervalLimitImpl.newInstance(point, true), IntervalLimitImpl.newInstance(point, true));
     }
 
     @NotNull
     public static <T extends Comparable<T>> Interval<T> newClosed(@NotNull T left, @NotNull T right) {
-        return new IntervalImpl<T>(IntervalLimitImpl.newInstance(left, true), IntervalLimitImpl.newInstance(right, true));
+        return newInstance(IntervalLimitImpl.newInstance(left, true), IntervalLimitImpl.newInstance(right, true));
+    }
+
+    @NotNull
+    public static <T extends Comparable<T>> IntervalImpl<T> newInstance(@NotNull IntervalLimit<T> left,
+                                                                        @NotNull IntervalLimit<T> right) {
+        return new IntervalImpl<T>(left, right);
     }
 
     /**
@@ -109,7 +114,7 @@ public class IntervalImpl<T extends Comparable<T>>
 
     /**
      * @param that interval.
-     * @return true if interval inside interval, false otherwise
+     * @return true if that interval is inside this interval, false otherwise
      */
     @Override
     public boolean contains(@NotNull Interval<T> that) {
