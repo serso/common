@@ -88,4 +88,9 @@ public class TypedCipherer<E, D> implements Cipherer<E, D> {
         final byte[] decryptedBytes = byteCipherer.decrypt(secret, encryptedBytes);
         return decryptedEncoder.convert(decryptedBytes);
     }
+
+    @NotNull
+    public Cipherer<byte[], byte[]> getByteCipherer() {
+        return byteCipherer;
+    }
 }

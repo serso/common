@@ -27,7 +27,7 @@ package org.solovyev.common.security;
  * Date: 8/20/12
  * Time: 7:46 PM
  */
-public class CiphererException extends Exception {
+public class CiphererException extends RuntimeException {
 
     public CiphererException() {
     }
