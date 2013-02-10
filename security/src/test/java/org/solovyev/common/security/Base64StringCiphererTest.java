@@ -33,7 +33,7 @@ public class Base64StringCiphererTest extends AbstractStringCiphererTest {
         final SecretKeyProvider secretKeyProvider = Sha1HashSecretKeyProvider.newAesInstance();
         final SecretKey sk = secretKeyProvider.getSecretKey("1234", new byte[]{1, 2, 3, 4});
 
-        final Cipherer<String, String> cipherer = Security.newBase64StringCipherer(ByteArrayCipherer.newInstance(null, "AES/ECB/PKCS5Padding", "BC"));
+        final Cipherer<String, String> cipherer = Security.newBase64StringCipherer(ByteArrayCipherer.newNoIv("AES/ECB/PKCS5Padding", "BC"));
         final String expected = "test";
 
         doCipherTest(sk, cipherer, expected);
@@ -42,7 +42,7 @@ public class Base64StringCiphererTest extends AbstractStringCiphererTest {
     @Test
     public void testRandomEncryptDecrypt() throws Exception {
         final SecretKeyProvider secretKeyProvider = Sha1HashSecretKeyProvider.newAesInstance();
-        final Cipherer<String, String> cipherer = Security.newBase64StringCipherer(ByteArrayCipherer.newInstance(null, "AES/ECB/PKCS5Padding", "BC"));
+        final Cipherer<String, String> cipherer = Security.newBase64StringCipherer(ByteArrayCipherer.newNoIv("AES/ECB/PKCS5Padding", "BC"));
 
         doRandomCiphererTest(secretKeyProvider, cipherer);
     }

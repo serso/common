@@ -39,8 +39,8 @@ import org.solovyev.common.text.hex.HexStringEncoder;
  */
 public class Security {
 
-    static final String CIPHERER_ALGORITHM_AES = "AES";
-    static final String CIPHERER_ALGORITHM_DES = "DES";
+    public static final String CIPHERER_ALGORITHM_AES = "AES";
+    public static final String CIPHERER_ALGORITHM_DES = "DES";
 
     protected Security() {
         throw new AssertionError();
@@ -49,8 +49,14 @@ public class Security {
     @NotNull
     public static Cipherer<byte[], byte[]> newCipherer(@NotNull String ciphererAlgorithm,
                                                        @Nullable String provider,
-                                                       @Nullable InitialVectorDef initialVectorDef) {
-        return ByteArrayCipherer.newInstance(initialVectorDef, ciphererAlgorithm, provider);
+                                                       @NotNull InitialVectorDef initialVectorDef) {
+        return ByteArrayCipherer.newInstance(ciphererAlgorithm, provider, initialVectorDef);
+    }
+
+    @NotNull
+    public static Cipherer<byte[], byte[]> newCiphererNoIv(@NotNull String ciphererAlgorithm,
+                                                           @Nullable String provider) {
+        return ByteArrayCipherer.newNoIv(ciphererAlgorithm, provider);
     }
 
     @NotNull
