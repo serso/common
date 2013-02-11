@@ -26,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.interval.IntervalLimit;
-import org.solovyev.common.interval.IntervalLimitImpl;
 import org.solovyev.common.interval.Intervals;
 
 /**
@@ -75,16 +74,16 @@ public final class NumberIntervalMapper<T extends Number & Comparable<T>> extend
     protected Interval<T> newInstance(@Nullable T left, @Nullable T right) {
         final IntervalLimit<T> leftLimit;
         if (left == null) {
-            leftLimit = IntervalLimitImpl.newLowest();
+            leftLimit = Intervals.newLowestLimit();
         } else {
-            leftLimit = IntervalLimitImpl.newInstance(left, true);
+            leftLimit = Intervals.newLimit(left, true);
         }
 
         final IntervalLimit<T> rightLimit;
         if (right == null) {
-            rightLimit = IntervalLimitImpl.newHighest();
+            rightLimit = Intervals.newHighestLimit();
         } else {
-            rightLimit = IntervalLimitImpl.newInstance(right, true);
+            rightLimit = Intervals.newLimit(right, true);
         }
 
         return Intervals.newInstance(leftLimit, rightLimit);

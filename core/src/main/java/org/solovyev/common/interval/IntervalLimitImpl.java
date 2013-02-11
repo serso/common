@@ -24,7 +24,6 @@ package org.solovyev.common.interval;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.JCloneable;
 import org.solovyev.common.JObject;
 import org.solovyev.common.Objects;
 
@@ -33,7 +32,7 @@ import org.solovyev.common.Objects;
  * Date: 8/9/12
  * Time: 12:14 PM
  */
-public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implements IntervalLimit<T> {
+class IntervalLimitImpl<T extends Comparable<T>> extends JObject implements IntervalLimit<T> {
 
     public static enum Type {
         lowest,
@@ -244,13 +243,7 @@ public class IntervalLimitImpl<T extends Comparable<T>> extends JObject implemen
     @NotNull
     @Override
     public IntervalLimitImpl<T> clone() {
-        final IntervalLimitImpl<T> clone = (IntervalLimitImpl<T>) super.clone();
-
-        if (this.value instanceof JCloneable) {
-            clone.value = (T) ((JCloneable) this.value).clone();
-        }
-
-        return clone;
+        return (IntervalLimitImpl<T>) super.clone();
     }
 
     @Override

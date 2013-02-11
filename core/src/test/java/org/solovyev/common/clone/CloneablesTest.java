@@ -32,9 +32,9 @@ public class CloneablesTest {
 
 	public void testCloneList() throws Exception {
 		final List<Interval<Integer>> intervals = new ArrayList<Interval<Integer>>();
-		intervals.add(Intervals.newClosed(10, 20));
-		intervals.add(Intervals.newClosed(-10, 20));
-		intervals.add(Intervals.newClosed(10, 520));
+		intervals.add(Intervals.newClosedInterval(10, 20));
+		intervals.add(Intervals.newClosedInterval(-10, 20));
+		intervals.add(Intervals.newClosedInterval(10, 520));
 
 		final List<Interval<Integer>> intervalsCopy = Cloneables.cloneList(intervals);
 	}

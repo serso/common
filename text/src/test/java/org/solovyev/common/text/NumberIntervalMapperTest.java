@@ -37,7 +37,7 @@ public class NumberIntervalMapperTest {
     public void testParse() throws Exception {
         final NumberIntervalMapper<Float> mapper = NumberIntervalMapper.of(Float.class);
 
-        Assert.assertEquals(Intervals.newClosed(1.2f, 12.2f), mapper.parseValue("1.2;12.2"));
+        Assert.assertEquals(Intervals.newClosedInterval(1.2f, 12.2f), mapper.parseValue("1.2;12.2"));
         Assert.assertEquals(Intervals.newPoint(0f), mapper.parseValue("0;0"));
     }
 }
