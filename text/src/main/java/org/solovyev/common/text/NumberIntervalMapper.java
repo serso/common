@@ -25,9 +25,9 @@ package org.solovyev.common.text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.interval.Interval;
-import org.solovyev.common.interval.IntervalImpl;
 import org.solovyev.common.interval.IntervalLimit;
 import org.solovyev.common.interval.IntervalLimitImpl;
+import org.solovyev.common.interval.Intervals;
 
 /**
  * User: serso
@@ -87,6 +87,6 @@ public final class NumberIntervalMapper<T extends Number & Comparable<T>> extend
             rightLimit = IntervalLimitImpl.newInstance(right, true);
         }
 
-        return IntervalImpl.newInstance(leftLimit, rightLimit);
+        return Intervals.newInstance(leftLimit, rightLimit);
     }
 }

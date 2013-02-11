@@ -34,8 +34,8 @@ public class IntervalImplTest {
 
     @Test
     public void testContains() throws Exception {
-        final Interval<Integer> interval1 = IntervalImpl.newInstance(IntervalLimitImpl.newInstance(10, true), IntervalLimitImpl.newInstance(20, true));
-        final Interval<Integer> interval2 = IntervalImpl.newInstance(IntervalLimitImpl.newInstance(12, true), IntervalLimitImpl.newInstance(18, true));
+        final Interval<Integer> interval1 = Intervals.newInstance(IntervalLimitImpl.newInstance(10, true), IntervalLimitImpl.newInstance(20, true));
+        final Interval<Integer> interval2 = Intervals.newInstance(IntervalLimitImpl.newInstance(12, true), IntervalLimitImpl.newInstance(18, true));
         Assert.assertTrue(interval1.contains(interval2));
     }
 }

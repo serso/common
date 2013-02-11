@@ -32,7 +32,7 @@ import org.solovyev.common.JObject;
  * Date: 9/19/11
  * Time: 4:51 PM
  */
-public class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<T>, JCloneable<Interval<T>> {
+class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<T>, JCloneable<Interval<T>> {
 
     @NotNull
     protected IntervalLimit<T> left;
@@ -45,7 +45,7 @@ public class IntervalImpl<T extends Comparable<T>> extends JObject implements In
     }
 
     private IntervalImpl(@NotNull IntervalLimit<T> left,
-                         @NotNull IntervalLimit<T> right) {
+						 @NotNull IntervalLimit<T> right) {
         int c = left.compareTo(right);
         if (c > 0) {
             throw new IllegalArgumentException("Left limit must <= than right!");
@@ -59,23 +59,13 @@ public class IntervalImpl<T extends Comparable<T>> extends JObject implements In
         this.right = right;
     }
 
-    @NotNull
-    public static <T extends Comparable<T>> Interval<T> newPoint(@NotNull T point) {
-        return newInstance(IntervalLimitImpl.newInstance(point, true), IntervalLimitImpl.newInstance(point, true));
-    }
+	@NotNull
+	static <T extends Comparable<T>> IntervalImpl<T> newInstance(@NotNull IntervalLimit<T> left,
+																 @NotNull IntervalLimit<T> right) {
+		return new IntervalImpl<T>(left, right);
+	}
 
-    @NotNull
-    public static <T extends Comparable<T>> Interval<T> newClosed(@NotNull T left, @NotNull T right) {
-        return newInstance(IntervalLimitImpl.newInstance(left, true), IntervalLimitImpl.newInstance(right, true));
-    }
-
-    @NotNull
-    public static <T extends Comparable<T>> IntervalImpl<T> newInstance(@NotNull IntervalLimit<T> left,
-                                                                        @NotNull IntervalLimit<T> right) {
-        return new IntervalImpl<T>(left, right);
-    }
-
-    /**
+	/**
      * @return left border
      */
     @Nullable
