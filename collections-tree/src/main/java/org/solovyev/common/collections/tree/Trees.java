@@ -45,8 +45,8 @@ public final class Trees {
     */
 
     @NotNull
-    public static <N> MutableTree<N> newTree(@Nullable N root) {
-        return TreeImpl.newInstance(root);
+    public static <N> MutableTree<N> newLinkedTree(@Nullable N root) {
+        return LinkedTree.newInstance(root);
     }
 
     @NotNull

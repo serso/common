@@ -36,19 +36,19 @@ import java.util.List;
  * Date: 4/1/12
  * Time: 12:22 PM
  */
-public class TreeImpl<T> implements MutableTree<T> {
+class LinkedTree<T> implements MutableTree<T> {
 
     @NotNull
     private MutableTreeNode<T> root;
 
-    private TreeImpl() {
+    private LinkedTree() {
     }
 
     @NotNull
-    public static <T> MutableTree<T> newInstance(@Nullable T root) {
-        final TreeImpl<T> result = new TreeImpl<T>();
+    static <T> MutableTree<T> newInstance(@Nullable T root) {
+        final LinkedTree<T> result = new LinkedTree<T>();
 
-        result.root = TreeNodeImpl.newInstance(root);
+        result.root = LinkedTreeNode.newInstance(root);
 
         return result;
     }

@@ -47,12 +47,12 @@ public class DepthTreeIteratorTest {
                 " 11\n" +
                 "  12\n" +
                 "   13\n" +
-                "    14\n", TreeImplTest.createMockTree().toString());
+                "    14\n", LinkedTreeTest.createMockTree().toString());
     }
 
     @Test
     public void testHasNext() throws Exception {
-        TreeImplTest.createMockTree();
+        LinkedTreeTest.createMockTree();
     }
 
     @Test

@@ -33,7 +33,7 @@ import java.util.*;
  * Date: 4/1/12
  * Time: 12:24 PM
  */
-public class TreeNodeImpl<T> implements MutableTreeNode<T> {
+class LinkedTreeNode<T> implements MutableTreeNode<T> {
 
     @Nullable
     private T data;
@@ -44,12 +44,12 @@ public class TreeNodeImpl<T> implements MutableTreeNode<T> {
     @NotNull
     private Collection<MutableTreeNode<T>> children = new ArrayList<MutableTreeNode<T>>();
 
-    private TreeNodeImpl() {
+    private LinkedTreeNode() {
     }
 
     @NotNull
-    public static <T> TreeNodeImpl<T> newInstance(@Nullable T data) {
-        final TreeNodeImpl<T> result = new TreeNodeImpl<T>();
+    static <T> LinkedTreeNode<T> newInstance(@Nullable T data) {
+        final LinkedTreeNode<T> result = new LinkedTreeNode<T>();
 
         result.data = data;
 
@@ -100,7 +100,7 @@ public class TreeNodeImpl<T> implements MutableTreeNode<T> {
     @NotNull
     @Override
     public MutableTreeNode<T> addChild(@NotNull T data) {
-        final TreeNodeImpl<T> node = TreeNodeImpl.newInstance(data);
+        final LinkedTreeNode<T> node = LinkedTreeNode.newInstance(data);
         addChild(node);
         return node;
     }

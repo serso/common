@@ -34,7 +34,7 @@ import org.solovyev.common.JPredicate;
  * Date: 4/1/12
  * Time: 11:08 PM
  */
-public class TreeImplTest {
+public class LinkedTreeTest {
     /*
 
 1
@@ -54,7 +54,7 @@ public class TreeImplTest {
      */
     @NotNull
     static MutableTree<Integer> createMockTree() {
-        final MutableTree<Integer> result = Trees.newTree(1);
+        final MutableTree<Integer> result = Trees.newLinkedTree(1);
 
         MutableTreeNode<Integer> root = result.getRoot();
         MutableTreeNode<Integer> child2 = root.addChild(2);
