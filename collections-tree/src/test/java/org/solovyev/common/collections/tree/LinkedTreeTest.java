@@ -116,4 +116,15 @@ public class LinkedTreeTest {
             }
         }
     }
+
+	@Test
+	public void testDepthTreeIterator() throws Exception {
+		MutableTree<Integer> tree = createMockTree();
+
+		for ( TreeIterator<Integer> it = Trees.newDepthTreeIterator(tree); it.hasNext(); ) {
+			final TreeNode<Integer> node  = it.next();
+			Assert.assertEquals(node.getDepth(), it.getDepth());
+			System.out.println(it.getDepth() + " ->" + node.getValue());
+		}
+	}
 }

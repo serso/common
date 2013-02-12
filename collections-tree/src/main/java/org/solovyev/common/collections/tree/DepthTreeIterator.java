@@ -41,7 +41,7 @@ import java.util.Iterator;
  *
  * @param <T> type of data in node
  */
-public final class DepthTreeIterator<T> implements TreeIterator<T> {
+final class DepthTreeIterator<T> implements TreeIterator<T> {
 
     @NotNull
     private Iterator<? extends TreeNode<T>> iterator;
@@ -54,11 +54,15 @@ public final class DepthTreeIterator<T> implements TreeIterator<T> {
     @Nullable
     private TreeNode<T> lastSelfResult;
 
-    public DepthTreeIterator(@NotNull TreeNode<T> root) {
+    DepthTreeIterator(@NotNull TreeNode<T> root) {
         this(new ArrayList<TreeNode<T>>(Arrays.asList(root)));
     }
 
-    public DepthTreeIterator(@NotNull Collection<? extends TreeNode<T>> nodes) {
+	DepthTreeIterator(@NotNull Tree<T> tree) {
+		this(tree.getRoot());
+	}
+
+    DepthTreeIterator(@NotNull Collection<? extends TreeNode<T>> nodes) {
         this(nodes, 0);
     }
 
