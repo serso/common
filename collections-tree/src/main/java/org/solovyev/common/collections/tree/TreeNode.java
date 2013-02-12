@@ -61,7 +61,7 @@ public interface TreeNode<T> extends Iterable<TreeNode<T>> {
      * @return data stored with the object (may be null is no actual data is stored)
      */
     @Nullable
-    T getData();
+    T getValue();
 
     // NOTE: this method iterates through ALL children (children of children etc)
 

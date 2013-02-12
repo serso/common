@@ -43,7 +43,7 @@ public interface MutableTreeNode<T> extends TreeNode<T> {
     @Nullable
     MutableTreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder);
 
-    void setData(@Nullable T data);
+    void setValue(@Nullable T value);
 
     @NotNull
     Collection<? extends MutableTreeNode<T>> getOwnChildren();
@@ -60,14 +60,14 @@ public interface MutableTreeNode<T> extends TreeNode<T> {
     void addChild(@NotNull MutableTreeNode<T> node);
 
     /**
-     * @param data data to be added in the node
+     * @param value data to be added in the node
      * @return just added tree node
      */
     @NotNull
-    MutableTreeNode<T> addChild(@NotNull T data);
+    MutableTreeNode<T> addChild(@NotNull T value);
 
     @NotNull
-    MutableTreeNode<T>  addChildIfNotExists(@NotNull T data);
+    MutableTreeNode<T>  addChildIfNotExists(@NotNull T value);
 
     /**
      * Method removes from OWN children elements which are applied by predicate

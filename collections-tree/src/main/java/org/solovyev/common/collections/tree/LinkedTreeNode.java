@@ -38,7 +38,7 @@ import java.util.Iterator;
 class LinkedTreeNode<T> implements MutableTreeNode<T> {
 
     @Nullable
-    private T data;
+    private T value;
 
     @Nullable
     private TreeNode<T> parent;
@@ -50,10 +50,10 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
     }
 
     @NotNull
-    static <T> LinkedTreeNode<T> newInstance(@Nullable T data) {
+    static <T> LinkedTreeNode<T> newInstance(@Nullable T value) {
         final LinkedTreeNode<T> result = new LinkedTreeNode<T>();
 
-        result.data = data;
+        result.value = value;
 
         return result;
     }
@@ -65,8 +65,8 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
     }
 
     @Override
-    public void setData(@Nullable T data) {
-        this.data = data;
+    public void setValue(@Nullable T value) {
+        this.value = value;
     }
 
     @NotNull
@@ -101,24 +101,24 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
 
     @NotNull
     @Override
-    public MutableTreeNode<T> addChild(@NotNull T data) {
-        final LinkedTreeNode<T> node = LinkedTreeNode.newInstance(data);
+    public MutableTreeNode<T> addChild(@NotNull T value) {
+        final LinkedTreeNode<T> node = LinkedTreeNode.newInstance(value);
         addChild(node);
         return node;
     }
 
     @NotNull
     @Override
-    public MutableTreeNode<T> addChildIfNotExists(@NotNull final T data) {
+    public MutableTreeNode<T> addChildIfNotExists(@NotNull final T value) {
         MutableTreeNode<T> result = this.findOwnChild(new JPredicate<TreeNode<T>>() {
             @Override
             public boolean apply(@Nullable TreeNode<T> input) {
-                return input != null && data.equals(input.getData());
+                return input != null && value.equals(input.getValue());
             }
         });
 
         if ( result == null ) {
-            result = this.addChild(data);
+            result = this.addChild(value);
         }
 
         return result;
@@ -136,8 +136,8 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
 
     @Nullable
     @Override
-    public T getData() {
-        return this.data;
+    public T getValue() {
+        return this.value;
     }
 
     @NotNull
@@ -189,7 +189,7 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
     @Override
     public String toString() {
         return "SimpleTreeNode{" +
-                "data=" + data +
+                "value=" + value +
                 ", number of own children=" + children.size() +
                 '}';
     }

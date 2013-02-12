@@ -83,7 +83,7 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
         return treeNode.findOwnChild(finder);
     }
 
-    public void setData(@Nullable T data) {
+    public void setValue(@Nullable T value) {
         throw new UnsupportedOperationException();
     }
 
@@ -110,12 +110,12 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
     }
 
     @NotNull
-    public MutableTreeNode<T> addChild(@NotNull T data) {
+    public MutableTreeNode<T> addChild(@NotNull T value) {
         throw new UnsupportedOperationException();
     }
 
     @NotNull
-    public MutableTreeNode<T> addChildIfNotExists(@NotNull T data) {
+    public MutableTreeNode<T> addChildIfNotExists(@NotNull T value) {
         throw new UnsupportedOperationException();
     }
 
@@ -133,8 +133,8 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
 
     @Override
     @Nullable
-    public T getData() {
-        return treeNode.getData();
+    public T getValue() {
+        return treeNode.getValue();
     }
 
     @Override
@@ -213,7 +213,7 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
         }
 
         @Override
-        public void setData(@Nullable T data) {
+        public void setValue(@Nullable T value) {
             throw new AssertionError("Should never happen!");
         }
 
@@ -231,8 +231,8 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
 
         @Override
         @Nullable
-        public T getData() {
-            return treeNode.getData();
+        public T getValue() {
+            return treeNode.getValue();
         }
 
         @Override
@@ -260,13 +260,13 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
 
         @NotNull
         @Override
-        public MutableTreeNode<T> addChild(@NotNull T data) {
+        public MutableTreeNode<T> addChild(@NotNull T value) {
             throw new AssertionError("Should never happen!");
         }
 
         @NotNull
         @Override
-        public MutableTreeNode<T> addChildIfNotExists(@NotNull T data) {
+        public MutableTreeNode<T> addChildIfNotExists(@NotNull T value) {
             throw new AssertionError("Should never happen!");
         }
 

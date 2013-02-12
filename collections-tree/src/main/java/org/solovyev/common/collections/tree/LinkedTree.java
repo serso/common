@@ -104,7 +104,7 @@ class LinkedTree<T> implements MutableTree<T> {
         for ( DepthTreeIterator<T> it = iterator(); it.hasNext(); ) {
             final TreeNode<T> node = it.next();
             result.append(Strings.repeat(" ", it.getDepth()));
-            result.append(node.getData());
+            result.append(node.getValue());
             result.append("\n");
         }
 

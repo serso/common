@@ -79,13 +79,13 @@ public class LinkedTreeTest {
         tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
             @Override
             public boolean apply(@Nullable TreeNode<Integer> input) {
-                return input.getData() % 2 == 0;
+                return input.getValue() % 2 == 0;
             }
         });
 
         Assert.assertEquals(3, tree.getSize());
         for (TreeNode<Integer> node : tree) {
-            Assert.assertTrue(node.getData() % 2 != 0);
+            Assert.assertTrue(node.getValue() % 2 != 0);
         }
 
         // remove all elements
@@ -105,14 +105,14 @@ public class LinkedTreeTest {
         tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
             @Override
             public boolean apply(@Nullable TreeNode<Integer> input) {
-                return input.getData() % 2 != 0;
+                return input.getValue() % 2 != 0;
             }
         });
 
         Assert.assertEquals(5, tree.getSize());
         for (TreeNode<Integer> node : tree) {
             if (node != tree.getRoot()) {
-                Assert.assertTrue(node.getData() % 2 == 0);
+                Assert.assertTrue(node.getValue() % 2 == 0);
             }
         }
     }
