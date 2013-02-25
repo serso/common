@@ -76,7 +76,6 @@ public class Strings {
     *
     **********************************************************************
     */
-
     public static String[] split(String source, String subString) {
         String[] params = source.split(subString);
         List<String> result = new ArrayList<String>();
@@ -227,5 +226,59 @@ public class Strings {
     @NotNull
     public static String fromHex(@NotNull CharSequence hex) {
         return Bytes.fromHex(hex);
+    }
+
+    @NotNull
+    public static String getAllEnumValues(@NotNull Class<? extends Enum> enumClass) {
+        final StringBuilder result = new StringBuilder(500);
+
+        boolean first = true;
+        for (Enum enumValue : enumClass.getEnumConstants()) {
+            if (first) {
+                first = false;
+            } else {
+                result.append(",");
+            }
+            result.append(enumValue);
+        }
+
+        return result.toString();
+    }
+
+    @NotNull
+    public static String getAllValues(@NotNull List<?> elements) {
+        final StringBuilder result = new StringBuilder(10 * elements.size());
+
+        boolean first = true;
+        for (Object element : elements) {
+            if (first) {
+                first = false;
+            } else {
+                result.append(",");
+            }
+            result.append(element);
+        }
+
+        return result.toString();
+    }
+
+    @NotNull
+    public static String toHtml(@NotNull CharSequence text) {
+        final String newLineStr = Strings.LINE_SEPARATOR;
+        assert newLineStr.length() == 1;
+
+        final char newline = newLineStr.charAt(0);
+
+        final StringBuilder result = new StringBuilder(text.length());
+        for ( int i = 0; i < text.length(); i++ ) {
+            final char ch = text.charAt(i);
+            if ( newline == ch ) {
+                result.append("<br>");
+            } else {
+                result.append(ch);
+            }
+        }
+
+        return result.toString();
     }
 }
