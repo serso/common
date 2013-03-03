@@ -35,6 +35,7 @@ import java.util.List;
  * This class is not thread safe - use {@link SynchronizedHistoryHelper} instead in multi-threaded environment
  */
 @NotThreadSafe
+@SuppressWarnings("VO_VOLATILE_INCREMENT")
 public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 
     /*
@@ -59,7 +60,6 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
     @Nonnull
     private final List<T> history;
 
-    @SuppressWarnings("VO_VOLATILE_INCREMENT")
     private volatile int currentStateIndex = START_HISTORY_INDEX;
 
     private final int historyCapacity;
