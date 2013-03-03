@@ -31,6 +31,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class is not thread safe - use {@link SynchronizedHistoryHelper} instead in multi-threaded environment
+ */
 @NotThreadSafe
 public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 
@@ -56,6 +59,7 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
     @Nonnull
     private final List<T> history;
 
+    @SuppressWarnings("VO_VOLATILE_INCREMENT")
     private volatile int currentStateIndex = START_HISTORY_INDEX;
 
     private final int historyCapacity;
@@ -188,6 +192,8 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
             case redo:
                 result = isRedoAvailable();
                 break;
+            default:
+                throw new UnsupportedOperationException(historyAction + " is not supported!");
         }
 
         return result;

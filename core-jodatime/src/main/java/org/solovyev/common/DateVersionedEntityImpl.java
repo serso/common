@@ -22,8 +22,9 @@
 
 package org.solovyev.common;
 
-import javax.annotation.Nonnull;
 import org.joda.time.DateTime;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -41,6 +42,7 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
     @Nonnull
     private DateTime modificationDate;
 
+    @SuppressWarnings("NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
     private DateVersionedEntityImpl() {
     }
 
