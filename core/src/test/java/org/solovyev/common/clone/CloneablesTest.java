@@ -37,18 +37,18 @@ import java.util.List;
 public class CloneablesTest {
 
     @Test
-	public void testCloneList() throws Exception {
-		final List<Interval<Integer>> intervals = new ArrayList<Interval<Integer>>();
-		intervals.add(Intervals.newClosedInterval(10, 20));
-		intervals.add(Intervals.newClosedInterval(-10, 20));
-		intervals.add(Intervals.newClosedInterval(10, 520));
+    public void testCloneList() throws Exception {
+        final List<Interval<Integer>> intervals = new ArrayList<Interval<Integer>>();
+        intervals.add(Intervals.newClosedInterval(10, 20));
+        intervals.add(Intervals.newClosedInterval(-10, 20));
+        intervals.add(Intervals.newClosedInterval(10, 520));
 
-		final List<Interval<Integer>> intervalsCopy = Cloneables.cloneList(intervals);
+        final List<Interval<Integer>> intervalsCopy = Cloneables.cloneList(intervals);
 
         Assert.assertTrue(intervalsCopy.size() == intervals.size());
         Assert.assertTrue(Objects.areEqual(intervals, intervalsCopy, ListEqualizer.<Interval<Integer>>newWithNaturalEquals(true)));
         Assert.assertFalse(Objects.areEqual(intervals, intervalsCopy, ListEqualizer.newWithNestedEqualizer(true, SameEqualizer.<Interval<Integer>>getInstance())));
-	}
+    }
 
     @Test
     public void testCloneArray() throws Exception {

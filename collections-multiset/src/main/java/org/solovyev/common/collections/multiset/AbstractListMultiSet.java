@@ -109,16 +109,16 @@ class AbstractListMultiSet<E> extends AbstractMultiSet<E> implements ManyInstanc
         int result = 0;
 
 
-        if ( e == null ) {
+        if (e == null) {
 
-            for ( Iterator<E> it = backingList.iterator(); it.hasNext();  ) {
+            for (Iterator<E> it = backingList.iterator(); it.hasNext(); ) {
                 final E el = it.next();
 
-                if ( el == null ) {
+                if (el == null) {
 
                     result++;
 
-                    if ( count > 0 ) {
+                    if (count > 0) {
                         it.remove();
                         count--;
                     }
@@ -128,14 +128,14 @@ class AbstractListMultiSet<E> extends AbstractMultiSet<E> implements ManyInstanc
 
         } else {
 
-            for ( Iterator<E> it = backingList.iterator(); it.hasNext();  ) {
+            for (Iterator<E> it = backingList.iterator(); it.hasNext(); ) {
                 final E el = it.next();
 
-                if ( e.equals(el) ) {
+                if (e.equals(el)) {
 
                     result++;
 
-                    if ( count > 0 ) {
+                    if (count > 0) {
                         it.remove();
                         count--;
                     }

@@ -23,6 +23,7 @@
 package org.solovyev.common.text.base64;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.Converter;
 
 /**

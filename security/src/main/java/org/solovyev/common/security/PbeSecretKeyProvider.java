@@ -79,7 +79,7 @@ class PbeSecretKeyProvider implements SecretKeyProvider {
     @Nonnull
     public SecretKey getSecretKey(@Nonnull String secret, @Nonnull byte[] salt) throws CiphererException {
         try {
-            if ( salt.length != saltLength ) {
+            if (salt.length != saltLength) {
                 throw new IllegalArgumentException("Salt size is not valid -  expected: " + saltLength + ", actual: " + salt.length);
             }
 

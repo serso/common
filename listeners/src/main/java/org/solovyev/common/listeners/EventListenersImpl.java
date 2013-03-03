@@ -64,15 +64,15 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     */
 
     private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, int eventThreadsCount) {
-        if ( eventThreadsCount < 0 ) {
+        if (eventThreadsCount < 0) {
             throw new IllegalArgumentException("eventThreadsCount should be not negative!");
         }
         this.listeners = listeners;
         this.baseEventType = baseEventType;
 
-        if ( eventThreadsCount == 0) {
+        if (eventThreadsCount == 0) {
             this.eventExecutor = null;
-        } else if ( eventThreadsCount == 1 ) {
+        } else if (eventThreadsCount == 1) {
             this.eventExecutor = Executors.newSingleThreadExecutor(createDefaultThreadFactory());
         } else {
             this.eventExecutor = Executors.newFixedThreadPool(eventThreadsCount, createDefaultThreadFactory());
@@ -106,7 +106,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     public void fireEvent(@Nonnull final E event) {
         final Collection<L> listeners = this.listeners.getListeners();
 
-        if ( eventExecutor == null ) {
+        if (eventExecutor == null) {
             // run on current thread
             fireEvent(event, listeners);
         } else {
@@ -121,7 +121,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
 
     private void fireEvent(@Nonnull E event, @Nonnull Collection<L> listeners) {
         for (L listener : listeners) {
-            if  (listener.getEventType().isAssignableFrom(event.getClass())) {
+            if (listener.getEventType().isAssignableFrom(event.getClass())) {
                 ((JEventListener<E>) listener).onEvent(event);
             }
         }
@@ -129,7 +129,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
 
     @Override
     public boolean addListener(@Nonnull L listener) {
-        if ( !baseEventType.isAssignableFrom(listener.getEventType()) ) {
+        if (!baseEventType.isAssignableFrom(listener.getEventType())) {
             throw new IllegalArgumentException("Current listener cannot be added, because will never be fired!");
         }
         return listeners.addListener(listener);

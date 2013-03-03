@@ -55,9 +55,9 @@ final class DepthTreeIterator<T> implements TreeIterator<T> {
         this(new ArrayList<TreeNode<T>>(Arrays.asList(root)));
     }
 
-	DepthTreeIterator(@Nonnull Tree<T> tree) {
-		this(tree.getRoot());
-	}
+    DepthTreeIterator(@Nonnull Tree<T> tree) {
+        this(tree.getRoot());
+    }
 
     DepthTreeIterator(@Nonnull Collection<? extends TreeNode<T>> nodes) {
         this(nodes, 0);
@@ -90,13 +90,13 @@ final class DepthTreeIterator<T> implements TreeIterator<T> {
         if (selfHasNext()) {
             if (lastSelfResult instanceof MutableTreeNode) {
                 childIterator = new DepthTreeIterator<T>(((MutableTreeNode<T>) lastSelfResult).getOwnChildrenIterator(), depth + 1);
-            } else if ( lastSelfResult != null ) {
+            } else if (lastSelfResult != null) {
                 childIterator = new DepthTreeIterator<T>(lastSelfResult.getOwnChildren(), depth + 1);
             } else {
                 throw new ConcurrentModificationException("Tree iterator is not tread safe!");
             }
         }
-        
+
         if (childrenHasNext()) {
             lastSelfResult = null;
             if (this.childIterator != null) {

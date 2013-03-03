@@ -23,8 +23,10 @@
 package org.solovyev.common.collections.tree;
 
 import junit.framework.Assert;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.junit.Test;
 import org.solovyev.common.JPredicate;
 
@@ -99,7 +101,6 @@ public class LinkedTreeTest {
         Assert.assertEquals(1, tree.getSize());
 
 
-
         // remove all odd elements
         tree = createMockTree();
         tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
@@ -117,14 +118,14 @@ public class LinkedTreeTest {
         }
     }
 
-	@Test
-	public void testDepthTreeIterator() throws Exception {
-		MutableTree<Integer> tree = createMockTree();
+    @Test
+    public void testDepthTreeIterator() throws Exception {
+        MutableTree<Integer> tree = createMockTree();
 
-		for ( TreeIterator<Integer> it = Trees.newDepthTreeIterator(tree); it.hasNext(); ) {
-			final TreeNode<Integer> node  = it.next();
-			Assert.assertEquals(node.getDepth(), it.getDepth());
-			System.out.println(it.getDepth() + " ->" + node.getValue());
-		}
-	}
+        for (TreeIterator<Integer> it = Trees.newDepthTreeIterator(tree); it.hasNext(); ) {
+            final TreeNode<Integer> node = it.next();
+            Assert.assertEquals(node.getDepth(), it.getDepth());
+            System.out.println(it.getDepth() + " ->" + node.getValue());
+        }
+    }
 }

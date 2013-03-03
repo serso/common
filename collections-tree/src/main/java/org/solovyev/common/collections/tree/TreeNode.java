@@ -24,6 +24,7 @@ package org.solovyev.common.collections.tree;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.JPredicate;
 
 import java.util.Collection;
@@ -45,6 +46,7 @@ public interface TreeNode<T> extends Iterable<TreeNode<T>> {
 
     /**
      * NOTE: immutable collection is returned
+     *
      * @return OWN children of the node (first level children)
      */
     @Nonnull
@@ -52,7 +54,7 @@ public interface TreeNode<T> extends Iterable<TreeNode<T>> {
 
     /**
      * @return iterator over the OWN children of the node (first level children).
-     * This iterator depending on the implementation may support or may not support java.util.Iterator#remove() method.
+     *         This iterator depending on the implementation may support or may not support java.util.Iterator#remove() method.
      */
     @Nonnull
     Iterator<? extends TreeNode<T>> getOwnChildrenIterator();
@@ -67,8 +69,8 @@ public interface TreeNode<T> extends Iterable<TreeNode<T>> {
 
     /**
      * @return iterator over ALL children of the current node (children of children etc).
-     * This iterator depending on the implementation  may support or may not support java.util.Iterator#remove() method.
-     * The actual traversal algorithm is not determined - it just guarantees iterating over all children
+     *         This iterator depending on the implementation  may support or may not support java.util.Iterator#remove() method.
+     *         The actual traversal algorithm is not determined - it just guarantees iterating over all children
      */
     @Override
     @Nonnull

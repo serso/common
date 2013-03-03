@@ -23,6 +23,7 @@
 package org.solovyev.common;
 
 import javax.annotation.Nullable;
+
 import org.solovyev.common.equals.Equalizer;
 
 public class EqualsResult<T> {

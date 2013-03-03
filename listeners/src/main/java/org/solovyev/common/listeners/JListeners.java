@@ -43,12 +43,11 @@ public interface JListeners<L> {
     /**
      * Adds <var>listener</var> to container.
      * After this method is called {@link JListeners#getListeners()} should return collection containing this <var>listener</var>.
-     *
+     * <p/>
      * Note: implementation of this interface may accept or may not accept same listener objects
      *
-     * @param listener  listener to be added to container
+     * @param listener listener to be added to container
      * @return true if listener was added to the container, false otherwise
-     *
      */
     boolean addListener(@Nonnull L listener);
 
@@ -57,7 +56,6 @@ public interface JListeners<L> {
      * After this method is called {@link JListeners#getListeners()} should return collection not containing this <var>listener</var>.
      *
      * @param listener listener to be removed from container
-     *
      * @return true if listener was removed, false if listener was not in container
      */
     boolean removeListener(@Nonnull L listener);

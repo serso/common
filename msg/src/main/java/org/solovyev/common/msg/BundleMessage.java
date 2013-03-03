@@ -16,20 +16,20 @@ class BundleMessage extends AbstractMessage {
     private ResourceBundle.Control bundleControl;
 
     BundleMessage(@Nonnull String bundleName,
-                            @Nullable ResourceBundle.Control bundleControl,
-                            @Nonnull String messageCode,
-                            @Nonnull MessageLevel messageLevel,
-                            @Nullable Object... parameters) {
+                  @Nullable ResourceBundle.Control bundleControl,
+                  @Nonnull String messageCode,
+                  @Nonnull MessageLevel messageLevel,
+                  @Nullable Object... parameters) {
         super(messageCode, messageLevel, parameters);
         this.bundleName = bundleName;
         this.bundleControl = bundleControl;
     }
 
     BundleMessage(@Nonnull String bundleName,
-                            @Nullable ResourceBundle.Control bundleControl,
-                            @Nonnull String messageCode,
-                            @Nonnull MessageLevel messageLevel,
-                            @Nonnull List<?> parameters) {
+                  @Nullable ResourceBundle.Control bundleControl,
+                  @Nonnull String messageCode,
+                  @Nonnull MessageLevel messageLevel,
+                  @Nonnull List<?> parameters) {
         super(messageCode, messageLevel, parameters);
         this.bundleName = bundleName;
         this.bundleControl = bundleControl;

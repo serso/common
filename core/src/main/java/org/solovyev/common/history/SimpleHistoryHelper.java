@@ -22,6 +22,7 @@
 
 package org.solovyev.common.history;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import org.solovyev.common.Objects;
 
 import javax.annotation.Nonnull;
@@ -35,7 +36,7 @@ import java.util.List;
  * This class is not thread safe - use {@link SynchronizedHistoryHelper} instead in multi-threaded environment
  */
 @NotThreadSafe
-@SuppressWarnings("VO_VOLATILE_INCREMENT")
+@SuppressWarnings({"VO_VOLATILE_INCREMENT"})
 public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 
     /*

@@ -34,6 +34,7 @@ import java.util.List;
 
 /**
  * Class representing tree data structure.
+ *
  * @param <T> type of values stored in the tree nodes
  */
 public interface Tree<T> extends Iterable<TreeNode<T>> {
@@ -54,6 +55,7 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
 
     /**
      * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
+     *
      * @return iterator which iterates over all elements in the tree
      */
     @Nonnull
@@ -62,6 +64,7 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
 
     /**
      * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
+     *
      * @return iterator which iterates over all elements in the tree
      */
     @Nonnull

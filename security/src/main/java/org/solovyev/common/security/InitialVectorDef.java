@@ -2,6 +2,7 @@ package org.solovyev.common.security;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.Bytes;
 import org.solovyev.common.collections.Collections;
 
@@ -73,7 +74,7 @@ public class InitialVectorDef {
     byte[] getInitialVector() throws NoSuchAlgorithmException, NoSuchProviderException {
         byte[] result;
 
-        if ( this.bytes != null ) {
+        if (this.bytes != null) {
             result = this.bytes;
         } else {
             result = Bytes.generateSecureRandomBytes(this.randomAlgorithm, this.length);
@@ -110,8 +111,8 @@ public class InitialVectorDef {
 
     @Nullable
     IvParameterSpec getEncryptIvParameterSpec() throws NoSuchProviderException, NoSuchAlgorithmException {
-        if ( this.bytes != null ) {
-            if ( this.bytes.length > 0 ) {
+        if (this.bytes != null) {
+            if (this.bytes.length > 0) {
                 // predefined
                 return new IvParameterSpec(this.bytes);
             } else {
@@ -126,8 +127,8 @@ public class InitialVectorDef {
 
     @Nullable
     IvParameterSpec getDecryptIvParameterSpec(@Nonnull byte[] encrypted) {
-        if ( this.bytes != null ) {
-            if ( this.bytes.length > 0 ) {
+        if (this.bytes != null) {
+            if (this.bytes.length > 0) {
                 return new IvParameterSpec(this.bytes);
             } else {
                 return null;

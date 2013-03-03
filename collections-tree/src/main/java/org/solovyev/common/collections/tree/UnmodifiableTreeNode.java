@@ -24,6 +24,7 @@ package org.solovyev.common.collections.tree;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.UnmodifiableIterator;
 
@@ -63,7 +64,7 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
     @Nonnull
     public static <T> UnmodifiableTreeNode<T> wrap(@Nonnull TreeNode<T> treeNode) {
         if (treeNode instanceof MutableTreeNode) {
-            return wrap((MutableTreeNode<T>)treeNode);
+            return wrap((MutableTreeNode<T>) treeNode);
         } else {
             return new UnmodifiableTreeNode<T>(TreeNodeAdapter.adapt(treeNode));
         }

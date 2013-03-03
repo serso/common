@@ -29,7 +29,7 @@ import java.util.Collection;
 
 /**
  * note: some methods of {@link ReferenceListeners} are already tested in {@link EventListenersImplTest}
-  */
+ */
 public class ReferenceListenersTest {
 
     @Test

@@ -1,6 +1,7 @@
 package org.solovyev.common.text;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.Bytes;
 
 import java.nio.charset.Charset;
@@ -120,12 +121,18 @@ public final class HexString implements java.io.Serializable, Comparable<HexStri
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HexString)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof HexString)) {
+            return false;
+        }
 
         final HexString that = (HexString) o;
 
-        if (!hex.equals(that.hex)) return false;
+        if (!hex.equals(that.hex)) {
+            return false;
+        }
 
         return true;
     }

@@ -23,6 +23,7 @@
 package org.solovyev.common.security;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.Bytes;
 
 import java.security.MessageDigest;

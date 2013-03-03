@@ -24,6 +24,7 @@ package org.solovyev.common.equals;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.Objects;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class ListEqualizer<T> implements Equalizer<List<T>> {
 
     @Nonnull
     public static <T> ListEqualizer<T> newWithNaturalEquals(boolean checkOrder) {
-        if ( checkOrder ) {
+        if (checkOrder) {
             return (ListEqualizer<T>) instanceWithOrder;
         } else {
             return (ListEqualizer<T>) instanceWithoutOrder;

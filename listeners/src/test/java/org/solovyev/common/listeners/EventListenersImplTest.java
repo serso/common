@@ -23,7 +23,9 @@
 package org.solovyev.common.listeners;
 
 import junit.framework.Assert;
+
 import javax.annotation.Nonnull;
+
 import org.junit.Test;
 import org.solovyev.common.MutableObject;
 
@@ -41,7 +43,7 @@ public class EventListenersImplTest {
 
     @Test
     public void testFireEvent() throws Exception {
-         JEventListeners<JEventListener<?>, JEvent> listeners = Listeners.newEventListenersBuilder().onCallerThread().withHardReferences().create();
+        JEventListeners<JEventListener<?>, JEvent> listeners = Listeners.newEventListenersBuilder().onCallerThread().withHardReferences().create();
 
         final TestEventListener1 l1 = new TestEventListener1();
         final TestEventListener2 l2 = new TestEventListener2();
@@ -109,7 +111,7 @@ public class EventListenersImplTest {
         });
 
         listeners.fireEvent(new TestEvent1());
-        if ( latch.await(1, TimeUnit.SECONDS) ) {
+        if (latch.await(1, TimeUnit.SECONDS)) {
             Assert.assertEquals(Thread.currentThread(), eventThread.getObject());
         } else {
             Assert.fail();
@@ -137,7 +139,7 @@ public class EventListenersImplTest {
         });
 
         listeners.fireEvent(new TestEvent1());
-        if ( latch.await(1, TimeUnit.SECONDS) ) {
+        if (latch.await(1, TimeUnit.SECONDS)) {
             Assert.assertNotSame(Thread.currentThread(), eventThread.getObject());
         } else {
             Assert.fail();
@@ -322,7 +324,7 @@ public class EventListenersImplTest {
 
     }
 
-    private static class TestEventListener1 extends AbstractTestEventListener<TestEvent1>{
+    private static class TestEventListener1 extends AbstractTestEventListener<TestEvent1> {
 
         public TestEventListener1() {
             super(TestEvent1.class);
@@ -346,7 +348,7 @@ public class EventListenersImplTest {
 
         @Override
         public void onEvent(@Nonnull TestEvent2 event) {
-           count();
+            count();
         }
     }
 

@@ -43,7 +43,7 @@ public interface UnitConverter<T> {
 
         @Nonnull
         public static <T> UnitConverter<T> getInstance() {
-            return (UnitConverter<T>)instance;
+            return (UnitConverter<T>) instance;
         }
 
         private Dummy() {

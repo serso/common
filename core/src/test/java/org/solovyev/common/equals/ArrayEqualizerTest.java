@@ -23,7 +23,9 @@
 package org.solovyev.common.equals;
 
 import junit.framework.Assert;
+
 import javax.annotation.Nonnull;
+
 import org.junit.Test;
 import org.solovyev.common.Objects;
 

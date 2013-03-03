@@ -24,6 +24,7 @@ package org.solovyev.common.math;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.Objects;
 import org.solovyev.common.MutableObject;
 import org.solovyev.common.collections.Collections;

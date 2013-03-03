@@ -44,34 +44,31 @@ public interface Message {
     /**
      * @return message code
      */
-	@Nonnull
-	public String getMessageCode();
+    @Nonnull
+    public String getMessageCode();
 
     /**
      * @return list of message parameters
      */
-	@Nonnull
-	public List<Object> getParameters();
+    @Nonnull
+    public List<Object> getParameters();
 
     /**
      * @return message level
      */
-	@Nonnull
-	public MessageLevel getMessageLevel();
+    @Nonnull
+    public MessageLevel getMessageLevel();
 
     /**
-     *
      * @param locale locate to which current message should be translated
-     *
      * @return message string translated to specified locale
      */
-	@Nonnull
-	public String getLocalizedMessage(@Nonnull Locale locale);
+    @Nonnull
+    public String getLocalizedMessage(@Nonnull Locale locale);
 
     /**
-     *
      * @return message string translated to deault locale (Locale.getDefault())
      */
-	@Nonnull
-	public String getLocalizedMessage();
+    @Nonnull
+    public String getLocalizedMessage();
 }

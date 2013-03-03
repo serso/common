@@ -14,10 +14,9 @@ public interface MessageLevel {
     /**
      * Position of current message level in some message level hierarchy.
      * By default, one can use {@link MessageType} implementation which uses next levels:
-     *        100         500           1000          level
+     * 100         500           1000          level
      * --------|-----------|--------------|------------->
-     *       Info       Warning         Error
-     *
+     * Info       Warning         Error
      *
      * @return int message level
      */

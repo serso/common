@@ -34,6 +34,7 @@ import java.io.Serializable;
 
 /**
  * Entity which stores version identifier
+ *
  * @param <I>
  */
 public interface VersionedEntity<I> extends Serializable, JCloneable<VersionedEntity<I>> {

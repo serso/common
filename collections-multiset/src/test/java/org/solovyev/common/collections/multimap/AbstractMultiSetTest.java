@@ -473,6 +473,5 @@ public abstract class AbstractMultiSetTest {
         i3.hashCode();
 
 
-
     }
 }

@@ -26,24 +26,24 @@ import javax.annotation.Nonnull;
 
 public final class Intervals {
 
-	private Intervals() {
-		throw new AssertionError();
-	}
+    private Intervals() {
+        throw new AssertionError();
+    }
 
-	@Nonnull
-	public static <T extends Comparable<T>> Interval<T> newPoint(@Nonnull T point) {
-		return newInstance(IntervalLimitImpl.newInstance(point, true), IntervalLimitImpl.newInstance(point, true));
-	}
+    @Nonnull
+    public static <T extends Comparable<T>> Interval<T> newPoint(@Nonnull T point) {
+        return newInstance(IntervalLimitImpl.newInstance(point, true), IntervalLimitImpl.newInstance(point, true));
+    }
 
     @Nonnull
     public static <T extends Comparable<T>> Interval<T> newInterval(@Nonnull T left, boolean leftClosed, @Nonnull T right, boolean rightClosed) {
         return newInstance(newLimit(left, leftClosed), newLimit(right, rightClosed));
     }
 
-	@Nonnull
-	public static <T extends Comparable<T>> Interval<T> newClosedInterval(@Nonnull T left, @Nonnull T right) {
-		return newInstance(newClosedLimit(left), newClosedLimit(right));
-	}
+    @Nonnull
+    public static <T extends Comparable<T>> Interval<T> newClosedInterval(@Nonnull T left, @Nonnull T right) {
+        return newInstance(newClosedLimit(left), newClosedLimit(right));
+    }
 
     @Nonnull
     public static <T extends Comparable<T>> IntervalLimit<T> newClosedLimit(@Nonnull T value) {
@@ -60,11 +60,11 @@ public final class Intervals {
         return newLimit(value, false);
     }
 
-	@Nonnull
-	public static <T extends Comparable<T>> IntervalImpl<T> newInstance(@Nonnull IntervalLimit<T> left,
-																		@Nonnull IntervalLimit<T> right) {
-		return IntervalImpl.newInstance(left, right);
-	}
+    @Nonnull
+    public static <T extends Comparable<T>> IntervalImpl<T> newInstance(@Nonnull IntervalLimit<T> left,
+                                                                        @Nonnull IntervalLimit<T> right) {
+        return IntervalImpl.newInstance(left, right);
+    }
 
     @Nonnull
     public static <T extends Comparable<T>> IntervalLimit<T> newLowestLimit() {

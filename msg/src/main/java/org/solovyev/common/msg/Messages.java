@@ -24,6 +24,7 @@ package org.solovyev.common.msg;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.collections.Collections;
 
 import java.text.MessageFormat;
@@ -39,7 +40,7 @@ public final class Messages {
 
     @Nonnull
     public static MessageRegistry newOrderedMessageRegistry() {
-         return new ListMessageRegistry();
+        return new ListMessageRegistry();
     }
 
     @Nonnull
@@ -81,13 +82,11 @@ public final class Messages {
     }
 
     /**
-     *
-     * @param locale locale for which default formatting will be applied
+     * @param locale         locale for which default formatting will be applied
      * @param messagePattern message pattern which will be used for {@link java.text.MessageFormat}
-     * @param parameters message parameters which will be used for {@link java.text.MessageFormat}
-     *
+     * @param parameters     message parameters which will be used for {@link java.text.MessageFormat}
      * @return formatted message string according to default locale formatting, nested messages are processed properly
-     * (for each message from parameter method {@link Message#getLocalizedMessage(java.util.Locale)} is called)
+     *         (for each message from parameter method {@link Message#getLocalizedMessage(java.util.Locale)} is called)
      */
     @Nonnull
     public static String prepareMessage(@Nonnull Locale locale, @Nonnull String messagePattern, @Nonnull List<?> parameters) {
@@ -108,22 +107,22 @@ public final class Messages {
     }
 
     @Nonnull
-	private static Object[] prepareParameters(@Nonnull List<?> parameters, @Nonnull Locale locale) {
-		final Object[] result = new Object[parameters.size()];
+    private static Object[] prepareParameters(@Nonnull List<?> parameters, @Nonnull Locale locale) {
+        final Object[] result = new Object[parameters.size()];
 
-		for (int i = 0; i<parameters.size(); i++){
-			result[i] = substituteParameter(parameters.get(i), locale);
-		}
+        for (int i = 0; i < parameters.size(); i++) {
+            result[i] = substituteParameter(parameters.get(i), locale);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
     @Nullable
-	private static Object substituteParameter(@Nullable Object object, @Nonnull Locale locale) {
-		if (object instanceof Message) {
-			return ((Message) object).getLocalizedMessage(locale);
-		} else {
-			return object;
-		}
-	}
+    private static Object substituteParameter(@Nullable Object object, @Nonnull Locale locale) {
+        if (object instanceof Message) {
+            return ((Message) object).getLocalizedMessage(locale);
+        } else {
+            return object;
+        }
+    }
 }

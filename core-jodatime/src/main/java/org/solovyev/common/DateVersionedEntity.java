@@ -34,6 +34,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Version entity which stores creation date and last date of modification
+ *
  * @param <I>
  */
 public interface DateVersionedEntity<I> extends VersionedEntity<I> {

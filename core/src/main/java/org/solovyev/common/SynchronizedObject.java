@@ -57,13 +57,19 @@ public abstract class SynchronizedObject<D> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SynchronizedObject)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SynchronizedObject)) {
+            return false;
+        }
 
         final SynchronizedObject that = (SynchronizedObject) o;
 
         synchronized (mutex) {
-            if (!delegate.equals(that.delegate)) return false;
+            if (!delegate.equals(that.delegate)) {
+                return false;
+            }
         }
 
         return true;

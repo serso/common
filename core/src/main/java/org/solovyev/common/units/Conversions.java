@@ -24,6 +24,7 @@ package org.solovyev.common.units;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.text.Strings;
 
 /**

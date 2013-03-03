@@ -31,7 +31,7 @@ import org.junit.Test;
  * Time: 8:09 PM
  */
 public class DiscreteNormalizerTest {
-    
+
     @Test
     public void testNormalize() throws Exception {
         DiscreteNormalizer dn = new DiscreteNormalizer(0, 10, 1d);

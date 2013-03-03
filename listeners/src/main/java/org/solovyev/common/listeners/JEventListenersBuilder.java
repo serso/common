@@ -23,6 +23,7 @@
 package org.solovyev.common.listeners;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.JBuilder;
 
 /**
@@ -55,6 +56,7 @@ public final class JEventListenersBuilder<L extends JEventListener<? extends E>,
 
     /**
      * Means that events must be fired on the same thread which calls {@link JEventListeners#fireEvent(E)} method
+     *
      * @return current builder
      */
     @Nonnull
@@ -94,7 +96,7 @@ public final class JEventListenersBuilder<L extends JEventListener<? extends E>,
 
         final JListeners<L> listeners;
 
-        if ( weakReference ) {
+        if (weakReference) {
             listeners = Listeners.newWeakRefListeners();
         } else {
             listeners = Listeners.newHardRefListeners();

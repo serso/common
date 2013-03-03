@@ -22,14 +22,14 @@
 
 package org.solovyev.common.msg;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.HashCodeBuilder;
 import org.solovyev.common.Objects;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.equals.ListEqualizer;
 import org.solovyev.common.text.Strings;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -41,92 +41,102 @@ import java.util.Locale;
  */
 public abstract class AbstractMessage implements Message {
 
-	@Nonnull
-	private final String messageCode;
+    @Nonnull
+    private final String messageCode;
 
-	@Nonnull
-	private final List<Object> parameters;
+    @Nonnull
+    private final List<Object> parameters;
 
-	@Nonnull
-	private final MessageLevel messageLevel;
+    @Nonnull
+    private final MessageLevel messageLevel;
 
-	protected AbstractMessage(@Nonnull String messageCode, @Nonnull MessageLevel messageType, @Nullable Object... parameters) {
-		this(messageCode, messageType, Collections.asList(parameters));
-	}
+    protected AbstractMessage(@Nonnull String messageCode, @Nonnull MessageLevel messageType, @Nullable Object... parameters) {
+        this(messageCode, messageType, Collections.asList(parameters));
+    }
 
-	protected AbstractMessage(@Nonnull String messageCode, @Nonnull MessageLevel messageType, @Nonnull List<?> parameters) {
-		this.messageCode = messageCode;
-		this.parameters = new ArrayList<Object>(parameters);
-		this.messageLevel = messageType;
-	}
+    protected AbstractMessage(@Nonnull String messageCode, @Nonnull MessageLevel messageType, @Nonnull List<?> parameters) {
+        this.messageCode = messageCode;
+        this.parameters = new ArrayList<Object>(parameters);
+        this.messageLevel = messageType;
+    }
 
-	@Override
-	@Nonnull
-	public String getMessageCode() {
-		return this.messageCode;
-	}
+    @Override
+    @Nonnull
+    public String getMessageCode() {
+        return this.messageCode;
+    }
 
-	@Nonnull
-	@Override
-	public List<Object> getParameters() {
-		return java.util.Collections.unmodifiableList(this.parameters);
-	}
+    @Nonnull
+    @Override
+    public List<Object> getParameters() {
+        return java.util.Collections.unmodifiableList(this.parameters);
+    }
 
-	@Nonnull
-	@Override
-	public MessageLevel getMessageLevel() {
-		return this.messageLevel;
-	}
+    @Nonnull
+    @Override
+    public MessageLevel getMessageLevel() {
+        return this.messageLevel;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-		final AbstractMessage that = (AbstractMessage) o;
+        final AbstractMessage that = (AbstractMessage) o;
 
-        if (!Objects.areEqual(parameters, that.parameters, ListEqualizer.newWithNaturalEquals(true))) return false;
-		if (!messageCode.equals(that.messageCode)) return false;
-		if (!messageLevel.equals(that.messageLevel)) return false;
+        if (!Objects.areEqual(parameters, that.parameters, ListEqualizer.newWithNaturalEquals(true))) {
+            return false;
+        }
+        if (!messageCode.equals(that.messageCode)) {
+            return false;
+        }
+        if (!messageLevel.equals(that.messageLevel)) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public int hashCode() {
-		final HashCodeBuilder hcb = HashCodeBuilder.newInstance();
+    @Override
+    public int hashCode() {
+        final HashCodeBuilder hcb = HashCodeBuilder.newInstance();
 
-		hcb.append(messageCode);
-		hcb.append(messageLevel);
-		hcb.append(parameters);
+        hcb.append(messageCode);
+        hcb.append(messageLevel);
+        hcb.append(parameters);
 
-		return hcb.toHashCode();
-	}
+        return hcb.toHashCode();
+    }
 
-	/**
-	 * Method converts message to string setting passed message parameters and translating some of them.
-	 *
-	 * @param locale language to which parameters should be translated (if possible)
-	 * @return message as string with properly translated and set parameters
-	 */
-	@Nonnull
-	public String getLocalizedMessage(@Nonnull Locale locale) {
-		String result = null;
+    /**
+     * Method converts message to string setting passed message parameters and translating some of them.
+     *
+     * @param locale language to which parameters should be translated (if possible)
+     * @return message as string with properly translated and set parameters
+     */
+    @Nonnull
+    public String getLocalizedMessage(@Nonnull Locale locale) {
+        String result = null;
 
-		final String messagePattern = getMessagePattern(locale);
-		if (!Strings.isEmpty(messagePattern)) {
+        final String messagePattern = getMessagePattern(locale);
+        if (!Strings.isEmpty(messagePattern)) {
             result = Messages.prepareMessage(locale, messagePattern, parameters);
         }
 
-		return Strings.getNotEmpty(result, messageLevel.getName() + ": message code = " + messageCode);
-	}
+        return Strings.getNotEmpty(result, messageLevel.getName() + ": message code = " + messageCode);
+    }
 
     @Nonnull
-	@Override
-	public String getLocalizedMessage() {
-		return this.getLocalizedMessage(Locale.getDefault());
-	}
+    @Override
+    public String getLocalizedMessage() {
+        return this.getLocalizedMessage(Locale.getDefault());
+    }
 
-	@Nullable
-	protected abstract String getMessagePattern(@Nonnull Locale locale);
+    @Nullable
+    protected abstract String getMessagePattern(@Nonnull Locale locale);
 }

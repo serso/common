@@ -37,7 +37,7 @@ public abstract class AbstractStringCiphererTest {
     protected static <E> void doRandomCiphererTest(SecretKeyProvider secretKeyProvider, Cipherer<E, String> cipherer) throws CiphererException, NoSuchProviderException, NoSuchAlgorithmException {
         java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
         final Random r = new Random(new Date().getTime());
-        for ( int i = 0; i < 1000; i++ ) {
+        for (int i = 0; i < 1000; i++) {
 
             final String expected = Strings.generateRandomString(r.nextInt(500) + 500);
 

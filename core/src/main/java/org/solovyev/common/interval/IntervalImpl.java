@@ -24,6 +24,7 @@ package org.solovyev.common.interval;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.JCloneable;
 import org.solovyev.common.JObject;
 
@@ -45,7 +46,7 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
     }
 
     private IntervalImpl(@Nonnull IntervalLimit<T> left,
-						 @Nonnull IntervalLimit<T> right) {
+                         @Nonnull IntervalLimit<T> right) {
         int c = left.compareTo(right);
         if (c > 0) {
             throw new IllegalArgumentException("Left limit must <= than right!");
@@ -59,13 +60,13 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
         this.right = right;
     }
 
-	@Nonnull
-	static <T extends Comparable<T>> IntervalImpl<T> newInstance(@Nonnull IntervalLimit<T> left,
-																 @Nonnull IntervalLimit<T> right) {
-		return new IntervalImpl<T>(left, right);
-	}
+    @Nonnull
+    static <T extends Comparable<T>> IntervalImpl<T> newInstance(@Nonnull IntervalLimit<T> left,
+                                                                 @Nonnull IntervalLimit<T> right) {
+        return new IntervalImpl<T>(left, right);
+    }
 
-	/**
+    /**
      * @return left border
      */
     @Nullable
@@ -171,13 +172,21 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof IntervalImpl)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof IntervalImpl)) {
+            return false;
+        }
 
         final IntervalImpl that = (IntervalImpl) o;
 
-        if (!this.left.equals(that.left)) return false;
-        if (!this.right.equals(that.right)) return false;
+        if (!this.left.equals(that.left)) {
+            return false;
+        }
+        if (!this.right.equals(that.right)) {
+            return false;
+        }
 
         return true;
     }

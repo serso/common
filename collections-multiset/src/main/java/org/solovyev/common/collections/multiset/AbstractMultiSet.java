@@ -79,7 +79,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
                 boolean equals = true;
 
                 for (E e : this) {
-                    if ( this.count(e) != that.count(e) ) {
+                    if (this.count(e) != that.count(e)) {
                         equals = false;
                         break;
                     }

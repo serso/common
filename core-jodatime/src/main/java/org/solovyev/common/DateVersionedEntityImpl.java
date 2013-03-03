@@ -106,12 +106,19 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DateVersionedEntityImpl)) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof DateVersionedEntityImpl)) {
+            return false;
+        }
 
         DateVersionedEntityImpl that = (DateVersionedEntityImpl) o;
 
-        if (!versionedEntity.equals(that.versionedEntity)) return false;
+        if (!versionedEntity.equals(that.versionedEntity)) {
+            return false;
+        }
 
         return true;
     }

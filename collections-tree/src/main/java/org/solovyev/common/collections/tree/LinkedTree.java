@@ -24,6 +24,7 @@ package org.solovyev.common.collections.tree;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.text.Strings;
@@ -101,7 +102,7 @@ class LinkedTree<T> implements MutableTree<T> {
     public String toString() {
         final StringBuilder result = new StringBuilder();
 
-        for ( DepthTreeIterator<T> it = iterator(); it.hasNext(); ) {
+        for (DepthTreeIterator<T> it = iterator(); it.hasNext(); ) {
             final TreeNode<T> node = it.next();
             result.append(Strings.repeat(" ", it.getDepth()));
             result.append(node.getValue());

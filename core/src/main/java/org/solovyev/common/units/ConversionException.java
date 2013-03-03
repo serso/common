@@ -23,10 +23,10 @@
 package org.solovyev.common.units;
 
 /**
-* User: Solovyev_S
-* Date: 24.09.12
-* Time: 16:01
-*/
+ * User: Solovyev_S
+ * Date: 24.09.12
+ * Time: 16:01
+ */
 public final class ConversionException extends Exception {
 
     public ConversionException() {

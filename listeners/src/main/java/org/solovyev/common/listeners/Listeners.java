@@ -68,9 +68,8 @@ public final class Listeners {
      * then reference producer may return weak references for those 'special' listeners
      *
      * @param referenceProducer reference producer
-     * @param <R> reference type
-     * @param <L> listener type
-     *
+     * @param <R>               reference type
+     * @param <L>               listener type
      * @return listeners container with user-defined references
      */
     @Nonnull
@@ -80,6 +79,7 @@ public final class Listeners {
 
     /**
      * Creates {@link JEventListeners} object which runs on ONE background thread, uses WEAK references and accepts all event types
+     *
      * @return event bus
      */
     @Nonnull
@@ -89,6 +89,7 @@ public final class Listeners {
 
     /**
      * Creates {@link JEventListeners} object which runs on ONE background thread, uses WEAK references and accepts only sub classes of <var>baseEventType</var>
+     *
      * @return event bus
      */
     @Nonnull

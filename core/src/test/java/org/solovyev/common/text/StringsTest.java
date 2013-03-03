@@ -39,7 +39,7 @@ public class StringsTest {
     public void testGenerateRandomString() throws Exception {
         final Map<String, String> generatedStrings = new HashMap<String, String>(100);
 
-        for (int i = 0; i < 100; i++ ) {
+        for (int i = 0; i < 100; i++) {
             final String newString = Strings.generateRandomString(100);
             final String oldString = generatedStrings.get(newString);
             Assert.assertNull("Iteration " + i + "\nNew string: " + newString + "\nOld string: " + oldString, oldString);

@@ -24,6 +24,7 @@ package org.solovyev.common.collections.tree;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.JPredicate;
 
 import java.util.Collection;
@@ -67,16 +68,18 @@ public interface MutableTreeNode<T> extends TreeNode<T> {
     MutableTreeNode<T> addChild(@Nonnull T value);
 
     @Nonnull
-    MutableTreeNode<T>  addChildIfNotExists(@Nonnull T value);
+    MutableTreeNode<T> addChildIfNotExists(@Nonnull T value);
 
     /**
      * Method removes from OWN children elements which are applied by predicate
+     *
      * @param predicate removal condition
      */
     void removeOwnChildIf(@Nonnull JPredicate<TreeNode<T>> predicate);
 
     /**
      * Method removes from ALL children elements which are applied by predicate
+     *
      * @param predicate removal condition
      */
     void removeChildIf(@Nonnull JPredicate<TreeNode<T>> predicate);

@@ -23,6 +23,7 @@
 package org.solovyev.common.clone;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.JCloneable;
 
 import java.lang.reflect.Array;
@@ -115,7 +116,6 @@ public class Cloneables {
      *
      * @param array array to beb deeply cloned
      * @return deep clone of <var>array</var>
-     *
      */
     public static <T extends JCloneable<T>> T[] deepClone(@Nonnull T[] array) {
         return deepArrayCloning(array);
@@ -127,7 +127,6 @@ public class Cloneables {
      *
      * @param array array to beb deeply cloned
      * @return deep clone of <var>array</var>
-     *
      * @deprecated use {@link Cloneables#deepClone(T[])} instead
      */
     @Deprecated

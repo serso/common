@@ -23,6 +23,7 @@
 package org.solovyev.common.equals;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.math.Maths;
 
 /**

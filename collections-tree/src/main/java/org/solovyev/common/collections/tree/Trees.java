@@ -59,15 +59,15 @@ public final class Trees {
         return UnmodifiableTree.wrap(tree);
     }
 
-	@Nonnull
-	public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull Tree<N> tree) {
-		return new DepthTreeIterator<N>(tree);
-	}
+    @Nonnull
+    public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull Tree<N> tree) {
+        return new DepthTreeIterator<N>(tree);
+    }
 
-	@Nonnull
-	public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull TreeNode<N> teeNode) {
-		return new DepthTreeIterator<N>(teeNode);
-	}
+    @Nonnull
+    public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull TreeNode<N> teeNode) {
+        return new DepthTreeIterator<N>(teeNode);
+    }
 
 
     /*

@@ -23,13 +23,14 @@
 package org.solovyev.common;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.equals.Equalizer;
 
 /**
-* User: serso
-* Date: 2/7/13
-* Time: 10:33 PM
-*/
+ * User: serso
+ * Date: 2/7/13
+ * Time: 10:33 PM
+ */
 public class ByteArrayEqualizer implements Equalizer<byte[]> {
 
     @Nonnull
@@ -47,9 +48,9 @@ public class ByteArrayEqualizer implements Equalizer<byte[]> {
     public boolean areEqual(@Nonnull byte[] first, @Nonnull byte[] second) {
         boolean result = true;
 
-        if (first.length == second.length ) {
+        if (first.length == second.length) {
             for (int i = 0; i < first.length; i++) {
-                if ( first[i] != second[i] ) {
+                if (first[i] != second[i]) {
                     result = false;
                     break;
                 }

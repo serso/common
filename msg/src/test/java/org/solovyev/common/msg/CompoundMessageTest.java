@@ -23,8 +23,10 @@
 package org.solovyev.common.msg;
 
 import junit.framework.Assert;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -38,36 +40,36 @@ import java.util.Locale;
  */
 public class CompoundMessageTest {
 
-	@Test
-	public void testMessage() throws Exception {
-		final List<Message> messages = new ArrayList<Message>();
-		messages.add(new MessageImpl("msg_1", MessageType.info));
-		messages.add(new MessageImpl("msg_2", MessageType.error));
-		messages.add(new MessageImpl("msg_3", MessageType.warning));
-		Message e = new MessageImpl("msg_4", MessageType.error);
-		messages.add(e);
+    @Test
+    public void testMessage() throws Exception {
+        final List<Message> messages = new ArrayList<Message>();
+        messages.add(new MessageImpl("msg_1", MessageType.info));
+        messages.add(new MessageImpl("msg_2", MessageType.error));
+        messages.add(new MessageImpl("msg_3", MessageType.warning));
+        Message e = new MessageImpl("msg_4", MessageType.error);
+        messages.add(e);
 
-		CompoundMessage compoundMessage = CompoundMessage.newInstance(new MessageImpl("msg_16", MessageType.info), messages);
-		Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{3}"));
-		Assert.assertFalse(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("\\"));
-		Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{2}"));
-		Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{1}"));
-		Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{0}"));
+        CompoundMessage compoundMessage = CompoundMessage.newInstance(new MessageImpl("msg_16", MessageType.info), messages);
+        Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{3}"));
+        Assert.assertFalse(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("\\"));
+        Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{2}"));
+        Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{1}"));
+        Assert.assertTrue(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{0}"));
 
-		Assert.assertFalse(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{5}"));
-		Assert.assertTrue(compoundMessage.getLocalizedMessage(Locale.ENGLISH).contains(e.getLocalizedMessage(Locale.ENGLISH)));
-	}
+        Assert.assertFalse(compoundMessage.getMessagePattern(Locale.ENGLISH).contains("{5}"));
+        Assert.assertTrue(compoundMessage.getLocalizedMessage(Locale.ENGLISH).contains(e.getLocalizedMessage(Locale.ENGLISH)));
+    }
 
-	private class  MessageImpl extends AbstractMessage {
+    private class MessageImpl extends AbstractMessage {
 
-		protected MessageImpl(@Nonnull String messageCode, @Nonnull MessageLevel messageLevel, @Nullable Object... parameters) {
-			super(messageCode, messageLevel, parameters);
-		}
+        protected MessageImpl(@Nonnull String messageCode, @Nonnull MessageLevel messageLevel, @Nullable Object... parameters) {
+            super(messageCode, messageLevel, parameters);
+        }
 
-		@Override
-		protected String getMessagePattern(@Nonnull Locale locale) {
-			return getMessageCode();
-		}
-	}
+        @Override
+        protected String getMessagePattern(@Nonnull Locale locale) {
+            return getMessageCode();
+        }
+    }
 
 }

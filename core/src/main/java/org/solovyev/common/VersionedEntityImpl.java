@@ -70,12 +70,18 @@ public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof VersionedEntityImpl)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof VersionedEntityImpl)) {
+            return false;
+        }
 
         VersionedEntityImpl that = (VersionedEntityImpl) o;
 
-        if (!id.equals(that.id)) return false;
+        if (!id.equals(that.id)) {
+            return false;
+        }
 
         return true;
     }

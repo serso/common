@@ -24,6 +24,7 @@ package org.solovyev.common.collections.tree;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
@@ -117,7 +118,7 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
             }
         });
 
-        if ( result == null ) {
+        if (result == null) {
             result = this.addChild(value);
         }
 
@@ -178,7 +179,7 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
         int depth = 0;
 
         TreeNode<?> parent = this.parent;
-        while( parent != null ) {
+        while (parent != null) {
             parent = parent.getParent();
             depth++;
         }

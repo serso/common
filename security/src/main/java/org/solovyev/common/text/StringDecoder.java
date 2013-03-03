@@ -23,7 +23,9 @@
 package org.solovyev.common.text;
 
 import org.apache.commons.codec.Charsets;
+
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.Converter;
 
 /**

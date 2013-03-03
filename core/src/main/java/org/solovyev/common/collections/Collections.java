@@ -24,6 +24,7 @@ package org.solovyev.common.collections;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.Identifiable;
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.Selectable;

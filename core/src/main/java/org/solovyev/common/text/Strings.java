@@ -24,6 +24,7 @@ package org.solovyev.common.text;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.Bytes;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.collections.LoopData;
@@ -50,7 +51,7 @@ public class Strings {
     **********************************************************************
     */
 
-	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     private static final String EMPTY = "";
 
@@ -270,9 +271,9 @@ public class Strings {
         final char newline = newLineStr.charAt(0);
 
         final StringBuilder result = new StringBuilder(text.length());
-        for ( int i = 0; i < text.length(); i++ ) {
+        for (int i = 0; i < text.length(); i++) {
             final char ch = text.charAt(i);
-            if ( newline == ch ) {
+            if (newline == ch) {
                 result.append("<br>");
             } else {
                 result.append(ch);

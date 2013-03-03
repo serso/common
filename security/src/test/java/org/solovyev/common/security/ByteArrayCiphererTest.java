@@ -24,7 +24,7 @@ public class ByteArrayCiphererTest {
 
         final Random random = new Random(new Date().getTime());
 
-        for ( int i = 0; i < 1000; i++ ) {
+        for (int i = 0; i < 1000; i++) {
             final SecretKeyProvider secretKeyProvider = Sha1HashSecretKeyProvider.newAesInstance();
             final SecretKey sk = secretKeyProvider.getSecretKey(Strings.generateRandomString(10), Bytes.generateRandomBytes(10));
 

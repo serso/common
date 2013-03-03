@@ -23,6 +23,7 @@
 package org.solovyev.common.filter;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;

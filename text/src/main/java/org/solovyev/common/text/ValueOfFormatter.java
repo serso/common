@@ -92,6 +92,14 @@ public class ValueOfFormatter<T> implements Formatter<T> {
 
     @Override
     public String formatValue(@Nullable T t) throws IllegalArgumentException {
-        return t == null ? (processNulls ? String.valueOf(t) : null) : String.valueOf(t);
+        if (t == null) {
+            if (processNulls) {
+                return String.valueOf(t);
+            } else {
+                return null;
+            }
+        } else {
+            return String.valueOf(t);
+        }
     }
 }

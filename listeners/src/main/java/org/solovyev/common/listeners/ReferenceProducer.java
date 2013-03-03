@@ -27,10 +27,10 @@ import javax.annotation.Nonnull;
 import java.lang.ref.Reference;
 
 /**
-* User: serso
-* Date: 2/1/13
-* Time: 9:33 PM
-*/
+ * User: serso
+ * Date: 2/1/13
+ * Time: 9:33 PM
+ */
 public interface ReferenceProducer<R extends Reference<L>, L> {
 
     @Nonnull

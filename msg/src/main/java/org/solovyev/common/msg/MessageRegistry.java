@@ -42,10 +42,9 @@ public interface MessageRegistry {
      *
      * @param message message to be added
      */
-	void addMessage(@Nonnull Message message);
+    void addMessage(@Nonnull Message message);
 
     /**
-     *
      * @return true if there is any message available in the registry
      */
     boolean hasMessage();
@@ -56,6 +55,6 @@ public interface MessageRegistry {
      *
      * @return message from the registry
      */
-	@Nonnull
-	Message getMessage();
+    @Nonnull
+    Message getMessage();
 }

@@ -1,6 +1,7 @@
 package org.solovyev.common;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.collections.Collections;
 
 import java.io.UnsupportedEncodingException;

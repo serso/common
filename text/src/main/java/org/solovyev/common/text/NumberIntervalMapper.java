@@ -24,6 +24,7 @@ package org.solovyev.common.text;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.interval.IntervalLimit;
 import org.solovyev.common.interval.Intervals;

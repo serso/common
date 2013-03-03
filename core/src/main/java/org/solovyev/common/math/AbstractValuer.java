@@ -23,6 +23,7 @@
 package org.solovyev.common.math;
 
 import javax.annotation.Nonnull;
+
 import org.solovyev.common.Converter;
 
 /**

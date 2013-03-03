@@ -24,6 +24,7 @@ package org.solovyev.common.listeners;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.filter.FilterType;
@@ -72,9 +73,8 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
      * This producer might return different types of references for different listeners if needed.
      *
      * @param referenceProducer reference producer. This producer might return different types of references if needed for different listeners
-     * @param <R> type of reference
-     * @param <L> type of listener
-     *
+     * @param <R>               type of reference
+     * @param <L>               type of listener
      * @return listeners container
      */
     @Nonnull
@@ -122,7 +122,7 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
                     public boolean apply(@Nullable R r) {
                         final L l = r != null ? r.get() : null;
                         boolean removed = listener.equals(l);
-                        if ( removed ) {
+                        if (removed) {
                             // we must clean reference in order to avoid memory leak
                             ((HardReferenceProducer) referenceProducer).remove((WeakReference) r);
                         }
@@ -156,10 +156,10 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
             result = new ArrayList<L>(listeners.size());
 
             // copy listeners and remove garbage collected references
-            for ( Iterator<R> it = listeners.iterator(); it.hasNext();  ) {
+            for (Iterator<R> it = listeners.iterator(); it.hasNext(); ) {
                 final R r = it.next();
                 final L l = r.get();
-                if ( l == null ) {
+                if (l == null) {
                     it.remove();
                 } else {
                     result.add(l);
@@ -177,9 +177,9 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
 
         final List<LE> result = new ArrayList<LE>(listeners.size());
         for (L listener : listeners) {
-           if (type.isAssignableFrom(listener.getClass())) {
+            if (type.isAssignableFrom(listener.getClass())) {
                 result.add((LE) listener);
-           }
+            }
         }
 
         return result;

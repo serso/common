@@ -24,6 +24,7 @@ package org.solovyev.common.interval;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import org.solovyev.common.JObject;
 import org.solovyev.common.Objects;
 
@@ -251,14 +252,24 @@ class IntervalLimitImpl<T extends Comparable<T>> extends JObject implements Inte
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof IntervalLimitImpl)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof IntervalLimitImpl)) {
+            return false;
+        }
 
         IntervalLimitImpl that = (IntervalLimitImpl) o;
 
-        if (closed != that.closed) return false;
-        if (type != that.type) return false;
-        if (value != null ? !value.equals(that.value) : that.value != null) return false;
+        if (closed != that.closed) {
+            return false;
+        }
+        if (type != that.type) {
+            return false;
+        }
+        if (value != null ? !value.equals(that.value) : that.value != null) {
+            return false;
+        }
 
         return true;
     }
