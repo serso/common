@@ -66,15 +66,14 @@ public class SynchronizedOneInstanceMultiSet<E> extends SynchronizedMultiSet<E> 
     */
 
     @Nonnull
-    @Override
-    protected OneInstanceMultiSet<E> delegate() {
-        return (OneInstanceMultiSet<E>) super.delegate();
+    protected OneInstanceMultiSet<E> getDelegate() {
+        return (OneInstanceMultiSet<E>) delegate;
     }
 
     @Override
     public int setCount(E e, int count) {
         synchronized (mutex) {
-            return delegate().setCount(e, count);
+            return getDelegate().setCount(e, count);
         }
     }
 }

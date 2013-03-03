@@ -22,8 +22,9 @@
 
 package org.solovyev.common.msg;
 
-import javax.annotation.Nonnull;
 import org.solovyev.common.SynchronizedObject;
+
+import javax.annotation.Nonnull;
 
 class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> implements MessageRegistry {
 
@@ -63,14 +64,14 @@ class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> im
     @Override
     public void addMessage(@Nonnull Message message) {
         synchronized (this.mutex) {
-            delegate().addMessage(message);
+            delegate.addMessage(message);
         }
     }
 
     @Override
     public boolean hasMessage() {
         synchronized (this.mutex) {
-            return delegate().hasMessage();
+            return delegate.hasMessage();
         }
     }
 
@@ -78,7 +79,7 @@ class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> im
     @Override
     public Message getMessage() {
         synchronized (this.mutex) {
-            return delegate().getMessage();
+            return delegate.getMessage();
         }
     }
 }

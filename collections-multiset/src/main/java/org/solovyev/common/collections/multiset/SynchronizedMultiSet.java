@@ -22,9 +22,9 @@
 
 package org.solovyev.common.collections.multiset;
 
-import javax.annotation.Nonnull;
 import org.solovyev.common.SynchronizedObject;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -73,7 +73,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     @Override
     public int count(E e) {
         synchronized (mutex) {
-            return delegate().count(e);
+            return delegate.count(e);
         }
     }
 
@@ -81,7 +81,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     @Override
     public Collection<E> getAll(E e) {
         synchronized (mutex) {
-            return delegate().getAll(e);
+            return delegate.getAll(e);
         }
     }
 
@@ -89,42 +89,42 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     @Override
     public Set<E> toElementSet() {
         synchronized (mutex) {
-            return delegate().toElementSet();
+            return delegate.toElementSet();
         }
     }
 
     @Override
     public boolean add(E e, int count) {
         synchronized (mutex) {
-            return delegate().add(e, count);
+            return delegate.add(e, count);
         }
     }
 
     @Override
     public int remove(E e, int count) {
         synchronized (mutex) {
-            return delegate().remove(e, count);
+            return delegate.remove(e, count);
         }
     }
 
     @Override
     public int size() {
         synchronized (mutex) {
-            return delegate().size();
+            return delegate.size();
         }
     }
 
     @Override
     public boolean isEmpty() {
         synchronized (mutex) {
-            return delegate().isEmpty();
+            return delegate.isEmpty();
         }
     }
 
     @Override
     public boolean contains(Object o) {
         synchronized (mutex) {
-            return delegate().contains(o);
+            return delegate.contains(o);
         }
     }
 
@@ -133,7 +133,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     @Override
     public Iterator<E> iterator() {
         synchronized (mutex) {
-            return delegate().iterator();
+            return delegate.iterator();
         }
     }
 
@@ -141,7 +141,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     @Override
     public Object[] toArray() {
         synchronized (mutex) {
-            return delegate().toArray();
+            return delegate.toArray();
         }
     }
 
@@ -149,56 +149,56 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     @Override
     public <T> T[] toArray(@Nonnull T[] a) {
         synchronized (mutex) {
-            return delegate().toArray(a);
+            return delegate.toArray(a);
         }
     }
 
     @Override
     public boolean add(E e) {
         synchronized (mutex) {
-            return delegate().add(e);
+            return delegate.add(e);
         }
     }
 
     @Override
     public boolean remove(Object o) {
         synchronized (mutex) {
-            return delegate().remove(o);
+            return delegate.remove(o);
         }
     }
 
     @Override
     public boolean containsAll(@Nonnull Collection<?> c) {
         synchronized (mutex) {
-            return delegate().containsAll(c);
+            return delegate.containsAll(c);
         }
     }
 
     @Override
     public boolean addAll(@Nonnull Collection<? extends E> c) {
         synchronized (mutex) {
-            return delegate().addAll(c);
+            return delegate.addAll(c);
         }
     }
 
     @Override
     public boolean removeAll(@Nonnull Collection<?> c) {
         synchronized (mutex) {
-            return delegate().removeAll(c);
+            return delegate.removeAll(c);
         }
     }
 
     @Override
     public boolean retainAll(@Nonnull Collection<?> c) {
         synchronized (mutex) {
-            return delegate().retainAll(c);
+            return delegate.retainAll(c);
         }
     }
 
     @Override
     public void clear() {
         synchronized (mutex) {
-            delegate().clear();
+            delegate.clear();
         }
     }
 }

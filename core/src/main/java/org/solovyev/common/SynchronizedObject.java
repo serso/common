@@ -23,6 +23,7 @@
 package org.solovyev.common;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 
 /**
  * User: serso
@@ -31,8 +32,9 @@ import javax.annotation.Nonnull;
  */
 public abstract class SynchronizedObject<D> {
 
+    @GuardedBy("mutex")
     @Nonnull
-    private final D delegate;
+    protected final D delegate;
 
     @Nonnull
     protected final Object mutex;
@@ -45,11 +47,6 @@ public abstract class SynchronizedObject<D> {
     protected SynchronizedObject(@Nonnull D delegate, @Nonnull Object mutex) {
         this.delegate = delegate;
         this.mutex = mutex;
-    }
-
-    @Nonnull
-    protected D delegate() {
-        return delegate;
     }
 
     // for manually synchronization it is allows to use mutex

@@ -22,14 +22,16 @@
 
 package org.solovyev.common.history;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.Objects;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@NotThreadSafe
 public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
 
     /*
