@@ -126,7 +126,7 @@ public class Strings {
     }
 
     @NotNull
-    public static Character[] toObject(char[] array) {
+    public static Character[] toObjects(char[] array) {
         if (array == null || array.length == 0) {
             return EMPTY_CHARACTER_OBJECT_ARRAY;
         }
@@ -134,7 +134,7 @@ public class Strings {
         final Character[] result = new Character[array.length];
 
         for (int i = 0; i < array.length; i++) {
-            result[i] = new Character(array[i]);
+            result[i] = array[i];
         }
         return result;
     }

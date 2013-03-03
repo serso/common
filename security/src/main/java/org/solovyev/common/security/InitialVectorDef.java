@@ -30,7 +30,7 @@ public class InitialVectorDef {
     }
 
     public InitialVectorDef(@NotNull byte[] bytes) {
-        this.bytes = bytes;
+        this.bytes = Arrays.copyOf(bytes, bytes.length);
         this.length = bytes.length;
         this.randomAlgorithm = "";
     }

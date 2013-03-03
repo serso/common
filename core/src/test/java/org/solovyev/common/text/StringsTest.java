@@ -46,4 +46,18 @@ public class StringsTest {
             generatedStrings.put(newString, newString);
         }
     }
+
+    @Test
+    public void testToCharacterObjects() throws Exception {
+        char[] chars = new char[]{'2', '3', 'a'};
+        Character[] characters = Strings.toObjects(chars);
+        Assert.assertTrue(chars.length == characters.length);
+        for (int i = 0; i < characters.length; i++) {
+            Character character = characters[i];
+            char ch = chars[i];
+            Assert.assertTrue(character.equals(ch));
+
+        }
+
+    }
 }
