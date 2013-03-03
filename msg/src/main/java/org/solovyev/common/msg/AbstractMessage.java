@@ -24,11 +24,11 @@ package org.solovyev.common.msg;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.HashCodeBuilder;
 import org.solovyev.common.Objects;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.equals.ListEqualizer;
 import org.solovyev.common.text.Strings;
-import org.solovyev.common.HashCodeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public abstract class AbstractMessage implements Message {
 	private final String messageCode;
 
 	@NotNull
-	private final List<?> parameters;
+	private final List<Object> parameters;
 
 	@NotNull
 	private final MessageLevel messageLevel;
@@ -85,7 +85,7 @@ public abstract class AbstractMessage implements Message {
 
 		final AbstractMessage that = (AbstractMessage) o;
 
-		if (!Objects.areEqual(parameters, that.parameters, ListEqualizer.newWithNestedEqualizer(true, null))) return false;
+        if (!Objects.areEqual(parameters, that.parameters, ListEqualizer.newWithNaturalEquals(true))) return false;
 		if (!messageCode.equals(that.messageCode)) return false;
 		if (!messageLevel.equals(that.messageLevel)) return false;
 
