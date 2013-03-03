@@ -40,7 +40,7 @@ public class SynchronizedHistoryHelper<T> extends SynchronizedObject<HistoryHelp
     }
 
     @Nonnull
-    public static <T> HistoryHelper<T> wrap(@Nonnull HistoryHelper<T> delegate) {
+    public static <T> SynchronizedHistoryHelper<T> wrap(@Nonnull HistoryHelper<T> delegate) {
         return new SynchronizedHistoryHelper<T>(delegate);
     }
 
