@@ -23,7 +23,7 @@
 package org.solovyev.common.listeners;
 
 import junit.framework.Assert;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.junit.Test;
 import org.solovyev.common.MutableObject;
 
@@ -95,14 +95,14 @@ public class EventListenersImplTest {
         final CountDownLatch latch = new CountDownLatch(1);
         final MutableObject<Thread> eventThread = new MutableObject<Thread>();
         listeners.addListener(new JEventListener<JEvent>() {
-            @NotNull
+            @Nonnull
             @Override
             public Class<JEvent> getEventType() {
                 return JEvent.class;
             }
 
             @Override
-            public void onEvent(@NotNull JEvent event) {
+            public void onEvent(@Nonnull JEvent event) {
                 eventThread.setObject(Thread.currentThread());
                 latch.countDown();
             }
@@ -123,14 +123,14 @@ public class EventListenersImplTest {
         final CountDownLatch latch = new CountDownLatch(1);
         final MutableObject<Thread> eventThread = new MutableObject<Thread>();
         listeners.addListener(new JEventListener<JEvent>() {
-            @NotNull
+            @Nonnull
             @Override
             public Class<JEvent> getEventType() {
                 return JEvent.class;
             }
 
             @Override
-            public void onEvent(@NotNull JEvent event) {
+            public void onEvent(@Nonnull JEvent event) {
                 eventThread.setObject(Thread.currentThread());
                 latch.countDown();
             }
@@ -168,14 +168,14 @@ public class EventListenersImplTest {
 
         final WeakReference<TestEventListener2> l2Ref = new WeakReference<TestEventListener2>(l2);
         listeners.addListener(new JEventListener<JEvent>() {
-            @NotNull
+            @Nonnull
             @Override
             public Class<JEvent> getEventType() {
                 return JEvent.class;
             }
 
             @Override
-            public void onEvent(@NotNull JEvent event) {
+            public void onEvent(@Nonnull JEvent event) {
                 Assert.assertNull(l2Ref.get());
             }
         });
@@ -210,14 +210,14 @@ public class EventListenersImplTest {
 
         final WeakReference<TestEventListener2> l2Ref = new WeakReference<TestEventListener2>(l2);
         listeners.addListener(new JEventListener<JEvent>() {
-            @NotNull
+            @Nonnull
             @Override
             public Class<JEvent> getEventType() {
                 return JEvent.class;
             }
 
             @Override
-            public void onEvent(@NotNull JEvent event) {
+            public void onEvent(@Nonnull JEvent event) {
                 Assert.assertEquals(3, l3.get().getCount());
             }
         });
@@ -305,10 +305,10 @@ public class EventListenersImplTest {
 
     private static abstract class AbstractTestEventListener<E extends JEvent> extends AbstractJEventListener<E> {
 
-        @NotNull
+        @Nonnull
         private final AtomicInteger counter = new AtomicInteger();
 
-        protected AbstractTestEventListener(@NotNull Class<E> eventType) {
+        protected AbstractTestEventListener(@Nonnull Class<E> eventType) {
             super(eventType);
         }
 
@@ -329,7 +329,7 @@ public class EventListenersImplTest {
         }
 
         @Override
-        public void onEvent(@NotNull TestEvent1 event) {
+        public void onEvent(@Nonnull TestEvent1 event) {
             count();
         }
     }
@@ -345,7 +345,7 @@ public class EventListenersImplTest {
         }
 
         @Override
-        public void onEvent(@NotNull TestEvent2 event) {
+        public void onEvent(@Nonnull TestEvent2 event) {
            count();
         }
     }
@@ -361,7 +361,7 @@ public class EventListenersImplTest {
         }
 
         @Override
-        public void onEvent(@NotNull TestEvent3 event) {
+        public void onEvent(@Nonnull TestEvent3 event) {
             count();
         }
     }

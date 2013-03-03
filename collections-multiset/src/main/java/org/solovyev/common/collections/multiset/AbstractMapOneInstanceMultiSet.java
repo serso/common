@@ -22,8 +22,8 @@
 
 package org.solovyev.common.collections.multiset;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 
@@ -42,7 +42,7 @@ public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> imple
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final Map<E, Value<E>> backingMap;
 
     /*
@@ -53,7 +53,7 @@ public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> imple
     **********************************************************************
     */
 
-    protected AbstractMapOneInstanceMultiSet(@NotNull Map<E, Value<E>> backingMap) {
+    protected AbstractMapOneInstanceMultiSet(@Nonnull Map<E, Value<E>> backingMap) {
         this.backingMap = backingMap;
     }
 
@@ -103,7 +103,7 @@ public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> imple
         return value == null ? 0 : value.count;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Collection<E> getAll(E e) {
         final Value<E> value = this.backingMap.get(e);
@@ -115,20 +115,20 @@ public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> imple
         }
     }
 
-    @NotNull
-    private Collection<E> getAsList(@NotNull Value<E> value) {
+    @Nonnull
+    private Collection<E> getAsList(@Nonnull Value<E> value) {
         final Object[] array = getAsArray(value);
         return (Collection<E>) Arrays.asList(array);
     }
 
-    @NotNull
-    private E[] getAsArray(@NotNull Value<E> value) {
+    @Nonnull
+    private E[] getAsArray(@Nonnull Value<E> value) {
         final Object[] result = new Object[value.count];
         Arrays.fill(result, value.element);
         return (E[]) result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Set<E> toElementSet() {
         final Set<E> result = new HashSet<E>(this.backingMap.size());
@@ -172,7 +172,7 @@ public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> imple
         return count0(e) > 0;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<E> iterator() {
         return new MapBasedMultiSetIterator();
@@ -223,7 +223,7 @@ public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> imple
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         final Object[] result = new Object[size()];
@@ -238,9 +238,9 @@ public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> imple
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] result) {
+    public <T> T[] toArray(@Nonnull T[] result) {
 
         int j = 0;
         for (Value<E> value : backingMap.values()) {
@@ -259,18 +259,18 @@ public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> imple
 
     protected static class Value<E> {
 
-        @NotNull
+        @Nonnull
         private E element;
 
-        @NotNull
+        @Nonnull
         private Integer count;
 
-        private Value(@NotNull E element, @NotNull Integer count) {
+        private Value(@Nonnull E element, @Nonnull Integer count) {
             this.element = element;
             this.count = count;
         }
 
-        @NotNull
+        @Nonnull
         public Integer addAndGetCount(int offset) {
             this.count += offset;
             return this.count;

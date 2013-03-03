@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Bytes;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.collections.LoopData;
@@ -106,17 +106,17 @@ public class Strings {
         return s == null || s.length() == 0;
     }
 
-    @NotNull
-    public static String getNotEmpty(@Nullable CharSequence s, @NotNull String defaultValue) {
+    @Nonnull
+    public static String getNotEmpty(@Nullable CharSequence s, @Nonnull String defaultValue) {
         return isEmpty(s) ? defaultValue : s.toString();
     }
 
-    @NotNull
-    public static <T> String getNotEmpty(@Nullable T t, @NotNull String defaultValue) {
+    @Nonnull
+    public static <T> String getNotEmpty(@Nullable T t, @Nonnull String defaultValue) {
         return t == null ? defaultValue : t.toString();
     }
 
-    public static String[] toString(@NotNull Enum... enums) {
+    public static String[] toString(@Nonnull Enum... enums) {
         String[] result = new String[enums.length];
         LoopData ld = new LoopData(enums);
         for (Enum anEnum : enums) {
@@ -125,7 +125,7 @@ public class Strings {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     public static Character[] toObjects(char[] array) {
         if (array == null || array.length == 0) {
             return EMPTY_CHARACTER_OBJECT_ARRAY;
@@ -139,7 +139,7 @@ public class Strings {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     public static String fromStackTrace(@Nullable StackTraceElement... stackTraceElements) {
         final StringBuilder sb = new StringBuilder();
 
@@ -154,8 +154,8 @@ public class Strings {
         return sb.toString();
     }
 
-    @NotNull
-    public static String repeat(@NotNull String str, int repeat) {
+    @Nonnull
+    public static String repeat(@Nonnull String str, int repeat) {
         // Performance tuned for 2.0 (JDK1.4)
 
         if (repeat <= 0) {
@@ -191,7 +191,7 @@ public class Strings {
         }
     }
 
-    @NotNull
+    @Nonnull
     public static String repeat(char ch, int repeat) {
         char[] buf = new char[repeat];
         for (int i = repeat - 1; i >= 0; i--) {
@@ -200,7 +200,7 @@ public class Strings {
         return new String(buf);
     }
 
-    @NotNull
+    @Nonnull
     public static String generateRandomString(int length) {
 
         final StringBuilder result = new StringBuilder(length);
@@ -218,18 +218,18 @@ public class Strings {
         return result.toString();
     }
 
-    @NotNull
-    public static String toHex(@NotNull String s) {
+    @Nonnull
+    public static String toHex(@Nonnull String s) {
         return Bytes.toHex(s);
     }
 
-    @NotNull
-    public static String fromHex(@NotNull CharSequence hex) {
+    @Nonnull
+    public static String fromHex(@Nonnull CharSequence hex) {
         return Bytes.fromHex(hex);
     }
 
-    @NotNull
-    public static String getAllEnumValues(@NotNull Class<? extends Enum> enumClass) {
+    @Nonnull
+    public static String getAllEnumValues(@Nonnull Class<? extends Enum> enumClass) {
         final StringBuilder result = new StringBuilder(500);
 
         boolean first = true;
@@ -245,8 +245,8 @@ public class Strings {
         return result.toString();
     }
 
-    @NotNull
-    public static String getAllValues(@NotNull List<?> elements) {
+    @Nonnull
+    public static String getAllValues(@Nonnull List<?> elements) {
         final StringBuilder result = new StringBuilder(10 * elements.size());
 
         boolean first = true;
@@ -262,8 +262,8 @@ public class Strings {
         return result.toString();
     }
 
-    @NotNull
-    public static String toHtml(@NotNull CharSequence text) {
+    @Nonnull
+    public static String toHtml(@Nonnull CharSequence text) {
         final String newLineStr = Strings.LINE_SEPARATOR;
         assert newLineStr.length() == 1;
 

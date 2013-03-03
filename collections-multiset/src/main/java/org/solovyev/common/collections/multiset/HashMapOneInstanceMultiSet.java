@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multiset;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,18 +54,18 @@ public class HashMapOneInstanceMultiSet<E> extends AbstractMapOneInstanceMultiSe
         super(new HashMap<E, Value<E>>(m));
     }
 
-    @NotNull
+    @Nonnull
     public static <E> HashMapOneInstanceMultiSet<E> newInstance() {
         return new HashMapOneInstanceMultiSet<E>();
     }
 
-    @NotNull
+    @Nonnull
     public static <E> HashMapOneInstanceMultiSet<E> newInstance(int capacity) {
         return new HashMapOneInstanceMultiSet<E>(capacity);
     }
 
-    @NotNull
-    public static <E> HashMapOneInstanceMultiSet<E> from(@NotNull Map<? extends E, ? extends Value<E>> m) {
+    @Nonnull
+    public static <E> HashMapOneInstanceMultiSet<E> from(@Nonnull Map<? extends E, ? extends Value<E>> m) {
         return new HashMapOneInstanceMultiSet<E>(m);
     }
 }

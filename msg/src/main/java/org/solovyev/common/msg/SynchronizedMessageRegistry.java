@@ -22,7 +22,7 @@
 
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.SynchronizedObject;
 
 class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> implements MessageRegistry {
@@ -34,21 +34,21 @@ class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> im
     *
     **********************************************************************
     */
-    private SynchronizedMessageRegistry(@NotNull MessageRegistry delegate) {
+    private SynchronizedMessageRegistry(@Nonnull MessageRegistry delegate) {
         super(delegate);
     }
 
-    private SynchronizedMessageRegistry(@NotNull MessageRegistry delegate, @NotNull Object mutex) {
+    private SynchronizedMessageRegistry(@Nonnull MessageRegistry delegate, @Nonnull Object mutex) {
         super(delegate, mutex);
     }
 
-    @NotNull
-    public static MessageRegistry wrap(@NotNull MessageRegistry delegate) {
+    @Nonnull
+    public static MessageRegistry wrap(@Nonnull MessageRegistry delegate) {
         return new SynchronizedMessageRegistry(delegate);
     }
 
-    @NotNull
-    public static MessageRegistry wrap(@NotNull MessageRegistry delegate, @NotNull Object mutex) {
+    @Nonnull
+    public static MessageRegistry wrap(@Nonnull MessageRegistry delegate, @Nonnull Object mutex) {
         return new SynchronizedMessageRegistry(delegate, mutex);
     }
 
@@ -61,7 +61,7 @@ class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> im
     */
 
     @Override
-    public void addMessage(@NotNull Message message) {
+    public void addMessage(@Nonnull Message message) {
         synchronized (this.mutex) {
             delegate().addMessage(message);
         }
@@ -74,7 +74,7 @@ class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> im
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Message getMessage() {
         synchronized (this.mutex) {

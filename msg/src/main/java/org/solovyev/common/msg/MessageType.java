@@ -22,7 +22,7 @@
 
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -39,20 +39,20 @@ public enum MessageType implements MessageLevel {
 
     private final int messageLevel;
 
-    @NotNull
+    @Nonnull
     private final String stringValue;
 
-    MessageType(int messageLevel, @NotNull String stringValue) {
+    MessageType(int messageLevel, @Nonnull String stringValue) {
         this.messageLevel = messageLevel;
         this.stringValue = stringValue;
     }
 
-    @NotNull
+    @Nonnull
     public String getStringValue() {
         return stringValue;
     }
 
-    @NotNull
+    @Nonnull
     public static MessageType getLowestMessageType() {
         return info;
     }
@@ -62,7 +62,7 @@ public enum MessageType implements MessageLevel {
         return messageLevel;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getName() {
         return stringValue;

@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class EnumMapper<T extends Enum> implements Mapper<T> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final static Map<Class<? extends Enum>, Mapper<?>> cachedMappers = new HashMap<Class<? extends Enum>, Mapper<?>>();
 
     /*
@@ -54,7 +54,7 @@ public class EnumMapper<T extends Enum> implements Mapper<T> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final Class<T> enumClass;
 
     /*
@@ -65,12 +65,12 @@ public class EnumMapper<T extends Enum> implements Mapper<T> {
     **********************************************************************
     */
 
-    private EnumMapper(@NotNull Class<T> enumClass) {
+    private EnumMapper(@Nonnull Class<T> enumClass) {
         this.enumClass = enumClass;
     }
 
-    @NotNull
-    public static <T extends Enum> Mapper<T> of(@NotNull Class<T> enumClass) {
+    @Nonnull
+    public static <T extends Enum> Mapper<T> of(@Nonnull Class<T> enumClass) {
         Mapper<T> result = (Mapper<T>) cachedMappers.get(enumClass);
         if (result == null) {
             // do not care about synchronization

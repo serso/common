@@ -22,8 +22,8 @@
 
 package org.solovyev.common.collections.tree;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
 import java.util.Collection;
@@ -41,45 +41,45 @@ import java.util.Iterator;
 public interface MutableTreeNode<T> extends TreeNode<T> {
 
     @Nullable
-    MutableTreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder);
+    MutableTreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder);
 
     void setValue(@Nullable T value);
 
-    @NotNull
+    @Nonnull
     Collection<? extends MutableTreeNode<T>> getOwnChildren();
 
-    @NotNull
+    @Nonnull
     Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator();
 
-    @NotNull
+    @Nonnull
     Collection<? extends MutableTreeNode<T>> getAllChildren();
 
     /**
      * @param node node to be added. The parent specified in the node will be overwritten by this tree node
      */
-    void addChild(@NotNull MutableTreeNode<T> node);
+    void addChild(@Nonnull MutableTreeNode<T> node);
 
     /**
      * @param value data to be added in the node
      * @return just added tree node
      */
-    @NotNull
-    MutableTreeNode<T> addChild(@NotNull T value);
+    @Nonnull
+    MutableTreeNode<T> addChild(@Nonnull T value);
 
-    @NotNull
-    MutableTreeNode<T>  addChildIfNotExists(@NotNull T value);
+    @Nonnull
+    MutableTreeNode<T>  addChildIfNotExists(@Nonnull T value);
 
     /**
      * Method removes from OWN children elements which are applied by predicate
      * @param predicate removal condition
      */
-    void removeOwnChildIf(@NotNull JPredicate<TreeNode<T>> predicate);
+    void removeOwnChildIf(@Nonnull JPredicate<TreeNode<T>> predicate);
 
     /**
      * Method removes from ALL children elements which are applied by predicate
      * @param predicate removal condition
      */
-    void removeChildIf(@NotNull JPredicate<TreeNode<T>> predicate);
+    void removeChildIf(@Nonnull JPredicate<TreeNode<T>> predicate);
 
 
     /**

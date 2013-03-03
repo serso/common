@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,19 +33,19 @@ public class Selectable<T> {
 
     private boolean selected = false;
 
-    @NotNull
+    @Nonnull
     final private T value;
 
-    public Selectable(@NotNull T value) {
+    public Selectable(@Nonnull T value) {
         this.value = value;
     }
 
-    public Selectable(Boolean selected, @NotNull T value) {
+    public Selectable(Boolean selected, @Nonnull T value) {
         this.selected = selected;
         this.value = value;
     }
 
-    @NotNull
+    @Nonnull
     public T getValue() {
         return value;
     }

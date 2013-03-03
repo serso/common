@@ -22,7 +22,7 @@
 
 package org.solovyev.common.filter;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
@@ -35,13 +35,13 @@ import java.util.List;
  */
 public class FilterRulesChain<T> implements JPredicate<T> {
 
-    @NotNull
+    @Nonnull
     private final List<JPredicate<T>> filters = new ArrayList<JPredicate<T>>();
 
     public FilterRulesChain() {
     }
 
-    public void addFilterRule(@NotNull JPredicate<T> filterRule) {
+    public void addFilterRule(@Nonnull JPredicate<T> filterRule) {
         filters.add(filterRule);
     }
 

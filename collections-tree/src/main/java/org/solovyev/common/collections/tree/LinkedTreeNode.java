@@ -22,8 +22,8 @@
 
 package org.solovyev.common.collections.tree;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
@@ -43,13 +43,13 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
     @Nullable
     private TreeNode<T> parent;
 
-    @NotNull
+    @Nonnull
     private Collection<MutableTreeNode<T>> children = new ArrayList<MutableTreeNode<T>>();
 
     private LinkedTreeNode() {
     }
 
-    @NotNull
+    @Nonnull
     static <T> LinkedTreeNode<T> newInstance(@Nullable T value) {
         final LinkedTreeNode<T> result = new LinkedTreeNode<T>();
 
@@ -60,7 +60,7 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
 
     @Nullable
     @Override
-    public MutableTreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder) {
+    public MutableTreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder) {
         return org.solovyev.common.collections.Collections.find(children.iterator(), finder);
     }
 
@@ -69,19 +69,19 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
         this.value = value;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Collection<MutableTreeNode<T>> getOwnChildren() {
         return java.util.Collections.unmodifiableCollection(children);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator() {
         return this.children.iterator();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Collection<? extends MutableTreeNode<T>> getAllChildren() {
         final Collection<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(children);
@@ -94,22 +94,22 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
     }
 
     @Override
-    public void addChild(@NotNull MutableTreeNode<T> node) {
+    public void addChild(@Nonnull MutableTreeNode<T> node) {
         node.setParent(this);
         this.children.add(node);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public MutableTreeNode<T> addChild(@NotNull T value) {
+    public MutableTreeNode<T> addChild(@Nonnull T value) {
         final LinkedTreeNode<T> node = LinkedTreeNode.newInstance(value);
         addChild(node);
         return node;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public MutableTreeNode<T> addChildIfNotExists(@NotNull final T value) {
+    public MutableTreeNode<T> addChildIfNotExists(@Nonnull final T value) {
         MutableTreeNode<T> result = this.findOwnChild(new JPredicate<TreeNode<T>>() {
             @Override
             public boolean apply(@Nullable TreeNode<T> input) {
@@ -125,12 +125,12 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
     }
 
     @Override
-    public void removeOwnChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
+    public void removeOwnChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
         org.solovyev.common.collections.Collections.removeIf(this.children.iterator(), predicate);
     }
 
     @Override
-    public void removeChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
+    public void removeChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
         org.solovyev.common.collections.Collections.removeIf(this.iterator(), predicate);
     }
 
@@ -140,13 +140,13 @@ class LinkedTreeNode<T> implements MutableTreeNode<T> {
         return this.value;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<TreeNode<T>> iterator() {
         return new DepthTreeIterator<T>(this.children);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<? extends TreeNode<T>> getIterator() {
         return iterator();

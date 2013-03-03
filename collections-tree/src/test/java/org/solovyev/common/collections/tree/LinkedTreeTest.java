@@ -23,8 +23,8 @@
 package org.solovyev.common.collections.tree;
 
 import junit.framework.Assert;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.junit.Test;
 import org.solovyev.common.JPredicate;
 
@@ -52,7 +52,7 @@ public class LinkedTreeTest {
             └──── 13
                   └──── 14
      */
-    @NotNull
+    @Nonnull
     static MutableTree<Integer> createMockTree() {
         final MutableTree<Integer> result = Trees.newLinkedTree(1);
 

@@ -22,8 +22,8 @@
 
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.HashCodeBuilder;
 import org.solovyev.common.Objects;
 import org.solovyev.common.collections.Collections;
@@ -41,38 +41,38 @@ import java.util.Locale;
  */
 public abstract class AbstractMessage implements Message {
 
-	@NotNull
+	@Nonnull
 	private final String messageCode;
 
-	@NotNull
+	@Nonnull
 	private final List<Object> parameters;
 
-	@NotNull
+	@Nonnull
 	private final MessageLevel messageLevel;
 
-	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageLevel messageType, @Nullable Object... parameters) {
+	protected AbstractMessage(@Nonnull String messageCode, @Nonnull MessageLevel messageType, @Nullable Object... parameters) {
 		this(messageCode, messageType, Collections.asList(parameters));
 	}
 
-	protected AbstractMessage(@NotNull String messageCode, @NotNull MessageLevel messageType, @NotNull List<?> parameters) {
+	protected AbstractMessage(@Nonnull String messageCode, @Nonnull MessageLevel messageType, @Nonnull List<?> parameters) {
 		this.messageCode = messageCode;
 		this.parameters = new ArrayList<Object>(parameters);
 		this.messageLevel = messageType;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getMessageCode() {
 		return this.messageCode;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public List<Object> getParameters() {
 		return java.util.Collections.unmodifiableList(this.parameters);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public MessageLevel getMessageLevel() {
 		return this.messageLevel;
@@ -109,8 +109,8 @@ public abstract class AbstractMessage implements Message {
 	 * @param locale language to which parameters should be translated (if possible)
 	 * @return message as string with properly translated and set parameters
 	 */
-	@NotNull
-	public String getLocalizedMessage(@NotNull Locale locale) {
+	@Nonnull
+	public String getLocalizedMessage(@Nonnull Locale locale) {
 		String result = null;
 
 		final String messagePattern = getMessagePattern(locale);
@@ -121,12 +121,12 @@ public abstract class AbstractMessage implements Message {
 		return Strings.getNotEmpty(result, messageLevel.getName() + ": message code = " + messageCode);
 	}
 
-    @NotNull
+    @Nonnull
 	@Override
 	public String getLocalizedMessage() {
 		return this.getLocalizedMessage(Locale.getDefault());
 	}
 
 	@Nullable
-	protected abstract String getMessagePattern(@NotNull Locale locale);
+	protected abstract String getMessagePattern(@Nonnull Locale locale);
 }

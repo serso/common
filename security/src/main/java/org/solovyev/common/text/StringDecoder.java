@@ -23,7 +23,7 @@
 package org.solovyev.common.text;
 
 import org.apache.commons.codec.Charsets;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 
 /**
@@ -31,20 +31,20 @@ import org.solovyev.common.Converter;
  */
 public class StringDecoder implements Converter<String, byte[]> {
 
-    @NotNull
+    @Nonnull
     private static Converter<String, byte[]> instance = new StringDecoder();
 
     private StringDecoder() {
     }
 
-    @NotNull
+    @Nonnull
     public static Converter<String, byte[]> getInstance() {
         return instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public byte[] convert(@NotNull String s) {
+    public byte[] convert(@Nonnull String s) {
         return s.getBytes(Charsets.UTF_8);
     }
 }

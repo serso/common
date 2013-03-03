@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.tree;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
     /**
      * @return root of the tree (one unique tree node without parent)
      */
-    @NotNull
+    @Nonnull
     TreeNode<T> getRoot();
 
     /**
@@ -56,7 +56,7 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
      * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
      * @return iterator which iterates over all elements in the tree
      */
-    @NotNull
+    @Nonnull
     @Override
     TreeIterator<T> iterator();
 
@@ -64,9 +64,9 @@ public interface Tree<T> extends Iterable<TreeNode<T>> {
      * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
      * @return iterator which iterates over all elements in the tree
      */
-    @NotNull
+    @Nonnull
     TreeIterator<T> getIterator();
 
-    @NotNull
+    @Nonnull
     List<? extends TreeNode<T>> getAllNodes();
 }

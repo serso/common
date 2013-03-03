@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.joda.time.DateTime;
 
 /**
@@ -32,20 +32,20 @@ import org.joda.time.DateTime;
  */
 public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> {
 
-    @NotNull
+    @Nonnull
     private VersionedEntity<I> versionedEntity;
 
-    @NotNull
+    @Nonnull
     private DateTime creationDate;
 
-    @NotNull
+    @Nonnull
     private DateTime modificationDate;
 
     private DateVersionedEntityImpl() {
     }
 
-    @NotNull
-    public static <I> DateVersionedEntity<I> newEntity(@NotNull I id) {
+    @Nonnull
+    public static <I> DateVersionedEntity<I> newEntity(@Nonnull I id) {
         final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
         result.versionedEntity = new VersionedEntityImpl<I>(id);
@@ -55,8 +55,8 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
         return result;
     }
 
-    @NotNull
-    public static <I> DateVersionedEntity<I> newVersion(@NotNull DateVersionedEntity<I> dateVersionedEntity) {
+    @Nonnull
+    public static <I> DateVersionedEntity<I> newVersion(@Nonnull DateVersionedEntity<I> dateVersionedEntity) {
         final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
         // increase version
@@ -67,8 +67,8 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
         return result;
     }
 
-    @NotNull
-    public static <I> DateVersionedEntity<I> newInstance(@NotNull VersionedEntity<I> versionedEntity, @NotNull DateTime creationDate, @NotNull DateTime modificationDate) {
+    @Nonnull
+    public static <I> DateVersionedEntity<I> newInstance(@Nonnull VersionedEntity<I> versionedEntity, @Nonnull DateTime creationDate, @Nonnull DateTime modificationDate) {
         final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
         result.versionedEntity = versionedEntity;
@@ -78,26 +78,26 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public DateTime getCreationDate() {
         return this.creationDate;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public DateTime getModificationDate() {
         return this.modificationDate;
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public I getId() {
         return versionedEntity.getId();
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Integer getVersion() {
         return versionedEntity.getVersion();
     }
@@ -124,7 +124,7 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
         return versionedEntity.hashCode();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public DateVersionedEntityImpl<I> clone() {
         final DateVersionedEntityImpl<I> clone;

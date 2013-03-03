@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.interval.Interval;
 
 import java.util.Arrays;
@@ -44,7 +44,7 @@ public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private static final String DEFAULT_DELIMITER = ";";
 
     /*
@@ -55,13 +55,13 @@ public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final Formatter<T> formatter;
 
-    @NotNull
+    @Nonnull
     private final Parser<T> parser;
 
-    @NotNull
+    @Nonnull
     private final String delimiter;
 
     // used in getMapper method
@@ -76,23 +76,23 @@ public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements
     **********************************************************************
     */
 
-    protected AbstractIntervalMapper(@NotNull Formatter<T> formatter, @NotNull Parser<T> parser, @NotNull String delimiter) {
+    protected AbstractIntervalMapper(@Nonnull Formatter<T> formatter, @Nonnull Parser<T> parser, @Nonnull String delimiter) {
         this.formatter = formatter;
         this.parser = parser;
         this.delimiter = delimiter;
     }
 
-    protected AbstractIntervalMapper(@NotNull Mapper<T> mapper, @NotNull String delimiter) {
+    protected AbstractIntervalMapper(@Nonnull Mapper<T> mapper, @Nonnull String delimiter) {
         this.formatter = mapper;
         this.parser = mapper;
         this.delimiter = delimiter;
     }
 
-    protected AbstractIntervalMapper(@NotNull Formatter<T> formatter, @NotNull Parser<T> parser) {
+    protected AbstractIntervalMapper(@Nonnull Formatter<T> formatter, @Nonnull Parser<T> parser) {
         this(formatter, parser, DEFAULT_DELIMITER);
     }
 
-    protected AbstractIntervalMapper(@NotNull Mapper<T> mapper) {
+    protected AbstractIntervalMapper(@Nonnull Mapper<T> mapper) {
         this(mapper, DEFAULT_DELIMITER);
 
     }
@@ -123,20 +123,20 @@ public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements
         return newInstance(list.get(0), list.get(1));
     }
 
-    @NotNull
+    @Nonnull
     protected abstract Interval<T> newInstance(@Nullable T left, @Nullable T right);
 
-    @NotNull
+    @Nonnull
     public final Parser<T> getParser() {
         return parser;
     }
 
-    @NotNull
+    @Nonnull
     public final Formatter<T> getFormatter() {
         return formatter;
     }
 
-    @NotNull
+    @Nonnull
     public final Mapper<T> getMapper() {
         if (mapper == null) {
             mapper = CompositeMapper.newInstance(formatter, parser);

@@ -28,7 +28,7 @@ package org.solovyev.common.listeners;
  * Time: 10:40 AM
  */
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -40,13 +40,13 @@ import java.util.List;
 
 public class Announcer<T extends EventListener> {
 
-    @NotNull
+    @Nonnull
     private final T proxy;
 
-    @NotNull
+    @Nonnull
     private final List<T> listeners = new ArrayList<T>();
 
-    public Announcer(@NotNull Class<? extends T> listenerType) {
+    public Announcer(@Nonnull Class<? extends T> listenerType) {
         proxy = listenerType.cast(Proxy.newProxyInstance(
                 getClass().getClassLoader(),
                 new Class<?>[]{listenerType},
@@ -58,13 +58,13 @@ public class Announcer<T extends EventListener> {
                 }));
     }
 
-    public void addListener(@NotNull T listener) {
+    public void addListener(@Nonnull T listener) {
         if (!listeners.contains(listener)) {
             listeners.add(listener);
         }
     }
 
-    public void removeListener(@NotNull T listener) {
+    public void removeListener(@Nonnull T listener) {
         listeners.remove(listener);
     }
 
@@ -96,7 +96,7 @@ public class Announcer<T extends EventListener> {
         }
     }
 
-    public static <T extends EventListener> Announcer<T> to(@NotNull Class<? extends T> listenerType) {
+    public static <T extends EventListener> Announcer<T> to(@Nonnull Class<? extends T> listenerType) {
         return new Announcer<T>(listenerType);
     }
 }

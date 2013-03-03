@@ -1,6 +1,6 @@
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * See {@link MessageType} as default implementation of this class
@@ -28,6 +28,6 @@ public interface MessageLevel {
      *
      * @return string level identifier
      */
-    @NotNull
+    @Nonnull
     String getName();
 }

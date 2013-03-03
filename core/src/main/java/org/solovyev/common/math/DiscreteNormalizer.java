@@ -22,8 +22,8 @@
 
 package org.solovyev.common.math;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class DiscreteNormalizer implements Normalizer {
 
-    @NotNull
+    @Nonnull
     private final Normalizer normalizer;
 
     private final double min;

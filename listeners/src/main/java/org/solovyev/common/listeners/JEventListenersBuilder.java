@@ -22,7 +22,7 @@
 
 package org.solovyev.common.listeners;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.JBuilder;
 
 /**
@@ -36,19 +36,19 @@ public final class JEventListenersBuilder<L extends JEventListener<? extends E>,
 
     private boolean weakReference = true;
 
-    @NotNull
+    @Nonnull
     private final Class<E> baseEventType;
 
-    private JEventListenersBuilder(@NotNull Class<E> baseEventType) {
+    private JEventListenersBuilder(@Nonnull Class<E> baseEventType) {
         this.baseEventType = baseEventType;
     }
 
-    @NotNull
-    static <L extends JEventListener<? extends E>, E extends JEvent> JEventListenersBuilder<L, E> newFor(@NotNull Class<E> baseEventType) {
+    @Nonnull
+    static <L extends JEventListener<? extends E>, E extends JEvent> JEventListenersBuilder<L, E> newFor(@Nonnull Class<E> baseEventType) {
         return new JEventListenersBuilder<L, E>(baseEventType);
     }
 
-    @NotNull
+    @Nonnull
     static <L extends JEventListener<? extends JEvent>> JEventListenersBuilder<L, JEvent> newForJEvent() {
         return new JEventListenersBuilder<L, JEvent>(JEvent.class);
     }
@@ -57,37 +57,37 @@ public final class JEventListenersBuilder<L extends JEventListener<? extends E>,
      * Means that events must be fired on the same thread which calls {@link JEventListeners#fireEvent(E)} method
      * @return current builder
      */
-    @NotNull
+    @Nonnull
     public JEventListenersBuilder<L, E> onCallerThread() {
         this.eventThreadsCount = 0;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     public JEventListenersBuilder<L, E> onBackgroundThread() {
         this.eventThreadsCount = 1;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     public JEventListenersBuilder<L, E> onBackgroundThreads(int eventThreadsCount) {
         this.eventThreadsCount = eventThreadsCount;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     public JEventListenersBuilder<L, E> withWeakReferences() {
         this.weakReference = true;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     public JEventListenersBuilder<L, E> withHardReferences() {
         this.weakReference = false;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public JEventListeners<L, E> create() {
         final JEventListeners<L, E> result;

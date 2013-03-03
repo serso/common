@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * <p>
@@ -161,12 +161,12 @@ public class HashCodeBuilder {
         total = initialNonZeroOddNumber;
     }
 
-    @NotNull
+    @Nonnull
     public static HashCodeBuilder newInstance() {
         return new HashCodeBuilder();
     }
 
-    @NotNull
+    @Nonnull
     public static HashCodeBuilder newInstance(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber) {
         return new HashCodeBuilder(initialNonZeroOddNumber, multiplierNonZeroOddNumber);
     }

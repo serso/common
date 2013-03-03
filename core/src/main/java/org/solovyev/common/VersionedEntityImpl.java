@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,38 +31,38 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
 
-    @NotNull
+    @Nonnull
     private I id;
 
-    @NotNull
+    @Nonnull
     private Integer version = FIRST_VERSION;
 
-    public VersionedEntityImpl(@NotNull I id) {
+    public VersionedEntityImpl(@Nonnull I id) {
         this.id = id;
     }
 
-    public VersionedEntityImpl(@NotNull I id, @NotNull Integer version) {
+    public VersionedEntityImpl(@Nonnull I id, @Nonnull Integer version) {
         this.id = id;
         this.version = version;
     }
 
-    public VersionedEntityImpl(@NotNull VersionedEntity<I> versionedEntity) {
+    public VersionedEntityImpl(@Nonnull VersionedEntity<I> versionedEntity) {
         this.id = versionedEntity.getId();
         this.version = versionedEntity.getVersion();
     }
 
-    @NotNull
-    public static <I> VersionedEntity<I> newVersion(@NotNull VersionedEntity<I> versionedEntity) {
+    @Nonnull
+    public static <I> VersionedEntity<I> newVersion(@Nonnull VersionedEntity<I> versionedEntity) {
         return new VersionedEntityImpl<I>(versionedEntity.getId(), versionedEntity.getVersion() + 1);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public I getId() {
         return this.id;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Integer getVersion() {
         return version;
@@ -98,7 +98,7 @@ public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
                 '}';
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public VersionedEntityImpl<I> clone() {
         final VersionedEntityImpl<I> clone;

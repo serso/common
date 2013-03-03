@@ -22,7 +22,7 @@
 
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 import java.util.Locale;
@@ -44,19 +44,19 @@ public interface Message {
     /**
      * @return message code
      */
-	@NotNull
+	@Nonnull
 	public String getMessageCode();
 
     /**
      * @return list of message parameters
      */
-	@NotNull
+	@Nonnull
 	public List<Object> getParameters();
 
     /**
      * @return message level
      */
-	@NotNull
+	@Nonnull
 	public MessageLevel getMessageLevel();
 
     /**
@@ -65,13 +65,13 @@ public interface Message {
      *
      * @return message string translated to specified locale
      */
-	@NotNull
-	public String getLocalizedMessage(@NotNull Locale locale);
+	@Nonnull
+	public String getLocalizedMessage(@Nonnull Locale locale);
 
     /**
      *
      * @return message string translated to deault locale (Locale.getDefault())
      */
-	@NotNull
+	@Nonnull
 	public String getLocalizedMessage();
 }

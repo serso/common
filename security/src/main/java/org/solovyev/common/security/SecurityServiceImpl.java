@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,56 +31,56 @@ import org.jetbrains.annotations.NotNull;
  */
 class SecurityServiceImpl<E, D, H> implements SecurityService<E, D, H> {
 
-    @NotNull
+    @Nonnull
     private Cipherer<E, D> cipherer;
 
-    @NotNull
+    @Nonnull
     private SecretKeyProvider secretKeyProvider;
 
-    @NotNull
+    @Nonnull
     private SaltGenerator saltGenerator;
 
-    @NotNull
+    @Nonnull
     private HashProvider<D, H> hashProvider;
 
-    private SecurityServiceImpl(@NotNull Cipherer<E, D> cipherer,
-                                @NotNull SecretKeyProvider secretKeyProvider,
-                                @NotNull SaltGenerator saltGenerator,
-                                @NotNull HashProvider<D, H> hashProvider) {
+    private SecurityServiceImpl(@Nonnull Cipherer<E, D> cipherer,
+                                @Nonnull SecretKeyProvider secretKeyProvider,
+                                @Nonnull SaltGenerator saltGenerator,
+                                @Nonnull HashProvider<D, H> hashProvider) {
         this.cipherer = cipherer;
         this.secretKeyProvider = secretKeyProvider;
         this.saltGenerator = saltGenerator;
         this.hashProvider = hashProvider;
     }
 
-    @NotNull
-    static <E, D, H> SecurityService<E, D, H> newInstance(@NotNull Cipherer<E, D> cipherer,
-                                                          @NotNull SecretKeyProvider secretKeyProvider,
-                                                          @NotNull SaltGenerator saltGenerator,
-                                                          @NotNull HashProvider<D, H> hashProvider) {
+    @Nonnull
+    static <E, D, H> SecurityService<E, D, H> newInstance(@Nonnull Cipherer<E, D> cipherer,
+                                                          @Nonnull SecretKeyProvider secretKeyProvider,
+                                                          @Nonnull SaltGenerator saltGenerator,
+                                                          @Nonnull HashProvider<D, H> hashProvider) {
         return new SecurityServiceImpl<E, D, H>(cipherer, secretKeyProvider, saltGenerator, hashProvider);
     }
 
 
-    @NotNull
+    @Nonnull
     @Override
     public SaltGenerator getSaltGenerator() {
         return saltGenerator;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public SecretKeyProvider getSecretKeyProvider() {
         return secretKeyProvider;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public HashProvider<D, H> getHashProvider() {
         return hashProvider;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Cipherer<E, D> getCipherer() {
         return cipherer;

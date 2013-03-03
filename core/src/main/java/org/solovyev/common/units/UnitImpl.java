@@ -22,7 +22,7 @@
 
 package org.solovyev.common.units;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,17 +31,17 @@ import org.jetbrains.annotations.NotNull;
  */
 public class UnitImpl<V> implements Unit<V> {
 
-    @NotNull
+    @Nonnull
     private V value;
 
-    @NotNull
+    @Nonnull
     private UnitType<V> unitType;
 
     private UnitImpl() {
     }
 
-    @NotNull
-    public static <V> Unit<V> newInstance(@NotNull V value, @NotNull UnitType<V> unitType) {
+    @Nonnull
+    public static <V> Unit<V> newInstance(@Nonnull V value, @Nonnull UnitType<V> unitType) {
         final UnitImpl<V> result = new UnitImpl<V>();
 
         result.value = value;
@@ -50,13 +50,13 @@ public class UnitImpl<V> implements Unit<V> {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public V getValue() {
         return this.value;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public UnitType<V> getUnitType() {
         return unitType;

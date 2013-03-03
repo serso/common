@@ -23,13 +23,13 @@
 package org.solovyev.common.collections.multimap;
 
 import junit.framework.Assert;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.solovyev.common.collections.multiset.ArrayListMultiSet;
 import org.solovyev.common.collections.multiset.HashMapManyInstancesMultiSet;
 import org.solovyev.common.collections.multiset.HashMapOneInstanceMultiSet;
 import org.solovyev.common.collections.multiset.MultiSet;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -40,7 +40,7 @@ import java.util.Iterator;
  */
 public abstract class AbstractMultiSetTest {
 
-    @NotNull
+    @Nonnull
     public abstract <E> MultiSet<E> createMultiSet();
 
     @Test
@@ -236,7 +236,7 @@ public abstract class AbstractMultiSetTest {
 
     }
 
-    private void removeAll(@NotNull MultiSet<String> m, @NotNull String element) {
+    private void removeAll(@Nonnull MultiSet<String> m, @Nonnull String element) {
         for (Iterator<String> it = m.iterator(); it.hasNext(); ) {
             final String s = it.next();
             if (s.equals(element)) {
@@ -261,7 +261,7 @@ public abstract class AbstractMultiSetTest {
         testArrayLength(m, 29);
     }
 
-    private void testArrayLength(@NotNull MultiSet<String> m, int expected) {
+    private void testArrayLength(@Nonnull MultiSet<String> m, int expected) {
         Object[] a = m.toArray();
         Assert.assertEquals(expected, a.length);
     }
@@ -382,7 +382,7 @@ public abstract class AbstractMultiSetTest {
         Assert.assertEquals(0, m.count("3"));
     }
 
-    @NotNull
+    @Nonnull
     private MultiSet<String> createAndFill() {
         final MultiSet<String> m = createMultiSet();
 
@@ -395,8 +395,8 @@ public abstract class AbstractMultiSetTest {
         return m;
     }
 
-    @NotNull
-    private MultiSet<String> fillMultiSet(@NotNull MultiSet<String> m) {
+    @Nonnull
+    private MultiSet<String> fillMultiSet(@Nonnull MultiSet<String> m) {
         m.addAll(Arrays.asList("1", "2", "3"));
         m.addAll(Arrays.asList("1", "2", "3"));
         m.addAll(Arrays.asList("1", "2", "3"));

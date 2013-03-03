@@ -22,8 +22,8 @@
 
 package org.solovyev.common.collections;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Identifiable;
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.Selectable;
@@ -56,8 +56,8 @@ public class Collections {
         throw new AssertionError();
     }
 
-    @NotNull
-    public static String toString(@NotNull Collection<Object> objects, @NotNull String separator) {
+    @Nonnull
+    public static String toString(@Nonnull Collection<Object> objects, @Nonnull String separator) {
         StringBuilder sb = new StringBuilder();
 
         LoopData ld = new LoopData(objects);
@@ -83,8 +83,8 @@ public class Collections {
         return array == null || array.length == 0;
     }
 
-    @NotNull
-    public static <T> Collection<T> setNotNull(@Nullable Collection<T> c, @NotNull Collection<T> defaultValue) {
+    @Nonnull
+    public static <T> Collection<T> setNotNull(@Nullable Collection<T> c, @Nonnull Collection<T> defaultValue) {
         Collection<T> result;
 
         if (c != null) {
@@ -97,13 +97,13 @@ public class Collections {
         return result;
     }
 
-    public static <T> void addUnique(@NotNull List<T> list, @NotNull List<T> list2) {
+    public static <T> void addUnique(@Nonnull List<T> list, @Nonnull List<T> list2) {
         for (T t : list2) {
             addUnique(list, t);
         }
     }
 
-    public static <T> void addUnique(@NotNull List<T> list, @NotNull T object) {
+    public static <T> void addUnique(@Nonnull List<T> list, @Nonnull T object) {
         boolean isFound = false;
 
         for (T t : list) {
@@ -118,8 +118,8 @@ public class Collections {
         }
     }
 
-    @NotNull
-    public static <T> List<Selectable<T>> selectable(@NotNull List<T> list) {
+    @Nonnull
+    public static <T> List<Selectable<T>> selectable(@Nonnull List<T> list) {
         final List<Selectable<T>> result = new ArrayList<Selectable<T>>();
 
         for (T t : list) {
@@ -248,19 +248,19 @@ public class Collections {
     }
 
 
-    public static <T> boolean contains(@NotNull T value, @Nullable Collection<T> list, @NotNull Equalizer<T> equalizer) {
+    public static <T> boolean contains(@Nonnull T value, @Nullable Collection<T> list, @Nonnull Equalizer<T> equalizer) {
         return contains(value, list, FilterType.included, equalizer);
     }
 
-    public static <T> boolean notContains(@NotNull T value, @Nullable Collection<T> list, @NotNull Equalizer<T> equalizer) {
+    public static <T> boolean notContains(@Nonnull T value, @Nullable Collection<T> list, @Nonnull Equalizer<T> equalizer) {
         return contains(value, list, FilterType.excluded, equalizer);
     }
 
-    public static <T> boolean contains(@NotNull T value, @Nullable Collection<T> list, @NotNull FilterType filterType, @Nullable Equalizer<T> equalizer) {
+    public static <T> boolean contains(@Nonnull T value, @Nullable Collection<T> list, @Nonnull FilterType filterType, @Nullable Equalizer<T> equalizer) {
         return contains(list, filterType, new EqualsFinder<T>(value, equalizer));
     }
 
-    public static <T> boolean contains(@Nullable Collection<T> list, @NotNull FilterType filterType, @NotNull JPredicate<T> finder) {
+    public static <T> boolean contains(@Nullable Collection<T> list, @Nonnull FilterType filterType, @Nonnull JPredicate<T> finder) {
         boolean found = find(list, finder) != null;
 
         final boolean result;
@@ -274,11 +274,11 @@ public class Collections {
     }
 
     @Nullable
-    public static <T> T find(@NotNull T value, @Nullable Collection<T> list, @Nullable Equalizer<T> equalizer) {
+    public static <T> T find(@Nonnull T value, @Nullable Collection<T> list, @Nullable Equalizer<T> equalizer) {
         return find(list, new EqualsFinder<T>(value, equalizer));
     }
 
-    public static <T> T find(@Nullable Collection<T> list, @NotNull JPredicate<T> finder) {
+    public static <T> T find(@Nullable Collection<T> list, @Nonnull JPredicate<T> finder) {
         T result = null;
 
         if (!isEmpty(list)) {
@@ -294,7 +294,7 @@ public class Collections {
     }
 
     @Nullable
-    public static <T> T removeFirst(@Nullable Collection<T> list, @NotNull JPredicate<T> finder) {
+    public static <T> T removeFirst(@Nullable Collection<T> list, @Nonnull JPredicate<T> finder) {
         T result = null;
 
         if (!isEmpty(list)) {
@@ -311,8 +311,8 @@ public class Collections {
         return result;
     }
 
-    @NotNull
-    public static <T> List<T> removeAll(@Nullable Collection<T> list, @NotNull JPredicate<T> finder) {
+    @Nonnull
+    public static <T> List<T> removeAll(@Nullable Collection<T> list, @Nonnull JPredicate<T> finder) {
         final List<T> result = new ArrayList<T>();
 
         if (!isEmpty(list)) {
@@ -328,19 +328,19 @@ public class Collections {
         return result;
     }
 
-    public static <T> boolean contains(@NotNull T value, @NotNull FilterType filterType, @Nullable Collection<T> list) {
+    public static <T> boolean contains(@Nonnull T value, @Nonnull FilterType filterType, @Nullable Collection<T> list) {
         return contains(value, list, filterType, null);
     }
 
-    public static <T> boolean contains(@NotNull T value, @Nullable Collection<T> list) {
+    public static <T> boolean contains(@Nonnull T value, @Nullable Collection<T> list) {
         return contains(value, FilterType.included, list);
     }
 
-    public static <T> boolean contains(@NotNull T value, @Nullable T... array) {
+    public static <T> boolean contains(@Nonnull T value, @Nullable T... array) {
         return contains(value, Arrays.asList(array));
     }
 
-    public static <T extends Comparable> List<T> toIdsList(@NotNull Collection<? extends Identifiable<T>> list) {
+    public static <T extends Comparable> List<T> toIdsList(@Nonnull Collection<? extends Identifiable<T>> list) {
         final List<T> result = new ArrayList<T>(list.size());
 
         for (Identifiable<T> t : list) {
@@ -350,7 +350,7 @@ public class Collections {
         return result;
     }
 
-    public static List<String> toStringList(@NotNull List<? extends Enum> idsList) {
+    public static List<String> toStringList(@Nonnull List<? extends Enum> idsList) {
         final List<String> result = new ArrayList<String>();
 
         for (Enum enumElement : idsList) {
@@ -360,7 +360,7 @@ public class Collections {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     public static <T> List<T> asList(T... ts) {
         final List<T> result = new ArrayList<T>();
 
@@ -373,7 +373,7 @@ public class Collections {
         return result;
     }
 
-    public static <T, V> SortedMap<T, V> toSortedMap(@NotNull Map<T, V> map, @Nullable Comparator<? super T> comparator) {
+    public static <T, V> SortedMap<T, V> toSortedMap(@Nonnull Map<T, V> map, @Nullable Comparator<? super T> comparator) {
         final SortedMap<T, V> result;
 
         if (comparator != null) {
@@ -387,17 +387,17 @@ public class Collections {
         return result;
     }
 
-    public static <T> Iterable<T> reversed(@NotNull List<T> list) {
+    public static <T> Iterable<T> reversed(@Nonnull List<T> list) {
         return new Reversed<T>(list);
     }
 
-    public static <T> Iterable<T> reversed(@NotNull T[] array) {
+    public static <T> Iterable<T> reversed(@Nonnull T[] array) {
         return new Reversed<T>(Arrays.asList(array));
     }
 
     // copied from guava: com.google.common.collect.Iterators.removeIf()
-    public static <T> boolean removeIf(@NotNull Iterator<T> removeFrom,
-                                       @NotNull JPredicate<? super T> predicate) {
+    public static <T> boolean removeIf(@Nonnull Iterator<T> removeFrom,
+                                       @Nonnull JPredicate<? super T> predicate) {
         boolean modified = false;
         while (removeFrom.hasNext()) {
             if (predicate.apply(removeFrom.next())) {
@@ -409,8 +409,8 @@ public class Collections {
     }
 
     @Nullable
-    public static <T> T find(@NotNull Iterator<T> iterator,
-                             @NotNull JPredicate<? super T> predicate) {
+    public static <T> T find(@Nonnull Iterator<T> iterator,
+                             @Nonnull JPredicate<? super T> predicate) {
         while (iterator.hasNext()) {
             final T next = iterator.next();
             if (predicate.apply(next)) {
@@ -424,10 +424,10 @@ public class Collections {
 
     public static class Reversed<T> implements Iterable<T> {
 
-        @NotNull
+        @Nonnull
         private final List<T> original;
 
-        public Reversed(@NotNull List<T> original) {
+        public Reversed(@Nonnull List<T> original) {
             this.original = original;
         }
 
@@ -450,22 +450,22 @@ public class Collections {
         }
     }
 
-    @NotNull
-    public static <T> T[] concat(@NotNull T[] first, @NotNull T[] second) {
+    @Nonnull
+    public static <T> T[] concat(@Nonnull T[] first, @Nonnull T[] second) {
         final T[] result = Arrays.copyOf(first, first.length + second.length);
         System.arraycopy(second, 0, result, first.length, second.length);
         return result;
     }
 
-    @NotNull
-    public static byte[] concat(@NotNull byte[] first, @NotNull byte[] second) {
+    @Nonnull
+    public static byte[] concat(@Nonnull byte[] first, @Nonnull byte[] second) {
         final byte[] result = Arrays.copyOf(first, first.length + second.length);
         System.arraycopy(second, 0, result, first.length, second.length);
         return result;
     }
 
-    @NotNull
-    public static <E> List<List<E>> split(@NotNull List<E> list, int chunkSize) {
+    @Nonnull
+    public static <E> List<List<E>> split(@Nonnull List<E> list, int chunkSize) {
         final int size = list.size();
 
         final List<List<E>> result = new ArrayList<List<E>>(size / chunkSize + 1);

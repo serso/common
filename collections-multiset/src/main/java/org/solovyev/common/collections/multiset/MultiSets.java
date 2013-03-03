@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multiset;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -74,12 +74,12 @@ public final class MultiSets {
                 }
             };
 
-    @NotNull
+    @Nonnull
     public static <E> OneInstanceMultiSet<E> newOneInstanceMultiSet() {
         return HashMapOneInstanceMultiSet.newInstance();
     }
 
-    @NotNull
+    @Nonnull
     public static <E> ManyInstancesMultiSet<E> newManyInstancesMultiSet() {
         return HashMapManyInstancesMultiSet.newInstance();
     }

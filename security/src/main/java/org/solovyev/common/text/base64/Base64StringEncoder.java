@@ -22,7 +22,7 @@
 
 package org.solovyev.common.text.base64;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 
 /**
@@ -31,20 +31,20 @@ import org.solovyev.common.Converter;
  */
 public class Base64StringEncoder implements Converter<byte[], String> {
 
-    @NotNull
+    @Nonnull
     private static Converter<byte[], String> instance = new Base64StringEncoder();
 
     private Base64StringEncoder() {
     }
 
-    @NotNull
+    @Nonnull
     public static Converter<byte[], String> getInstance() {
         return instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public String convert(@NotNull byte[] bytes) {
+    public String convert(@Nonnull byte[] bytes) {
         return com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(bytes);
     }
 }

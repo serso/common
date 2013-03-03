@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -63,7 +63,7 @@ public class NumberParser<N extends Number> implements Parser<N> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final Class<? extends N> clazz;
 
     /*
@@ -74,12 +74,12 @@ public class NumberParser<N extends Number> implements Parser<N> {
     **********************************************************************
     */
 
-    private NumberParser(@NotNull Class<? extends N> clazz) {
+    private NumberParser(@Nonnull Class<? extends N> clazz) {
         this.clazz = clazz;
     }
 
-    @NotNull
-    public static <N extends Number> Parser<N> of(@NotNull Class<N> clazz) {
+    @Nonnull
+    public static <N extends Number> Parser<N> of(@Nonnull Class<N> clazz) {
         assert supportedClasses.contains(clazz) : "Class " + clazz + " is not supported by " + NumberParser.class;
         return (Parser<N>) parsers.get(clazz);
     }

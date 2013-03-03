@@ -29,7 +29,7 @@ package org.solovyev.common.filter;
  * Time: 5:10:52 PM
  */
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Used in Filter
@@ -47,7 +47,7 @@ public class FilterData<T> {
         this.wasFiltered = wasFiltered;
     }
 
-    @NotNull
+    @Nonnull
     public static <T> FilterData<T> newInstance(T element, boolean wasFiltered) {
         return new FilterData<T>(element, wasFiltered);
     }

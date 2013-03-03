@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multiset;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collection;
 import java.util.Set;
@@ -63,7 +63,7 @@ public interface MultiSet<E> extends Collection<E> {
      * @throws NullPointerException if the specified element is null and this
      *                              multiset does not permit null elements (optional)
      */
-    @NotNull
+    @Nonnull
     Collection<E> getAll(E e);
 
     /**
@@ -72,7 +72,7 @@ public interface MultiSet<E> extends Collection<E> {
      *
      * @return set for current multiset
      */
-    @NotNull
+    @Nonnull
     Set<E> toElementSet();
 
     /**

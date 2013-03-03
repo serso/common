@@ -22,7 +22,7 @@
 
 package org.solovyev.common.units;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,17 +31,17 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface UnitConverter<T> {
 
-    boolean isSupported(@NotNull UnitType<?> from, @NotNull UnitType<T> to);
+    boolean isSupported(@Nonnull UnitType<?> from, @Nonnull UnitType<T> to);
 
-    @NotNull
-    Unit<T> convert(@NotNull Unit<?> from, @NotNull UnitType<T> toType);
+    @Nonnull
+    Unit<T> convert(@Nonnull Unit<?> from, @Nonnull UnitType<T> toType);
 
     public static class Dummy implements UnitConverter<Object> {
 
-        @NotNull
+        @Nonnull
         private static final Dummy instance = new Dummy();
 
-        @NotNull
+        @Nonnull
         public static <T> UnitConverter<T> getInstance() {
             return (UnitConverter<T>)instance;
         }
@@ -50,13 +50,13 @@ public interface UnitConverter<T> {
         }
 
         @Override
-        public boolean isSupported(@NotNull UnitType<?> from, @NotNull UnitType<Object> to) {
+        public boolean isSupported(@Nonnull UnitType<?> from, @Nonnull UnitType<Object> to) {
             return false;
         }
 
-        @NotNull
+        @Nonnull
         @Override
-        public Unit<Object> convert(@NotNull Unit<?> from, @NotNull UnitType<Object> toType) {
+        public Unit<Object> convert(@Nonnull Unit<?> from, @Nonnull UnitType<Object> toType) {
             throw new IllegalArgumentException();
         }
     }

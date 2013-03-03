@@ -22,8 +22,8 @@
 
 package org.solovyev.common.equals;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Objects;
 
 import java.util.Collection;
@@ -43,7 +43,7 @@ public class CollectionEqualizer<T> implements Equalizer<Collection<T>> {
     }
 
     @Override
-    public boolean areEqual(@NotNull Collection<T> first, @NotNull Collection<T> second) {
+    public boolean areEqual(@Nonnull Collection<T> first, @Nonnull Collection<T> second) {
         boolean result = false;
 
         if (first.size() == second.size()) {

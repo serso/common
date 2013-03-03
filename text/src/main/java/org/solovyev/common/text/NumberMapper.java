@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,10 +62,10 @@ public class NumberMapper<N extends Number> implements Mapper<N> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final Formatter<N> formatter;
 
-    @NotNull
+    @Nonnull
     private final Parser<? extends N> parser;
 
     /*
@@ -81,29 +81,29 @@ public class NumberMapper<N extends Number> implements Mapper<N> {
      *
      * @param clazz class representing parsed object
      */
-    private NumberMapper(@NotNull Class<? extends N> clazz) {
+    private NumberMapper(@Nonnull Class<? extends N> clazz) {
         this(NumberParser.of(clazz), ValueOfFormatter.<N>getNotNullFormatter());
     }
 
-    private NumberMapper(@NotNull Parser<? extends N> parser,
-                         @NotNull Formatter<N> formatter) {
+    private NumberMapper(@Nonnull Parser<? extends N> parser,
+                         @Nonnull Formatter<N> formatter) {
         this.parser = parser;
         this.formatter = formatter;
     }
 
-    @NotNull
-    public static <N extends Number> Mapper<N> newInstance(@NotNull Parser<? extends N> parser,
-                                                           @NotNull Formatter<N> formatter) {
+    @Nonnull
+    public static <N extends Number> Mapper<N> newInstance(@Nonnull Parser<? extends N> parser,
+                                                           @Nonnull Formatter<N> formatter) {
         return new NumberMapper<N>(parser, formatter);
     }
 
-    @NotNull
-    private static <N extends Number> Mapper<N> newInstance(@NotNull Class<? extends N> clazz) {
+    @Nonnull
+    private static <N extends Number> Mapper<N> newInstance(@Nonnull Class<? extends N> clazz) {
         return new NumberMapper<N>(clazz);
     }
 
-    @NotNull
-    public static <N extends Number> Mapper<N> of(@NotNull Class<? extends N> clazz) {
+    @Nonnull
+    public static <N extends Number> Mapper<N> of(@Nonnull Class<? extends N> clazz) {
         assert supportedClasses.contains(clazz) : "Class " + clazz + " is not supported by " + NumberMapper.class;
         return (Mapper<N>) mappers.get(clazz);
     }

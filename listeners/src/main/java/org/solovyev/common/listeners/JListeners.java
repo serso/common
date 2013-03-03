@@ -22,7 +22,7 @@
 
 package org.solovyev.common.listeners;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collection;
 
@@ -50,7 +50,7 @@ public interface JListeners<L> {
      * @return true if listener was added to the container, false otherwise
      *
      */
-    boolean addListener(@NotNull L listener);
+    boolean addListener(@Nonnull L listener);
 
     /**
      * Removes <var>listener</var> from container.
@@ -60,7 +60,7 @@ public interface JListeners<L> {
      *
      * @return true if listener was removed, false if listener was not in container
      */
-    boolean removeListener(@NotNull L listener);
+    boolean removeListener(@Nonnull L listener);
 
     /**
      * Removes all registered listeners
@@ -70,12 +70,12 @@ public interface JListeners<L> {
     /**
      * @return collection of listeners of container. This collection must be a mutable copy of original collection
      */
-    @NotNull
+    @Nonnull
     Collection<L> getListeners();
 
     /**
      * @return collection of listeners of specified <var>type</var> of container. This collection must be a mutable copy of original collection
      */
-    @NotNull
-    <LE extends L> Collection<LE> getListenersOfType(@NotNull Class<LE> type);
+    @Nonnull
+    <LE extends L> Collection<LE> getListenersOfType(@Nonnull Class<LE> type);
 }

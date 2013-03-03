@@ -22,8 +22,8 @@
 
 package org.solovyev.common.history;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Objects;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final List<T> history;
 
     private volatile int currentStateIndex = START_HISTORY_INDEX;
@@ -75,12 +75,12 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
         this.history = new ArrayList<T>(historyCapacity);
     }
 
-    @NotNull
+    @Nonnull
     public static <T> SimpleHistoryHelper<T> newInstance() {
         return newInstance(DEFAULT_HISTORY_CAPACITY);
     }
 
-    @NotNull
+    @Nonnull
     public static <T> SimpleHistoryHelper<T> newInstance(int historyCapacity) {
         return new SimpleHistoryHelper<T>(historyCapacity);
     }
@@ -176,7 +176,7 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
     }
 
     @Override
-    public boolean isActionAvailable(@NotNull HistoryAction historyAction) {
+    public boolean isActionAvailable(@Nonnull HistoryAction historyAction) {
         boolean result = false;
 
         switch (historyAction) {
@@ -192,7 +192,7 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
     }
 
     @Override
-    public T doAction(@NotNull HistoryAction historyAction, @Nullable T currentState) {
+    public T doAction(@Nonnull HistoryAction historyAction, @Nullable T currentState) {
         T result = null;
 
         switch (historyAction) {
@@ -207,7 +207,7 @@ public class SimpleHistoryHelper<T> implements HistoryHelper<T> {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public List<T> getStates() {
         return Collections.unmodifiableList(this.history);

@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,6 +31,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface HashProvider<T, H> {
 
-    @NotNull
-    H getHash(@NotNull T object, @NotNull byte[] salt) throws CiphererException;
+    @Nonnull
+    H getHash(@Nonnull T object, @Nonnull byte[] salt) throws CiphererException;
 }

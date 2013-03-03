@@ -22,9 +22,9 @@
 
 package org.solovyev.common.collections.multiset;
 
-import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.Objects;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 /**
@@ -34,14 +34,14 @@ import java.util.*;
  */
 class AbstractListMultiSet<E> extends AbstractMultiSet<E> implements ManyInstancesMultiSet<E> {
 
-    @NotNull
+    @Nonnull
     private final List<E> backingList;
 
-    protected AbstractListMultiSet(@NotNull List<E> backingList) {
+    protected AbstractListMultiSet(@Nonnull List<E> backingList) {
         this.backingList = backingList;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Collection<E> getAll(E e) {
         final List<E> result = new ArrayList<E>();
@@ -76,7 +76,7 @@ class AbstractListMultiSet<E> extends AbstractMultiSet<E> implements ManyInstanc
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Set<E> toElementSet() {
         final Set<E> result = new HashSet<E>();
@@ -163,32 +163,32 @@ class AbstractListMultiSet<E> extends AbstractMultiSet<E> implements ManyInstanc
         return this.backingList.contains(o);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<E> iterator() {
         return this.backingList.iterator();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         return this.backingList.toArray();
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
+    public <T> T[] toArray(@Nonnull T[] a) {
         //noinspection SuspiciousToArrayCall
         return this.backingList.toArray(a);
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public boolean containsAll(@Nonnull Collection<?> c) {
         return this.backingList.containsAll(c);
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends E> c) {
+    public boolean addAll(@Nonnull Collection<? extends E> c) {
         return this.backingList.addAll(c);
     }
 

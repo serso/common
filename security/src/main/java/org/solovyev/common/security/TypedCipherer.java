@@ -22,33 +22,33 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 
 import javax.crypto.SecretKey;
 
 public class TypedCipherer<E, D> implements Cipherer<E, D> {
 
-    @NotNull
+    @Nonnull
     private Cipherer<byte[], byte[]> byteCipherer;
 
-    @NotNull
+    @Nonnull
     private Converter<D, byte[]> decryptedDecoder;
 
-    @NotNull
+    @Nonnull
     private Converter<byte[], D> decryptedEncoder;
 
-    @NotNull
+    @Nonnull
     private Converter<E, byte[]> encryptedDecoder;
 
-    @NotNull
+    @Nonnull
     private Converter<byte[], E> encryptedEncoder;
 
-    private TypedCipherer(@NotNull Cipherer<byte[], byte[]> byteCipherer,
-                          @NotNull Converter<D, byte[]> decryptedDecoder,
-                          @NotNull Converter<byte[], D> decryptedEncoder,
-                          @NotNull Converter<E, byte[]> encryptedDecoder,
-                          @NotNull Converter<byte[], E> encryptedEncoder) {
+    private TypedCipherer(@Nonnull Cipherer<byte[], byte[]> byteCipherer,
+                          @Nonnull Converter<D, byte[]> decryptedDecoder,
+                          @Nonnull Converter<byte[], D> decryptedEncoder,
+                          @Nonnull Converter<E, byte[]> encryptedDecoder,
+                          @Nonnull Converter<byte[], E> encryptedEncoder) {
         this.byteCipherer = byteCipherer;
         this.decryptedDecoder = decryptedDecoder;
         this.decryptedEncoder = decryptedEncoder;
@@ -56,40 +56,40 @@ public class TypedCipherer<E, D> implements Cipherer<E, D> {
         this.encryptedEncoder = encryptedEncoder;
     }
 
-    @NotNull
-    public static <E, D> TypedCipherer<E, D> newInstance(@NotNull Cipherer<byte[], byte[]> byteCipherer,
-                                                         @NotNull Converter<D, byte[]> decryptedDecoder,
-                                                         @NotNull Converter<byte[], D> decryptedEncoder,
-                                                         @NotNull Converter<E, byte[]> encryptedDecoder,
-                                                         @NotNull Converter<byte[], E> encryptedEncoder) {
+    @Nonnull
+    public static <E, D> TypedCipherer<E, D> newInstance(@Nonnull Cipherer<byte[], byte[]> byteCipherer,
+                                                         @Nonnull Converter<D, byte[]> decryptedDecoder,
+                                                         @Nonnull Converter<byte[], D> decryptedEncoder,
+                                                         @Nonnull Converter<E, byte[]> encryptedDecoder,
+                                                         @Nonnull Converter<byte[], E> encryptedEncoder) {
         return new TypedCipherer<E, D>(byteCipherer, decryptedDecoder, decryptedEncoder, encryptedDecoder, encryptedEncoder);
     }
 
-    @NotNull
-    public static <T> TypedCipherer<T, T> newInstance(@NotNull Cipherer<byte[], byte[]> byteCipherer,
-                                                      @NotNull Converter<T, byte[]> decoder,
-                                                      @NotNull Converter<byte[], T> encoder) {
+    @Nonnull
+    public static <T> TypedCipherer<T, T> newInstance(@Nonnull Cipherer<byte[], byte[]> byteCipherer,
+                                                      @Nonnull Converter<T, byte[]> decoder,
+                                                      @Nonnull Converter<byte[], T> encoder) {
         return new TypedCipherer<T, T>(byteCipherer, decoder, encoder, decoder, encoder);
     }
 
 
-    @NotNull
+    @Nonnull
     @Override
-    public E encrypt(@NotNull SecretKey secret, @NotNull D decrypted) throws CiphererException {
+    public E encrypt(@Nonnull SecretKey secret, @Nonnull D decrypted) throws CiphererException {
         byte[] decryptedBytes = decryptedDecoder.convert(decrypted);
         final byte[] encryptedBytes = byteCipherer.encrypt(secret, decryptedBytes);
         return encryptedEncoder.convert(encryptedBytes);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public D decrypt(@NotNull SecretKey secret, @NotNull E encrypted) throws CiphererException {
+    public D decrypt(@Nonnull SecretKey secret, @Nonnull E encrypted) throws CiphererException {
         byte[] encryptedBytes = encryptedDecoder.convert(encrypted);
         final byte[] decryptedBytes = byteCipherer.decrypt(secret, encryptedBytes);
         return decryptedEncoder.convert(decryptedBytes);
     }
 
-    @NotNull
+    @Nonnull
     public Cipherer<byte[], byte[]> getByteCipherer() {
         return byteCipherer;
     }

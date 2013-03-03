@@ -22,8 +22,8 @@
 
 package org.solovyev.common.interval;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JCloneable;
 
 /**
@@ -46,19 +46,19 @@ public interface IntervalLimit<T extends Comparable<T>>
 
     boolean isHighest();
 
-    boolean isLowerThan(@NotNull T that);
+    boolean isLowerThan(@Nonnull T that);
 
-    boolean isLowerThan(@NotNull IntervalLimit<T> that);
+    boolean isLowerThan(@Nonnull IntervalLimit<T> that);
 
-    boolean isLowerOrEqualsThan(@NotNull T that);
+    boolean isLowerOrEqualsThan(@Nonnull T that);
 
-    boolean isLowerOrEqualsThan(@NotNull IntervalLimit<T> that);
+    boolean isLowerOrEqualsThan(@Nonnull IntervalLimit<T> that);
 
-    boolean isHigherThan(@NotNull T that);
+    boolean isHigherThan(@Nonnull T that);
 
-    boolean isHigherThan(@NotNull IntervalLimit<T> that);
+    boolean isHigherThan(@Nonnull IntervalLimit<T> that);
 
-    boolean isHigherOrEqualsThan(@NotNull T that);
+    boolean isHigherOrEqualsThan(@Nonnull T that);
 
-    boolean isHigherOrEqualsThan(@NotNull IntervalLimit<T> that);
+    boolean isHigherOrEqualsThan(@Nonnull IntervalLimit<T> that);
 }

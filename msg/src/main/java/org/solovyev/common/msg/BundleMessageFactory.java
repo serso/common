@@ -1,33 +1,33 @@
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 import java.util.ResourceBundle;
 
 class BundleMessageFactory implements MessageFactory {
 
-    @NotNull
+    @Nonnull
     private final String bundleName;
 
     @Nullable
     private ResourceBundle.Control bundleControl;
 
-    BundleMessageFactory(@NotNull String bundleName, @Nullable ResourceBundle.Control bundleControl) {
+    BundleMessageFactory(@Nonnull String bundleName, @Nullable ResourceBundle.Control bundleControl) {
         this.bundleName = bundleName;
         this.bundleControl = bundleControl;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Message newMessage(@NotNull String messageCode, @NotNull MessageLevel messageLevel, @Nullable Object... parameters) {
+    public Message newMessage(@Nonnull String messageCode, @Nonnull MessageLevel messageLevel, @Nullable Object... parameters) {
         return new BundleMessage(bundleName, bundleControl, messageCode, messageLevel, parameters);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Message newMessage(@NotNull String messageCode, @NotNull MessageLevel messageLevel, @NotNull List<?> parameters) {
+    public Message newMessage(@Nonnull String messageCode, @Nonnull MessageLevel messageLevel, @Nonnull List<?> parameters) {
         return new BundleMessage(bundleName, bundleControl, messageCode, messageLevel, parameters);
     }
 }

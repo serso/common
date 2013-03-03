@@ -22,8 +22,8 @@
 
 package org.solovyev.common.history;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -44,14 +44,14 @@ public interface HistoryHelper<T> {
     @Nullable
     T redo(@Nullable T currentState);
 
-    boolean isActionAvailable(@NotNull HistoryAction historyAction);
+    boolean isActionAvailable(@Nonnull HistoryAction historyAction);
 
     @Nullable
-    T doAction(@NotNull HistoryAction historyAction, @Nullable T currentState);
+    T doAction(@Nonnull HistoryAction historyAction, @Nullable T currentState);
 
     void addState(@Nullable T currentState);
 
-    @NotNull
+    @Nonnull
     List<T> getStates();
 
     void clear();

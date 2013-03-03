@@ -22,8 +22,8 @@
 
 package org.solovyev.common.equals;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Objects;
 
 import java.util.List;
@@ -35,10 +35,10 @@ import java.util.List;
  */
 public class ListEqualizer<T> implements Equalizer<List<T>> {
 
-    @NotNull
+    @Nonnull
     private static final Equalizer<List<Object>> instanceWithOrder = new ListEqualizer<Object>(true, null);
 
-    @NotNull
+    @Nonnull
     private static final Equalizer<List<Object>> instanceWithoutOrder = new ListEqualizer<Object>(false, null);
 
     private final boolean checkOrder;
@@ -51,12 +51,12 @@ public class ListEqualizer<T> implements Equalizer<List<T>> {
         this.nestedEqualizer = nestedEqualizer;
     }
 
-    @NotNull
+    @Nonnull
     public static <T> ListEqualizer<T> newWithNestedEqualizer(boolean checkOrder, @Nullable Equalizer<T> nestedEqualizer) {
         return new ListEqualizer<T>(checkOrder, nestedEqualizer);
     }
 
-    @NotNull
+    @Nonnull
     public static <T> ListEqualizer<T> newWithNaturalEquals(boolean checkOrder) {
         if ( checkOrder ) {
             return (ListEqualizer<T>) instanceWithOrder;
@@ -66,7 +66,7 @@ public class ListEqualizer<T> implements Equalizer<List<T>> {
     }
 
     @Override
-    public boolean areEqual(@NotNull List<T> first, @NotNull List<T> second) {
+    public boolean areEqual(@Nonnull List<T> first, @Nonnull List<T> second) {
         boolean result = false;
 
         if (first.size() == second.size()) {

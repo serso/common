@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -40,10 +40,10 @@ public class StringMapper implements Mapper<String> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private static final Mapper<String> instance = new StringMapper();
 
-    @NotNull
+    @Nonnull
     public static Mapper<String> getInstance() {
         return instance;
     }

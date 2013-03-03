@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * User: serso

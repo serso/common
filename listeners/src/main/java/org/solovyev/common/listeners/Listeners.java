@@ -22,7 +22,7 @@
 
 package org.solovyev.common.listeners;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.lang.ref.Reference;
 
@@ -45,7 +45,7 @@ public final class Listeners {
      * @param <L> type of listeners
      * @return listeners container with weak references
      */
-    @NotNull
+    @Nonnull
     public static <L> JListeners<L> newWeakRefListeners() {
         return ReferenceListeners.newWeakReferenceInstance();
     }
@@ -57,7 +57,7 @@ public final class Listeners {
      * @param <L> type of listeners
      * @return listeners container with hard references
      */
-    @NotNull
+    @Nonnull
     public static <L> JListeners<L> newHardRefListeners() {
         return ReferenceListeners.newHardReferenceInstance();
     }
@@ -73,8 +73,8 @@ public final class Listeners {
      *
      * @return listeners container with user-defined references
      */
-    @NotNull
-    public static <R extends Reference<L>, L> JListeners<L> newRefListeners(@NotNull ReferenceProducer<R, L> referenceProducer) {
+    @Nonnull
+    public static <R extends Reference<L>, L> JListeners<L> newRefListeners(@Nonnull ReferenceProducer<R, L> referenceProducer) {
         return ReferenceListeners.newInstance(referenceProducer);
     }
 
@@ -82,7 +82,7 @@ public final class Listeners {
      * Creates {@link JEventListeners} object which runs on ONE background thread, uses WEAK references and accepts all event types
      * @return event bus
      */
-    @NotNull
+    @Nonnull
     public static JEventListeners<JEventListener<? extends JEvent>, JEvent> newEventBus() {
         return JEventListenersBuilder.newForJEvent().withWeakReferences().onBackgroundThread().create();
     }
@@ -91,18 +91,18 @@ public final class Listeners {
      * Creates {@link JEventListeners} object which runs on ONE background thread, uses WEAK references and accepts only sub classes of <var>baseEventType</var>
      * @return event bus
      */
-    @NotNull
-    public static <E extends JEvent> JEventListeners<JEventListener<? extends E>, E> newEventBusFor(@NotNull Class<E> baseEventType) {
+    @Nonnull
+    public static <E extends JEvent> JEventListeners<JEventListener<? extends E>, E> newEventBusFor(@Nonnull Class<E> baseEventType) {
         return JEventListenersBuilder.newFor(baseEventType).withWeakReferences().onBackgroundThread().create();
     }
 
-    @NotNull
+    @Nonnull
     public static <L extends JEventListener<?>> JEventListenersBuilder<JEventListener<? extends JEvent>, JEvent> newEventListenersBuilder() {
         return JEventListenersBuilder.newForJEvent();
     }
 
-    @NotNull
-    public static <L extends JEventListener<?>, E extends JEvent> JEventListenersBuilder<JEventListener<? extends E>, E> newEventListenersBuilderFor(@NotNull Class<E> baseEventType) {
+    @Nonnull
+    public static <L extends JEventListener<?>, E extends JEvent> JEventListenersBuilder<JEventListener<? extends E>, E> newEventListenersBuilderFor(@Nonnull Class<E> baseEventType) {
         return JEventListenersBuilder.newFor(baseEventType);
     }
 }

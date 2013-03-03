@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -35,6 +35,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Builder<T> {
 
-    @NotNull
+    @Nonnull
     T build();
 }

@@ -22,7 +22,7 @@
 
 package org.solovyev.common.interval;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public final class Intervals {
 
@@ -30,48 +30,48 @@ public final class Intervals {
 		throw new AssertionError();
 	}
 
-	@NotNull
-	public static <T extends Comparable<T>> Interval<T> newPoint(@NotNull T point) {
+	@Nonnull
+	public static <T extends Comparable<T>> Interval<T> newPoint(@Nonnull T point) {
 		return newInstance(IntervalLimitImpl.newInstance(point, true), IntervalLimitImpl.newInstance(point, true));
 	}
 
-    @NotNull
-    public static <T extends Comparable<T>> Interval<T> newInterval(@NotNull T left, boolean leftClosed, @NotNull T right, boolean rightClosed) {
+    @Nonnull
+    public static <T extends Comparable<T>> Interval<T> newInterval(@Nonnull T left, boolean leftClosed, @Nonnull T right, boolean rightClosed) {
         return newInstance(newLimit(left, leftClosed), newLimit(right, rightClosed));
     }
 
-	@NotNull
-	public static <T extends Comparable<T>> Interval<T> newClosedInterval(@NotNull T left, @NotNull T right) {
+	@Nonnull
+	public static <T extends Comparable<T>> Interval<T> newClosedInterval(@Nonnull T left, @Nonnull T right) {
 		return newInstance(newClosedLimit(left), newClosedLimit(right));
 	}
 
-    @NotNull
-    public static <T extends Comparable<T>> IntervalLimit<T> newClosedLimit(@NotNull T value) {
+    @Nonnull
+    public static <T extends Comparable<T>> IntervalLimit<T> newClosedLimit(@Nonnull T value) {
         return newLimit(value, true);
     }
 
-    @NotNull
-    public static <T extends Comparable<T>> IntervalLimit<T> newLimit(@NotNull T value, boolean closed) {
+    @Nonnull
+    public static <T extends Comparable<T>> IntervalLimit<T> newLimit(@Nonnull T value, boolean closed) {
         return IntervalLimitImpl.newInstance(value, closed);
     }
 
-    @NotNull
-    public static <T extends Comparable<T>> IntervalLimit<T> newOpenedLimit(@NotNull T value) {
+    @Nonnull
+    public static <T extends Comparable<T>> IntervalLimit<T> newOpenedLimit(@Nonnull T value) {
         return newLimit(value, false);
     }
 
-	@NotNull
-	public static <T extends Comparable<T>> IntervalImpl<T> newInstance(@NotNull IntervalLimit<T> left,
-																		@NotNull IntervalLimit<T> right) {
+	@Nonnull
+	public static <T extends Comparable<T>> IntervalImpl<T> newInstance(@Nonnull IntervalLimit<T> left,
+																		@Nonnull IntervalLimit<T> right) {
 		return IntervalImpl.newInstance(left, right);
 	}
 
-    @NotNull
+    @Nonnull
     public static <T extends Comparable<T>> IntervalLimit<T> newLowestLimit() {
         return IntervalLimitImpl.newLowest();
     }
 
-    @NotNull
+    @Nonnull
     public static <T extends Comparable<T>> IntervalLimit<T> newHighestLimit() {
         return IntervalLimitImpl.newHighest();
     }

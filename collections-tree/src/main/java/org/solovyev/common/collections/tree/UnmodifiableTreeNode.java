@@ -22,8 +22,8 @@
 
 package org.solovyev.common.collections.tree;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.UnmodifiableIterator;
 
@@ -40,7 +40,7 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final MutableTreeNode<T> treeNode;
 
     /*
@@ -51,17 +51,17 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
     **********************************************************************
     */
 
-    private UnmodifiableTreeNode(@NotNull MutableTreeNode<T> treeNode) {
+    private UnmodifiableTreeNode(@Nonnull MutableTreeNode<T> treeNode) {
         this.treeNode = treeNode;
     }
 
-    @NotNull
-    public static <T> UnmodifiableTreeNode<T> wrap(@NotNull MutableTreeNode<T> treeNode) {
+    @Nonnull
+    public static <T> UnmodifiableTreeNode<T> wrap(@Nonnull MutableTreeNode<T> treeNode) {
         return new UnmodifiableTreeNode<T>(treeNode);
     }
 
-    @NotNull
-    public static <T> UnmodifiableTreeNode<T> wrap(@NotNull TreeNode<T> treeNode) {
+    @Nonnull
+    public static <T> UnmodifiableTreeNode<T> wrap(@Nonnull TreeNode<T> treeNode) {
         if (treeNode instanceof MutableTreeNode) {
             return wrap((MutableTreeNode<T>)treeNode);
         } else {
@@ -79,7 +79,7 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
     */
 
     @Nullable
-    public MutableTreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder) {
+    public MutableTreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder) {
         return treeNode.findOwnChild(finder);
     }
 
@@ -88,42 +88,42 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Collection<? extends MutableTreeNode<T>> getOwnChildren() {
         return Trees.unmodifiableMutableTreeNodes(treeNode.getOwnChildren());
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator() {
         return UnmodifiableIterator.wrap(treeNode.getOwnChildrenIterator());
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Collection<? extends MutableTreeNode<T>> getAllChildren() {
         return Trees.unmodifiableMutableTreeNodes(treeNode.getAllChildren());
     }
 
-    public void addChild(@NotNull MutableTreeNode<T> node) {
+    public void addChild(@Nonnull MutableTreeNode<T> node) {
         throw new UnsupportedOperationException();
     }
 
-    @NotNull
-    public MutableTreeNode<T> addChild(@NotNull T value) {
+    @Nonnull
+    public MutableTreeNode<T> addChild(@Nonnull T value) {
         throw new UnsupportedOperationException();
     }
 
-    @NotNull
-    public MutableTreeNode<T> addChildIfNotExists(@NotNull T value) {
+    @Nonnull
+    public MutableTreeNode<T> addChildIfNotExists(@Nonnull T value) {
         throw new UnsupportedOperationException();
     }
 
-    public void removeOwnChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
+    public void removeOwnChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
         throw new UnsupportedOperationException();
     }
 
-    public void removeChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
+    public void removeChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
         throw new UnsupportedOperationException();
     }
 
@@ -138,13 +138,13 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Iterator<TreeNode<T>> iterator() {
         return UnmodifiableIterator.wrap(treeNode.iterator());
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Iterator<? extends TreeNode<T>> getIterator() {
         return UnmodifiableIterator.wrap(treeNode.getIterator());
     }
@@ -190,20 +190,20 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
 
     private static class TreeNodeAdapter<T> implements MutableTreeNode<T> {
 
-        @NotNull
+        @Nonnull
         private final TreeNode<T> treeNode;
 
-        private TreeNodeAdapter(@NotNull TreeNode<T> treeNode) {
+        private TreeNodeAdapter(@Nonnull TreeNode<T> treeNode) {
             this.treeNode = treeNode;
         }
 
-        @NotNull
-        private static <T> TreeNodeAdapter<T> adapt(@NotNull TreeNode<T> treeNode) {
+        @Nonnull
+        private static <T> TreeNodeAdapter<T> adapt(@Nonnull TreeNode<T> treeNode) {
             return new TreeNodeAdapter<T>(treeNode);
         }
 
         @Nullable
-        public MutableTreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder) {
+        public MutableTreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder) {
             final TreeNode<T> result = treeNode.findOwnChild(finder);
             if (result != null) {
                 return wrap(result);
@@ -218,13 +218,13 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
         }
 
         @Override
-        @NotNull
+        @Nonnull
         public Collection<? extends MutableTreeNode<T>> getOwnChildren() {
             return Trees.unmodifiableTreeNodes(treeNode.getOwnChildren());
         }
 
         @Override
-        @NotNull
+        @Nonnull
         public Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator() {
             return UnmodifiableIterator.wrap(TreeNodeIteratorAdapter.adapt(treeNode.getOwnChildrenIterator()));
         }
@@ -236,47 +236,47 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
         }
 
         @Override
-        @NotNull
+        @Nonnull
         public Iterator<TreeNode<T>> iterator() {
             return UnmodifiableIterator.wrap(treeNode.iterator());
         }
 
         @Override
-        @NotNull
+        @Nonnull
         public Iterator<? extends TreeNode<T>> getIterator() {
             return UnmodifiableIterator.wrap(treeNode.getIterator());
         }
 
         @Override
-        @NotNull
+        @Nonnull
         public Collection<? extends MutableTreeNode<T>> getAllChildren() {
             return Trees.unmodifiableTreeNodes(treeNode.getAllChildren());
         }
 
         @Override
-        public void addChild(@NotNull MutableTreeNode<T> node) {
+        public void addChild(@Nonnull MutableTreeNode<T> node) {
             throw new AssertionError("Should never happen!");
         }
 
-        @NotNull
+        @Nonnull
         @Override
-        public MutableTreeNode<T> addChild(@NotNull T value) {
+        public MutableTreeNode<T> addChild(@Nonnull T value) {
             throw new AssertionError("Should never happen!");
         }
 
-        @NotNull
+        @Nonnull
         @Override
-        public MutableTreeNode<T> addChildIfNotExists(@NotNull T value) {
-            throw new AssertionError("Should never happen!");
-        }
-
-        @Override
-        public void removeOwnChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
+        public MutableTreeNode<T> addChildIfNotExists(@Nonnull T value) {
             throw new AssertionError("Should never happen!");
         }
 
         @Override
-        public void removeChildIf(@NotNull JPredicate<TreeNode<T>> predicate) {
+        public void removeOwnChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
+            throw new AssertionError("Should never happen!");
+        }
+
+        @Override
+        public void removeChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
             throw new AssertionError("Should never happen!");
         }
 
@@ -314,15 +314,15 @@ class UnmodifiableTreeNode<T> implements MutableTreeNode<T> {
 
     private static class TreeNodeIteratorAdapter<T> implements Iterator<MutableTreeNode<T>> {
 
-        @NotNull
+        @Nonnull
         private final Iterator<? extends TreeNode<T>> i;
 
-        private TreeNodeIteratorAdapter(@NotNull Iterator<? extends TreeNode<T>> i) {
+        private TreeNodeIteratorAdapter(@Nonnull Iterator<? extends TreeNode<T>> i) {
             this.i = i;
         }
 
-        @NotNull
-        private static <T> Iterator<MutableTreeNode<T>> adapt(@NotNull Iterator<? extends TreeNode<T>> i) {
+        @Nonnull
+        private static <T> Iterator<MutableTreeNode<T>> adapt(@Nonnull Iterator<? extends TreeNode<T>> i) {
             return new TreeNodeIteratorAdapter<T>(i);
         }
 

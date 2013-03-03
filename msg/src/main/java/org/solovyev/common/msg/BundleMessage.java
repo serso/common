@@ -1,7 +1,7 @@
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -9,27 +9,27 @@ import java.util.ResourceBundle;
 
 class BundleMessage extends AbstractMessage {
 
-    @NotNull
+    @Nonnull
     private final String bundleName;
 
     @Nullable
     private ResourceBundle.Control bundleControl;
 
-    BundleMessage(@NotNull String bundleName,
+    BundleMessage(@Nonnull String bundleName,
                             @Nullable ResourceBundle.Control bundleControl,
-                            @NotNull String messageCode,
-                            @NotNull MessageLevel messageLevel,
+                            @Nonnull String messageCode,
+                            @Nonnull MessageLevel messageLevel,
                             @Nullable Object... parameters) {
         super(messageCode, messageLevel, parameters);
         this.bundleName = bundleName;
         this.bundleControl = bundleControl;
     }
 
-    BundleMessage(@NotNull String bundleName,
+    BundleMessage(@Nonnull String bundleName,
                             @Nullable ResourceBundle.Control bundleControl,
-                            @NotNull String messageCode,
-                            @NotNull MessageLevel messageLevel,
-                            @NotNull List<?> parameters) {
+                            @Nonnull String messageCode,
+                            @Nonnull MessageLevel messageLevel,
+                            @Nonnull List<?> parameters) {
         super(messageCode, messageLevel, parameters);
         this.bundleName = bundleName;
         this.bundleControl = bundleControl;
@@ -37,7 +37,7 @@ class BundleMessage extends AbstractMessage {
 
     @Nullable
     @Override
-    protected final String getMessagePattern(@NotNull Locale locale) {
+    protected final String getMessagePattern(@Nonnull Locale locale) {
         final ResourceBundle bundle;
 
         if (bundleControl == null) {

@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multimap;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.collections.multiset.HashMapOneInstanceMultiSet;
 import org.solovyev.common.collections.multiset.MultiSet;
 
@@ -33,7 +33,7 @@ import org.solovyev.common.collections.multiset.MultiSet;
  */
 public class HashMapOneInstanceMultiSetTest extends AbstractMultiSetTest {
 
-    @NotNull
+    @Nonnull
     @Override
     public <E> MultiSet<E> createMultiSet() {
         return HashMapOneInstanceMultiSet.newInstance();

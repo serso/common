@@ -22,7 +22,7 @@
 
 package org.solovyev.common.text.hex;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 import org.solovyev.common.text.HexString;
 
@@ -32,20 +32,20 @@ import org.solovyev.common.text.HexString;
  */
 public class HexStringDecoder implements Converter<HexString, byte[]> {
 
-    @NotNull
+    @Nonnull
     private static Converter<HexString, byte[]> instance = new HexStringDecoder();
 
     private HexStringDecoder() {
     }
 
-    @NotNull
+    @Nonnull
     public static Converter<HexString, byte[]> getInstance() {
         return instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public byte[] convert(@NotNull HexString s) {
+    public byte[] convert(@Nonnull HexString s) {
         return s.getOriginalBytes();
     }
 }

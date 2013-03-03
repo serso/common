@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.collections.LoopData;
 
@@ -49,10 +49,10 @@ public class StringCollections {
      * @param <T>       - type of object
      * @return list of objects, not null
      */
-    @NotNull
+    @Nonnull
     public static <T> List<T> split(@Nullable String string,
-                                    @NotNull String delimiter,
-                                    @NotNull Parser<T> parser) {
+                                    @Nonnull String delimiter,
+                                    @Nonnull Parser<T> parser) {
         final List<T> result = new ArrayList<T>();
 
         split(result, string, delimiter, parser);
@@ -60,11 +60,11 @@ public class StringCollections {
         return result;
     }
 
-    @NotNull
-    public static <C extends Collection<T>, T> C split(@NotNull C result,
+    @Nonnull
+    public static <C extends Collection<T>, T> C split(@Nonnull C result,
                                                        @Nullable String string,
-                                                       @NotNull String delimiter,
-                                                       @NotNull Parser<T> parser) {
+                                                       @Nonnull String delimiter,
+                                                       @Nonnull Parser<T> parser) {
         if (!Strings.isEmpty(string)) {
             @SuppressWarnings({"ConstantConditions"}) final String[] parts = string.split(delimiter);
 
@@ -83,15 +83,15 @@ public class StringCollections {
      * @param delimiter - delimiter with which string will be split
      * @return list of objects, not null
      */
-    @NotNull
-    public static List<String> split(@Nullable String string, @NotNull String delimiter) {
+    @Nonnull
+    public static List<String> split(@Nullable String string, @Nonnull String delimiter) {
         return split(string, delimiter, StringMapper.getInstance());
     }
 
     @Nullable
     public static <T> String formatValue(@Nullable Collection<T> values,
-                                         @NotNull String delimiter,
-                                         @NotNull org.solovyev.common.text.Formatter<T> formatter) {
+                                         @Nonnull String delimiter,
+                                         @Nonnull org.solovyev.common.text.Formatter<T> formatter) {
         String result = null;
 
         if (!Collections.isEmpty(values)) {

@@ -22,7 +22,7 @@
 
 package org.solovyev.common.listeners;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.EventListener;
 
@@ -36,7 +36,7 @@ public interface JEventListener<E extends JEvent> extends EventListener {
     /**
      * @return type of supported event
      */
-    @NotNull
+    @Nonnull
     Class<E> getEventType();
 
     /**
@@ -44,5 +44,5 @@ public interface JEventListener<E extends JEvent> extends EventListener {
      *
      * @param event event to be processed by current listener
      */
-    void onEvent(@NotNull E event);
+    void onEvent(@Nonnull E event);
 }

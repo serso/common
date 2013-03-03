@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multiset;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.SynchronizedObject;
 
 import java.util.Collection;
@@ -44,21 +44,21 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     **********************************************************************
     */
 
-    protected SynchronizedMultiSet(@NotNull MultiSet<E> delegate) {
+    protected SynchronizedMultiSet(@Nonnull MultiSet<E> delegate) {
         super(delegate);
     }
 
-    protected SynchronizedMultiSet(@NotNull MultiSet<E> delegate, @NotNull Object mutex) {
+    protected SynchronizedMultiSet(@Nonnull MultiSet<E> delegate, @Nonnull Object mutex) {
         super(delegate, mutex);
     }
 
-    @NotNull
-    public static <E> SynchronizedMultiSet<E> wrap(@NotNull MultiSet<E> delegate) {
+    @Nonnull
+    public static <E> SynchronizedMultiSet<E> wrap(@Nonnull MultiSet<E> delegate) {
         return new SynchronizedMultiSet<E>(delegate);
     }
 
-    @NotNull
-    public static <E> SynchronizedMultiSet<E> wrap(@NotNull MultiSet<E> delegate, @NotNull Object mutex) {
+    @Nonnull
+    public static <E> SynchronizedMultiSet<E> wrap(@Nonnull MultiSet<E> delegate, @Nonnull Object mutex) {
         return new SynchronizedMultiSet<E>(delegate, mutex);
     }
 
@@ -77,7 +77,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Collection<E> getAll(E e) {
         synchronized (mutex) {
@@ -85,7 +85,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Set<E> toElementSet() {
         synchronized (mutex) {
@@ -129,7 +129,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     }
 
     // must be manually synchronized (or may be NotSupportedOperationException should be thrown)
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<E> iterator() {
         synchronized (mutex) {
@@ -137,7 +137,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         synchronized (mutex) {
@@ -145,9 +145,9 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
+    public <T> T[] toArray(@Nonnull T[] a) {
         synchronized (mutex) {
             return delegate().toArray(a);
         }
@@ -168,28 +168,28 @@ public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> imp
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public boolean containsAll(@Nonnull Collection<?> c) {
         synchronized (mutex) {
             return delegate().containsAll(c);
         }
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends E> c) {
+    public boolean addAll(@Nonnull Collection<? extends E> c) {
         synchronized (mutex) {
             return delegate().addAll(c);
         }
     }
 
     @Override
-    public boolean removeAll(@NotNull Collection<?> c) {
+    public boolean removeAll(@Nonnull Collection<?> c) {
         synchronized (mutex) {
             return delegate().removeAll(c);
         }
     }
 
     @Override
-    public boolean retainAll(@NotNull Collection<?> c) {
+    public boolean retainAll(@Nonnull Collection<?> c) {
         synchronized (mutex) {
             return delegate().retainAll(c);
         }

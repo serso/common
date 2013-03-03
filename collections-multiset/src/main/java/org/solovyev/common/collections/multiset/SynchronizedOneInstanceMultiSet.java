@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multiset;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -39,21 +39,21 @@ public class SynchronizedOneInstanceMultiSet<E> extends SynchronizedMultiSet<E> 
     **********************************************************************
     */
 
-    private SynchronizedOneInstanceMultiSet(@NotNull OneInstanceMultiSet<E> delegate) {
+    private SynchronizedOneInstanceMultiSet(@Nonnull OneInstanceMultiSet<E> delegate) {
         super(delegate);
     }
 
-    private SynchronizedOneInstanceMultiSet(@NotNull OneInstanceMultiSet<E> delegate, @NotNull Object mutex) {
+    private SynchronizedOneInstanceMultiSet(@Nonnull OneInstanceMultiSet<E> delegate, @Nonnull Object mutex) {
         super(delegate, mutex);
     }
 
-    @NotNull
-    public static <E> SynchronizedOneInstanceMultiSet<E> wrap(@NotNull OneInstanceMultiSet<E> delegate) {
+    @Nonnull
+    public static <E> SynchronizedOneInstanceMultiSet<E> wrap(@Nonnull OneInstanceMultiSet<E> delegate) {
         return new SynchronizedOneInstanceMultiSet<E>(delegate);
     }
 
-    @NotNull
-    public static <E> SynchronizedOneInstanceMultiSet<E> wrap(@NotNull OneInstanceMultiSet<E> delegate, @NotNull Object mutex) {
+    @Nonnull
+    public static <E> SynchronizedOneInstanceMultiSet<E> wrap(@Nonnull OneInstanceMultiSet<E> delegate, @Nonnull Object mutex) {
         return new SynchronizedOneInstanceMultiSet<E>(delegate, mutex);
     }
 
@@ -65,7 +65,7 @@ public class SynchronizedOneInstanceMultiSet<E> extends SynchronizedMultiSet<E> 
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     @Override
     protected OneInstanceMultiSet<E> delegate() {
         return (OneInstanceMultiSet<E>) super.delegate();

@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multiset;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.*;
 
@@ -33,10 +33,10 @@ import java.util.*;
  */
 abstract class AbstractMapManyInstancesMultiSet<E> extends AbstractMultiSet<E> implements ManyInstancesMultiSet<E> {
 
-    @NotNull
+    @Nonnull
     private final Map<E, List<E>> backingMap;
 
-    protected AbstractMapManyInstancesMultiSet(@NotNull Map<E, List<E>> backingMap) {
+    protected AbstractMapManyInstancesMultiSet(@Nonnull Map<E, List<E>> backingMap) {
         this.backingMap = backingMap;
     }
 
@@ -46,19 +46,19 @@ abstract class AbstractMapManyInstancesMultiSet<E> extends AbstractMultiSet<E> i
     }
 
     // always returns unmodifiable list
-    @NotNull
+    @Nonnull
     private List<E> get(E e) {
         final List<E> list = backingMap.get(e);
         return list == null ? Collections.<E>emptyList() : Collections.unmodifiableList(list);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Collection<E> getAll(E e) {
         return get(e);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Set<E> toElementSet() {
         final Set<E> result = new HashSet<E>();

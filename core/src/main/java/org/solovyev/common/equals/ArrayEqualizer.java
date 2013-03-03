@@ -22,8 +22,8 @@
 
 package org.solovyev.common.equals;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Objects;
 
 /**
@@ -33,7 +33,7 @@ import org.solovyev.common.Objects;
  */
 public class ArrayEqualizer<T> implements Equalizer<T[]> {
 
-    @NotNull
+    @Nonnull
     private static final ArrayEqualizer<?> instance = new ArrayEqualizer<Object>(null);
 
     @Nullable
@@ -43,18 +43,18 @@ public class ArrayEqualizer<T> implements Equalizer<T[]> {
         this.nestedEqualizer = nestedEqualizer;
     }
 
-    @NotNull
-    public static <T> ArrayEqualizer<T> newWithNestedEqualizer(@NotNull Equalizer<T> nestedEqualizer) {
+    @Nonnull
+    public static <T> ArrayEqualizer<T> newWithNestedEqualizer(@Nonnull Equalizer<T> nestedEqualizer) {
         return new ArrayEqualizer<T>(nestedEqualizer);
     }
 
-    @NotNull
+    @Nonnull
     public static <T> ArrayEqualizer<T> newWithNaturalEquals() {
         return (ArrayEqualizer<T>) instance;
     }
 
     @Override
-    public boolean areEqual(@NotNull T[] first, @NotNull T[] second) {
+    public boolean areEqual(@Nonnull T[] first, @Nonnull T[] second) {
         boolean result = false;
 
         if (first.length == second.length) {

@@ -22,8 +22,8 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -41,39 +41,39 @@ import java.security.NoSuchProviderException;
  */
 class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
 
-    @NotNull
+    @Nonnull
     private final String ciphererAlgorithm;
 
     @Nullable
     private final String provider;
 
-    @NotNull
+    @Nonnull
     InitialVectorDef initialVectorDef;
 
-    private ByteArrayCipherer(@NotNull String ciphererAlgorithm,
+    private ByteArrayCipherer(@Nonnull String ciphererAlgorithm,
                               @Nullable String provider,
-                              @NotNull InitialVectorDef initialVectorDef) {
+                              @Nonnull InitialVectorDef initialVectorDef) {
         this.ciphererAlgorithm = ciphererAlgorithm;
         this.provider = provider;
         this.initialVectorDef = initialVectorDef;
     }
 
-    @NotNull
-    public static Cipherer<byte[], byte[]> newInstance(@NotNull String ciphererAlgorithm,
+    @Nonnull
+    public static Cipherer<byte[], byte[]> newInstance(@Nonnull String ciphererAlgorithm,
                                                        @Nullable String provider,
-                                                       @NotNull InitialVectorDef initialVectorDef) {
+                                                       @Nonnull InitialVectorDef initialVectorDef) {
         return new ByteArrayCipherer(ciphererAlgorithm, provider, initialVectorDef);
     }
 
-    @NotNull
-    public static Cipherer<byte[], byte[]> newNoIv(@NotNull String ciphererAlgorithm,
+    @Nonnull
+    public static Cipherer<byte[], byte[]> newNoIv(@Nonnull String ciphererAlgorithm,
                                                    @Nullable String provider) {
         return new ByteArrayCipherer(ciphererAlgorithm, provider, InitialVectorDef.newEmpty());
     }
 
-    @NotNull
-    public byte[] encrypt(@NotNull SecretKey secret,
-                          @NotNull byte[] decrypted) throws CiphererException {
+    @Nonnull
+    public byte[] encrypt(@Nonnull SecretKey secret,
+                          @Nonnull byte[] decrypted) throws CiphererException {
         try {
             final IvParameterSpec ivParameterSpec = initialVectorDef.getEncryptIvParameterSpec();
 
@@ -87,8 +87,8 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
         }
     }
 
-    @NotNull
-    private Cipher getEncrypter(@NotNull SecretKey secret,
+    @Nonnull
+    private Cipher getEncrypter(@Nonnull SecretKey secret,
                                 @Nullable IvParameterSpec ivParameterSpec) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         final Cipher result;
 
@@ -107,9 +107,9 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public byte[] decrypt(@NotNull SecretKey secret, @NotNull byte[] encrypted) throws CiphererException {
+    public byte[] decrypt(@Nonnull SecretKey secret, @Nonnull byte[] encrypted) throws CiphererException {
         try {
             final IvParameterSpec ivParameterSpec = initialVectorDef.getDecryptIvParameterSpec(encrypted);
 
@@ -123,8 +123,8 @@ class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
         }
     }
 
-    @NotNull
-    private Cipher getDecrypter(@NotNull SecretKey secret,
+    @Nonnull
+    private Cipher getDecrypter(@Nonnull SecretKey secret,
                                 @Nullable IvParameterSpec ivParameterSpec) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         Cipher result;
 

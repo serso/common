@@ -23,7 +23,7 @@
 package org.solovyev.common.equals;
 
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -32,10 +32,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public class SameEqualizer<T> implements Equalizer<T> {
 
-    @NotNull
+    @Nonnull
     private static SameEqualizer<?> instance = new SameEqualizer<Object>();
 
-    @NotNull
+    @Nonnull
     public static <T> SameEqualizer<T> getInstance() {
         return (SameEqualizer<T>) instance;
     }
@@ -44,7 +44,7 @@ public class SameEqualizer<T> implements Equalizer<T> {
     }
 
     @Override
-    public boolean areEqual(@NotNull Object first, @NotNull Object second) {
+    public boolean areEqual(@Nonnull Object first, @Nonnull Object second) {
         return first == second;
     }
 }

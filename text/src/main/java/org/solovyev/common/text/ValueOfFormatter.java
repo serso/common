@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -40,18 +40,18 @@ public class ValueOfFormatter<T> implements Formatter<T> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private static final ValueOfFormatter<Object> notNullFormatter = new ValueOfFormatter<Object>(false);
 
-    @NotNull
+    @Nonnull
     private static final ValueOfFormatter<Object> nullableFormatter = new ValueOfFormatter<Object>(true);
 
-    @NotNull
+    @Nonnull
     public static <T> ValueOfFormatter<T> getNotNullFormatter() {
         return (ValueOfFormatter<T>) notNullFormatter;
     }
 
-    @NotNull
+    @Nonnull
     public static <T> ValueOfFormatter<T> getNullableFormatter() {
         return (ValueOfFormatter<T>) nullableFormatter;
     }

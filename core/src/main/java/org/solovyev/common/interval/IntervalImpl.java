@@ -22,8 +22,8 @@
 
 package org.solovyev.common.interval;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JCloneable;
 import org.solovyev.common.JObject;
 
@@ -34,18 +34,18 @@ import org.solovyev.common.JObject;
  */
 class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<T>, JCloneable<Interval<T>> {
 
-    @NotNull
+    @Nonnull
     protected IntervalLimit<T> left;
 
-    @NotNull
+    @Nonnull
     protected IntervalLimit<T> right;
 
     // for JAXB
     protected IntervalImpl() {
     }
 
-    private IntervalImpl(@NotNull IntervalLimit<T> left,
-						 @NotNull IntervalLimit<T> right) {
+    private IntervalImpl(@Nonnull IntervalLimit<T> left,
+						 @Nonnull IntervalLimit<T> right) {
         int c = left.compareTo(right);
         if (c > 0) {
             throw new IllegalArgumentException("Left limit must <= than right!");
@@ -59,9 +59,9 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
         this.right = right;
     }
 
-	@NotNull
-	static <T extends Comparable<T>> IntervalImpl<T> newInstance(@NotNull IntervalLimit<T> left,
-																 @NotNull IntervalLimit<T> right) {
+	@Nonnull
+	static <T extends Comparable<T>> IntervalImpl<T> newInstance(@Nonnull IntervalLimit<T> left,
+																 @Nonnull IntervalLimit<T> right) {
 		return new IntervalImpl<T>(left, right);
 	}
 
@@ -81,13 +81,13 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
         return this.right.getValue();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public IntervalLimit<T> getRight() {
         return this.right;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public IntervalLimit<T> getLeft() {
         return this.left;
@@ -98,7 +98,7 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
      * @return true if single value inside interval, false otherwise
      */
     @Override
-    public boolean contains(@NotNull T value) {
+    public boolean contains(@Nonnull T value) {
         return this.left.isLowerOrEqualsThan(value) && this.right.isHigherOrEqualsThan(value);
     }
 
@@ -107,7 +107,7 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
      * @return true if that interval is inside this interval, false otherwise
      */
     @Override
-    public boolean contains(@NotNull Interval<T> that) {
+    public boolean contains(@Nonnull Interval<T> that) {
         return this.left.isLowerOrEqualsThan(that.getLeft()) && this.right.isHigherOrEqualsThan(that.getRight());
     }
 
@@ -136,7 +136,7 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
         return (this.left.isClosed() && !this.right.isClosed()) || (!this.left.isClosed() && this.right.isClosed());
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public IntervalImpl<T> clone() {
         final IntervalImpl<T> clone = (IntervalImpl<T>) super.clone();
@@ -182,7 +182,7 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
         return true;
     }
 
-    protected boolean areEqual(@NotNull T thisBorder, @Nullable Object thatBorder) {
+    protected boolean areEqual(@Nonnull T thisBorder, @Nullable Object thatBorder) {
         return thisBorder.equals(thatBorder);
     }
 

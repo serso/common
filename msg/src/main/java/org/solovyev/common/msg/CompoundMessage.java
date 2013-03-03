@@ -22,7 +22,7 @@
 
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 import java.util.Locale;
@@ -34,15 +34,15 @@ import java.util.Locale;
  */
 public class CompoundMessage extends AbstractMessage {
 
-	@NotNull
+	@Nonnull
 	private final Message compoundMessage;
 
-	private CompoundMessage(@NotNull Message compoundMessage, @NotNull MessageLevel messageLevel, @NotNull List<?> parameters) {
+	private CompoundMessage(@Nonnull Message compoundMessage, @Nonnull MessageLevel messageLevel, @Nonnull List<?> parameters) {
 		super(compoundMessage.getMessageCode(), messageLevel, parameters);
 		this.compoundMessage = compoundMessage;
 	}
 
-	public static CompoundMessage newInstance(@NotNull Message compoundMessage, @NotNull List<? extends Message> messages) {
+	public static CompoundMessage newInstance(@Nonnull Message compoundMessage, @Nonnull List<? extends Message> messages) {
 		MessageLevel messageLevel = MessageType.info;
 		for (Message message : messages) {
 			messageLevel = Messages.getMessageLevelWithHigherLevel(messageLevel, message.getMessageLevel());
@@ -51,7 +51,7 @@ public class CompoundMessage extends AbstractMessage {
 	}
 
 	@Override
-	protected String getMessagePattern(@NotNull Locale locale) {
+	protected String getMessagePattern(@Nonnull Locale locale) {
 		final StringBuilder result = new StringBuilder();
 
 		result.append(compoundMessage.getLocalizedMessage(locale)).append("\n");

@@ -23,7 +23,7 @@
 package org.solovyev.common.equals;
 
 import junit.framework.Assert;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.junit.Test;
 import org.solovyev.common.Objects;
 
@@ -72,7 +72,7 @@ public class ArrayEqualizerTest {
     public void testCustomEquals() throws Exception {
         final Equalizer<TestJObject[]> equalizer = ArrayEqualizer.newWithNestedEqualizer(new Equalizer<TestJObject>() {
             @Override
-            public boolean areEqual(@NotNull TestJObject first, @NotNull TestJObject second) {
+            public boolean areEqual(@Nonnull TestJObject first, @Nonnull TestJObject second) {
                 return first.getField().equals(second.getField());
             }
         });
@@ -107,18 +107,18 @@ public class ArrayEqualizerTest {
 
     private static final class TestJObject {
 
-        @NotNull
+        @Nonnull
         private final String field;
 
-        private TestJObject(@NotNull String field) {
+        private TestJObject(@Nonnull String field) {
             this.field = field;
         }
 
-        private static TestJObject newInstance(@NotNull String field) {
+        private static TestJObject newInstance(@Nonnull String field) {
             return new TestJObject(field);
         }
 
-        @NotNull
+        @Nonnull
         public String getField() {
             return field;
         }

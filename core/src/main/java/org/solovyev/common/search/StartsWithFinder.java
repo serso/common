@@ -22,8 +22,8 @@
 
 package org.solovyev.common.search;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
 /**
@@ -35,21 +35,21 @@ public class StartsWithFinder implements JPredicate<String> {
 
     private int i;
 
-    @NotNull
+    @Nonnull
     private final String targetString;
 
-    private StartsWithFinder(@NotNull String targetString, int i) {
+    private StartsWithFinder(@Nonnull String targetString, int i) {
         this.targetString = targetString;
         this.i = i;
     }
 
-    @NotNull
-    public static StartsWithFinder newFrom(@NotNull String targetString, int i) {
+    @Nonnull
+    public static StartsWithFinder newFrom(@Nonnull String targetString, int i) {
         return new StartsWithFinder(targetString, i);
     }
 
-    @NotNull
-    public static StartsWithFinder newInstance(@NotNull String targetString) {
+    @Nonnull
+    public static StartsWithFinder newInstance(@Nonnull String targetString) {
         return newFrom(targetString, 0);
     }
 

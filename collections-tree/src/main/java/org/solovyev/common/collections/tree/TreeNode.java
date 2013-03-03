@@ -22,8 +22,8 @@
 
 package org.solovyev.common.collections.tree;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
 import java.util.Collection;
@@ -41,20 +41,20 @@ import java.util.Iterator;
 public interface TreeNode<T> extends Iterable<TreeNode<T>> {
 
     @Nullable
-    TreeNode<T> findOwnChild(@NotNull JPredicate<TreeNode<T>> finder);
+    TreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder);
 
     /**
      * NOTE: immutable collection is returned
      * @return OWN children of the node (first level children)
      */
-    @NotNull
+    @Nonnull
     Collection<? extends TreeNode<T>> getOwnChildren();
 
     /**
      * @return iterator over the OWN children of the node (first level children).
      * This iterator depending on the implementation may support or may not support java.util.Iterator#remove() method.
      */
-    @NotNull
+    @Nonnull
     Iterator<? extends TreeNode<T>> getOwnChildrenIterator();
 
     /**
@@ -71,13 +71,13 @@ public interface TreeNode<T> extends Iterable<TreeNode<T>> {
      * The actual traversal algorithm is not determined - it just guarantees iterating over all children
      */
     @Override
-    @NotNull
+    @Nonnull
     Iterator<TreeNode<T>> iterator();
 
-    @NotNull
+    @Nonnull
     Iterator<? extends TreeNode<T>> getIterator();
 
-    @NotNull
+    @Nonnull
     Collection<? extends TreeNode<T>> getAllChildren();
 
 

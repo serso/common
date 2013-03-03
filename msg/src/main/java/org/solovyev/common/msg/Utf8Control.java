@@ -1,6 +1,6 @@
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,10 +13,10 @@ import java.util.ResourceBundle;
 
 class Utf8Control extends ResourceBundle.Control {
 
-    @NotNull
+    @Nonnull
     private static final ResourceBundle.Control instance = new Utf8Control();
 
-    @NotNull
+    @Nonnull
     public static ResourceBundle.Control getInstance() {
         return instance;
     }

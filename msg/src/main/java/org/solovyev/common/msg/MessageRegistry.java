@@ -22,7 +22,7 @@
 
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -42,7 +42,7 @@ public interface MessageRegistry {
      *
      * @param message message to be added
      */
-	void addMessage(@NotNull Message message);
+	void addMessage(@Nonnull Message message);
 
     /**
      *
@@ -56,6 +56,6 @@ public interface MessageRegistry {
      *
      * @return message from the registry
      */
-	@NotNull
+	@Nonnull
 	Message getMessage();
 }

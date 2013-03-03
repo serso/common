@@ -28,7 +28,7 @@ package org.solovyev.common;
  * Time: 4:32 PM
  */
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Interface converts one object to another
@@ -38,7 +38,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Converter<FROM, TO> {
 
-    @NotNull
-    TO convert(@NotNull FROM from);
+    @Nonnull
+    TO convert(@Nonnull FROM from);
 }
 

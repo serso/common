@@ -23,7 +23,7 @@
 package org.solovyev.common.text;
 
 import org.apache.commons.codec.Charsets;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 
 /**
@@ -32,20 +32,20 @@ import org.solovyev.common.Converter;
  */
 public class StringEncoder implements Converter<byte[], String> {
 
-    @NotNull
+    @Nonnull
     private static Converter<byte[], String> instance = new StringEncoder();
 
     private StringEncoder() {
     }
 
-    @NotNull
+    @Nonnull
     public static Converter<byte[], String> getInstance() {
         return instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public String convert(@NotNull byte[] bytes) {
+    public String convert(@Nonnull byte[] bytes) {
         return new String(bytes, Charsets.UTF_8);
     }
 }

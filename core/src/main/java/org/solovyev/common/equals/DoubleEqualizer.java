@@ -22,7 +22,7 @@
 
 package org.solovyev.common.equals;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.math.Maths;
 
 /**
@@ -39,7 +39,7 @@ public class DoubleEqualizer implements Equalizer<Double> {
     }
 
     @Override
-    public boolean areEqual(@NotNull Double first, @NotNull Double second) {
+    public boolean areEqual(@Nonnull Double first, @Nonnull Double second) {
         return Maths.equals(first, second, precision);
     }
 }

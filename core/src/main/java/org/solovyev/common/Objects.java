@@ -28,7 +28,7 @@ package org.solovyev.common;
  * Time: 11:18 AM
  */
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.solovyev.common.equals.Equalizer;
 
 import java.util.Date;

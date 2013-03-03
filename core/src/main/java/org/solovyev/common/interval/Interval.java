@@ -22,8 +22,8 @@
 
 package org.solovyev.common.interval;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JCloneable;
 
 /**
@@ -39,15 +39,15 @@ public interface Interval<T extends Comparable<T>> extends JCloneable<Interval<T
     @Nullable
     public T getRightLimit();
 
-    @NotNull
+    @Nonnull
     public IntervalLimit<T> getLeft();
 
-    @NotNull
+    @Nonnull
     public IntervalLimit<T> getRight();
 
-    public boolean contains(@NotNull T value);
+    public boolean contains(@Nonnull T value);
 
-    public boolean contains(@NotNull Interval<T> that);
+    public boolean contains(@Nonnull Interval<T> that);
 
     public boolean isClosed();
 

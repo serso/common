@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Bytes;
 
 import java.security.MessageDigest;
@@ -34,25 +34,25 @@ import java.security.MessageDigest;
  */
 class ByteArrayHashProvider implements HashProvider<byte[], byte[]> {
 
-    @NotNull
+    @Nonnull
     private final String hashAlgorithm;
 
-    @NotNull
+    @Nonnull
     private final String provider;
 
-    private ByteArrayHashProvider(@NotNull String hashAlgorithm, @NotNull String provider) {
+    private ByteArrayHashProvider(@Nonnull String hashAlgorithm, @Nonnull String provider) {
         this.hashAlgorithm = hashAlgorithm;
         this.provider = provider;
     }
 
-    @NotNull
-    static HashProvider<byte[], byte[]> newInstance(@NotNull String hashAlgorithm, @NotNull String provider) {
+    @Nonnull
+    static HashProvider<byte[], byte[]> newInstance(@Nonnull String hashAlgorithm, @Nonnull String provider) {
         return new ByteArrayHashProvider(hashAlgorithm, provider);
     }
 
     @Override
-    @NotNull
-    public byte[] getHash(@NotNull byte[] object, @NotNull byte[] salt) throws CiphererException {
+    @Nonnull
+    public byte[] getHash(@Nonnull byte[] object, @Nonnull byte[] salt) throws CiphererException {
         try {
             final MessageDigest md = MessageDigest.getInstance(hashAlgorithm, provider);
             return md.digest(Bytes.concat(object, salt));

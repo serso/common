@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Bytes;
 import org.solovyev.common.Converter;
 
@@ -33,20 +33,20 @@ import org.solovyev.common.Converter;
  */
 class HashCodeConverter<T> implements Converter<T, byte[]> {
 
-    @NotNull
+    @Nonnull
     private static final Converter<?, byte[]> instance = new HashCodeConverter<Object>();
 
     private HashCodeConverter() {
     }
 
-    @NotNull
+    @Nonnull
     static <T> Converter<T, byte[]> getInstance() {
         return (Converter<T, byte[]>) instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public byte[] convert(@NotNull T t) {
+    public byte[] convert(@Nonnull T t) {
         return Bytes.intToBytes(t.hashCode());
     }
 }

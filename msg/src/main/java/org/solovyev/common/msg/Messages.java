@@ -22,8 +22,8 @@
 
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.collections.Collections;
 
 import java.text.MessageFormat;
@@ -37,38 +37,38 @@ public final class Messages {
         throw new AssertionError();
     }
 
-    @NotNull
+    @Nonnull
     public static MessageRegistry newOrderedMessageRegistry() {
          return new ListMessageRegistry();
     }
 
-    @NotNull
-    public static MessageRegistry synchronizedMessageRegistry(@NotNull MessageRegistry messageRegistry) {
+    @Nonnull
+    public static MessageRegistry synchronizedMessageRegistry(@Nonnull MessageRegistry messageRegistry) {
         return SynchronizedMessageRegistry.wrap(messageRegistry);
     }
 
-    @NotNull
-    public static MessageRegistry synchronizedMessageRegistry(@NotNull MessageRegistry messageRegistry, @NotNull Object mutex) {
+    @Nonnull
+    public static MessageRegistry synchronizedMessageRegistry(@Nonnull MessageRegistry messageRegistry, @Nonnull Object mutex) {
         return SynchronizedMessageRegistry.wrap(messageRegistry, mutex);
     }
 
-    @NotNull
-    public static MessageFactory newBundleMessageFactory(@NotNull String bundleName) {
+    @Nonnull
+    public static MessageFactory newBundleMessageFactory(@Nonnull String bundleName) {
         return new BundleMessageFactory(bundleName, null);
     }
 
-    @NotNull
-    public static MessageFactory newBundleMessageFactory(@NotNull String bundleName, @NotNull ResourceBundle.Control bundleControl) {
+    @Nonnull
+    public static MessageFactory newBundleMessageFactory(@Nonnull String bundleName, @Nonnull ResourceBundle.Control bundleControl) {
         return new BundleMessageFactory(bundleName, bundleControl);
     }
 
-    @NotNull
-    public static MessageFactory newUtf8BundleMessageFactory(@NotNull String bundleName) {
+    @Nonnull
+    public static MessageFactory newUtf8BundleMessageFactory(@Nonnull String bundleName) {
         return new BundleMessageFactory(bundleName, Utf8Control.getInstance());
     }
 
-    @NotNull
-    public static MessageLevel getMessageLevelWithHigherLevel(@NotNull MessageLevel l, @NotNull MessageLevel r) {
+    @Nonnull
+    public static MessageLevel getMessageLevelWithHigherLevel(@Nonnull MessageLevel l, @Nonnull MessageLevel r) {
         MessageLevel result;
 
         if (l.getMessageLevel() > r.getMessageLevel()) {
@@ -89,8 +89,8 @@ public final class Messages {
      * @return formatted message string according to default locale formatting, nested messages are processed properly
      * (for each message from parameter method {@link Message#getLocalizedMessage(java.util.Locale)} is called)
      */
-    @NotNull
-    public static String prepareMessage(@NotNull Locale locale, @NotNull String messagePattern, @NotNull List<?> parameters) {
+    @Nonnull
+    public static String prepareMessage(@Nonnull Locale locale, @Nonnull String messagePattern, @Nonnull List<?> parameters) {
         String result;
 
         if (Collections.isEmpty(parameters)) {
@@ -107,8 +107,8 @@ public final class Messages {
         return result;
     }
 
-    @NotNull
-	private static Object[] prepareParameters(@NotNull List<?> parameters, @NotNull Locale locale) {
+    @Nonnull
+	private static Object[] prepareParameters(@Nonnull List<?> parameters, @Nonnull Locale locale) {
 		final Object[] result = new Object[parameters.size()];
 
 		for (int i = 0; i<parameters.size(); i++){
@@ -119,7 +119,7 @@ public final class Messages {
 	}
 
     @Nullable
-	private static Object substituteParameter(@Nullable Object object, @NotNull Locale locale) {
+	private static Object substituteParameter(@Nullable Object object, @Nonnull Locale locale) {
 		if (object instanceof Message) {
 			return ((Message) object).getLocalizedMessage(locale);
 		} else {

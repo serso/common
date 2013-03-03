@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,29 +31,29 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class SynchronizedObject<D> {
 
-    @NotNull
+    @Nonnull
     private final D delegate;
 
-    @NotNull
+    @Nonnull
     protected final Object mutex;
 
-    protected SynchronizedObject(@NotNull D delegate) {
+    protected SynchronizedObject(@Nonnull D delegate) {
         this.delegate = delegate;
         this.mutex = this;
     }
 
-    protected SynchronizedObject(@NotNull D delegate, @NotNull Object mutex) {
+    protected SynchronizedObject(@Nonnull D delegate, @Nonnull Object mutex) {
         this.delegate = delegate;
         this.mutex = mutex;
     }
 
-    @NotNull
+    @Nonnull
     protected D delegate() {
         return delegate;
     }
 
     // for manually synchronization it is allows to use mutex
-    @NotNull
+    @Nonnull
     public Object getMutex() {
         return mutex;
     }

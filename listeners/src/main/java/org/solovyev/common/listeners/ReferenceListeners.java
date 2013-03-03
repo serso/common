@@ -22,8 +22,8 @@
 
 package org.solovyev.common.listeners;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.filter.FilterType;
@@ -49,10 +49,10 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final List<R> listeners = new ArrayList<R>();
 
-    @NotNull
+    @Nonnull
     private final ReferenceProducer<R, L> referenceProducer;
 
     /*
@@ -63,7 +63,7 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
     **********************************************************************
     */
 
-    private ReferenceListeners(@NotNull ReferenceProducer<R, L> referenceProducer) {
+    private ReferenceListeners(@Nonnull ReferenceProducer<R, L> referenceProducer) {
         this.referenceProducer = referenceProducer;
     }
 
@@ -77,17 +77,17 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
      *
      * @return listeners container
      */
-    @NotNull
-    public static <R extends Reference<L>, L> ReferenceListeners<R, L> newInstance(@NotNull ReferenceProducer<R, L> referenceProducer) {
+    @Nonnull
+    public static <R extends Reference<L>, L> ReferenceListeners<R, L> newInstance(@Nonnull ReferenceProducer<R, L> referenceProducer) {
         return new ReferenceListeners<R, L>(referenceProducer);
     }
 
-    @NotNull
+    @Nonnull
     public static <L> ReferenceListeners<WeakReference<L>, L> newWeakReferenceInstance() {
         return new ReferenceListeners<WeakReference<L>, L>(new WeakReferenceProducer<L>());
     }
 
-    @NotNull
+    @Nonnull
     public static <L> ReferenceListeners<WeakReference<L>, L> newHardReferenceInstance() {
         return new ReferenceListeners<WeakReference<L>, L>(new HardReferenceProducer<L>());
     }
@@ -101,7 +101,7 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
     */
 
     @Override
-    public boolean addListener(@NotNull final L listener) {
+    public boolean addListener(@Nonnull final L listener) {
         synchronized (listeners) {
             boolean contains = Collections.contains(listeners, FilterType.included, new ReferencePredicate<R, L>(listener));
 
@@ -114,7 +114,7 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
     }
 
     @Override
-    public boolean removeListener(@NotNull final L listener) {
+    public boolean removeListener(@Nonnull final L listener) {
         synchronized (listeners) {
             if (referenceProducer instanceof HardReferenceProducer) {
                 return Collections.removeIf(listeners.iterator(), new JPredicate<R>() {
@@ -148,7 +148,7 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public List<L> getListeners() {
         final List<L> result;
 
@@ -170,9 +170,9 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <LE extends L> List<LE> getListenersOfType(@NotNull Class<LE> type) {
+    public <LE extends L> List<LE> getListenersOfType(@Nonnull Class<LE> type) {
         final List<L> listeners = getListeners();
 
         final List<LE> result = new ArrayList<LE>(listeners.size());
@@ -195,10 +195,10 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
 
     private static class ReferencePredicate<R extends Reference<L>, L> implements JPredicate<R> {
 
-        @NotNull
+        @Nonnull
         private final L l;
 
-        public ReferencePredicate(@NotNull L l) {
+        public ReferencePredicate(@Nonnull L l) {
             this.l = l;
         }
 
@@ -211,21 +211,21 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
 
     private static class WeakReferenceProducer<L> implements ReferenceProducer<WeakReference<L>, L> {
 
-        @NotNull
+        @Nonnull
         @Override
-        public WeakReference<L> newReference(@NotNull L listener) {
+        public WeakReference<L> newReference(@Nonnull L listener) {
             return new WeakReference<L>(listener);
         }
     }
 
     private static class HardReferenceProducer<L> implements ReferenceProducer<WeakReference<L>, L> {
 
-        @NotNull
+        @Nonnull
         private final List<ReferenceHolder<L>> references = new ArrayList<ReferenceHolder<L>>();
 
-        @NotNull
+        @Nonnull
         @Override
-        public WeakReference<L> newReference(@NotNull L listener) {
+        public WeakReference<L> newReference(@Nonnull L listener) {
             final WeakReference<L> result = new WeakReference<L>(listener);
 
             // store hard reference to prevent GC
@@ -234,7 +234,7 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
             return result;
         }
 
-        public boolean remove(@NotNull final WeakReference<L> reference) {
+        public boolean remove(@Nonnull final WeakReference<L> reference) {
             return Collections.removeIf(references.iterator(), new JPredicate<ReferenceHolder<L>>() {
                 @Override
                 public boolean apply(@Nullable ReferenceHolder<L> referenceHolder) {
@@ -248,20 +248,20 @@ final class ReferenceListeners<R extends Reference<L>, L> implements JListeners<
         }
 
         private static class ReferenceHolder<R> {
-            @NotNull
+            @Nonnull
             private final WeakReference<R> reference;
 
             // do not remove: this object should be stored here in order not to be garbage collected
-            @NotNull
+            @Nonnull
             private final R referent;
 
-            private ReferenceHolder(@NotNull WeakReference<R> reference, @NotNull R referent) {
+            private ReferenceHolder(@Nonnull WeakReference<R> reference, @Nonnull R referent) {
                 this.reference = reference;
                 this.referent = referent;
             }
 
 
-            private static <R> ReferenceHolder<R> newInstance(@NotNull WeakReference<R> reference, @NotNull R referent) {
+            private static <R> ReferenceHolder<R> newInstance(@Nonnull WeakReference<R> reference, @Nonnull R referent) {
                 return new ReferenceHolder<R>(reference, referent);
             }
         }

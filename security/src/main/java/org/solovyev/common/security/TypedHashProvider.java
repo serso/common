@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 import org.solovyev.common.TrivialConverter;
 
@@ -33,50 +33,50 @@ import org.solovyev.common.TrivialConverter;
  */
 public class TypedHashProvider<T, H> implements HashProvider<T, H> {
 
-    @NotNull
+    @Nonnull
     private final HashProvider<byte[], byte[]> byteHashProvider;
 
-    @NotNull
+    @Nonnull
     private final Converter<T, byte[]> elementConverter;
 
-    @NotNull
+    @Nonnull
     private final Converter<byte[], H> hashConverter;
 
-    private TypedHashProvider(@NotNull HashProvider<byte[], byte[]> byteHashProvider,
-                              @NotNull Converter<T, byte[]> elementConverter,
-                              @NotNull Converter<byte[], H> hashConverter) {
+    private TypedHashProvider(@Nonnull HashProvider<byte[], byte[]> byteHashProvider,
+                              @Nonnull Converter<T, byte[]> elementConverter,
+                              @Nonnull Converter<byte[], H> hashConverter) {
         this.byteHashProvider = byteHashProvider;
         this.elementConverter = elementConverter;
         this.hashConverter = hashConverter;
     }
 
-    @NotNull
-    public static <T, H> TypedHashProvider<T, H> newInstance(@NotNull HashProvider<byte[], byte[]> byteHashProvider,
-                                                             @NotNull Converter<T, byte[]> elementConverter,
-                                                             @NotNull Converter<byte[], H> hashConverter) {
+    @Nonnull
+    public static <T, H> TypedHashProvider<T, H> newInstance(@Nonnull HashProvider<byte[], byte[]> byteHashProvider,
+                                                             @Nonnull Converter<T, byte[]> elementConverter,
+                                                             @Nonnull Converter<byte[], H> hashConverter) {
         return new TypedHashProvider<T, H>(byteHashProvider, elementConverter, hashConverter);
     }
 
-    @NotNull
-    public static <T> TypedHashProvider<T, byte[]> newByteInstance(@NotNull HashProvider<byte[], byte[]> byteHashProvider,
-                                                                   @NotNull Converter<T, byte[]> elementConverter) {
+    @Nonnull
+    public static <T> TypedHashProvider<T, byte[]> newByteInstance(@Nonnull HashProvider<byte[], byte[]> byteHashProvider,
+                                                                   @Nonnull Converter<T, byte[]> elementConverter) {
         return new TypedHashProvider<T, byte[]>(byteHashProvider, elementConverter, TrivialConverter.<byte[]>getInstance());
     }
 
-    @NotNull
-    public static <T> TypedHashProvider<T, byte[]> newByteHashCodeInstance(@NotNull HashProvider<byte[], byte[]> byteHashProvider) {
+    @Nonnull
+    public static <T> TypedHashProvider<T, byte[]> newByteHashCodeInstance(@Nonnull HashProvider<byte[], byte[]> byteHashProvider) {
         return new TypedHashProvider<T, byte[]>(byteHashProvider, HashCodeConverter.<T>getInstance(), TrivialConverter.<byte[]>getInstance());
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public H getHash(@NotNull T object, @NotNull byte[] salt) throws CiphererException {
+    public H getHash(@Nonnull T object, @Nonnull byte[] salt) throws CiphererException {
         final byte[] bytes = elementConverter.convert(object);
         final byte[] hashBytes = byteHashProvider.getHash(bytes, salt);
         return hashConverter.convert(hashBytes);
     }
 
-    @NotNull
+    @Nonnull
     public HashProvider<byte[], byte[]> getByteHashProvider() {
         return byteHashProvider;
     }

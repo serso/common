@@ -22,8 +22,8 @@
 
 package org.solovyev.common.datetime;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.joda.time.DateTimeZone;
 import org.joda.time.tz.Provider;
 
@@ -36,14 +36,14 @@ import java.util.*;
  */
 public class FastDateTimeZoneProvider implements Provider {
 
-    @NotNull
+    @Nonnull
     public static final Set<String> availableIds = new HashSet<String>();
 
     static {
         availableIds.addAll(Arrays.asList(TimeZone.getAvailableIDs()));
     }
 
-    @NotNull
+    @Nonnull
     public DateTimeZone getZone(@Nullable String id) {
         if (id == null) {
             return DateTimeZone.UTC;
@@ -64,7 +64,7 @@ public class FastDateTimeZoneProvider implements Provider {
         return DateTimeZone.forOffsetMillis(rawOffset);
     }
 
-    @NotNull
+    @Nonnull
     public Set<String> getAvailableIDs() {
         return availableIds;
     }

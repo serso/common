@@ -22,8 +22,8 @@
 
 package org.solovyev.common.units;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Strings;
 
 /**
@@ -37,11 +37,11 @@ public final class Conversions {
         throw new AssertionError();
     }
 
-    @NotNull
-    public static String doConversion(@NotNull UnitConverter<String> converter,
+    @Nonnull
+    public static String doConversion(@Nonnull UnitConverter<String> converter,
                                       @Nullable String from,
-                                      @NotNull UnitType<String> fromUnitType,
-                                      @NotNull UnitType<String> toUnitType) throws ConversionException {
+                                      @Nonnull UnitType<String> fromUnitType,
+                                      @Nonnull UnitType<String> toUnitType) throws ConversionException {
         final String result;
 
         if (Strings.isEmpty(from)) {

@@ -22,8 +22,8 @@
 
 package org.solovyev.common.math;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Objects;
 import org.solovyev.common.MutableObject;
 import org.solovyev.common.collections.Collections;
@@ -157,7 +157,7 @@ public class Maths {
     }
 
     @Nullable
-    public static <T extends Number> T minMax(@Nullable Collection<T> numbers, @NotNull ComparisonType comparisonType) {
+    public static <T extends Number> T minMax(@Nullable Collection<T> numbers, @Nonnull ComparisonType comparisonType) {
         T result = null;
         if (!Collections.isEmpty(numbers)) {
             for (T number : numbers) {
@@ -173,8 +173,8 @@ public class Maths {
         return result;
     }
 
-    @NotNull
-    public static <T extends Number> T minMax(@NotNull T first, @NotNull T second, @NotNull ComparisonType comparisonType) {
+    @Nonnull
+    public static <T extends Number> T minMax(@Nonnull T first, @Nonnull T second, @Nonnull ComparisonType comparisonType) {
         T result = first;
 
         switch (comparisonType) {
@@ -197,31 +197,31 @@ public class Maths {
 
     public static final float MIN_AMOUNT = 0.05f;
 
-    public static double round(@NotNull Double value, int precision) {
+    public static double round(@Nonnull Double value, int precision) {
         double factor = Math.pow(10, precision);
         return ((double) Math.round(value * factor)) / factor;
     }
 
-    public static float getDistance(@NotNull Point2d startPoint,
-                                    @NotNull Point2d endPoint) {
+    public static float getDistance(@Nonnull Point2d startPoint,
+                                    @Nonnull Point2d endPoint) {
         return getNorm(subtract(endPoint, startPoint));
     }
 
-    public static Point2d subtract(@NotNull Point2d p1, @NotNull Point2d p2) {
+    public static Point2d subtract(@Nonnull Point2d p1, @Nonnull Point2d p2) {
         return new Point2d(p1.getX() - p2.getX(), p1.getY() - p2.getY());
     }
 
-    public static Point2d sum(@NotNull Point2d p1, @NotNull Point2d p2) {
+    public static Point2d sum(@Nonnull Point2d p1, @Nonnull Point2d p2) {
         return new Point2d(p1.getX() + p2.getX(), p1.getY() + p2.getY());
     }
 
-    public static float getNorm(@NotNull Point2d point) {
+    public static float getNorm(@Nonnull Point2d point) {
         return (float) Math.pow(Math.pow(point.getX(), 2) + Math.pow(point.getY(), 2), 0.5);
     }
 
-    public static float getAngle(@NotNull Point2d startPoint,
-                                 @NotNull Point2d axisEndPoint,
-                                 @NotNull Point2d endPoint,
+    public static float getAngle(@Nonnull Point2d startPoint,
+                                 @Nonnull Point2d axisEndPoint,
+                                 @Nonnull Point2d endPoint,
                                  @Nullable MutableObject<Boolean> left) {
         final Point2d axisVector = subtract(axisEndPoint, startPoint);
         final Point2d vector = subtract(endPoint, startPoint);
@@ -239,7 +239,7 @@ public class Maths {
         return (float) Math.acos((-a_2 + b_2 + c_2) / (2 * b * c));
     }
 
-    public static double countMean(@NotNull List<Double> objects) {
+    public static double countMean(@Nonnull List<Double> objects) {
 
         double sum = 0d;
         for (Double object : objects) {
@@ -249,7 +249,7 @@ public class Maths {
         return objects.size() == 0 ? 0d : (sum / objects.size());
     }
 
-    public static double countStandardDeviation(@NotNull Double mean, @NotNull List<Double> objects) {
+    public static double countStandardDeviation(@Nonnull Double mean, @Nonnull List<Double> objects) {
         double sum = 0d;
 
         for (Double object : objects) {
@@ -259,7 +259,7 @@ public class Maths {
         return objects.size() == 0 ? 0d : Math.sqrt(sum / objects.size());
     }
 
-    public static StatData getStatData(@NotNull List<Double> objects) {
+    public static StatData getStatData(@Nonnull List<Double> objects) {
 
         final double mean = countMean(objects);
         final double standardDeviation = countStandardDeviation(mean, objects);
@@ -299,7 +299,7 @@ public class Maths {
      * @param <T>       border type
      * @return intersection of 2 intervals
      *//*
-    public static <T extends Comparable<T>> Interval<T> intersection(@NotNull Interval<T> int1, @NotNull Interval<T> int2) {
+    public static <T extends Comparable<T>> Interval<T> intersection(@Nonnull Interval<T> int1, @Nonnull Interval<T> int2) {
 		Interval<T> result = null;
 
 		if (earlier(int1.getLeftLimit(), true, int2.getLeftLimit(), true) ||

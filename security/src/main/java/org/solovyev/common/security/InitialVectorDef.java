@@ -1,7 +1,7 @@
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Bytes;
 import org.solovyev.common.collections.Collections;
 
@@ -15,7 +15,7 @@ public class InitialVectorDef {
     private static final String RANDOM_ALGORITHM = "SHA1PRNG";
     private static final byte[] EMPTY = new byte[]{};
 
-    @NotNull
+    @Nonnull
     private final String randomAlgorithm;
 
     private final int length;
@@ -23,39 +23,39 @@ public class InitialVectorDef {
     @Nullable
     private final byte[] bytes;
 
-    private InitialVectorDef(@NotNull String randomAlgorithm, int length) {
+    private InitialVectorDef(@Nonnull String randomAlgorithm, int length) {
         this.length = length;
         this.randomAlgorithm = randomAlgorithm;
         this.bytes = null;
     }
 
-    public InitialVectorDef(@NotNull byte[] bytes) {
+    public InitialVectorDef(@Nonnull byte[] bytes) {
         this.bytes = Arrays.copyOf(bytes, bytes.length);
         this.length = bytes.length;
         this.randomAlgorithm = "";
     }
 
-    @NotNull
-    public static InitialVectorDef newRandom(@NotNull String randomAlgorithm, int length) {
+    @Nonnull
+    public static InitialVectorDef newRandom(@Nonnull String randomAlgorithm, int length) {
         return new InitialVectorDef(randomAlgorithm, length);
     }
 
-    @NotNull
+    @Nonnull
     public static InitialVectorDef newSha1PrngRandom(int length) {
         return new InitialVectorDef(RANDOM_ALGORITHM, length);
     }
 
-    @NotNull
+    @Nonnull
     public static InitialVectorDef newPredefined(byte[] bytes) {
         return new InitialVectorDef(bytes);
     }
 
-    @NotNull
+    @Nonnull
     public static InitialVectorDef newEmpty() {
         return new InitialVectorDef(EMPTY);
     }
 
-    @NotNull
+    @Nonnull
     public String getRandomAlgorithm() {
         return randomAlgorithm;
     }
@@ -69,7 +69,7 @@ public class InitialVectorDef {
         return bytes;
     }
 
-    @NotNull
+    @Nonnull
     byte[] getInitialVector() throws NoSuchAlgorithmException, NoSuchProviderException {
         byte[] result;
 
@@ -82,7 +82,7 @@ public class InitialVectorDef {
         return result;
     }
 
-    byte[] postEncrypt(@Nullable IvParameterSpec ivParameterSpec, @NotNull byte[] encrypted) {
+    byte[] postEncrypt(@Nullable IvParameterSpec ivParameterSpec, @Nonnull byte[] encrypted) {
         if (this.bytes != null) {
             if (this.bytes.length > 0) {
                 // bytes were predefined => are stored separately
@@ -125,7 +125,7 @@ public class InitialVectorDef {
     }
 
     @Nullable
-    IvParameterSpec getDecryptIvParameterSpec(@NotNull byte[] encrypted) {
+    IvParameterSpec getDecryptIvParameterSpec(@Nonnull byte[] encrypted) {
         if ( this.bytes != null ) {
             if ( this.bytes.length > 0 ) {
                 return new IvParameterSpec(this.bytes);

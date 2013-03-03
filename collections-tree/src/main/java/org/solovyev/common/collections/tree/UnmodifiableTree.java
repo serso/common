@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.tree;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.JPredicate;
 
 import java.util.List;
@@ -37,7 +37,7 @@ class UnmodifiableTree<T> implements MutableTree<T> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final MutableTree<T> t;
 
     /*
@@ -48,16 +48,16 @@ class UnmodifiableTree<T> implements MutableTree<T> {
     **********************************************************************
     */
 
-    private UnmodifiableTree(@NotNull MutableTree<T> t) {
+    private UnmodifiableTree(@Nonnull MutableTree<T> t) {
         this.t = t;
     }
 
-    public static <T> UnmodifiableTree<T> wrap(@NotNull MutableTree<T> t) {
+    public static <T> UnmodifiableTree<T> wrap(@Nonnull MutableTree<T> t) {
         return new UnmodifiableTree<T>(t);
     }
 
 
-    public static <T> UnmodifiableTree<T> wrap(@NotNull Tree<T> t) {
+    public static <T> UnmodifiableTree<T> wrap(@Nonnull Tree<T> t) {
         if (t instanceof MutableTree) {
             return wrap((MutableTree<T>)t);
         } else {
@@ -73,7 +73,7 @@ class UnmodifiableTree<T> implements MutableTree<T> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     @Override
     public MutableTreeNode<T> getRoot() {
         return t.getRoot();
@@ -84,24 +84,24 @@ class UnmodifiableTree<T> implements MutableTree<T> {
         return t.getSize();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public TreeIterator<T> iterator() {
         return t.iterator();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public TreeIterator<T> getIterator() {
         return t.getIterator();
     }
 
     @Override
-    public void removeNodeIf(@NotNull JPredicate<? super TreeNode<T>> filter) {
+    public void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter) {
         throw new UnsupportedOperationException();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public List<? extends MutableTreeNode<T>> getAllNodes() {
         return t.getAllNodes();
@@ -117,26 +117,26 @@ class UnmodifiableTree<T> implements MutableTree<T> {
 
     private static class TreeAdapter<T> implements MutableTree<T> {
 
-        @NotNull
+        @Nonnull
         private final Tree<T> tree;
 
-        private TreeAdapter(@NotNull Tree<T> tree) {
+        private TreeAdapter(@Nonnull Tree<T> tree) {
             this.tree = tree;
         }
 
-        @NotNull
-        private static <T> TreeAdapter<T> adapt(@NotNull Tree<T> tree) {
+        @Nonnull
+        private static <T> TreeAdapter<T> adapt(@Nonnull Tree<T> tree) {
             return new TreeAdapter<T>(tree);
         }
 
         @Override
-        @NotNull
+        @Nonnull
         public MutableTreeNode<T> getRoot() {
             return UnmodifiableTreeNode.wrap(tree.getRoot());
         }
 
         @Override
-        public void removeNodeIf(@NotNull JPredicate<? super TreeNode<T>> filter) {
+        public void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter) {
             throw new AssertionError("Should never happen!");
         }
 
@@ -145,20 +145,20 @@ class UnmodifiableTree<T> implements MutableTree<T> {
             return tree.getSize();
         }
 
-        @NotNull
+        @Nonnull
         @Override
         public TreeIterator<T> iterator() {
             return tree.iterator();
         }
 
         @Override
-        @NotNull
+        @Nonnull
         public TreeIterator<T> getIterator() {
             return tree.getIterator();
         }
 
         @Override
-        @NotNull
+        @Nonnull
         public List<? extends MutableTreeNode<T>> getAllNodes() {
             return Trees.unmodifiableTreeNodes(tree.getAllNodes());
         }

@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -38,6 +38,6 @@ public interface SaltGenerator {
      *
      * @throws CiphererException exception
      */
-    @NotNull
+    @Nonnull
     byte[] generateSalt() throws CiphererException;
 }

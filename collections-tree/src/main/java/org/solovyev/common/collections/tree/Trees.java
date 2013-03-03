@@ -22,8 +22,8 @@
 
 package org.solovyev.common.collections.tree;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,28 +44,28 @@ public final class Trees {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     public static <N> MutableTree<N> newLinkedTree(@Nullable N root) {
         return LinkedTree.newInstance(root);
     }
 
-    @NotNull
-    public static <N> MutableTree<N> unmodifiableTree(@NotNull MutableTree<N> tree) {
+    @Nonnull
+    public static <N> MutableTree<N> unmodifiableTree(@Nonnull MutableTree<N> tree) {
         return UnmodifiableTree.wrap(tree);
     }
 
-    @NotNull
-    public static <N> MutableTree<N> unmodifiableTree(@NotNull Tree<N> tree) {
+    @Nonnull
+    public static <N> MutableTree<N> unmodifiableTree(@Nonnull Tree<N> tree) {
         return UnmodifiableTree.wrap(tree);
     }
 
-	@NotNull
-	public static <N> TreeIterator<N> newDepthTreeIterator(@NotNull Tree<N> tree) {
+	@Nonnull
+	public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull Tree<N> tree) {
 		return new DepthTreeIterator<N>(tree);
 	}
 
-	@NotNull
-	public static <N> TreeIterator<N> newDepthTreeIterator(@NotNull TreeNode<N> teeNode) {
+	@Nonnull
+	public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull TreeNode<N> teeNode) {
 		return new DepthTreeIterator<N>(teeNode);
 	}
 
@@ -78,8 +78,8 @@ public final class Trees {
     **********************************************************************
     */
 
-    @NotNull
-    static <T> List<? extends MutableTreeNode<T>> unmodifiableMutableTreeNodes(@NotNull Collection<? extends MutableTreeNode<T>> treeNodes) {
+    @Nonnull
+    static <T> List<? extends MutableTreeNode<T>> unmodifiableMutableTreeNodes(@Nonnull Collection<? extends MutableTreeNode<T>> treeNodes) {
         final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(treeNodes.size());
 
         for (MutableTreeNode<T> treeNode : treeNodes) {
@@ -89,8 +89,8 @@ public final class Trees {
         return Collections.unmodifiableList(result);
     }
 
-    @NotNull
-    static <T> List<? extends MutableTreeNode<T>> unmodifiableTreeNodes(@NotNull Collection<? extends TreeNode<T>> treeNodes) {
+    @Nonnull
+    static <T> List<? extends MutableTreeNode<T>> unmodifiableTreeNodes(@Nonnull Collection<? extends TreeNode<T>> treeNodes) {
         final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(treeNodes.size());
 
         for (TreeNode<T> treeNode : treeNodes) {

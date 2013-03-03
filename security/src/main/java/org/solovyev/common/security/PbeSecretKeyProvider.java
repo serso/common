@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -38,13 +38,13 @@ class PbeSecretKeyProvider implements SecretKeyProvider {
 
     private final int iterationCount;
 
-    @NotNull
+    @Nonnull
     private final String algorithm;
 
-    @NotNull
+    @Nonnull
     private final String provider;
 
-    @NotNull
+    @Nonnull
     private final String ciphererAlgorithm;
 
     private final int keyLength;
@@ -52,9 +52,9 @@ class PbeSecretKeyProvider implements SecretKeyProvider {
     private final int saltLength;
 
     private PbeSecretKeyProvider(int iterationCount,
-                                 @NotNull String algorithm,
-                                 @NotNull String ciphererAlgorithm,
-                                 @NotNull String provider,
+                                 @Nonnull String algorithm,
+                                 @Nonnull String ciphererAlgorithm,
+                                 @Nonnull String provider,
                                  int keyLength,
                                  int saltLength) {
         this.iterationCount = iterationCount;
@@ -65,19 +65,19 @@ class PbeSecretKeyProvider implements SecretKeyProvider {
         this.saltLength = saltLength;
     }
 
-    @NotNull
+    @Nonnull
     public static SecretKeyProvider newInstance(int iterationCount,
-                                                @NotNull String algorithm,
-                                                @NotNull String ciphererAlgorithm,
-                                                @NotNull String provider,
+                                                @Nonnull String algorithm,
+                                                @Nonnull String ciphererAlgorithm,
+                                                @Nonnull String provider,
                                                 int keyLength,
                                                 int saltLength) {
         return new PbeSecretKeyProvider(iterationCount, algorithm, ciphererAlgorithm, provider, keyLength, saltLength);
     }
 
     @Override
-    @NotNull
-    public SecretKey getSecretKey(@NotNull String secret, @NotNull byte[] salt) throws CiphererException {
+    @Nonnull
+    public SecretKey getSecretKey(@Nonnull String secret, @Nonnull byte[] salt) throws CiphererException {
         try {
             if ( salt.length != saltLength ) {
                 throw new IllegalArgumentException("Salt size is not valid -  expected: " + saltLength + ", actual: " + salt.length);

@@ -23,7 +23,7 @@
 package org.solovyev.common.collections.multimap;
 
 import junit.framework.Assert;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.junit.Test;
 import org.solovyev.common.collections.multiset.ArrayListMultiSet;
 import org.solovyev.common.collections.multiset.MultiSet;
@@ -80,7 +80,7 @@ public class SynchronizedMultiSetTest {
 
     }
 
-    private void doOperations(@NotNull MultiSet<String> m, @NotNull Object mutex) {
+    private void doOperations(@Nonnull MultiSet<String> m, @Nonnull Object mutex) {
         for (int j = 0; j < 1000; j++) {
 
             final int operationCode;

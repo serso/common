@@ -22,7 +22,7 @@
 
 package org.solovyev.common.listeners;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -37,7 +37,7 @@ public interface JEventListeners<L extends JEventListener<? extends E>, E extend
      *
      * @param event to be fired
      */
-    void fireEvent(@NotNull E event);
+    void fireEvent(@Nonnull E event);
 
     /**
      * Adds <var>listener</var> to container.
@@ -48,7 +48,7 @@ public interface JEventListeners<L extends JEventListener<? extends E>, E extend
      * @return true if listener was added to the container, false otherwise
      *
      */
-    boolean addListener(@NotNull L listener);
+    boolean addListener(@Nonnull L listener);
 
     /**
      * Removes <var>listener</var> from container.
@@ -57,7 +57,7 @@ public interface JEventListeners<L extends JEventListener<? extends E>, E extend
      *
      * @return true if listener was removed, false if listener was not in container
      */
-    boolean removeListener(@NotNull L listener);
+    boolean removeListener(@Nonnull L listener);
 
 
     /**

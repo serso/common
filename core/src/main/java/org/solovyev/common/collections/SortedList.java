@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,10 +47,10 @@ public class SortedList<T> implements List<T> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private List<T> list = new ArrayList<T>();
 
-    @NotNull
+    @Nonnull
     private final Comparator<? super T> comparator;
 
     /*
@@ -61,22 +61,22 @@ public class SortedList<T> implements List<T> {
     **********************************************************************
     */
 
-    private SortedList(@NotNull Comparator<? super T> comparator) {
+    private SortedList(@Nonnull Comparator<? super T> comparator) {
         this.comparator = comparator;
     }
 
-    private SortedList(@NotNull List<T> list, @NotNull Comparator<? super T> comparator) {
+    private SortedList(@Nonnull List<T> list, @Nonnull Comparator<? super T> comparator) {
         this.list = list;
         this.comparator = comparator;
     }
 
-    @NotNull
-    public static <T> SortedList<T> newInstance(@NotNull Comparator<? super T> comparator) {
+    @Nonnull
+    public static <T> SortedList<T> newInstance(@Nonnull Comparator<? super T> comparator) {
         return new SortedList<T>(comparator);
     }
 
-    @NotNull
-    public static <T> SortedList<T> newInstance(@NotNull List<T> list, @NotNull Comparator<? super T> comparator) {
+    @Nonnull
+    public static <T> SortedList<T> newInstance(@Nonnull List<T> list, @Nonnull Comparator<? super T> comparator) {
         return new SortedList<T>(list, comparator);
     }
 
@@ -103,7 +103,7 @@ public class SortedList<T> implements List<T> {
         return list.contains(o);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Iterator<T> iterator() {
         final Iterator<T> it = list.iterator();
@@ -127,15 +127,15 @@ public class SortedList<T> implements List<T> {
         };
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Object[] toArray() {
         return list.toArray();
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public <T> T[] toArray(@NotNull T[] a) {
+    public <T> T[] toArray(@Nonnull T[] a) {
         return list.toArray(a);
     }
 
@@ -154,33 +154,33 @@ public class SortedList<T> implements List<T> {
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public boolean containsAll(@Nonnull Collection<?> c) {
         return this.list.containsAll(c);
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends T> c) {
+    public boolean addAll(@Nonnull Collection<? extends T> c) {
         boolean result = this.list.addAll(c);
         Collections.sort(list, comparator);
         return result;
     }
 
     @Override
-    public boolean addAll(int index, @NotNull Collection<? extends T> c) {
+    public boolean addAll(int index, @Nonnull Collection<? extends T> c) {
         boolean result = this.list.addAll(index, c);
         Collections.sort(list, comparator);
         return result;
     }
 
     @Override
-    public boolean removeAll(@NotNull Collection<?> c) {
+    public boolean removeAll(@Nonnull Collection<?> c) {
         boolean result = this.list.removeAll(c);
         Collections.sort(list, comparator);
         return result;
     }
 
     @Override
-    public boolean retainAll(@NotNull Collection<?> c) {
+    public boolean retainAll(@Nonnull Collection<?> c) {
         boolean result = this.list.retainAll(c);
         Collections.sort(list, comparator);
         return result;
@@ -226,13 +226,13 @@ public class SortedList<T> implements List<T> {
         return this.list.lastIndexOf(o);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public ListIterator<T> listIterator() {
         return listIterator(0);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public ListIterator<T> listIterator(int index) {
         final ListIterator<T> it = this.list.listIterator(index);
@@ -287,7 +287,7 @@ public class SortedList<T> implements List<T> {
         };
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
         return this.list.subList(fromIndex, toIndex);

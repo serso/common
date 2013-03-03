@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Iterator;
 
@@ -35,7 +35,7 @@ public final class UnmodifiableIterator<T> implements Iterator<T> {
     *
     **********************************************************************
     */
-    @NotNull
+    @Nonnull
     private final Iterator<? extends T> i;
 
     /*
@@ -46,11 +46,11 @@ public final class UnmodifiableIterator<T> implements Iterator<T> {
     **********************************************************************
     */
 
-    private UnmodifiableIterator(@NotNull Iterator<? extends T> i) {
+    private UnmodifiableIterator(@Nonnull Iterator<? extends T> i) {
         this.i = i;
     }
 
-    public static <T> UnmodifiableIterator<T> wrap(@NotNull Iterator<? extends T> i) {
+    public static <T> UnmodifiableIterator<T> wrap(@Nonnull Iterator<? extends T> i) {
         return new UnmodifiableIterator<T>(i);
     }
 

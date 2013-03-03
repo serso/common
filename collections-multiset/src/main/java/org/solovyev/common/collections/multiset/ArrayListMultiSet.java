@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multiset;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,11 +50,11 @@ public class ArrayListMultiSet<E> extends AbstractListMultiSet<E> {
         super(new ArrayList<E>(capacity));
     }
 
-    private ArrayListMultiSet(@NotNull Collection<? extends E> c) {
+    private ArrayListMultiSet(@Nonnull Collection<? extends E> c) {
         super(new ArrayList<E>(c));
     }
 
-    @NotNull
+    @Nonnull
     public static <E> ManyInstancesMultiSet<E> newInstance() {
         return new ArrayListMultiSet<E>();
     }
@@ -63,7 +63,7 @@ public class ArrayListMultiSet<E> extends AbstractListMultiSet<E> {
         return new ArrayListMultiSet<E>(capacity);
     }
 
-    public static <E> ManyInstancesMultiSet<E> from(@NotNull Collection<? extends E> c) {
+    public static <E> ManyInstancesMultiSet<E> from(@Nonnull Collection<? extends E> c) {
         return new ArrayListMultiSet<E>(c);
     }
 }

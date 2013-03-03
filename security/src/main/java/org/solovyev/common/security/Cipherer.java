@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.crypto.SecretKey;
 
@@ -33,11 +33,11 @@ import javax.crypto.SecretKey;
  */
 public interface Cipherer<E, D> {
 
-    @NotNull
-    E encrypt(@NotNull SecretKey secret,
-              @NotNull D decrypted) throws CiphererException;
+    @Nonnull
+    E encrypt(@Nonnull SecretKey secret,
+              @Nonnull D decrypted) throws CiphererException;
 
-    @NotNull
-    D decrypt(@NotNull SecretKey secret,
-              @NotNull E encrypted) throws CiphererException;
+    @Nonnull
+    D decrypt(@Nonnull SecretKey secret,
+              @Nonnull E encrypted) throws CiphererException;
 }

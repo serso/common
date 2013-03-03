@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -38,7 +38,7 @@ public interface SecurityService<E, D, H> {
      *
      * @return salt generator
      */
-    @NotNull
+    @Nonnull
     SaltGenerator getSaltGenerator();
 
     /**
@@ -47,7 +47,7 @@ public interface SecurityService<E, D, H> {
      *
      * @return secret key provider
      */
-    @NotNull
+    @Nonnull
     SecretKeyProvider getSecretKeyProvider();
 
     /**
@@ -57,7 +57,7 @@ public interface SecurityService<E, D, H> {
      *
      * @return cipherer
      */
-    @NotNull
+    @Nonnull
     Cipherer<E, D> getCipherer();
 
     /**
@@ -65,6 +65,6 @@ public interface SecurityService<E, D, H> {
      *
      * @return hash provider
      */
-    @NotNull
+    @Nonnull
     HashProvider<D, H> getHashProvider();
 }

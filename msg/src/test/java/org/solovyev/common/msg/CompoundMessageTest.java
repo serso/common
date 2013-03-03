@@ -23,8 +23,8 @@
 package org.solovyev.common.msg;
 
 import junit.framework.Assert;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -60,12 +60,12 @@ public class CompoundMessageTest {
 
 	private class  MessageImpl extends AbstractMessage {
 
-		protected MessageImpl(@NotNull String messageCode, @NotNull MessageLevel messageLevel, @Nullable Object... parameters) {
+		protected MessageImpl(@Nonnull String messageCode, @Nonnull MessageLevel messageLevel, @Nullable Object... parameters) {
 			super(messageCode, messageLevel, parameters);
 		}
 
 		@Override
-		protected String getMessagePattern(@NotNull Locale locale) {
+		protected String getMessagePattern(@Nonnull Locale locale) {
 			return getMessageCode();
 		}
 	}

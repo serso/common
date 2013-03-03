@@ -22,7 +22,7 @@
 
 package org.solovyev.common.msg;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +34,17 @@ import java.util.List;
  */
 public class ListMessageRegistry implements MessageRegistry {
 
-	@NotNull
+	@Nonnull
 	private final List<Message> messages = new ArrayList<Message>();
 
 	@Override
-	public void addMessage(@NotNull Message message) {
+	public void addMessage(@Nonnull Message message) {
 		if ( !messages.contains(message) ) {
 			messages.add(message);
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Message getMessage() {
 		return this.messages.remove(0);

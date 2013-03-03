@@ -23,7 +23,7 @@
 
 package org.solovyev.common.filter;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
@@ -150,11 +150,11 @@ public class Filter<T> {
      * @param <T>        type
      * @return copy of passed list filtered according to filter rule
      */
-    public static <T> List<T> filterCopy(@NotNull Collection<T> list, @NotNull JPredicate<T> filterRule) {
+    public static <T> List<T> filterCopy(@Nonnull Collection<T> list, @Nonnull JPredicate<T> filterRule) {
         return filter(new ArrayList<T>(list), filterRule);
     }
 
-    public static <T> void filter(@NotNull Iterator<T> it, final boolean inverseFilter, @NotNull JPredicate<T> filterRule) {
+    public static <T> void filter(@Nonnull Iterator<T> it, final boolean inverseFilter, @Nonnull JPredicate<T> filterRule) {
         final Filter<T> filter = new Filter<T>(filterRule, inverseFilter);
 
         filter.filter(it);
@@ -168,11 +168,11 @@ public class Filter<T> {
      * @param <T>        type
      * @return passed list instance filtered according to filter rule
      */
-    public static <X extends Collection<T>, T> X filter(@NotNull X list, @NotNull JPredicate<T> filterRule) {
+    public static <X extends Collection<T>, T> X filter(@Nonnull X list, @Nonnull JPredicate<T> filterRule) {
         return filter(list, false, filterRule);
     }
 
-    public static <X extends Collection<T>, T> X filter(@NotNull X list, boolean inverseFilter, @NotNull JPredicate<T> filterRule) {
+    public static <X extends Collection<T>, T> X filter(@Nonnull X list, boolean inverseFilter, @Nonnull JPredicate<T> filterRule) {
         filter(list.iterator(), inverseFilter, filterRule);
         return list;
     }

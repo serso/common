@@ -22,7 +22,7 @@
 
 package org.solovyev.common.history;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -36,19 +36,19 @@ public interface HistoryControl<T> {
      *
      * @param historyAction action to be done
      */
-    void doHistoryAction(@NotNull HistoryAction historyAction);
+    void doHistoryAction(@Nonnull HistoryAction historyAction);
 
     /**
      * Method sets current history state
      *
      * @param state state to be set as current
      */
-    void setCurrentHistoryState(@NotNull T state);
+    void setCurrentHistoryState(@Nonnull T state);
 
 
     /**
      * @return current history state
      */
-    @NotNull
+    @Nonnull
     T getCurrentHistoryState();
 }

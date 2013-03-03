@@ -22,24 +22,24 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CompositeMapper<T> implements Mapper<T> {
 
-    @NotNull
+    @Nonnull
     private final Formatter<T> formatter;
 
-    @NotNull
+    @Nonnull
     private final Parser<T> parser;
 
-    private CompositeMapper(@NotNull Formatter<T> formatter, @NotNull Parser<T> parser) {
+    private CompositeMapper(@Nonnull Formatter<T> formatter, @Nonnull Parser<T> parser) {
         this.formatter = formatter;
         this.parser = parser;
     }
 
-    @NotNull
-    public static <T> CompositeMapper<T> newInstance(@NotNull Formatter<T> formatter, @NotNull Parser<T> parser) {
+    @Nonnull
+    public static <T> CompositeMapper<T> newInstance(@Nonnull Formatter<T> formatter, @Nonnull Parser<T> parser) {
         return new CompositeMapper<T>(formatter, parser);
     }
 

@@ -23,7 +23,7 @@
 package org.solovyev.common.collections;
 
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 

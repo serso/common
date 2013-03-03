@@ -22,8 +22,8 @@
 
 package org.solovyev.common.collections.tree;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.text.Strings;
@@ -38,13 +38,13 @@ import java.util.List;
  */
 class LinkedTree<T> implements MutableTree<T> {
 
-    @NotNull
+    @Nonnull
     private MutableTreeNode<T> root;
 
     private LinkedTree() {
     }
 
-    @NotNull
+    @Nonnull
     static <T> MutableTree<T> newInstance(@Nullable T root) {
         final LinkedTree<T> result = new LinkedTree<T>();
 
@@ -53,7 +53,7 @@ class LinkedTree<T> implements MutableTree<T> {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public MutableTreeNode<T> getRoot() {
         return this.root;
@@ -72,11 +72,11 @@ class LinkedTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public void removeNodeIf(@NotNull JPredicate<? super TreeNode<T>> filter) {
+    public void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter) {
         Collections.removeIf(this.iterator(), filter);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public List<? extends MutableTreeNode<T>> getAllNodes() {
         final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>();
@@ -85,13 +85,13 @@ class LinkedTree<T> implements MutableTree<T> {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public DepthTreeIterator<T> iterator() {
         return new DepthTreeIterator<T>(this.root);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public DepthTreeIterator<T> getIterator() {
         return iterator();

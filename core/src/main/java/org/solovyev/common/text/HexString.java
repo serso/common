@@ -1,19 +1,19 @@
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Bytes;
 
 import java.nio.charset.Charset;
 
 public final class HexString implements java.io.Serializable, Comparable<HexString>, CharSequence {
 
-    @NotNull
+    @Nonnull
     private static final HexString EMPTY = newInstance("", "");
 
-    @NotNull
+    @Nonnull
     private final String hex;
 
-    @NotNull
+    @Nonnull
     private final String original;
 
     /*
@@ -24,49 +24,49 @@ public final class HexString implements java.io.Serializable, Comparable<HexStri
     **********************************************************************
     */
 
-    private HexString(@NotNull String hex, @NotNull String original) {
+    private HexString(@Nonnull String hex, @Nonnull String original) {
         this.hex = hex;
         this.original = original;
     }
 
-    private HexString(@NotNull CharSequence hex, @NotNull String original) {
+    private HexString(@Nonnull CharSequence hex, @Nonnull String original) {
         this.hex = hex.toString();
         this.original = original;
     }
 
-    @NotNull
-    public static HexString fromString(@NotNull String value) {
+    @Nonnull
+    public static HexString fromString(@Nonnull String value) {
         return newInstance(Strings.toHex(value), value);
     }
 
-    @NotNull
-    public static HexString fromHexString(@NotNull CharSequence hex) {
+    @Nonnull
+    public static HexString fromHexString(@Nonnull CharSequence hex) {
         return newInstance(hex, Strings.fromHex(hex));
     }
 
-    @NotNull
-    public static HexString fromBytes(@NotNull byte[] bytes) {
+    @Nonnull
+    public static HexString fromBytes(@Nonnull byte[] bytes) {
         return newInstance(Bytes.toHex(bytes), new String(bytes, Charset.forName("UTF-8")));
     }
 
-    @NotNull
-    public static HexString fromHexBytes(@NotNull byte[] hexBytes) {
+    @Nonnull
+    public static HexString fromHexBytes(@Nonnull byte[] hexBytes) {
         return fromHexString(new String(hexBytes, Charset.forName("UTF-8")));
     }
 
 
-    @NotNull
+    @Nonnull
     public static HexString newEmpty() {
         return EMPTY;
     }
 
-    @NotNull
-    private static HexString newInstance(@NotNull String hex, @NotNull String original) {
+    @Nonnull
+    private static HexString newInstance(@Nonnull String hex, @Nonnull String original) {
         return new HexString(hex, original);
     }
 
-    @NotNull
-    private static HexString newInstance(@NotNull CharSequence hex, @NotNull String original) {
+    @Nonnull
+    private static HexString newInstance(@Nonnull CharSequence hex, @Nonnull String original) {
         return new HexString(hex, original);
     }
 
@@ -78,17 +78,17 @@ public final class HexString implements java.io.Serializable, Comparable<HexStri
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     public String toString() {
         return hex;
     }
 
-    @NotNull
+    @Nonnull
     public String getHex() {
         return hex;
     }
 
-    @NotNull
+    @Nonnull
     public String getOriginal() {
         return original;
     }
@@ -113,8 +113,8 @@ public final class HexString implements java.io.Serializable, Comparable<HexStri
         return this.hex.compareTo(that.hex);
     }
 
-    @NotNull
-    public HexString concat(@NotNull HexString that) {
+    @Nonnull
+    public HexString concat(@Nonnull HexString that) {
         return newInstance(this.hex + that.hex, this.original + that.original);
     }
 
@@ -139,22 +139,22 @@ public final class HexString implements java.io.Serializable, Comparable<HexStri
         return hex.isEmpty();
     }
 
-    @NotNull
+    @Nonnull
     public byte[] getBytes() {
         return this.hex.getBytes(Charset.forName("UTF-8"));
     }
 
-    @NotNull
+    @Nonnull
     public byte[] getOriginalBytes() {
         return Bytes.hexToBytes(this.hex);
     }
 
-    @NotNull
+    @Nonnull
     public HexString substring(int beginIndex, int endIndex) {
         return fromHexString(this.hex.substring(beginIndex, endIndex));
     }
 
-    @NotNull
+    @Nonnull
     public HexString substring(int beginIndex) {
         return fromHexString(this.hex.substring(beginIndex));
     }

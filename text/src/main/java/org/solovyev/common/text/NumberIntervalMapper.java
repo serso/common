@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.interval.IntervalLimit;
 import org.solovyev.common.interval.Intervals;
@@ -43,21 +43,21 @@ public final class NumberIntervalMapper<T extends Number & Comparable<T>> extend
     **********************************************************************
     */
 
-    private NumberIntervalMapper(@NotNull Class<T> clazz) {
+    private NumberIntervalMapper(@Nonnull Class<T> clazz) {
         super(NumberMapper.of(clazz));
     }
 
-    private NumberIntervalMapper(@NotNull Class<T> clazz, @NotNull String delimiter) {
+    private NumberIntervalMapper(@Nonnull Class<T> clazz, @Nonnull String delimiter) {
         super(NumberMapper.of(clazz), delimiter);
     }
 
-    @NotNull
-    public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> of(@NotNull Class<T> clazz) {
+    @Nonnull
+    public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> of(@Nonnull Class<T> clazz) {
         return new NumberIntervalMapper<T>(clazz);
     }
 
-    @NotNull
-    public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> newInstance(@NotNull Class<T> clazz, @NotNull String delimiter) {
+    @Nonnull
+    public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> newInstance(@Nonnull Class<T> clazz, @Nonnull String delimiter) {
         return new NumberIntervalMapper<T>(clazz, delimiter);
     }
 
@@ -69,7 +69,7 @@ public final class NumberIntervalMapper<T extends Number & Comparable<T>> extend
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     @Override
     protected Interval<T> newInstance(@Nullable T left, @Nullable T right) {
         final IntervalLimit<T> leftLimit;

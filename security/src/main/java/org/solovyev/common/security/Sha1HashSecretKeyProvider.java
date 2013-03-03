@@ -23,7 +23,7 @@
 package org.solovyev.common.security;
 
 import org.apache.commons.codec.Charsets;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Bytes;
 
 import javax.crypto.SecretKey;
@@ -34,40 +34,40 @@ import java.util.Arrays;
 
 public class Sha1HashSecretKeyProvider implements SecretKeyProvider {
 
-    @NotNull
+    @Nonnull
     private static final SecretKeyProvider aes = newInstance(Security.CIPHERER_ALGORITHM_AES, 16);
 
-    @NotNull
+    @Nonnull
     private static final SecretKeyProvider des = newInstance(Security.CIPHERER_ALGORITHM_DES, 16);
 
     private final int saltLength;
 
-    @NotNull
+    @Nonnull
     private final String ciphererAlgorithm;
 
-    private Sha1HashSecretKeyProvider(@NotNull String ciphererAlgorithm, int saltLength) {
+    private Sha1HashSecretKeyProvider(@Nonnull String ciphererAlgorithm, int saltLength) {
         this.ciphererAlgorithm = ciphererAlgorithm;
         this.saltLength = saltLength;
     }
 
-    @NotNull
+    @Nonnull
     public static SecretKeyProvider newAesInstance() {
         return aes;
     }
 
-    @NotNull
+    @Nonnull
     public static SecretKeyProvider newDesInstance() {
         return des;
     }
 
-    @NotNull
-    public static Sha1HashSecretKeyProvider newInstance(@NotNull String ciphererAlgorithm, int saltLength) {
+    @Nonnull
+    public static Sha1HashSecretKeyProvider newInstance(@Nonnull String ciphererAlgorithm, int saltLength) {
         return new Sha1HashSecretKeyProvider(ciphererAlgorithm, saltLength);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public SecretKey getSecretKey(@NotNull String secret, @NotNull byte[] salt) throws CiphererException {
+    public SecretKey getSecretKey(@Nonnull String secret, @Nonnull byte[] salt) throws CiphererException {
         final String secretKey = secret + Bytes.toHex(salt);
 
         try {

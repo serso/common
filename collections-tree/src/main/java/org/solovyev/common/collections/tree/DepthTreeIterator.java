@@ -22,8 +22,8 @@
 
 package org.solovyev.common.collections.tree;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 
@@ -40,7 +40,7 @@ import java.util.*;
  */
 final class DepthTreeIterator<T> implements TreeIterator<T> {
 
-    @NotNull
+    @Nonnull
     private Iterator<? extends TreeNode<T>> iterator;
 
     @Nullable
@@ -51,23 +51,23 @@ final class DepthTreeIterator<T> implements TreeIterator<T> {
     @Nullable
     private TreeNode<T> lastSelfResult;
 
-    DepthTreeIterator(@NotNull TreeNode<T> root) {
+    DepthTreeIterator(@Nonnull TreeNode<T> root) {
         this(new ArrayList<TreeNode<T>>(Arrays.asList(root)));
     }
 
-	DepthTreeIterator(@NotNull Tree<T> tree) {
+	DepthTreeIterator(@Nonnull Tree<T> tree) {
 		this(tree.getRoot());
 	}
 
-    DepthTreeIterator(@NotNull Collection<? extends TreeNode<T>> nodes) {
+    DepthTreeIterator(@Nonnull Collection<? extends TreeNode<T>> nodes) {
         this(nodes, 0);
     }
 
-    private DepthTreeIterator(@NotNull Collection<? extends TreeNode<T>> nodes, int depth) {
+    private DepthTreeIterator(@Nonnull Collection<? extends TreeNode<T>> nodes, int depth) {
         this(nodes.iterator(), depth);
     }
 
-    private DepthTreeIterator(@NotNull Iterator<? extends TreeNode<T>> iterator, int depth) {
+    private DepthTreeIterator(@Nonnull Iterator<? extends TreeNode<T>> iterator, int depth) {
         this.iterator = iterator;
         this.depth = depth;
     }

@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -37,7 +37,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class JObject implements Cloneable {
 
-    @NotNull
+    @Nonnull
     @Override
     public JObject clone() {
         try {

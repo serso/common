@@ -1,6 +1,6 @@
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.collections.Collections;
 
 import java.io.UnsupportedEncodingException;
@@ -27,13 +27,13 @@ public final class Bytes {
         throw new AssertionError();
     }
 
-    @NotNull
-    public static String toHex(@NotNull String s) {
+    @Nonnull
+    public static String toHex(@Nonnull String s) {
         return toHex(s.getBytes());
     }
 
-    @NotNull
-    public static String fromHex(@NotNull CharSequence hex) {
+    @Nonnull
+    public static String fromHex(@Nonnull CharSequence hex) {
         try {
             return new String(hexToBytes(hex), "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -41,7 +41,7 @@ public final class Bytes {
         }
     }
 
-    @NotNull
+    @Nonnull
     public static String toHex(byte[] bytes) {
         if (bytes == null) {
             return "";
@@ -55,12 +55,12 @@ public final class Bytes {
         return result.toString();
     }
 
-    private static void appendHex(@NotNull StringBuilder out, byte b) {
+    private static void appendHex(@Nonnull StringBuilder out, byte b) {
         out.append(HEX.charAt((b >> 4) & 0x0f)).append(HEX.charAt(b & 0x0f));
     }
 
-    @NotNull
-    public static byte[] hexToBytes(@NotNull CharSequence hexString) {
+    @Nonnull
+    public static byte[] hexToBytes(@Nonnull CharSequence hexString) {
         final int length = hexString.length() / 2;
 
         final byte[] result = new byte[length];
@@ -81,7 +81,7 @@ public final class Bytes {
         return result;
     }
 
-    public static byte[] generateSecureRandomBytes(@NotNull String randomAlgorithm, int length) throws NoSuchAlgorithmException, NoSuchProviderException {
+    public static byte[] generateSecureRandomBytes(@Nonnull String randomAlgorithm, int length) throws NoSuchAlgorithmException, NoSuchProviderException {
         assert length >= 0;
 
         final Random random = SecureRandom.getInstance(randomAlgorithm);

@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -39,10 +39,10 @@ public class BooleanMapper implements Mapper<Boolean> {
     *
     **********************************************************************
     */
-    @NotNull
+    @Nonnull
     private final static Mapper<Boolean> instance = new BooleanMapper();
 
-    @NotNull
+    @Nonnull
     public static Mapper<Boolean> getInstance() {
         return instance;
     }
@@ -55,7 +55,7 @@ public class BooleanMapper implements Mapper<Boolean> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final Formatter<Boolean> formatter = ValueOfFormatter.getNotNullFormatter();
 
     /*

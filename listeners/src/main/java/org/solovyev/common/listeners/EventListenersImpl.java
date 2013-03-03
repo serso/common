@@ -22,8 +22,8 @@
 
 package org.solovyev.common.listeners;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
@@ -46,10 +46,10 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final JListeners<L> listeners;
 
-    @NotNull
+    @Nonnull
     private final Class<E> baseEventType;
 
     @Nullable
@@ -63,7 +63,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     **********************************************************************
     */
 
-    private EventListenersImpl(@NotNull JListeners<L> listeners, @NotNull Class<E> baseEventType, int eventThreadsCount) {
+    private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, int eventThreadsCount) {
         if ( eventThreadsCount < 0 ) {
             throw new IllegalArgumentException("eventThreadsCount should be not negative!");
         }
@@ -79,18 +79,18 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
         }
     }
 
-    @NotNull
-    public static <L extends JEventListener<?>> EventListenersImpl<L, JEvent> newSingleThread(@NotNull JListeners<L> listeners) {
+    @Nonnull
+    public static <L extends JEventListener<?>> EventListenersImpl<L, JEvent> newSingleThread(@Nonnull JListeners<L> listeners) {
         return newInstance(listeners, JEvent.class, 1);
     }
 
-    @NotNull
-    public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newSingleThread(@NotNull JListeners<L> listeners, @NotNull Class<E> baseEventType) {
+    @Nonnull
+    public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newSingleThread(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType) {
         return newInstance(listeners, baseEventType, 1);
     }
 
-    @NotNull
-    public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@NotNull JListeners<L> listeners, @NotNull Class<E> baseEventType, int eventThreadsCount) {
+    @Nonnull
+    public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, int eventThreadsCount) {
         return new EventListenersImpl<L, E>(listeners, baseEventType, eventThreadsCount);
     }
 
@@ -103,7 +103,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     */
 
     @Override
-    public void fireEvent(@NotNull final E event) {
+    public void fireEvent(@Nonnull final E event) {
         final Collection<L> listeners = this.listeners.getListeners();
 
         if ( eventExecutor == null ) {
@@ -119,7 +119,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
         }
     }
 
-    private void fireEvent(@NotNull E event, @NotNull Collection<L> listeners) {
+    private void fireEvent(@Nonnull E event, @Nonnull Collection<L> listeners) {
         for (L listener : listeners) {
             if  (listener.getEventType().isAssignableFrom(event.getClass())) {
                 ((JEventListener<E>) listener).onEvent(event);
@@ -128,7 +128,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     }
 
     @Override
-    public boolean addListener(@NotNull L listener) {
+    public boolean addListener(@Nonnull L listener) {
         if ( !baseEventType.isAssignableFrom(listener.getEventType()) ) {
             throw new IllegalArgumentException("Current listener cannot be added, because will never be fired!");
         }
@@ -136,7 +136,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     }
 
     @Override
-    public boolean removeListener(@NotNull L listener) {
+    public boolean removeListener(@Nonnull L listener) {
         return listeners.removeListener(listener);
     }
 
@@ -153,16 +153,16 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private static ThreadFactory createDefaultThreadFactory() {
         return new ThreadFactory() {
 
-            @NotNull
+            @Nonnull
             private AtomicInteger threadCounter = new AtomicInteger(0);
 
-            @NotNull
+            @Nonnull
             @Override
-            public Thread newThread(@NotNull Runnable r) {
+            public Thread newThread(@Nonnull Runnable r) {
                 return new Thread(r, "Event executor thread #" + threadCounter.incrementAndGet());
             }
         };

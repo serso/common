@@ -22,7 +22,7 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,39 +37,39 @@ public class ListMapper<E> extends CollectionMapper<List<E>, E> {
     **********************************************************************
     */
 
-    private ListMapper(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter, @NotNull String delimiter) {
+    private ListMapper(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter, @Nonnull String delimiter) {
         super(parser, formatter, delimiter);
     }
 
-    private ListMapper(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter) {
+    private ListMapper(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter) {
         super(parser, formatter);
     }
 
-    private ListMapper(@NotNull Mapper<E> mapper, @NotNull String delimiter) {
+    private ListMapper(@Nonnull Mapper<E> mapper, @Nonnull String delimiter) {
         super(mapper, delimiter);
     }
 
-    private ListMapper(@NotNull Mapper<E> mapper) {
+    private ListMapper(@Nonnull Mapper<E> mapper) {
         super(mapper);
     }
 
-    @NotNull
-    public static <E> ListMapper<E> newInstance(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter, @NotNull String delimiter) {
+    @Nonnull
+    public static <E> ListMapper<E> newInstance(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter, @Nonnull String delimiter) {
         return new ListMapper<E>(parser, formatter, delimiter);
     }
 
-    @NotNull
-    public static <E> ListMapper<E> newInstance(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter) {
+    @Nonnull
+    public static <E> ListMapper<E> newInstance(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter) {
         return new ListMapper<E>(parser, formatter);
     }
 
-    @NotNull
-    public static <E> ListMapper<E> newInstance(@NotNull Mapper<E> mapper, @NotNull String delimiter) {
+    @Nonnull
+    public static <E> ListMapper<E> newInstance(@Nonnull Mapper<E> mapper, @Nonnull String delimiter) {
         return new ListMapper<E>(mapper, delimiter);
     }
 
-    @NotNull
-    public static <E> ListMapper<E> newInstance(@NotNull Mapper<E> mapper) {
+    @Nonnull
+    public static <E> ListMapper<E> newInstance(@Nonnull Mapper<E> mapper) {
         return new ListMapper<E>(mapper);
     }
 
@@ -81,7 +81,7 @@ public class ListMapper<E> extends CollectionMapper<List<E>, E> {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     @Override
     protected List<E> newCollection() {
         return new ArrayList<E>();

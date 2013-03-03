@@ -22,7 +22,7 @@
 
 package org.solovyev.common.units;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,9 +31,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Unit<V> {
 
-    @NotNull
+    @Nonnull
     V getValue();
 
-    @NotNull
+    @Nonnull
     UnitType<V> getUnitType();
 }

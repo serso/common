@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -36,14 +36,14 @@ public class TrivialConverter<T> implements Converter<T, T> {
     private TrivialConverter() {
     }
 
-    @NotNull
+    @Nonnull
     public static <T> Converter<T, T> getInstance() {
         return (Converter<T, T>) instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public T convert(@NotNull T t) {
+    public T convert(@Nonnull T t) {
         return t;
     }
 }

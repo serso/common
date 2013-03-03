@@ -22,8 +22,9 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -37,12 +38,12 @@ import org.joda.time.DateTime;
  */
 public interface DateVersionedEntity<I> extends VersionedEntity<I> {
 
-    @NotNull
+    @Nonnull
     DateTime getCreationDate();
 
-    @NotNull
+    @Nonnull
     DateTime getModificationDate();
 
-    @NotNull
+    @Nonnull
     DateVersionedEntity<I> clone();
 }

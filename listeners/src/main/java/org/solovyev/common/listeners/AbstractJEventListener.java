@@ -22,7 +22,7 @@
 
 package org.solovyev.common.listeners;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,14 +31,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class AbstractJEventListener<E extends JEvent> implements JEventListener<E> {
 
-    @NotNull
+    @Nonnull
     private final Class<E> eventType;
 
-    protected AbstractJEventListener(@NotNull Class<E> eventType) {
+    protected AbstractJEventListener(@Nonnull Class<E> eventType) {
         this.eventType = eventType;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public final Class<E> getEventType() {
         return this.eventType;

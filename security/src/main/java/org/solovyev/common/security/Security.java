@@ -22,8 +22,8 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.HexString;
 import org.solovyev.common.text.base64.Base64StringDecoder;
 import org.solovyev.common.text.base64.Base64StringEncoder;
@@ -46,75 +46,75 @@ public class Security {
         throw new AssertionError();
     }
 
-    @NotNull
-    public static Cipherer<byte[], byte[]> newCipherer(@NotNull String ciphererAlgorithm,
+    @Nonnull
+    public static Cipherer<byte[], byte[]> newCipherer(@Nonnull String ciphererAlgorithm,
                                                        @Nullable String provider,
-                                                       @NotNull InitialVectorDef initialVectorDef) {
+                                                       @Nonnull InitialVectorDef initialVectorDef) {
         return ByteArrayCipherer.newInstance(ciphererAlgorithm, provider, initialVectorDef);
     }
 
-    @NotNull
-    public static Cipherer<byte[], byte[]> newCiphererNoIv(@NotNull String ciphererAlgorithm,
+    @Nonnull
+    public static Cipherer<byte[], byte[]> newCiphererNoIv(@Nonnull String ciphererAlgorithm,
                                                            @Nullable String provider) {
         return ByteArrayCipherer.newNoIv(ciphererAlgorithm, provider);
     }
 
-    @NotNull
+    @Nonnull
     public static SecretKeyProvider newPbeSecretKeyProvider(int iterationCount,
-                                                            @NotNull String algorithm,
-                                                            @NotNull String ciphererAlgorithm,
-                                                            @NotNull String provider,
+                                                            @Nonnull String algorithm,
+                                                            @Nonnull String ciphererAlgorithm,
+                                                            @Nonnull String provider,
                                                             int keyLength,
                                                             int saltLength) {
         return PbeSecretKeyProvider.newInstance(iterationCount, algorithm, ciphererAlgorithm, provider, keyLength, saltLength);
     }
 
-    @NotNull
-    public static HashProvider<byte[], byte[]> newHashProvider(@NotNull String hashAlgorithm, @NotNull String provider) {
+    @Nonnull
+    public static HashProvider<byte[], byte[]> newHashProvider(@Nonnull String hashAlgorithm, @Nonnull String provider) {
         return ByteArrayHashProvider.newInstance(hashAlgorithm, provider);
     }
 
-    @NotNull
-    public static SaltGenerator newSaltGenerator(@NotNull String randomAlgorithm, int saltLength) {
+    @Nonnull
+    public static SaltGenerator newSaltGenerator(@Nonnull String randomAlgorithm, int saltLength) {
         return SaltGeneratorImpl.newInstance(randomAlgorithm, saltLength);
     }
 
-    @NotNull
+    @Nonnull
     public static SecretKeyProvider newAesSha1HashSecretKeyProvider() {
         return Sha1HashSecretKeyProvider.newAesInstance();
     }
 
 
-    @NotNull
+    @Nonnull
     public static SecretKeyProvider newDesSha1HashSecretKeyProvider() {
         return Sha1HashSecretKeyProvider.newDesInstance();
     }
 
-    @NotNull
-    public static Cipherer<String, String> newBase64StringCipherer(@NotNull Cipherer<byte[], byte[]> byteCipherer) {
+    @Nonnull
+    public static Cipherer<String, String> newBase64StringCipherer(@Nonnull Cipherer<byte[], byte[]> byteCipherer) {
         return TypedCipherer.newInstance(byteCipherer, StringDecoder.getInstance(), StringEncoder.getInstance(), Base64StringDecoder.getInstance(), Base64StringEncoder.getInstance());
     }
 
-    @NotNull
-    public static Cipherer<HexString, String> newHexStringCipherer(@NotNull Cipherer<byte[], byte[]> byteCipherer) {
+    @Nonnull
+    public static Cipherer<HexString, String> newHexStringCipherer(@Nonnull Cipherer<byte[], byte[]> byteCipherer) {
         return TypedCipherer.newInstance(byteCipherer, StringDecoder.getInstance(), StringEncoder.getInstance(), HexStringDecoder.getInstance(), HexStringEncoder.getInstance());
     }
 
-    @NotNull
-    public static SecurityService<String, String, String> newBase64StringSecurityService(@NotNull SecurityService<byte[], byte[], byte[]> byteSecurityService) {
+    @Nonnull
+    public static SecurityService<String, String, String> newBase64StringSecurityService(@Nonnull SecurityService<byte[], byte[], byte[]> byteSecurityService) {
         return SecurityServiceConverter.wrap(byteSecurityService, StringDecoder.getInstance(), StringEncoder.getInstance(), Base64StringDecoder.getInstance(), Base64StringEncoder.getInstance());
     }
 
-    @NotNull
-    public static SecurityService<HexString, String, HexString> newHexStringSecurityService(@NotNull SecurityService<byte[], byte[], byte[]> byteSecurityService) {
+    @Nonnull
+    public static SecurityService<HexString, String, HexString> newHexStringSecurityService(@Nonnull SecurityService<byte[], byte[], byte[]> byteSecurityService) {
         return SecurityServiceConverter.wrap(byteSecurityService, StringDecoder.getInstance(), StringEncoder.getInstance(), HexStringDecoder.getInstance(), HexStringEncoder.getInstance());
     }
 
-    @NotNull
-    public static <E, D, H> SecurityService<E, D, H> newSecurityService(@NotNull Cipherer<E, D> cipherer,
-                                                                        @NotNull SecretKeyProvider secretKeyProvider,
-                                                                        @NotNull SaltGenerator saltGenerator,
-                                                                        @NotNull HashProvider<D, H> hashProvider) {
+    @Nonnull
+    public static <E, D, H> SecurityService<E, D, H> newSecurityService(@Nonnull Cipherer<E, D> cipherer,
+                                                                        @Nonnull SecretKeyProvider secretKeyProvider,
+                                                                        @Nonnull SaltGenerator saltGenerator,
+                                                                        @Nonnull HashProvider<D, H> hashProvider) {
         return SecurityServiceImpl.newInstance(cipherer, secretKeyProvider, saltGenerator, hashProvider);
     }
 }

@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.Serializable;
 
@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 public interface VersionedEntity<I> extends Serializable, JCloneable<VersionedEntity<I>> {
 
-    @NotNull
+    @Nonnull
     public static final Integer FIRST_VERSION = 1;
 
     /**
@@ -46,7 +46,7 @@ public interface VersionedEntity<I> extends Serializable, JCloneable<VersionedEn
      *
      * @return entity identifier
      */
-    @NotNull
+    @Nonnull
     I getId();
 
     /**
@@ -54,7 +54,7 @@ public interface VersionedEntity<I> extends Serializable, JCloneable<VersionedEn
      *
      * @return version number
      */
-    @NotNull
+    @Nonnull
     Integer getVersion();
 
     // check if two entities are the same == this.id equals to that.id

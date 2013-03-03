@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Bytes;
 
 /**
@@ -32,23 +32,23 @@ import org.solovyev.common.Bytes;
  */
 class SaltGeneratorImpl implements SaltGenerator {
 
-    @NotNull
+    @Nonnull
     private final String randomAlgorithm;
 
     private final int saltLength;
 
-    private SaltGeneratorImpl(@NotNull String randomAlgorithm, int saltLength) {
+    private SaltGeneratorImpl(@Nonnull String randomAlgorithm, int saltLength) {
         this.randomAlgorithm = randomAlgorithm;
         this.saltLength = saltLength;
     }
 
-    @NotNull
-    static SaltGenerator newInstance(@NotNull String randomAlgorithm, int saltLength) {
+    @Nonnull
+    static SaltGenerator newInstance(@Nonnull String randomAlgorithm, int saltLength) {
         return new SaltGeneratorImpl(randomAlgorithm, saltLength);
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public byte[] generateSalt() throws CiphererException {
         try {
             return Bytes.generateSecureRandomBytes(randomAlgorithm, saltLength);

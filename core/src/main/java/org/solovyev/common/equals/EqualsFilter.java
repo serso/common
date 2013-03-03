@@ -22,7 +22,7 @@
 
 package org.solovyev.common.equals;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Objects;
 import org.solovyev.common.JPredicate;
 
@@ -33,10 +33,10 @@ import org.solovyev.common.JPredicate;
  */
 public class EqualsFilter<T> implements JPredicate<T> {
 
-    @NotNull
+    @Nonnull
     private final T filterObject;
 
-    public EqualsFilter(@NotNull T filterObject) {
+    public EqualsFilter(@Nonnull T filterObject) {
         this.filterObject = filterObject;
     }
 

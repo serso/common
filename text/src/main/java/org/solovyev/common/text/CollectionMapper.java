@@ -22,8 +22,8 @@
 
 package org.solovyev.common.text;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 
@@ -42,7 +42,7 @@ public abstract class CollectionMapper<C extends Collection<E>, E> implements Ma
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private static final String DEFAULT_DELIMITER = ";";
 
     /*
@@ -53,30 +53,30 @@ public abstract class CollectionMapper<C extends Collection<E>, E> implements Ma
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final Formatter<E> formatter;
 
-    @NotNull
+    @Nonnull
     private final Parser<E> parser;
 
-    @NotNull
+    @Nonnull
     private final String delimiter;
 
-    protected CollectionMapper(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter, @NotNull String delimiter) {
+    protected CollectionMapper(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter, @Nonnull String delimiter) {
         this.parser = parser;
         this.formatter = formatter;
         this.delimiter = delimiter;
     }
 
-    protected CollectionMapper(@NotNull Parser<E> parser, @NotNull Formatter<E> formatter) {
+    protected CollectionMapper(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter) {
         this(parser, formatter, DEFAULT_DELIMITER);
     }
 
-    protected CollectionMapper(@NotNull Mapper<E> mapper, @NotNull String delimiter) {
+    protected CollectionMapper(@Nonnull Mapper<E> mapper, @Nonnull String delimiter) {
         this(mapper, mapper, delimiter);
     }
 
-    protected CollectionMapper(@NotNull Mapper<E> mapper) {
+    protected CollectionMapper(@Nonnull Mapper<E> mapper) {
         this(mapper, DEFAULT_DELIMITER);
     }
 
@@ -92,6 +92,6 @@ public abstract class CollectionMapper<C extends Collection<E>, E> implements Ma
         return StringCollections.split(newCollection(), value, delimiter, parser);
     }
 
-    @NotNull
+    @Nonnull
     protected abstract C newCollection();
 }
