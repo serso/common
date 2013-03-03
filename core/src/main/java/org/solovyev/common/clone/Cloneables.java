@@ -25,6 +25,7 @@ package org.solovyev.common.clone;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.JCloneable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -108,9 +109,31 @@ public class Cloneables {
         return result;
     }
 
+    /**
+     * Method deeply clones specified <var>array</var>, which means that for each element
+     * {@link org.solovyev.common.JCloneable#clone()} method will be called.
+     *
+     * @param array array to beb deeply cloned
+     * @return deep clone of <var>array</var>
+     *
+     */
+    public static <T extends JCloneable<T>> T[] deepClone(@NotNull T[] array) {
+        return deepArrayCloning(array);
+    }
+
+    /**
+     * Method deeply clones specified <var>array</var>, which means that for each element
+     * {@link org.solovyev.common.JCloneable#clone()} method will be called.
+     *
+     * @param array array to beb deeply cloned
+     * @return deep clone of <var>array</var>
+     *
+     * @deprecated use {@link Cloneables#deepClone(T[])} instead
+     */
+    @Deprecated
     @NotNull
     public static <T extends JCloneable<T>> T[] deepArrayCloning(@NotNull T[] array) {
-        final T[] result = (T[]) new Object[array.length];
+        final T[] result = (T[]) Array.newInstance(array.getClass().getComponentType(), array.length);
 
         // clone all elements of array
         for (int i = 0; i < array.length; i++) {

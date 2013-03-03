@@ -35,14 +35,34 @@ import java.util.List;
  */
 public class ListEqualizer<T> implements Equalizer<List<T>> {
 
+    @NotNull
+    private static final Equalizer<List<Object>> instanceWithOrder = new ListEqualizer<Object>(true, null);
+
+    @NotNull
+    private static final Equalizer<List<Object>> instanceWithoutOrder = new ListEqualizer<Object>(false, null);
+
     private final boolean checkOrder;
 
     @Nullable
     protected final Equalizer<T> nestedEqualizer;
 
-    public ListEqualizer(boolean checkOrder, @Nullable Equalizer<T> nestedEqualizer) {
+    private ListEqualizer(boolean checkOrder, @Nullable Equalizer<T> nestedEqualizer) {
         this.checkOrder = checkOrder;
         this.nestedEqualizer = nestedEqualizer;
+    }
+
+    @NotNull
+    public static <T> ListEqualizer<T> newWithNestedEqualizer(boolean checkOrder, @Nullable Equalizer<T> nestedEqualizer) {
+        return new ListEqualizer<T>(checkOrder, nestedEqualizer);
+    }
+
+    @NotNull
+    public static <T> ListEqualizer<T> newWithNaturalEquals(boolean checkOrder) {
+        if ( checkOrder ) {
+            return (ListEqualizer<T>) instanceWithOrder;
+        } else {
+            return (ListEqualizer<T>) instanceWithoutOrder;
+        }
     }
 
     @Override

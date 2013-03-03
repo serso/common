@@ -30,14 +30,14 @@ import org.jetbrains.annotations.NotNull;
  * Date: 12/17/11
  * Time: 11:11 PM
  */
-public class SameEqualizer implements Equalizer {
+public class SameEqualizer<T> implements Equalizer<T> {
 
     @NotNull
-    private static SameEqualizer instance = new SameEqualizer();
+    private static SameEqualizer<?> instance = new SameEqualizer<Object>();
 
     @NotNull
-    public static SameEqualizer getInstance() {
-        return instance;
+    public static <T> SameEqualizer<T> getInstance() {
+        return (SameEqualizer<T>) instance;
     }
 
     private SameEqualizer() {

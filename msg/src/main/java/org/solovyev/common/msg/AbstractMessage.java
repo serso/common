@@ -85,7 +85,7 @@ public abstract class AbstractMessage implements Message {
 
 		final AbstractMessage that = (AbstractMessage) o;
 
-		if (!Objects.areEqual(parameters, that.parameters, new ListEqualizer(true, null))) return false;
+		if (!Objects.areEqual(parameters, that.parameters, ListEqualizer.newWithNestedEqualizer(true, null))) return false;
 		if (!messageCode.equals(that.messageCode)) return false;
 		if (!messageLevel.equals(that.messageLevel)) return false;
 
