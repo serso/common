@@ -44,7 +44,7 @@ public class SameEqualizer<T> implements Equalizer<T> {
     }
 
     @Override
-    public boolean equals(@NotNull Object first, @NotNull Object second) {
+    public boolean areEqual(@NotNull Object first, @NotNull Object second) {
         return first == second;
     }
 }

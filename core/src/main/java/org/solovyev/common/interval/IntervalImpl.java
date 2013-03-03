@@ -182,7 +182,7 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
         return true;
     }
 
-    protected boolean equals(@NotNull T thisBorder, @Nullable Object thatBorder) {
+    protected boolean areEqual(@NotNull T thisBorder, @Nullable Object thatBorder) {
         return thisBorder.equals(thatBorder);
     }
 

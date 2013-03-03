@@ -66,7 +66,7 @@ public class ListEqualizer<T> implements Equalizer<List<T>> {
     }
 
     @Override
-    public boolean equals(@NotNull List<T> first, @NotNull List<T> second) {
+    public boolean areEqual(@NotNull List<T> first, @NotNull List<T> second) {
         boolean result = false;
 
         if (first.size() == second.size()) {

@@ -44,7 +44,7 @@ public class ByteArrayEqualizer implements Equalizer<byte[]> {
     }
 
     @Override
-    public boolean equals(@NotNull byte[] first, @NotNull byte[] second) {
+    public boolean areEqual(@NotNull byte[] first, @NotNull byte[] second) {
         boolean result = true;
 
         if (first.length == second.length ) {

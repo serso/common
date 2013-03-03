@@ -23,6 +23,7 @@
 package org.solovyev.common.collections.multiset;
 
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.common.Objects;
 
 import java.util.*;
 
@@ -45,17 +46,9 @@ class AbstractListMultiSet<E> extends AbstractMultiSet<E> implements ManyInstanc
     public Collection<E> getAll(E e) {
         final List<E> result = new ArrayList<E>();
 
-        if (e == null) {
-            for (E el : backingList) {
-                if (el == null) {
-                    result.add(el);
-                }
-            }
-        } else {
-            for (E el : backingList) {
-                if (e.equals(el)) {
-                    result.add(el);
-                }
+        for (E el : backingList) {
+            if (Objects.areEqual(el, e)) {
+                result.add(el);
             }
         }
 

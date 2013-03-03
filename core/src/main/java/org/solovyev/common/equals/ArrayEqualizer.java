@@ -54,7 +54,7 @@ public class ArrayEqualizer<T> implements Equalizer<T[]> {
     }
 
     @Override
-    public boolean equals(@NotNull T[] first, @NotNull T[] second) {
+    public boolean areEqual(@NotNull T[] first, @NotNull T[] second) {
         boolean result = false;
 
         if (first.length == second.length) {

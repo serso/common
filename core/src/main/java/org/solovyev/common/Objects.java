@@ -189,31 +189,6 @@ public class Objects {
     }
 
     /**
-     * Method compares two object with equals() method. Null checking is provided.
-     *
-     * @param o1 first object for check
-     * @param o2 second object for check
-     * @return 'true' if object are equal by equals() method of if they are both nulls, 'false' otherwise
-     */
-    public static boolean equals(Object o1, Object o2) {
-        // first compare on nullness
-        Integer compareResult = compareOnNullness(o1, o2);
-
-        // by default objects are unequal
-        boolean result = false;
-
-        if (compareResult == null) {
-            // both objects are not nulls -> let's compare with equals
-            result = o1.equals(o2);
-        } else if (compareResult.equals(0)) {
-            // both nulls -> they are equal
-            result = true;
-        }
-
-        return result;
-    }
-
-    /**
      * Method compares objects according their nullness property
      *
      * @param o1 first compared object

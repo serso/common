@@ -39,7 +39,7 @@ public class DoubleEqualizer implements Equalizer<Double> {
     }
 
     @Override
-    public boolean equals(@NotNull Double first, @NotNull Double second) {
+    public boolean areEqual(@NotNull Double first, @NotNull Double second) {
         return Maths.equals(first, second, precision);
     }
 }

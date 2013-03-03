@@ -31,5 +31,5 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Equalizer<T> {
 
-    boolean equals(@NotNull T first, @NotNull T second);
+    boolean areEqual(@NotNull T first, @NotNull T second);
 }

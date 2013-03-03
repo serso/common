@@ -72,7 +72,7 @@ public class ArrayEqualizerTest {
     public void testCustomEquals() throws Exception {
         final Equalizer<TestJObject[]> equalizer = ArrayEqualizer.newWithNestedEqualizer(new Equalizer<TestJObject>() {
             @Override
-            public boolean equals(@NotNull TestJObject first, @NotNull TestJObject second) {
+            public boolean areEqual(@NotNull TestJObject first, @NotNull TestJObject second) {
                 return first.getField().equals(second.getField());
             }
         });

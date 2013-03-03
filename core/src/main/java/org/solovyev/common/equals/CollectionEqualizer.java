@@ -43,7 +43,7 @@ public class CollectionEqualizer<T> implements Equalizer<Collection<T>> {
     }
 
     @Override
-    public boolean equals(@NotNull Collection<T> first, @NotNull Collection<T> second) {
+    public boolean areEqual(@NotNull Collection<T> first, @NotNull Collection<T> second) {
         boolean result = false;
 
         if (first.size() == second.size()) {

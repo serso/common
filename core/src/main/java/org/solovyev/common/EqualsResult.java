@@ -73,6 +73,6 @@ public class EqualsResult<T> {
     public boolean areEqual() {
         //noinspection ConstantConditions
         boolean areSame = o1 == o2;
-        return areBothNulls() || areSame || (areBothNotNulls() && (equalizer == null ? o1.equals(o2) : equalizer.equals(o1, o2)));
+        return areBothNulls() || areSame || (areBothNotNulls() && (equalizer == null ? o1.equals(o2) : equalizer.areEqual(o1, o2)));
     }
 }
