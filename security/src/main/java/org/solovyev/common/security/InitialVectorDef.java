@@ -1,11 +1,10 @@
 package org.solovyev.common.security;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.solovyev.common.Bytes;
 import org.solovyev.common.collections.Collections;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.crypto.spec.IvParameterSpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -67,7 +66,11 @@ public class InitialVectorDef {
 
     @Nullable
     public byte[] getBytes() {
-        return bytes;
+        if (bytes != null) {
+            return Arrays.copyOf(bytes, bytes.length);
+        } else {
+            return null;
+        }
     }
 
     @Nonnull

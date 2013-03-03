@@ -22,11 +22,11 @@
 
 package org.solovyev.common.interval;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.solovyev.common.JCloneable;
 import org.solovyev.common.JObject;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -42,6 +42,7 @@ class IntervalImpl<T extends Comparable<T>> extends JObject implements Interval<
     protected IntervalLimit<T> right;
 
     // for JAXB
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
     protected IntervalImpl() {
     }
 

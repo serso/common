@@ -131,7 +131,6 @@ abstract class AbstractMapManyInstancesMultiSet<E> extends AbstractMultiSet<E> i
 
     private class ValueIterator implements Iterator<E> {
         private final Iterator<Map.Entry<E, List<E>>> keyIterator;
-        private E key;
         private Collection<E> collection;
         private Iterator<E> valueIterator;
 
@@ -146,7 +145,6 @@ abstract class AbstractMapManyInstancesMultiSet<E> extends AbstractMultiSet<E> i
 
         void findValueIteratorAndKey() {
             Map.Entry<E, List<E>> entry = keyIterator.next();
-            key = entry.getKey();
             collection = entry.getValue();
             valueIterator = collection.iterator();
         }

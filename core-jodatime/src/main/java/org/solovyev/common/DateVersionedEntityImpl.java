@@ -42,7 +42,7 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
     @Nonnull
     private DateTime modificationDate;
 
-    @SuppressWarnings("NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
     private DateVersionedEntityImpl() {
     }
 

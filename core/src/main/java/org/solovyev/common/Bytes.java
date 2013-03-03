@@ -1,9 +1,8 @@
 package org.solovyev.common;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.collections.Collections;
 
+import javax.annotation.Nonnull;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
@@ -30,7 +29,7 @@ public final class Bytes {
 
     @Nonnull
     public static String toHex(@Nonnull String s) {
-        return toHex(s.getBytes());
+        return toHex(s.getBytes(Charsets.UTF_8));
     }
 
     @Nonnull

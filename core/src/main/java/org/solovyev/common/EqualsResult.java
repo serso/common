@@ -22,13 +22,13 @@
 
 package org.solovyev.common;
 
-import javax.annotation.Nullable;
-
 import org.solovyev.common.equals.Equalizer;
+
+import javax.annotation.Nullable;
 
 public class EqualsResult<T> {
 
-    public static Integer BOTH_NULLS_CONST = 0;
+    public static final Integer BOTH_NULLS_CONST = 0;
 
     @Nullable
     private final Integer result;

@@ -22,13 +22,12 @@
 
 package org.solovyev.common.collections.tree;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.solovyev.common.JPredicate;
 import org.solovyev.common.collections.Collections;
 import org.solovyev.common.text.Strings;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +41,7 @@ class LinkedTree<T> implements MutableTree<T> {
     @Nonnull
     private MutableTreeNode<T> root;
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
     private LinkedTree() {
     }
 
