@@ -166,6 +166,9 @@
             <version>2.0.1</version>
         </dependency>
 
+        <!--
+            FindBugs Annotations
+        -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>annotations</artifactId>
