@@ -139,10 +139,11 @@ class IntervalLimitImpl<T extends Comparable<T>> extends JObject implements Inte
         } else if (this.isHighest()) {
             return false;
         } else {
-            assert this.value != null;
             if (this.isClosed()) {
+                assert this.value != null;
                 return this.value.compareTo(that) <= 0;
             } else {
+                assert this.value != null;
                 return this.value.compareTo(that) < 0;
             }
         }
@@ -195,8 +196,10 @@ class IntervalLimitImpl<T extends Comparable<T>> extends JObject implements Inte
         } else {
             assert this.value != null;
             if (this.isClosed()) {
+                assert this.value != null;
                 return this.value.compareTo(that) >= 0;
             } else {
+                assert this.value != null;
                 return this.value.compareTo(that) > 0;
             }
         }

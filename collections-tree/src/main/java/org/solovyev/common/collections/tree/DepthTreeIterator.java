@@ -25,10 +25,7 @@ package org.solovyev.common.collections.tree;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * User: serso
@@ -93,14 +90,20 @@ final class DepthTreeIterator<T> implements TreeIterator<T> {
         if (selfHasNext()) {
             if (lastSelfResult instanceof MutableTreeNode) {
                 childIterator = new DepthTreeIterator<T>(((MutableTreeNode<T>) lastSelfResult).getOwnChildrenIterator(), depth + 1);
-            } else {
+            } else if ( lastSelfResult != null ) {
                 childIterator = new DepthTreeIterator<T>(lastSelfResult.getOwnChildren(), depth + 1);
+            } else {
+                throw new ConcurrentModificationException("Tree iterator is not tread safe!");
             }
         }
         
         if (childrenHasNext()) {
             lastSelfResult = null;
-            return this.childIterator.next();
+            if (this.childIterator != null) {
+                return this.childIterator.next();
+            } else {
+                throw new ConcurrentModificationException("Tree iterator is not tread safe!");
+            }
         } else {
             childIterator = null;
             lastSelfResult = iterator.next();

@@ -100,12 +100,8 @@ public class InitialVectorDef {
 
     byte[] preDecrypt(byte[] encrypted) {
         final byte[] encryptedBytes;
-        if (this != null) {
-            if (this.bytes == null) {
-                encryptedBytes = Arrays.copyOfRange(encrypted, getLength(), encrypted.length);
-            } else {
-                encryptedBytes = encrypted;
-            }
+        if (this.bytes == null) {
+            encryptedBytes = Arrays.copyOfRange(encrypted, getLength(), encrypted.length);
         } else {
             encryptedBytes = encrypted;
         }
