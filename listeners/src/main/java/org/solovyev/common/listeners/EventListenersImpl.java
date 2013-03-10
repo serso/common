@@ -25,6 +25,7 @@ package org.solovyev.common.listeners;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -104,25 +105,34 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
 
     @Override
     public void fireEvent(@Nonnull final E event) {
+        fireEvents(Arrays.asList(event));
+    }
+
+    @Override
+    public void fireEvents(@Nonnull final Collection<E> events) {
         final Collection<L> listeners = this.listeners.getListeners();
 
         if (eventExecutor == null) {
             // run on current thread
-            fireEvent(event, listeners);
+            fireEvents(events, listeners);
         } else {
             eventExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    fireEvent(event, listeners);
+                    fireEvents(events, listeners);
                 }
             });
         }
     }
 
-    private void fireEvent(@Nonnull E event, @Nonnull Collection<L> listeners) {
-        for (L listener : listeners) {
-            if (listener.getEventType().isAssignableFrom(event.getClass())) {
-                ((JEventListener<E>) listener).onEvent(event);
+    private void fireEvents(@Nonnull Collection<E> events, @Nonnull Collection<L> listeners) {
+        // first loop for events as some events might be earlier than others and we want to notify all listeners
+        // in chronological order
+        for (E event : events) {
+            for (L listener : listeners) {
+                if (listener.getEventType().isAssignableFrom(event.getClass())) {
+                    ((JEventListener<E>) listener).onEvent(event);
+                }
             }
         }
     }

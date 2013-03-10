@@ -23,6 +23,7 @@
 package org.solovyev.common.listeners;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
 
 /**
  * User: serso
@@ -35,9 +36,17 @@ public interface JEventListeners<L extends JEventListener<? extends E>, E extend
      * Calls {@link JEventListener#onEvent(E)} for every listener added to container.
      * Note: method calls may be done on current thread or on some background thread depending on implementation
      *
-     * @param event to be fired
+     * @param event to be fired event
      */
     void fireEvent(@Nonnull E event);
+
+    /**
+     * Calls {@link JEventListener#onEvent(E)} for every listener added to container for each event in <var>events</var>
+     * Note: method calls may be done on current thread or on some background thread depending on implementation
+     *
+     * @param events to be fired events
+     */
+    void fireEvents(@Nonnull Collection<E> events);
 
     /**
      * Adds <var>listener</var> to container.
