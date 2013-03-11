@@ -49,4 +49,4 @@ Full description is available at http://se.solovyev.org/java/jcl
 The project is based on Maven 3. In order to build it you need to install Apache Maven and run 'mvn install' command.
 
 Note: To install missing Maven plugin use next command (plugin jar can be found in misc/lib folder):
-mvn install:install-file -Dfile=javac2-maven-plugin-1.0.1.jar -DgroupId=com.electriccloud -DartifactId=javac2-maven-plugin -Dversion=1.0.1 -Dpackaging=maven-plugin
+mvn install:install-file -Dfile=javac2-maven-plugin-1.0.2.jar -DgroupId=com.electriccloud -DartifactId=javac2-maven-plugin -Dversion=1.0.2 -Dpackaging=maven-plugin
