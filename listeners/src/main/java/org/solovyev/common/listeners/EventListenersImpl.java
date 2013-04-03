@@ -65,19 +65,31 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     */
 
     private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, int eventThreadsCount) {
+        this(listeners, baseEventType, newExecutor(eventThreadsCount));
+    }
+
+    @Nullable
+    private static ExecutorService newExecutor(int eventThreadsCount) {
+        final ExecutorService result;
+
         if (eventThreadsCount < 0) {
             throw new IllegalArgumentException("eventThreadsCount should be not negative!");
         }
+        if (eventThreadsCount == 0) {
+            result = null;
+        } else if (eventThreadsCount == 1) {
+            result = Executors.newSingleThreadExecutor(createDefaultThreadFactory());
+        } else {
+            result = Executors.newFixedThreadPool(eventThreadsCount, createDefaultThreadFactory());
+        }
+
+        return result;
+    }
+
+    private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nullable ExecutorService eventExecutor) {
         this.listeners = listeners;
         this.baseEventType = baseEventType;
-
-        if (eventThreadsCount == 0) {
-            this.eventExecutor = null;
-        } else if (eventThreadsCount == 1) {
-            this.eventExecutor = Executors.newSingleThreadExecutor(createDefaultThreadFactory());
-        } else {
-            this.eventExecutor = Executors.newFixedThreadPool(eventThreadsCount, createDefaultThreadFactory());
-        }
+        this.eventExecutor = eventExecutor;
     }
 
     @Nonnull
@@ -93,6 +105,11 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
     @Nonnull
     public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, int eventThreadsCount) {
         return new EventListenersImpl<L, E>(listeners, baseEventType, eventThreadsCount);
+    }
+
+    @Nonnull
+    public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nonnull ExecutorService executor) {
+        return new EventListenersImpl<L, E>(listeners, baseEventType, executor);
     }
 
     /*
