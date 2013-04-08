@@ -45,6 +45,7 @@
         <module>core</module>
         <module>msg</module>
         <module>listeners</module>
+        <module>tasks</module>
         <module>collections-tree</module>
         <module>collections-multiset</module>
         <module>core-jodatime</module>
@@ -150,6 +151,18 @@
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-all</artifactId>
                 <version>1.0.4-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>11.0.2</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.code.findbugs</groupId>
+                        <artifactId>jsr305</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
         </dependencies>
