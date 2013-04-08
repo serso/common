@@ -134,4 +134,17 @@ public interface TaskService {
      * @return true if result listener has been added, false otherwise
      */
     <T> boolean addTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener);
+
+    /**
+     * Method removed task result listener from the task with specified <var>taskName</var>
+     *
+     * @param taskName name of the task
+     * @param taskListener result listener
+     * @param <T> type of the result
+     *
+     * @return true if listener has been removed, false otherwise
+     */
+    <T> boolean removeTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener);
+
+    void  removeAllTaskListeners(@Nonnull String taskName);
 }
