@@ -107,28 +107,32 @@ final class TaskServiceImpl implements TaskService {
     }
 
 
+    @Nullable
     @Override
-    public <T> void tryRun(@Nonnull String taskName, @Nonnull Callable<T> callable, @Nullable final FutureCallback<T> taskListener) throws TaskIsAlreadyRunningException {
+    public <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Callable<T> callable, @Nullable final FutureCallback<T> taskListener) throws TaskIsAlreadyRunningException {
         synchronized (tasks) {
             final ListenableFutureTask<T> oldTask = (ListenableFutureTask<T>) tasks.get(taskName);
             if (oldTask == null || oldTask.isDone()) {
                 final ListenableFutureTask<T> task = createTask(taskName, callable, taskListener);
                 tasks.put(taskName, task);
                 executor.execute(task);
+                return taskListener;
             } else {
                 throw new TaskIsAlreadyRunningException(taskName);
             }
         }
     }
 
+    @Nullable
     @Override
-    public <T> void tryRun(@Nonnull String taskName, @Nonnull Task<T> task) throws TaskIsAlreadyRunningException {
-        tryRun(taskName, task, task);
+    public <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Task<T> task) throws TaskIsAlreadyRunningException {
+        return tryRun(taskName, task, task);
     }
 
+    @Nullable
     @Override
-    public <T> void tryRun(@Nonnull NamedTask<T> task) throws TaskIsAlreadyRunningException {
-        tryRun(task.getName(), task);
+    public <T> FutureCallback<T> tryRun(@Nonnull NamedTask<T> task) throws TaskIsAlreadyRunningException {
+        return tryRun(task.getName(), task);
     }
 
     @Override
@@ -136,8 +140,9 @@ final class TaskServiceImpl implements TaskService {
         run(taskName, task, null);
     }
 
+    @Nullable
     @Override
-    public <T> void run(@Nonnull String taskName, @Nonnull Callable<T> callable, @Nullable FutureCallback<T> taskListener) {
+    public <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Callable<T> callable, @Nullable FutureCallback<T> taskListener) {
         synchronized (tasks) {
             final ListenableFutureTask<T> oldTask = (ListenableFutureTask<T>) tasks.get(taskName);
             if (oldTask != null && !oldTask.isDone()) {
@@ -147,17 +152,20 @@ final class TaskServiceImpl implements TaskService {
             final ListenableFutureTask<T> task = createTask(taskName, callable, taskListener);
             tasks.put(taskName, task);
             executor.execute(task);
+            return taskListener;
         }
     }
 
+    @Nullable
     @Override
-    public <T> void run(@Nonnull String taskName, @Nonnull Task<T> task) {
-        run(taskName, task, task);
+    public <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Task<T> task) {
+        return run(taskName, task, task);
     }
 
+    @Nullable
     @Override
-    public <T> void run(@Nonnull NamedTask<T> task) {
-        run(task.getName(), task);
+    public <T> FutureCallback<T> run(@Nonnull NamedTask<T> task) {
+        return run(task.getName(), task);
     }
 
     @Override

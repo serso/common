@@ -35,7 +35,8 @@ public interface TaskService {
      * @param <T>          type of result
      * @throws TaskIsAlreadyRunningException if task with the same <var>taskName</var> is already running
      */
-    <T> void tryRun(@Nonnull String taskName, @Nonnull Callable<T> task, @Nullable FutureCallback<T> taskListener) throws TaskIsAlreadyRunningException;
+    @Nullable
+    <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Callable<T> task, @Nullable FutureCallback<T> taskListener) throws TaskIsAlreadyRunningException;
 
     /**
      * @see TaskService#tryRun(java.lang.String, java.util.concurrent.Callable<T>, com.google.common.util.concurrent.FutureCallback<T>)
@@ -45,12 +46,14 @@ public interface TaskService {
     /**
      * @see TaskService#tryRun(java.lang.String, java.util.concurrent.Callable<T>, com.google.common.util.concurrent.FutureCallback<T>)
      */
-    <T> void tryRun(@Nonnull String taskName, @Nonnull Task<T> task) throws TaskIsAlreadyRunningException;
+    @Nullable
+    <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Task<T> task) throws TaskIsAlreadyRunningException;
 
     /**
      * @see TaskService#tryRun(java.lang.String, java.util.concurrent.Callable<T>, com.google.common.util.concurrent.FutureCallback<T>)
      */
-    <T> void tryRun(@Nonnull NamedTask<T> task) throws TaskIsAlreadyRunningException;
+    @Nullable
+    <T> FutureCallback<T> tryRun(@Nonnull NamedTask<T> task) throws TaskIsAlreadyRunningException;
 
     /**
      * Method runs specified <var>task</var>. If task with the same <var>taskName</var> is already running (or is waiting in queue) it will be cancelled.
@@ -60,7 +63,8 @@ public interface TaskService {
      * @param taskListener result listener
      * @param <T>          type of result
      */
-    <T> void run(@Nonnull String taskName, @Nonnull Callable<T> task, @Nullable FutureCallback<T> taskListener);
+    @Nullable
+    <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Callable<T> task, @Nullable FutureCallback<T> taskListener);
 
     /**
      * @see TaskService#run(java.lang.String, java.util.concurrent.Callable<T>, com.google.common.util.concurrent.FutureCallback<T>)
@@ -70,12 +74,14 @@ public interface TaskService {
     /**
      * @see TaskService#run(java.lang.String, java.util.concurrent.Callable<T>, com.google.common.util.concurrent.FutureCallback<T>)
      */
-    <T> void run(@Nonnull String taskName, @Nonnull Task<T> task);
+    @Nullable
+    <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Task<T> task);
 
     /**
      * @see TaskService#run(java.lang.String, java.util.concurrent.Callable<T>, com.google.common.util.concurrent.FutureCallback<T>)
      */
-    <T> void run(@Nonnull NamedTask<T> task);
+    @Nullable
+    <T> FutureCallback<T> run(@Nonnull NamedTask<T> task);
 
     /**
      * Method tries to cancel task.
