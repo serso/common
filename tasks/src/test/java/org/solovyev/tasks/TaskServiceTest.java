@@ -66,7 +66,7 @@ public abstract class TaskServiceTest {
         Assert.assertFalse(taskService.isDone(taskName));
         Assert.assertTrue(taskService.isRunning(taskName));
 
-        Assert.assertTrue(taskService.addTaskListener(taskName, new FutureCallback<Object>() {
+        Assert.assertNotNull(taskService.addTaskListener(taskName, new FutureCallback<Object>() {
             @Override
             public void onSuccess(Object result) {
                 Assert.fail();
@@ -79,6 +79,31 @@ public abstract class TaskServiceTest {
         }));
 
         Assert.assertTrue(taskService.cancel(taskName));
+
+        taskService.tryRun(taskName, new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                Thread.sleep(1000);
+                return null;
+            }
+        });
+
+        final FutureCallback<Object> listener = taskService.addTaskListener(taskName, new FutureCallback<Object>() {
+            @Override
+            public void onSuccess(Object result) {
+                Assert.fail();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Assert.fail();
+            }
+        });
+
+        Assert.assertNotNull(listener);
+        taskService.removeTaskListener(taskName, listener);
+
+        Thread.sleep(2000);
     }
 
     @Test

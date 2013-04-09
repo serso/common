@@ -120,8 +120,11 @@ public interface TaskService {
      * @param <T> type of the result
      * @throws NoSuchTaskException If no task with specified <var>taskName</var> is running
      * @throws TaskFinishedException If task with specified <var>taskName</var> has already been finished
+     *
+     * @return <var>taskListener</var>
      */
-    <T> void tryAddTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) throws NoSuchTaskException, TaskFinishedException;
+    @Nonnull
+    <T> FutureCallback<T> tryAddTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) throws NoSuchTaskException, TaskFinishedException;
 
     /**
      * Method tries to add task result listener (<var>taskListener</var>) to the task with specified <var>taskName</var>.
@@ -131,9 +134,10 @@ public interface TaskService {
      * @param taskListener result listener
      * @param <T> type of the result
      *
-     * @return true if result listener has been added, false otherwise
+     * @return <var>taskListener</var> if result listener has been added, null otherwise
      */
-    <T> boolean addTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener);
+    @Nullable
+    <T> FutureCallback<T> addTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener);
 
     /**
      * Method removed task result listener from the task with specified <var>taskName</var>
@@ -141,10 +145,8 @@ public interface TaskService {
      * @param taskName name of the task
      * @param taskListener result listener
      * @param <T> type of the result
-     *
-     * @return true if listener has been removed, false otherwise
      */
-    <T> boolean removeTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener);
+    <T> void removeTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener);
 
     void  removeAllTaskListeners(@Nonnull String taskName);
 }
