@@ -196,18 +196,6 @@ final class TaskServiceImpl implements TaskService {
         }
     }
 
-    @Override
-    public boolean isDone(@Nonnull String taskName) {
-        synchronized (tasks) {
-            final ListenableFutureTask<?> task = tasks.get(taskName);
-            if (task != null && task.isDone()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
     @Nullable
     @Override
     public <T> FutureCallback<T> addTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) {

@@ -110,15 +110,6 @@ public interface TaskService {
     boolean isRunning(@Nonnull String taskName);
 
     /**
-     * Method checks if task with specified <var>taskName</var> has already been finished, i.e. that task already has been started and finished.
-     *
-     * @param taskName name of the task
-     *
-     * @return true if task has already been finished, false otherwise
-     */
-    boolean isDone(@Nonnull String taskName);
-
-    /**
      * Method tries to add task result listener (<var>taskListener</var>) to the task with specified <var>taskName</var>.
      *
      * @param taskName name of the task
@@ -154,5 +145,5 @@ public interface TaskService {
      */
     <T> void removeTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener);
 
-    void  removeAllTaskListeners(@Nonnull String taskName);
+    void removeAllTaskListeners(@Nonnull String taskName);
 }

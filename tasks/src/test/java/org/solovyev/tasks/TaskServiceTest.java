@@ -63,7 +63,6 @@ public abstract class TaskServiceTest {
 
         }
 
-        Assert.assertFalse(taskService.isDone(taskName));
         Assert.assertTrue(taskService.isRunning(taskName));
 
         Assert.assertNotNull(taskService.addTaskListener(taskName, new FutureCallback<Object>() {
