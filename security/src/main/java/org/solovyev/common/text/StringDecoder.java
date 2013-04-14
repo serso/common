@@ -22,11 +22,10 @@
 
 package org.solovyev.common.text;
 
-import org.apache.commons.codec.Charsets;
+import org.solovyev.common.Charsets;
+import org.solovyev.common.Converter;
 
 import javax.annotation.Nonnull;
-
-import org.solovyev.common.Converter;
 
 /**
  * Converter from String to bytes.

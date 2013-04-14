@@ -22,12 +22,10 @@
 
 package org.solovyev.common.security;
 
-import org.apache.commons.codec.Charsets;
+import org.solovyev.common.Bytes;
+import org.solovyev.common.Charsets;
 
 import javax.annotation.Nonnull;
-
-import org.solovyev.common.Bytes;
-
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.MessageDigest;
