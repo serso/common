@@ -62,7 +62,7 @@
 
 		<dependency>
 			<groupId>org.solovyev</groupId>
-			<artifactId>common-collections-multimap</artifactId>
+			<artifactId>common-collections-multiset</artifactId>
 			<version>1.0.4-SNAPSHOT</version>
 		</dependency>
 
