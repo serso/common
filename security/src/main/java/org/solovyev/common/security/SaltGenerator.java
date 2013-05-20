@@ -31,12 +31,12 @@ import javax.annotation.Nonnull;
  */
 public interface SaltGenerator {
 
-    /**
-     * Method should generate random array of bytes using some secure random algorithm
-     *
-     * @return generated salt
-     * @throws CiphererException exception
-     */
-    @Nonnull
-    byte[] generateSalt() throws CiphererException;
+	/**
+	 * Method should generate random array of bytes using some secure random algorithm
+	 *
+	 * @return generated salt
+	 * @throws CiphererException exception
+	 */
+	@Nonnull
+	byte[] generateSalt() throws CiphererException;
 }

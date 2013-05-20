@@ -29,22 +29,22 @@ import javax.crypto.SecretKey;
 
 public class HexStringCiphererTest extends AbstractStringCiphererTest {
 
-    @Test
-    public void testEncryptDecrypt() throws Exception {
-        final SecretKeyProvider secretKeyProvider = Sha1HashSecretKeyProvider.newAesInstance();
-        final SecretKey sk = secretKeyProvider.getSecretKey("1234", new byte[]{0, -122, 2, 3, 6, 32, 1, 3});
+	@Test
+	public void testEncryptDecrypt() throws Exception {
+		final SecretKeyProvider secretKeyProvider = Sha1HashSecretKeyProvider.newAesInstance();
+		final SecretKey sk = secretKeyProvider.getSecretKey("1234", new byte[]{0, -122, 2, 3, 6, 32, 1, 3});
 
-        final Cipherer<HexString, String> cipherer = Security.newHexStringCipherer(ByteArrayCipherer.newNoIv("AES/ECB/PKCS5Padding", "BC"));
-        final String expected = "test";
+		final Cipherer<HexString, String> cipherer = Security.newHexStringCipherer(ByteArrayCipherer.newNoIv("AES/ECB/PKCS5Padding", "BC"));
+		final String expected = "test";
 
-        doCipherTest(sk, cipherer, expected);
-    }
+		doCipherTest(sk, cipherer, expected);
+	}
 
-    @Test
-    public void testRandomEncryptDecrypt() throws Exception {
-        final SecretKeyProvider secretKeyProvider = Sha1HashSecretKeyProvider.newAesInstance();
-        final Cipherer<HexString, String> cipherer = Security.newHexStringCipherer(ByteArrayCipherer.newNoIv("AES/ECB/PKCS5Padding", "BC"));
+	@Test
+	public void testRandomEncryptDecrypt() throws Exception {
+		final SecretKeyProvider secretKeyProvider = Sha1HashSecretKeyProvider.newAesInstance();
+		final Cipherer<HexString, String> cipherer = Security.newHexStringCipherer(ByteArrayCipherer.newNoIv("AES/ECB/PKCS5Padding", "BC"));
 
-        doRandomCiphererTest(secretKeyProvider, cipherer);
-    }
+		doRandomCiphererTest(secretKeyProvider, cipherer);
+	}
 }

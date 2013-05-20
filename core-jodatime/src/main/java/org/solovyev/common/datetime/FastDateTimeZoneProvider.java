@@ -22,12 +22,11 @@
 
 package org.solovyev.common.datetime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.joda.time.DateTimeZone;
 import org.joda.time.tz.Provider;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -37,37 +36,37 @@ import java.util.*;
  */
 public class FastDateTimeZoneProvider implements Provider {
 
-    @Nonnull
-    public static final Set<String> availableIds = new HashSet<String>();
+	@Nonnull
+	public static final Set<String> availableIds = new HashSet<String>();
 
-    static {
-        availableIds.addAll(Arrays.asList(TimeZone.getAvailableIDs()));
-    }
+	static {
+		availableIds.addAll(Arrays.asList(TimeZone.getAvailableIDs()));
+	}
 
-    @Nonnull
-    public DateTimeZone getZone(@Nullable String id) {
-        if (id == null) {
-            return DateTimeZone.UTC;
-        }
+	@Nonnull
+	public DateTimeZone getZone(@Nullable String id) {
+		if (id == null) {
+			return DateTimeZone.UTC;
+		}
 
-        final TimeZone tz = TimeZone.getTimeZone(id);
-        if (tz == null) {
-            return DateTimeZone.UTC;
-        }
+		final TimeZone tz = TimeZone.getTimeZone(id);
+		if (tz == null) {
+			return DateTimeZone.UTC;
+		}
 
-        int rawOffset = tz.getRawOffset();
+		int rawOffset = tz.getRawOffset();
 
-        // sub-optimal. could be improved to only create a new Date every few minutes
-        if (tz.inDaylightTime(new Date())) {
-            rawOffset += tz.getDSTSavings();
-        }
+		// sub-optimal. could be improved to only create a new Date every few minutes
+		if (tz.inDaylightTime(new Date())) {
+			rawOffset += tz.getDSTSavings();
+		}
 
-        return DateTimeZone.forOffsetMillis(rawOffset);
-    }
+		return DateTimeZone.forOffsetMillis(rawOffset);
+	}
 
-    @Nonnull
-    public Set<String> getAvailableIDs() {
-        return availableIds;
-    }
+	@Nonnull
+	public Set<String> getAvailableIDs() {
+		return availableIds;
+	}
 }
 

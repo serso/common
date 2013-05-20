@@ -35,94 +35,94 @@ import java.util.List;
  */
 public class SynchronizedHistoryHelper<T> extends SynchronizedObject<HistoryHelper<T>> implements HistoryHelper<T> {
 
-    private SynchronizedHistoryHelper(@Nonnull HistoryHelper<T> delegate) {
-        super(delegate);
-    }
+	private SynchronizedHistoryHelper(@Nonnull HistoryHelper<T> delegate) {
+		super(delegate);
+	}
 
-    @Nonnull
-    public static <T> SynchronizedHistoryHelper<T> wrap(@Nonnull HistoryHelper<T> delegate) {
-        return new SynchronizedHistoryHelper<T>(delegate);
-    }
+	@Nonnull
+	public static <T> SynchronizedHistoryHelper<T> wrap(@Nonnull HistoryHelper<T> delegate) {
+		return new SynchronizedHistoryHelper<T>(delegate);
+	}
 
-    @Override
-    public boolean isEmpty() {
-        synchronized (mutex) {
-            return delegate.isEmpty();
-        }
-    }
+	@Override
+	public boolean isEmpty() {
+		synchronized (mutex) {
+			return delegate.isEmpty();
+		}
+	}
 
-    @Nullable
-    @Override
-    public T getLastHistoryState() {
-        synchronized (mutex) {
-            return delegate.getLastHistoryState();
-        }
-    }
+	@Nullable
+	@Override
+	public T getLastHistoryState() {
+		synchronized (mutex) {
+			return delegate.getLastHistoryState();
+		}
+	}
 
-    @Override
-    public boolean isUndoAvailable() {
-        synchronized (mutex) {
-            return delegate.isUndoAvailable();
-        }
-    }
+	@Override
+	public boolean isUndoAvailable() {
+		synchronized (mutex) {
+			return delegate.isUndoAvailable();
+		}
+	}
 
-    @Nullable
-    @Override
-    public T undo(@Nullable T currentState) {
-        synchronized (mutex) {
-            return delegate.undo(currentState);
-        }
-    }
+	@Nullable
+	@Override
+	public T undo(@Nullable T currentState) {
+		synchronized (mutex) {
+			return delegate.undo(currentState);
+		}
+	}
 
-    @Override
-    public boolean isRedoAvailable() {
-        synchronized (mutex) {
-            return delegate.isRedoAvailable();
-        }
-    }
+	@Override
+	public boolean isRedoAvailable() {
+		synchronized (mutex) {
+			return delegate.isRedoAvailable();
+		}
+	}
 
-    @Nullable
-    @Override
-    public T redo(@Nullable T currentState) {
-        synchronized (mutex) {
-            return delegate.redo(currentState);
-        }
-    }
+	@Nullable
+	@Override
+	public T redo(@Nullable T currentState) {
+		synchronized (mutex) {
+			return delegate.redo(currentState);
+		}
+	}
 
-    @Override
-    public boolean isActionAvailable(@Nonnull HistoryAction historyAction) {
-        synchronized (mutex) {
-            return delegate.isActionAvailable(historyAction);
-        }
-    }
+	@Override
+	public boolean isActionAvailable(@Nonnull HistoryAction historyAction) {
+		synchronized (mutex) {
+			return delegate.isActionAvailable(historyAction);
+		}
+	}
 
-    @Nullable
-    @Override
-    public T doAction(@Nonnull HistoryAction historyAction, @Nullable T currentState) {
-        synchronized (mutex) {
-            return delegate.doAction(historyAction, currentState);
-        }
-    }
+	@Nullable
+	@Override
+	public T doAction(@Nonnull HistoryAction historyAction, @Nullable T currentState) {
+		synchronized (mutex) {
+			return delegate.doAction(historyAction, currentState);
+		}
+	}
 
-    @Override
-    public void addState(@Nullable T currentState) {
-        synchronized (mutex) {
-            delegate.addState(currentState);
-        }
-    }
+	@Override
+	public void addState(@Nullable T currentState) {
+		synchronized (mutex) {
+			delegate.addState(currentState);
+		}
+	}
 
-    @Nonnull
-    @Override
-    public List<T> getStates() {
-        synchronized (mutex) {
-            return delegate.getStates();
-        }
-    }
+	@Nonnull
+	@Override
+	public List<T> getStates() {
+		synchronized (mutex) {
+			return delegate.getStates();
+		}
+	}
 
-    @Override
-    public void clear() {
-        synchronized (mutex) {
-            delegate.clear();
-        }
-    }
+	@Override
+	public void clear() {
+		synchronized (mutex) {
+			delegate.clear();
+		}
+	}
 }

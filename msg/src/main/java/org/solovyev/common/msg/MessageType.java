@@ -31,40 +31,40 @@ import javax.annotation.Nonnull;
  */
 public enum MessageType implements MessageLevel {
 
-    error(ERROR_LEVEL, "ERROR"),
+	error(ERROR_LEVEL, "ERROR"),
 
-    warning(WARNING_LEVEL, "WARNING"),
+	warning(WARNING_LEVEL, "WARNING"),
 
-    info(INFO_LEVEL, "INFO");
+	info(INFO_LEVEL, "INFO");
 
-    private final int messageLevel;
+	private final int messageLevel;
 
-    @Nonnull
-    private final String stringValue;
+	@Nonnull
+	private final String stringValue;
 
-    MessageType(int messageLevel, @Nonnull String stringValue) {
-        this.messageLevel = messageLevel;
-        this.stringValue = stringValue;
-    }
+	MessageType(int messageLevel, @Nonnull String stringValue) {
+		this.messageLevel = messageLevel;
+		this.stringValue = stringValue;
+	}
 
-    @Nonnull
-    public String getStringValue() {
-        return stringValue;
-    }
+	@Nonnull
+	public String getStringValue() {
+		return stringValue;
+	}
 
-    @Nonnull
-    public static MessageType getLowestMessageType() {
-        return info;
-    }
+	@Nonnull
+	public static MessageType getLowestMessageType() {
+		return info;
+	}
 
-    @Override
-    public int getMessageLevel() {
-        return messageLevel;
-    }
+	@Override
+	public int getMessageLevel() {
+		return messageLevel;
+	}
 
-    @Nonnull
-    @Override
-    public String getName() {
-        return stringValue;
-    }
+	@Nonnull
+	@Override
+	public String getName() {
+		return stringValue;
+	}
 }

@@ -24,7 +24,6 @@ package org.solovyev.common.collections.multiset;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.*;
 
 /**
@@ -34,248 +33,248 @@ import java.util.*;
  */
 public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> implements OneInstanceMultiSet<E> {
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private final Map<E, Value<E>> backingMap;
+	@Nonnull
+	private final Map<E, Value<E>> backingMap;
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    protected AbstractMapOneInstanceMultiSet(@Nonnull Map<E, Value<E>> backingMap) {
-        this.backingMap = backingMap;
-    }
+	protected AbstractMapOneInstanceMultiSet(@Nonnull Map<E, Value<E>> backingMap) {
+		this.backingMap = backingMap;
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Override
-    public int remove(@Nullable E e, int count) {
-        MultiSets.checkRemove(count);
+	@Override
+	public int remove(@Nullable E e, int count) {
+		MultiSets.checkRemove(count);
 
-        final int oldCount = count(e);
+		final int oldCount = count(e);
 
-        if (oldCount > count) {
-            setCount(e, oldCount - count);
-        } else {
-            this.backingMap.remove(e);
-        }
+		if (oldCount > count) {
+			setCount(e, oldCount - count);
+		} else {
+			this.backingMap.remove(e);
+		}
 
-        return oldCount;
-    }
+		return oldCount;
+	}
 
-    @Override
-    public int setCount(E e, int count) {
-        MultiSets.checkSetCount(count);
+	@Override
+	public int setCount(E e, int count) {
+		MultiSets.checkSetCount(count);
 
-        final Value<E> oldValue = this.backingMap.put(e, new Value<E>(e, count));
+		final Value<E> oldValue = this.backingMap.put(e, new Value<E>(e, count));
 
-        if (oldValue == null) {
-            return 0;
-        } else {
-            return oldValue.count;
-        }
-    }
+		if (oldValue == null) {
+			return 0;
+		} else {
+			return oldValue.count;
+		}
+	}
 
-    @Override
-    public int count(E e) {
-        return count0(e);
-    }
+	@Override
+	public int count(E e) {
+		return count0(e);
+	}
 
-    private int count0(Object e) {
-        final Value<E> value = this.backingMap.get(e);
-        return value == null ? 0 : value.count;
-    }
+	private int count0(Object e) {
+		final Value<E> value = this.backingMap.get(e);
+		return value == null ? 0 : value.count;
+	}
 
-    @Nonnull
-    @Override
-    public Collection<E> getAll(E e) {
-        final Value<E> value = this.backingMap.get(e);
+	@Nonnull
+	@Override
+	public Collection<E> getAll(E e) {
+		final Value<E> value = this.backingMap.get(e);
 
-        if (value == null) {
-            return Collections.emptyList();
-        } else {
-            return getAsList(value);
-        }
-    }
+		if (value == null) {
+			return Collections.emptyList();
+		} else {
+			return getAsList(value);
+		}
+	}
 
-    @Nonnull
-    private Collection<E> getAsList(@Nonnull Value<E> value) {
-        final Object[] array = getAsArray(value);
-        return (Collection<E>) Arrays.asList(array);
-    }
+	@Nonnull
+	private Collection<E> getAsList(@Nonnull Value<E> value) {
+		final Object[] array = getAsArray(value);
+		return (Collection<E>) Arrays.asList(array);
+	}
 
-    @Nonnull
-    private E[] getAsArray(@Nonnull Value<E> value) {
-        final Object[] result = new Object[value.count];
-        Arrays.fill(result, value.element);
-        return (E[]) result;
-    }
+	@Nonnull
+	private E[] getAsArray(@Nonnull Value<E> value) {
+		final Object[] result = new Object[value.count];
+		Arrays.fill(result, value.element);
+		return (E[]) result;
+	}
 
-    @Nonnull
-    @Override
-    public Set<E> toElementSet() {
-        final Set<E> result = new HashSet<E>(this.backingMap.size());
+	@Nonnull
+	@Override
+	public Set<E> toElementSet() {
+		final Set<E> result = new HashSet<E>(this.backingMap.size());
 
-        for (Value<E> value : this.backingMap.values()) {
-            if (value.count > 0) {
-                result.add(value.element);
-            }
-        }
+		for (Value<E> value : this.backingMap.values()) {
+			if (value.count > 0) {
+				result.add(value.element);
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public boolean add(E e, int count) {
-        MultiSets.checkAdd(count);
+	@Override
+	public boolean add(E e, int count) {
+		MultiSets.checkAdd(count);
 
-        final Value<E> oldValue = this.backingMap.get(e);
-        if (oldValue == null) {
-            this.backingMap.put(e, new Value<E>(e, count));
-        } else {
-            this.backingMap.put(e, new Value<E>(e, oldValue.count + count));
-        }
+		final Value<E> oldValue = this.backingMap.get(e);
+		if (oldValue == null) {
+			this.backingMap.put(e, new Value<E>(e, count));
+		} else {
+			this.backingMap.put(e, new Value<E>(e, oldValue.count + count));
+		}
 
-        return count > 0;
-    }
+		return count > 0;
+	}
 
-    @Override
-    public int size() {
-        int result = 0;
+	@Override
+	public int size() {
+		int result = 0;
 
-        for (Value<E> v : backingMap.values()) {
-            result += v.count;
-        }
+		for (Value<E> v : backingMap.values()) {
+			result += v.count;
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public boolean contains(Object e) {
-        return count0(e) > 0;
-    }
+	@Override
+	public boolean contains(Object e) {
+		return count0(e) > 0;
+	}
 
-    @Nonnull
-    @Override
-    public Iterator<E> iterator() {
-        return new MapBasedMultiSetIterator();
-    }
+	@Nonnull
+	@Override
+	public Iterator<E> iterator() {
+		return new MapBasedMultiSetIterator();
+	}
 
-    private class MapBasedMultiSetIterator implements Iterator<E> {
+	private class MapBasedMultiSetIterator implements Iterator<E> {
 
-        private final Iterator<Map.Entry<E, Value<E>>> entryIterator;
-        private Map.Entry<E, Value<E>> currentEntry;
-        private int occurrencesLeft;
-        private boolean canRemove;
+		private final Iterator<Map.Entry<E, Value<E>>> entryIterator;
+		private Map.Entry<E, Value<E>> currentEntry;
+		private int occurrencesLeft;
+		private boolean canRemove;
 
-        MapBasedMultiSetIterator() {
-            this.entryIterator = backingMap.entrySet().iterator();
-        }
+		MapBasedMultiSetIterator() {
+			this.entryIterator = backingMap.entrySet().iterator();
+		}
 
-        @Override
-        public boolean hasNext() {
-            return occurrencesLeft > 0 || entryIterator.hasNext();
-        }
+		@Override
+		public boolean hasNext() {
+			return occurrencesLeft > 0 || entryIterator.hasNext();
+		}
 
-        @Override
-        public E next() {
-            if (occurrencesLeft == 0) {
-                currentEntry = entryIterator.next();
-                occurrencesLeft = currentEntry.getValue().count;
-            }
-            occurrencesLeft--;
-            canRemove = true;
-            return currentEntry.getKey();
-        }
+		@Override
+		public E next() {
+			if (occurrencesLeft == 0) {
+				currentEntry = entryIterator.next();
+				occurrencesLeft = currentEntry.getValue().count;
+			}
+			occurrencesLeft--;
+			canRemove = true;
+			return currentEntry.getKey();
+		}
 
-        @Override
-        public void remove() {
-            if (!canRemove) {
-                throw new IllegalStateException("No calls to next() since the last call to remove()");
-            }
+		@Override
+		public void remove() {
+			if (!canRemove) {
+				throw new IllegalStateException("No calls to next() since the last call to remove()");
+			}
 
-            int count = currentEntry.getValue().count;
-            if (count <= 0) {
-                throw new ConcurrentModificationException();
-            }
+			int count = currentEntry.getValue().count;
+			if (count <= 0) {
+				throw new ConcurrentModificationException();
+			}
 
-            if (currentEntry.getValue().addAndGetCount(-1) == 0) {
-                entryIterator.remove();
-            }
-            canRemove = false;
-        }
-    }
+			if (currentEntry.getValue().addAndGetCount(-1) == 0) {
+				entryIterator.remove();
+			}
+			canRemove = false;
+		}
+	}
 
-    @Nonnull
-    @Override
-    public Object[] toArray() {
-        final Object[] result = new Object[size()];
+	@Nonnull
+	@Override
+	public Object[] toArray() {
+		final Object[] result = new Object[size()];
 
-        int j = 0;
-        for (Value<E> value : backingMap.values()) {
-            for (int i = 0; i < value.count; i++) {
-                result[j++] = value.element;
-            }
-        }
+		int j = 0;
+		for (Value<E> value : backingMap.values()) {
+			for (int i = 0; i < value.count; i++) {
+				result[j++] = value.element;
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public <T> T[] toArray(@Nonnull T[] result) {
+	@Nonnull
+	@Override
+	public <T> T[] toArray(@Nonnull T[] result) {
 
-        int j = 0;
-        for (Value<E> value : backingMap.values()) {
-            for (int i = 0; i < value.count; i++) {
-                result[j++] = (T) value.element;
-            }
-        }
+		int j = 0;
+		for (Value<E> value : backingMap.values()) {
+			for (int i = 0; i < value.count; i++) {
+				result[j++] = (T) value.element;
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public void clear() {
-        this.backingMap.clear();
-    }
+	@Override
+	public void clear() {
+		this.backingMap.clear();
+	}
 
-    protected static class Value<E> {
+	protected static class Value<E> {
 
-        @Nonnull
-        private E element;
+		@Nonnull
+		private E element;
 
-        @Nonnull
-        private Integer count;
+		@Nonnull
+		private Integer count;
 
-        private Value(@Nonnull E element, @Nonnull Integer count) {
-            this.element = element;
-            this.count = count;
-        }
+		private Value(@Nonnull E element, @Nonnull Integer count) {
+			this.element = element;
+			this.count = count;
+		}
 
-        @Nonnull
-        public Integer addAndGetCount(int offset) {
-            this.count += offset;
-            return this.count;
-        }
-    }
+		@Nonnull
+		public Integer addAndGetCount(int offset) {
+			this.count += offset;
+			return this.count;
+		}
+	}
 
 
 }

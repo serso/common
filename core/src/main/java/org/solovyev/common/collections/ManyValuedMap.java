@@ -39,20 +39,20 @@ import java.util.Map;
 * */
 public interface ManyValuedMap<K, V> extends Cloneable, Map<K, List<V>>, Serializable {
 
-    public List<V> put(K key, V... values);
+	public List<V> put(K key, V... values);
 
-    public void clear(K key);
+	public void clear(K key);
 
-    public ManyValuedMap<K, V> clone();
+	public ManyValuedMap<K, V> clone();
 
-    public void sort(Comparator<? super V> c);
+	public void sort(Comparator<? super V> c);
 
-    public List<V> getAllValues();
+	public List<V> getAllValues();
 
-    public Collection<List<V>> values(Comparator<? super K> c);
+	public Collection<List<V>> values(Comparator<? super K> c);
 
-    public void lock();
+	public void lock();
 
-    public Map<K, List<V>> toMap();
+	public Map<K, List<V>> toMap();
 
 }

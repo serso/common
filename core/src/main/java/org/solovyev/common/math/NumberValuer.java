@@ -31,9 +31,9 @@ import javax.annotation.Nonnull;
  */
 public class NumberValuer<T extends Number> extends AbstractValuer<T> {
 
-    @Override
-    @Nonnull
-    public Double getValue(@Nonnull T item) {
-        return item.doubleValue();
-    }
+	@Override
+	@Nonnull
+	public Double getValue(@Nonnull T item) {
+		return item.doubleValue();
+	}
 }

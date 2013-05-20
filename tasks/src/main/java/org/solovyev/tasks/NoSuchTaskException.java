@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  */
 public class NoSuchTaskException extends TaskException {
 
-    public NoSuchTaskException(@Nonnull String taskName) {
-        super("No such task: " + taskName);
-    }
+	public NoSuchTaskException(@Nonnull String taskName) {
+		super("No such task: " + taskName);
+	}
 }

@@ -37,13 +37,13 @@ import javax.annotation.Nonnull;
  */
 public abstract class JObject implements Cloneable {
 
-    @Nonnull
-    @Override
-    public JObject clone() {
-        try {
-            return (JObject) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError(e);
-        }
-    }
+	@Nonnull
+	@Override
+	public JObject clone() {
+		try {
+			return (JObject) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new AssertionError(e);
+		}
+	}
 }

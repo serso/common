@@ -22,11 +22,10 @@
 
 package org.solovyev.common.equals;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.solovyev.common.Objects;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -36,58 +35,58 @@ import java.util.List;
  */
 public class ListEqualizer<T> implements Equalizer<List<T>> {
 
-    @Nonnull
-    private static final Equalizer<List<Object>> instanceWithOrder = new ListEqualizer<Object>(true, null);
+	@Nonnull
+	private static final Equalizer<List<Object>> instanceWithOrder = new ListEqualizer<Object>(true, null);
 
-    @Nonnull
-    private static final Equalizer<List<Object>> instanceWithoutOrder = new ListEqualizer<Object>(false, null);
+	@Nonnull
+	private static final Equalizer<List<Object>> instanceWithoutOrder = new ListEqualizer<Object>(false, null);
 
-    private final boolean checkOrder;
+	private final boolean checkOrder;
 
-    @Nullable
-    protected final Equalizer<T> nestedEqualizer;
+	@Nullable
+	protected final Equalizer<T> nestedEqualizer;
 
-    private ListEqualizer(boolean checkOrder, @Nullable Equalizer<T> nestedEqualizer) {
-        this.checkOrder = checkOrder;
-        this.nestedEqualizer = nestedEqualizer;
-    }
+	private ListEqualizer(boolean checkOrder, @Nullable Equalizer<T> nestedEqualizer) {
+		this.checkOrder = checkOrder;
+		this.nestedEqualizer = nestedEqualizer;
+	}
 
-    @Nonnull
-    public static <T> ListEqualizer<T> newWithNestedEqualizer(boolean checkOrder, @Nullable Equalizer<T> nestedEqualizer) {
-        return new ListEqualizer<T>(checkOrder, nestedEqualizer);
-    }
+	@Nonnull
+	public static <T> ListEqualizer<T> newWithNestedEqualizer(boolean checkOrder, @Nullable Equalizer<T> nestedEqualizer) {
+		return new ListEqualizer<T>(checkOrder, nestedEqualizer);
+	}
 
-    @Nonnull
-    public static <T> ListEqualizer<T> newWithNaturalEquals(boolean checkOrder) {
-        if (checkOrder) {
-            return (ListEqualizer<T>) instanceWithOrder;
-        } else {
-            return (ListEqualizer<T>) instanceWithoutOrder;
-        }
-    }
+	@Nonnull
+	public static <T> ListEqualizer<T> newWithNaturalEquals(boolean checkOrder) {
+		if (checkOrder) {
+			return (ListEqualizer<T>) instanceWithOrder;
+		} else {
+			return (ListEqualizer<T>) instanceWithoutOrder;
+		}
+	}
 
-    @Override
-    public boolean areEqual(@Nonnull List<T> first, @Nonnull List<T> second) {
-        boolean result = false;
+	@Override
+	public boolean areEqual(@Nonnull List<T> first, @Nonnull List<T> second) {
+		boolean result = false;
 
-        if (first.size() == second.size()) {
-            if (checkOrder) {
-                result = true;
-                for (int i = 0; i < first.size(); i++) {
-                    final T el1 = first.get(i);
-                    final T el2 = second.get(i);
+		if (first.size() == second.size()) {
+			if (checkOrder) {
+				result = true;
+				for (int i = 0; i < first.size(); i++) {
+					final T el1 = first.get(i);
+					final T el2 = second.get(i);
 
-                    if (!Objects.areEqual(el1, el2, nestedEqualizer)) {
-                        result = false;
-                        break;
-                    }
+					if (!Objects.areEqual(el1, el2, nestedEqualizer)) {
+						result = false;
+						break;
+					}
 
-                }
-            } else {
-                result = Objects.areEqual(first, second, new CollectionEqualizer<T>(nestedEqualizer));
-            }
-        }
+				}
+			} else {
+				result = Objects.areEqual(first, second, new CollectionEqualizer<T>(nestedEqualizer));
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

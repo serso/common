@@ -38,6 +38,6 @@ import javax.annotation.Nonnull;
  */
 public interface BuilderWithData<T, D> {
 
-    @Nonnull
-    T build(D data);
+	@Nonnull
+	T build(D data);
 }

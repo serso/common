@@ -22,10 +22,10 @@
 
 package org.solovyev.common.search;
 
+import org.solovyev.common.JPredicate;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.solovyev.common.JPredicate;
 
 /**
  * User: serso
@@ -34,32 +34,32 @@ import org.solovyev.common.JPredicate;
  */
 public class StartsWithFinder implements JPredicate<String> {
 
-    private int i;
+	private int i;
 
-    @Nonnull
-    private final String targetString;
+	@Nonnull
+	private final String targetString;
 
-    private StartsWithFinder(@Nonnull String targetString, int i) {
-        this.targetString = targetString;
-        this.i = i;
-    }
+	private StartsWithFinder(@Nonnull String targetString, int i) {
+		this.targetString = targetString;
+		this.i = i;
+	}
 
-    @Nonnull
-    public static StartsWithFinder newFrom(@Nonnull String targetString, int i) {
-        return new StartsWithFinder(targetString, i);
-    }
+	@Nonnull
+	public static StartsWithFinder newFrom(@Nonnull String targetString, int i) {
+		return new StartsWithFinder(targetString, i);
+	}
 
-    @Nonnull
-    public static StartsWithFinder newInstance(@Nonnull String targetString) {
-        return newFrom(targetString, 0);
-    }
+	@Nonnull
+	public static StartsWithFinder newInstance(@Nonnull String targetString) {
+		return newFrom(targetString, 0);
+	}
 
-    @Override
-    public boolean apply(@Nullable String s) {
-        return s != null && targetString.startsWith(s, i);
-    }
+	@Override
+	public boolean apply(@Nullable String s) {
+		return s != null && targetString.startsWith(s, i);
+	}
 
-    public void setI(int i) {
-        this.i = i;
-    }
+	public void setI(int i) {
+		this.i = i;
+	}
 }

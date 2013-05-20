@@ -32,10 +32,10 @@ import org.junit.Test;
  */
 public class IntervalImplTest {
 
-    @Test
-    public void testContains() throws Exception {
-        final Interval<Integer> interval1 = Intervals.newClosedInterval(10, 20);
-        final Interval<Integer> interval2 = Intervals.newClosedInterval(12, 19);
-        Assert.assertTrue(interval1.contains(interval2));
-    }
+	@Test
+	public void testContains() throws Exception {
+		final Interval<Integer> interval1 = Intervals.newClosedInterval(10, 20);
+		final Interval<Integer> interval2 = Intervals.newClosedInterval(12, 19);
+		Assert.assertTrue(interval1.contains(interval2));
+	}
 }

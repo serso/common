@@ -22,9 +22,9 @@
 
 package org.solovyev.common.math;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.Converter;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,9 +33,9 @@ import org.solovyev.common.Converter;
  */
 public abstract class AbstractValuer<T> implements Valuer<T>, Converter<T, Double> {
 
-    @Nonnull
-    @Override
-    public Double convert(@Nonnull T t) {
-        return getValue(t);
-    }
+	@Nonnull
+	@Override
+	public Double convert(@Nonnull T t) {
+		return getValue(t);
+	}
 }

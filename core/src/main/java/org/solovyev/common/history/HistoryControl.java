@@ -31,24 +31,24 @@ import javax.annotation.Nonnull;
  */
 public interface HistoryControl<T> {
 
-    /**
-     * Method moves through the history states
-     *
-     * @param historyAction action to be done
-     */
-    void doHistoryAction(@Nonnull HistoryAction historyAction);
+	/**
+	 * Method moves through the history states
+	 *
+	 * @param historyAction action to be done
+	 */
+	void doHistoryAction(@Nonnull HistoryAction historyAction);
 
-    /**
-     * Method sets current history state
-     *
-     * @param state state to be set as current
-     */
-    void setCurrentHistoryState(@Nonnull T state);
+	/**
+	 * Method sets current history state
+	 *
+	 * @param state state to be set as current
+	 */
+	void setCurrentHistoryState(@Nonnull T state);
 
 
-    /**
-     * @return current history state
-     */
-    @Nonnull
-    T getCurrentHistoryState();
+	/**
+	 * @return current history state
+	 */
+	@Nonnull
+	T getCurrentHistoryState();
 }

@@ -9,6 +9,6 @@ import javax.annotation.Nonnull;
  */
 public interface NamedTask<V> extends Task<V> {
 
-    @Nonnull
-    String getName();
+	@Nonnull
+	String getName();
 }

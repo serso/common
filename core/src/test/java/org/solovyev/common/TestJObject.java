@@ -33,18 +33,18 @@ import javax.annotation.Nonnull;
 // MUST COMPILE =)
 public class TestJObject extends JObject implements JCloneable<TestJObject> {
 
-    @Nonnull
-    @Override
-    public TestJObject clone() {
-        return (TestJObject) super.clone();
-    }
+	@Nonnull
+	@Override
+	public TestJObject clone() {
+		return (TestJObject) super.clone();
+	}
 
-    private static class TestJObject2 extends TestJObject {
+	private static class TestJObject2 extends TestJObject {
 
-        @Nonnull
-        @Override
-        public TestJObject2 clone() {
-            return (TestJObject2) super.clone();
-        }
-    }
+		@Nonnull
+		@Override
+		public TestJObject2 clone() {
+			return (TestJObject2) super.clone();
+		}
+	}
 }

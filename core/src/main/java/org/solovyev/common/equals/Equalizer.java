@@ -31,5 +31,5 @@ import javax.annotation.Nonnull;
  */
 public interface Equalizer<T> {
 
-    boolean areEqual(@Nonnull T first, @Nonnull T second);
+	boolean areEqual(@Nonnull T first, @Nonnull T second);
 }

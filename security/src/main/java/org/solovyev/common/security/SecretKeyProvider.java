@@ -23,7 +23,6 @@
 package org.solovyev.common.security;
 
 import javax.annotation.Nonnull;
-
 import javax.crypto.SecretKey;
 
 /**
@@ -33,6 +32,6 @@ import javax.crypto.SecretKey;
  */
 public interface SecretKeyProvider {
 
-    @Nonnull
-    SecretKey getSecretKey(@Nonnull String secret, @Nonnull byte[] salt) throws CiphererException;
+	@Nonnull
+	SecretKey getSecretKey(@Nonnull String secret, @Nonnull byte[] salt) throws CiphererException;
 }

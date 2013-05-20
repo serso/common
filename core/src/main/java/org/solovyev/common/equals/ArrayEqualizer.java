@@ -22,10 +22,10 @@
 
 package org.solovyev.common.equals;
 
+import org.solovyev.common.Objects;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.solovyev.common.Objects;
 
 /**
  * User: serso
@@ -34,44 +34,44 @@ import org.solovyev.common.Objects;
  */
 public class ArrayEqualizer<T> implements Equalizer<T[]> {
 
-    @Nonnull
-    private static final ArrayEqualizer<?> instance = new ArrayEqualizer<Object>(null);
+	@Nonnull
+	private static final ArrayEqualizer<?> instance = new ArrayEqualizer<Object>(null);
 
-    @Nullable
-    private final Equalizer<T> nestedEqualizer;
+	@Nullable
+	private final Equalizer<T> nestedEqualizer;
 
-    private ArrayEqualizer(@Nullable Equalizer<T> nestedEqualizer) {
-        this.nestedEqualizer = nestedEqualizer;
-    }
+	private ArrayEqualizer(@Nullable Equalizer<T> nestedEqualizer) {
+		this.nestedEqualizer = nestedEqualizer;
+	}
 
-    @Nonnull
-    public static <T> ArrayEqualizer<T> newWithNestedEqualizer(@Nonnull Equalizer<T> nestedEqualizer) {
-        return new ArrayEqualizer<T>(nestedEqualizer);
-    }
+	@Nonnull
+	public static <T> ArrayEqualizer<T> newWithNestedEqualizer(@Nonnull Equalizer<T> nestedEqualizer) {
+		return new ArrayEqualizer<T>(nestedEqualizer);
+	}
 
-    @Nonnull
-    public static <T> ArrayEqualizer<T> newWithNaturalEquals() {
-        return (ArrayEqualizer<T>) instance;
-    }
+	@Nonnull
+	public static <T> ArrayEqualizer<T> newWithNaturalEquals() {
+		return (ArrayEqualizer<T>) instance;
+	}
 
-    @Override
-    public boolean areEqual(@Nonnull T[] first, @Nonnull T[] second) {
-        boolean result = false;
+	@Override
+	public boolean areEqual(@Nonnull T[] first, @Nonnull T[] second) {
+		boolean result = false;
 
-        if (first.length == second.length) {
-            result = true;
-            for (int i = 0; i < first.length; i++) {
-                final T el1 = first[i];
-                final T el2 = second[i];
+		if (first.length == second.length) {
+			result = true;
+			for (int i = 0; i < first.length; i++) {
+				final T el1 = first[i];
+				final T el2 = second[i];
 
-                if (!Objects.areEqual(el1, el2, nestedEqualizer)) {
-                    result = false;
-                    break;
-                }
+				if (!Objects.areEqual(el1, el2, nestedEqualizer)) {
+					result = false;
+					break;
+				}
 
-            }
-        }
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

@@ -22,10 +22,10 @@
 
 package org.solovyev.common.equals;
 
-import javax.annotation.Nonnull;
-
-import org.solovyev.common.Objects;
 import org.solovyev.common.JPredicate;
+import org.solovyev.common.Objects;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -34,15 +34,15 @@ import org.solovyev.common.JPredicate;
  */
 public class EqualsFilter<T> implements JPredicate<T> {
 
-    @Nonnull
-    private final T filterObject;
+	@Nonnull
+	private final T filterObject;
 
-    public EqualsFilter(@Nonnull T filterObject) {
-        this.filterObject = filterObject;
-    }
+	public EqualsFilter(@Nonnull T filterObject) {
+		this.filterObject = filterObject;
+	}
 
-    @Override
-    public boolean apply(T object) {
-        return Objects.areEqual(filterObject, object);
-    }
+	@Override
+	public boolean apply(T object) {
+		return Objects.areEqual(filterObject, object);
+	}
 }

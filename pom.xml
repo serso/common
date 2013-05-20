@@ -1,260 +1,260 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    Copyright 2013 serso aka se.solovyev
+	Copyright 2013 serso aka se.solovyev
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
 
-    Contact details
+	Contact details
 
-    Email: se.solovyev@gmail.com
-    Site:  http://se.solovyev.org
+	Email: se.solovyev@gmail.com
+	Site:  http://se.solovyev.org
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <!-- HEADER -->
+	<!-- HEADER -->
 
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.solovyev</groupId>
-    <artifactId>common</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
-    <name>Java Common Library</name>
+	<groupId>org.solovyev</groupId>
+	<artifactId>common</artifactId>
+	<version>1.0.4-SNAPSHOT</version>
+	<name>Java Common Library</name>
 
-    <packaging>pom</packaging>
+	<packaging>pom</packaging>
 
-    <modules>
-        <module>text</module>
-        <module>core</module>
-        <module>msg</module>
-        <module>listeners</module>
-        <module>tasks</module>
-        <module>collections-tree</module>
-        <module>collections-multiset</module>
-        <module>core-jodatime</module>
-        <module>security</module>
-        <module>all</module>
-    </modules>
+	<modules>
+		<module>text</module>
+		<module>core</module>
+		<module>msg</module>
+		<module>listeners</module>
+		<module>tasks</module>
+		<module>collections-tree</module>
+		<module>collections-multiset</module>
+		<module>core-jodatime</module>
+		<module>security</module>
+		<module>all</module>
+	</modules>
 
-    <!-- PROJECT INFORMATION -->
+	<!-- PROJECT INFORMATION -->
 
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-    <organization>
-        <name>se.solovyev</name>
-        <url>http://se.solovyev.org</url>
-    </organization>
+	<organization>
+		<name>se.solovyev</name>
+		<url>http://se.solovyev.org</url>
+	</organization>
 
-    <scm>
-        <connection>scm:git:git@github.com:serso/common.git</connection>
-        <developerConnection>scm:git:git@github.com:serso/common.git</developerConnection>
-        <url>http://github.com/serso/common</url>
-    </scm>
+	<scm>
+		<connection>scm:git:git@github.com:serso/common.git</connection>
+		<developerConnection>scm:git:git@github.com:serso/common.git</developerConnection>
+		<url>http://github.com/serso/common</url>
+	</scm>
 
-    <developers>
-        <developer>
-            <id>se.solovyev</id>
-            <name>Sergey Solovyev</name>
-            <email>se.solovyev@gmail.com</email>
-            <url>http://se.solovyev.org</url>
-            <organization>se.solovyev</organization>
-            <organizationUrl>http://se.solovyev.org</organizationUrl>
-            <roles>
-                <role>architect</role>
-                <role>developer</role>
-            </roles>
-            <timezone>+4</timezone>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<id>se.solovyev</id>
+			<name>Sergey Solovyev</name>
+			<email>se.solovyev@gmail.com</email>
+			<url>http://se.solovyev.org</url>
+			<organization>se.solovyev</organization>
+			<organizationUrl>http://se.solovyev.org</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+4</timezone>
+		</developer>
+	</developers>
 
-    <!-- BUILD -->
+	<!-- BUILD -->
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-    <dependencyManagement>
-        <dependencies>
+	<dependencyManagement>
+		<dependencies>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-core</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-core</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-msg</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-msg</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-listeners</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-listeners</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-text</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-text</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-other</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-other</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-collections-multimap</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-collections-multimap</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-collections-tree</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-collections-tree</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-core-jodatime</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-core-jodatime</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-tasks</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-tasks</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.solovyev</groupId>
-                <artifactId>common-all</artifactId>
-                <version>1.0.4-SNAPSHOT</version>
-            </dependency>
+			<dependency>
+				<groupId>org.solovyev</groupId>
+				<artifactId>common-all</artifactId>
+				<version>1.0.4-SNAPSHOT</version>
+			</dependency>
 
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>11.0.2</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.code.findbugs</groupId>
-                        <artifactId>jsr305</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>11.0.2</version>
+				<exclusions>
+					<exclusion>
+						<groupId>com.google.code.findbugs</groupId>
+						<artifactId>jsr305</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 
-        </dependencies>
-    </dependencyManagement>
+		</dependencies>
+	</dependencyManagement>
 
-    <dependencies>
+	<dependencies>
 
-        <!--
-            FindBugs Annotations
-        -->
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>annotations</artifactId>
-            <version>2.0.1</version>
-        </dependency>
+		<!--
+			FindBugs Annotations
+		-->
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>annotations</artifactId>
+			<version>2.0.1</version>
+		</dependency>
 
 
-        <!-- TEST -->
+		<!-- TEST -->
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>com.intellij</groupId>
-            <artifactId>annotations</artifactId>
-            <version>7.0.3</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.intellij</groupId>
+			<artifactId>annotations</artifactId>
+			<version>7.0.3</version>
+			<scope>test</scope>
+		</dependency>
 
-    </dependencies>
+	</dependencies>
 
-    <build>
-        <plugins>
+	<build>
+		<plugins>
 
-            <plugin>
-                <groupId>com.electriccloud</groupId>
-                <artifactId>javac2-maven-plugin</artifactId>
-                <version>1.0.2</version>
-                <executions>
-                    <execution>
-                        <id>instrument-notnull-src</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>instrument</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>instrument-notnull-test</id>
-                        <phase>process-test-classes</phase>
-                        <goals>
-                            <goal>testInstrument</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>com.electriccloud</groupId>
+				<artifactId>javac2-maven-plugin</artifactId>
+				<version>1.0.2</version>
+				<executions>
+					<execution>
+						<id>instrument-notnull-src</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>instrument</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>instrument-notnull-test</id>
+						<phase>process-test-classes</phase>
+						<goals>
+							<goal>testInstrument</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <tagNameFormat>release-@{project.version}</tagNameFormat>
-                    <mavenExecutorId>forked-path</mavenExecutorId>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <arguments>-Psonatype-oss-release ${arguments}</arguments>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<tagNameFormat>release-@{project.version}</tagNameFormat>
+					<mavenExecutorId>forked-path</mavenExecutorId>
+					<useReleaseProfile>false</useReleaseProfile>
+					<arguments>-Psonatype-oss-release ${arguments}</arguments>
+				</configuration>
+			</plugin>
 
-        </plugins>
-    </build>
+		</plugins>
+	</build>
 </project>

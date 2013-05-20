@@ -23,57 +23,56 @@
 package org.solovyev.common.collections;
 
 import javax.annotation.Nonnull;
-
 import java.util.Iterator;
 
 public final class UnmodifiableIterator<T> implements Iterator<T> {
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
-    @Nonnull
-    private final Iterator<? extends T> i;
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
+	@Nonnull
+	private final Iterator<? extends T> i;
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private UnmodifiableIterator(@Nonnull Iterator<? extends T> i) {
-        this.i = i;
-    }
+	private UnmodifiableIterator(@Nonnull Iterator<? extends T> i) {
+		this.i = i;
+	}
 
-    public static <T> UnmodifiableIterator<T> wrap(@Nonnull Iterator<? extends T> i) {
-        return new UnmodifiableIterator<T>(i);
-    }
+	public static <T> UnmodifiableIterator<T> wrap(@Nonnull Iterator<? extends T> i) {
+		return new UnmodifiableIterator<T>(i);
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Override
-    public boolean hasNext() {
-        return i.hasNext();
-    }
+	@Override
+	public boolean hasNext() {
+		return i.hasNext();
+	}
 
-    @Override
-    public T next() {
-        return i.next();
-    }
+	@Override
+	public T next() {
+		return i.next();
+	}
 
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
+	@Override
+	public void remove() {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -32,111 +32,111 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
-* User: serso
-* Date: 4/9/13
-* Time: 1:12 AM
-*/
+ * User: serso
+ * Date: 4/9/13
+ * Time: 1:12 AM
+ */
 final class ListenersAwareFutureTask<T> {
 
-    @GuardedBy("listeners")
-    @Nonnull
-    private final Set<FutureCallback<T>> listeners = new HashSet<FutureCallback<T>>();
+	@GuardedBy("listeners")
+	@Nonnull
+	private final Set<FutureCallback<T>> listeners = new HashSet<FutureCallback<T>>();
 
-    @Nonnull
-    private final ListenableFutureTask<T> futureTask;
+	@Nonnull
+	private final ListenableFutureTask<T> futureTask;
 
-    @GuardedBy("listeners")
-    private volatile boolean executed = false;
+	@GuardedBy("listeners")
+	private volatile boolean executed = false;
 
-    private ListenersAwareFutureTask(@Nonnull ListenableFutureTask<T> futureTask) {
-        this.futureTask = futureTask;
-        Futures.addCallback(futureTask, new FutureCallback<T>() {
-            @Override
-            public void onSuccess(T result) {
-                synchronized (listeners) {
-                    executed = true;
-                }
+	private ListenersAwareFutureTask(@Nonnull ListenableFutureTask<T> futureTask) {
+		this.futureTask = futureTask;
+		Futures.addCallback(futureTask, new FutureCallback<T>() {
+			@Override
+			public void onSuccess(T result) {
+				synchronized (listeners) {
+					executed = true;
+				}
 
-                for (FutureCallback<T> listener : getListenersCopy()) {
-                    listener.onSuccess(result);
-                }
+				for (FutureCallback<T> listener : getListenersCopy()) {
+					listener.onSuccess(result);
+				}
 
-                synchronized (listeners) {
-                    listeners.clear();
-                }
-            }
+				synchronized (listeners) {
+					listeners.clear();
+				}
+			}
 
-            @Override
-            public void onFailure(Throwable t) {
-                synchronized (listeners) {
-                    executed = true;
-                }
+			@Override
+			public void onFailure(Throwable t) {
+				synchronized (listeners) {
+					executed = true;
+				}
 
-                for (FutureCallback<T> listener : getListenersCopy()) {
-                    listener.onFailure(t);
-                }
+				for (FutureCallback<T> listener : getListenersCopy()) {
+					listener.onFailure(t);
+				}
 
-                synchronized (listeners) {
-                    listeners.clear();
-                }
-            }
-        });
-    }
+				synchronized (listeners) {
+					listeners.clear();
+				}
+			}
+		});
+	}
 
-    @Nonnull
-    static <T> ListenersAwareFutureTask<T> create(@Nonnull ListenableFutureTask<T> futureTask) {
-        return new ListenersAwareFutureTask<T>(futureTask);
-    }
+	@Nonnull
+	static <T> ListenersAwareFutureTask<T> create(@Nonnull ListenableFutureTask<T> futureTask) {
+		return new ListenersAwareFutureTask<T>(futureTask);
+	}
 
-    @Nonnull
-    private Set<FutureCallback<T>> getListenersCopy() {
-        synchronized (listeners) {
-            return new HashSet<FutureCallback<T>>(listeners);
-        }
-    }
+	@Nonnull
+	private Set<FutureCallback<T>> getListenersCopy() {
+		synchronized (listeners) {
+			return new HashSet<FutureCallback<T>>(listeners);
+		}
+	}
 
-    public boolean addListener(@Nonnull FutureCallback<T> listener) {
-        synchronized (listeners) {
-            if ( !executed ) {
-                return listeners.add(listener);
-            } else {
-                // too late
-                return false;
-            }
-        }
-    }
+	public boolean addListener(@Nonnull FutureCallback<T> listener) {
+		synchronized (listeners) {
+			if (!executed) {
+				return listeners.add(listener);
+			} else {
+				// too late
+				return false;
+			}
+		}
+	}
 
-    public boolean removeListener(@Nonnull FutureCallback<T> listener) {
-        synchronized (listeners) {
-            return listeners.remove(listener);
-        }
-    }
+	public boolean removeListener(@Nonnull FutureCallback<T> listener) {
+		synchronized (listeners) {
+			return listeners.remove(listener);
+		}
+	}
 
-    public void removeAllListeners() {
-        synchronized (listeners) {
-            listeners.clear();
-        }
-    }
+	public void removeAllListeners() {
+		synchronized (listeners) {
+			listeners.clear();
+		}
+	}
 
-    @Nonnull
-    public ListenableFutureTask<T> getFutureTask() {
-        return futureTask;
-    }
+	@Nonnull
+	public ListenableFutureTask<T> getFutureTask() {
+		return futureTask;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-        ListenersAwareFutureTask that = (ListenersAwareFutureTask) o;
+		ListenersAwareFutureTask that = (ListenersAwareFutureTask) o;
 
-        if (!futureTask.equals(that.futureTask)) return false;
+		if (!futureTask.equals(that.futureTask)) return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return futureTask.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return futureTask.hashCode();
+	}
 }

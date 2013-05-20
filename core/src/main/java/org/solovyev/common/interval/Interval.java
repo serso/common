@@ -22,10 +22,10 @@
 
 package org.solovyev.common.interval;
 
+import org.solovyev.common.JCloneable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.solovyev.common.JCloneable;
 
 /**
  * User: serso
@@ -34,27 +34,27 @@ import org.solovyev.common.JCloneable;
  */
 public interface Interval<T extends Comparable<T>> extends JCloneable<Interval<T>> {
 
-    @Nullable
-    public T getLeftLimit();
+	@Nullable
+	public T getLeftLimit();
 
-    @Nullable
-    public T getRightLimit();
+	@Nullable
+	public T getRightLimit();
 
-    @Nonnull
-    public IntervalLimit<T> getLeft();
+	@Nonnull
+	public IntervalLimit<T> getLeft();
 
-    @Nonnull
-    public IntervalLimit<T> getRight();
+	@Nonnull
+	public IntervalLimit<T> getRight();
 
-    public boolean contains(@Nonnull T value);
+	public boolean contains(@Nonnull T value);
 
-    public boolean contains(@Nonnull Interval<T> that);
+	public boolean contains(@Nonnull Interval<T> that);
 
-    public boolean isClosed();
+	public boolean isClosed();
 
-    public boolean isInfinite();
+	public boolean isInfinite();
 
-    public boolean isHalfClosed();
+	public boolean isHalfClosed();
 
-    boolean equals(Object obj);
+	boolean equals(Object obj);
 }

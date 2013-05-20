@@ -22,9 +22,9 @@
 
 package org.solovyev.common.text.base64;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.Converter;
+
+import javax.annotation.Nonnull;
 
 /**
  * Converter from base64 encoded String to bytes.
@@ -32,20 +32,20 @@ import org.solovyev.common.Converter;
  */
 public class Base64StringDecoder implements Converter<String, byte[]> {
 
-    @Nonnull
-    private static Converter<String, byte[]> instance = new Base64StringDecoder();
+	@Nonnull
+	private static Converter<String, byte[]> instance = new Base64StringDecoder();
 
-    private Base64StringDecoder() {
-    }
+	private Base64StringDecoder() {
+	}
 
-    @Nonnull
-    public static Converter<String, byte[]> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static Converter<String, byte[]> getInstance() {
+		return instance;
+	}
 
-    @Nonnull
-    @Override
-    public byte[] convert(@Nonnull String s) {
-        return com.sun.org.apache.xerces.internal.impl.dv.util.Base64.decode(s);
-    }
+	@Nonnull
+	@Override
+	public byte[] convert(@Nonnull String s) {
+		return com.sun.org.apache.xerces.internal.impl.dv.util.Base64.decode(s);
+	}
 }

@@ -22,11 +22,10 @@
 
 package org.solovyev.common.collections.tree;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.solovyev.common.JPredicate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -41,71 +40,71 @@ import java.util.Iterator;
  */
 public interface TreeNode<T> extends Iterable<TreeNode<T>> {
 
-    @Nullable
-    TreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder);
+	@Nullable
+	TreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder);
 
-    /**
-     * NOTE: immutable collection is returned
-     *
-     * @return OWN children of the node (first level children)
-     */
-    @Nonnull
-    Collection<? extends TreeNode<T>> getOwnChildren();
+	/**
+	 * NOTE: immutable collection is returned
+	 *
+	 * @return OWN children of the node (first level children)
+	 */
+	@Nonnull
+	Collection<? extends TreeNode<T>> getOwnChildren();
 
-    /**
-     * @return iterator over the OWN children of the node (first level children).
-     *         This iterator depending on the implementation may support or may not support java.util.Iterator#remove() method.
-     */
-    @Nonnull
-    Iterator<? extends TreeNode<T>> getOwnChildrenIterator();
+	/**
+	 * @return iterator over the OWN children of the node (first level children).
+	 *         This iterator depending on the implementation may support or may not support java.util.Iterator#remove() method.
+	 */
+	@Nonnull
+	Iterator<? extends TreeNode<T>> getOwnChildrenIterator();
 
-    /**
-     * @return data stored with the object (may be null is no actual data is stored)
-     */
-    @Nullable
-    T getValue();
+	/**
+	 * @return data stored with the object (may be null is no actual data is stored)
+	 */
+	@Nullable
+	T getValue();
 
-    // NOTE: this method iterates through ALL children (children of children etc)
+	// NOTE: this method iterates through ALL children (children of children etc)
 
-    /**
-     * @return iterator over ALL children of the current node (children of children etc).
-     *         This iterator depending on the implementation  may support or may not support java.util.Iterator#remove() method.
-     *         The actual traversal algorithm is not determined - it just guarantees iterating over all children
-     */
-    @Override
-    @Nonnull
-    Iterator<TreeNode<T>> iterator();
+	/**
+	 * @return iterator over ALL children of the current node (children of children etc).
+	 *         This iterator depending on the implementation  may support or may not support java.util.Iterator#remove() method.
+	 *         The actual traversal algorithm is not determined - it just guarantees iterating over all children
+	 */
+	@Override
+	@Nonnull
+	Iterator<TreeNode<T>> iterator();
 
-    @Nonnull
-    Iterator<? extends TreeNode<T>> getIterator();
+	@Nonnull
+	Iterator<? extends TreeNode<T>> getIterator();
 
-    @Nonnull
-    Collection<? extends TreeNode<T>> getAllChildren();
+	@Nonnull
+	Collection<? extends TreeNode<T>> getAllChildren();
 
 
-    /**
-     * @return number of ALL children of current node
-     */
-    int getSize();
+	/**
+	 * @return number of ALL children of current node
+	 */
+	int getSize();
 
-    /**
-     * @return true if current node is leaf (= has no children)
-     */
-    boolean isLeaf();
+	/**
+	 * @return true if current node is leaf (= has no children)
+	 */
+	boolean isLeaf();
 
-    /**
-     * @return true if current node is root (=has no parent)
-     */
-    boolean isRoot();
+	/**
+	 * @return true if current node is root (=has no parent)
+	 */
+	boolean isRoot();
 
-    /**
-     * @return depth of the current node in the tree (= number of parents of current node)
-     */
-    int getDepth();
+	/**
+	 * @return depth of the current node in the tree (= number of parents of current node)
+	 */
+	int getDepth();
 
-    /**
-     * @return parent node to current node (if and only if root then result is null)
-     */
-    @Nullable
-    TreeNode<T> getParent();
+	/**
+	 * @return parent node to current node (if and only if root then result is null)
+	 */
+	@Nullable
+	TreeNode<T> getParent();
 }

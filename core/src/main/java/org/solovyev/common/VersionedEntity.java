@@ -23,7 +23,6 @@
 package org.solovyev.common;
 
 import javax.annotation.Nonnull;
-
 import java.io.Serializable;
 
 /**
@@ -39,28 +38,28 @@ import java.io.Serializable;
  */
 public interface VersionedEntity<I> extends Serializable, JCloneable<VersionedEntity<I>> {
 
-    @Nonnull
-    public static final Integer FIRST_VERSION = 1;
+	@Nonnull
+	public static final Integer FIRST_VERSION = 1;
 
-    /**
-     * Identifier of the entity (unique for all entities of the same type)
-     *
-     * @return entity identifier
-     */
-    @Nonnull
-    I getId();
+	/**
+	 * Identifier of the entity (unique for all entities of the same type)
+	 *
+	 * @return entity identifier
+	 */
+	@Nonnull
+	I getId();
 
-    /**
-     * Sequential number of version starting from {@link VersionedEntity#FIRST_VERSION}
-     *
-     * @return version number
-     */
-    @Nonnull
-    Integer getVersion();
+	/**
+	 * Sequential number of version starting from {@link VersionedEntity#FIRST_VERSION}
+	 *
+	 * @return version number
+	 */
+	@Nonnull
+	Integer getVersion();
 
-    // check if two entities are the same == this.id equals to that.id
-    boolean equals(Object that);
+	// check if two entities are the same == this.id equals to that.id
+	boolean equals(Object that);
 
-    // check if two entities are the same version == this.id equals to that.id && this.version equals to that.version
-    boolean equalsVersion(Object that);
+	// check if two entities are the same version == this.id equals to that.id && this.version equals to that.version
+	boolean equalsVersion(Object that);
 }

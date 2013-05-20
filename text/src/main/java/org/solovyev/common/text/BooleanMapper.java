@@ -32,58 +32,58 @@ import javax.annotation.Nullable;
  */
 public class BooleanMapper implements Mapper<Boolean> {
 
-    /*
-    **********************************************************************
-    *
-    *                           STATIC
-    *
-    **********************************************************************
-    */
-    @Nonnull
-    private final static Mapper<Boolean> instance = new BooleanMapper();
+	/*
+	**********************************************************************
+	*
+	*                           STATIC
+	*
+	**********************************************************************
+	*/
+	@Nonnull
+	private final static Mapper<Boolean> instance = new BooleanMapper();
 
-    @Nonnull
-    public static Mapper<Boolean> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static Mapper<Boolean> getInstance() {
+		return instance;
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private final Formatter<Boolean> formatter = ValueOfFormatter.getNotNullFormatter();
+	@Nonnull
+	private final Formatter<Boolean> formatter = ValueOfFormatter.getNotNullFormatter();
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private BooleanMapper() {
-    }
+	private BooleanMapper() {
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Override
-    public String formatValue(@Nullable Boolean value) throws IllegalArgumentException {
-        return formatter.formatValue(value);
-    }
+	@Override
+	public String formatValue(@Nullable Boolean value) throws IllegalArgumentException {
+		return formatter.formatValue(value);
+	}
 
-    @Override
-    public Boolean parseValue(@Nullable String value) throws IllegalArgumentException {
-        return value == null ? null : Boolean.valueOf(value);
-    }
+	@Override
+	public Boolean parseValue(@Nullable String value) throws IllegalArgumentException {
+		return value == null ? null : Boolean.valueOf(value);
+	}
 }

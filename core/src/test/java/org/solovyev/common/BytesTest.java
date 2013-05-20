@@ -29,16 +29,16 @@ import org.solovyev.common.text.Strings;
 
 public class BytesTest {
 
-    @Test
-    public void testHexToBytes() throws Exception {
-        final String test = "test";
-        final HexString testHex = HexString.fromString(test);
+	@Test
+	public void testHexToBytes() throws Exception {
+		final String test = "test";
+		final HexString testHex = HexString.fromString(test);
 
-        Assert.assertTrue(Objects.areEqual(test.getBytes(), testHex.getOriginal().getBytes(), ByteArrayEqualizer.getInstance()));
-        for (int i = 0; i < 1000; i++) {
-            final String text = Strings.generateRandomString(100);
-            Assert.assertTrue(Objects.areEqual(Bytes.hexToBytes(Bytes.toHex(text)), text.getBytes("UTF-8"), ByteArrayEqualizer.getInstance()));
-        }
-    }
+		Assert.assertTrue(Objects.areEqual(test.getBytes(), testHex.getOriginal().getBytes(), ByteArrayEqualizer.getInstance()));
+		for (int i = 0; i < 1000; i++) {
+			final String text = Strings.generateRandomString(100);
+			Assert.assertTrue(Objects.areEqual(Bytes.hexToBytes(Bytes.toHex(text)), text.getBytes("UTF-8"), ByteArrayEqualizer.getInstance()));
+		}
+	}
 
 }

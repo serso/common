@@ -22,10 +22,10 @@
 
 package org.solovyev.common.security;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.Converter;
 import org.solovyev.common.TrivialConverter;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -34,51 +34,51 @@ import org.solovyev.common.TrivialConverter;
  */
 public class TypedHashProvider<T, H> implements HashProvider<T, H> {
 
-    @Nonnull
-    private final HashProvider<byte[], byte[]> byteHashProvider;
+	@Nonnull
+	private final HashProvider<byte[], byte[]> byteHashProvider;
 
-    @Nonnull
-    private final Converter<T, byte[]> elementConverter;
+	@Nonnull
+	private final Converter<T, byte[]> elementConverter;
 
-    @Nonnull
-    private final Converter<byte[], H> hashConverter;
+	@Nonnull
+	private final Converter<byte[], H> hashConverter;
 
-    private TypedHashProvider(@Nonnull HashProvider<byte[], byte[]> byteHashProvider,
-                              @Nonnull Converter<T, byte[]> elementConverter,
-                              @Nonnull Converter<byte[], H> hashConverter) {
-        this.byteHashProvider = byteHashProvider;
-        this.elementConverter = elementConverter;
-        this.hashConverter = hashConverter;
-    }
+	private TypedHashProvider(@Nonnull HashProvider<byte[], byte[]> byteHashProvider,
+							  @Nonnull Converter<T, byte[]> elementConverter,
+							  @Nonnull Converter<byte[], H> hashConverter) {
+		this.byteHashProvider = byteHashProvider;
+		this.elementConverter = elementConverter;
+		this.hashConverter = hashConverter;
+	}
 
-    @Nonnull
-    public static <T, H> TypedHashProvider<T, H> newInstance(@Nonnull HashProvider<byte[], byte[]> byteHashProvider,
-                                                             @Nonnull Converter<T, byte[]> elementConverter,
-                                                             @Nonnull Converter<byte[], H> hashConverter) {
-        return new TypedHashProvider<T, H>(byteHashProvider, elementConverter, hashConverter);
-    }
+	@Nonnull
+	public static <T, H> TypedHashProvider<T, H> newInstance(@Nonnull HashProvider<byte[], byte[]> byteHashProvider,
+															 @Nonnull Converter<T, byte[]> elementConverter,
+															 @Nonnull Converter<byte[], H> hashConverter) {
+		return new TypedHashProvider<T, H>(byteHashProvider, elementConverter, hashConverter);
+	}
 
-    @Nonnull
-    public static <T> TypedHashProvider<T, byte[]> newByteInstance(@Nonnull HashProvider<byte[], byte[]> byteHashProvider,
-                                                                   @Nonnull Converter<T, byte[]> elementConverter) {
-        return new TypedHashProvider<T, byte[]>(byteHashProvider, elementConverter, TrivialConverter.<byte[]>getInstance());
-    }
+	@Nonnull
+	public static <T> TypedHashProvider<T, byte[]> newByteInstance(@Nonnull HashProvider<byte[], byte[]> byteHashProvider,
+																   @Nonnull Converter<T, byte[]> elementConverter) {
+		return new TypedHashProvider<T, byte[]>(byteHashProvider, elementConverter, TrivialConverter.<byte[]>getInstance());
+	}
 
-    @Nonnull
-    public static <T> TypedHashProvider<T, byte[]> newByteHashCodeInstance(@Nonnull HashProvider<byte[], byte[]> byteHashProvider) {
-        return new TypedHashProvider<T, byte[]>(byteHashProvider, HashCodeConverter.<T>getInstance(), TrivialConverter.<byte[]>getInstance());
-    }
+	@Nonnull
+	public static <T> TypedHashProvider<T, byte[]> newByteHashCodeInstance(@Nonnull HashProvider<byte[], byte[]> byteHashProvider) {
+		return new TypedHashProvider<T, byte[]>(byteHashProvider, HashCodeConverter.<T>getInstance(), TrivialConverter.<byte[]>getInstance());
+	}
 
-    @Nonnull
-    @Override
-    public H getHash(@Nonnull T object, @Nonnull byte[] salt) throws CiphererException {
-        final byte[] bytes = elementConverter.convert(object);
-        final byte[] hashBytes = byteHashProvider.getHash(bytes, salt);
-        return hashConverter.convert(hashBytes);
-    }
+	@Nonnull
+	@Override
+	public H getHash(@Nonnull T object, @Nonnull byte[] salt) throws CiphererException {
+		final byte[] bytes = elementConverter.convert(object);
+		final byte[] hashBytes = byteHashProvider.getHash(bytes, salt);
+		return hashConverter.convert(hashBytes);
+	}
 
-    @Nonnull
-    public HashProvider<byte[], byte[]> getByteHashProvider() {
-        return byteHashProvider;
-    }
+	@Nonnull
+	public HashProvider<byte[], byte[]> getByteHashProvider() {
+		return byteHashProvider;
+	}
 }

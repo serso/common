@@ -24,7 +24,6 @@ package org.solovyev.common.security;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
@@ -41,106 +40,106 @@ import java.security.NoSuchProviderException;
  */
 class ByteArrayCipherer implements Cipherer<byte[], byte[]> {
 
-    @Nonnull
-    private final String ciphererAlgorithm;
+	@Nonnull
+	private final String ciphererAlgorithm;
 
-    @Nullable
-    private final String provider;
+	@Nullable
+	private final String provider;
 
-    @Nonnull
-    InitialVectorDef initialVectorDef;
+	@Nonnull
+	InitialVectorDef initialVectorDef;
 
-    private ByteArrayCipherer(@Nonnull String ciphererAlgorithm,
-                              @Nullable String provider,
-                              @Nonnull InitialVectorDef initialVectorDef) {
-        this.ciphererAlgorithm = ciphererAlgorithm;
-        this.provider = provider;
-        this.initialVectorDef = initialVectorDef;
-    }
+	private ByteArrayCipherer(@Nonnull String ciphererAlgorithm,
+							  @Nullable String provider,
+							  @Nonnull InitialVectorDef initialVectorDef) {
+		this.ciphererAlgorithm = ciphererAlgorithm;
+		this.provider = provider;
+		this.initialVectorDef = initialVectorDef;
+	}
 
-    @Nonnull
-    public static Cipherer<byte[], byte[]> newInstance(@Nonnull String ciphererAlgorithm,
-                                                       @Nullable String provider,
-                                                       @Nonnull InitialVectorDef initialVectorDef) {
-        return new ByteArrayCipherer(ciphererAlgorithm, provider, initialVectorDef);
-    }
+	@Nonnull
+	public static Cipherer<byte[], byte[]> newInstance(@Nonnull String ciphererAlgorithm,
+													   @Nullable String provider,
+													   @Nonnull InitialVectorDef initialVectorDef) {
+		return new ByteArrayCipherer(ciphererAlgorithm, provider, initialVectorDef);
+	}
 
-    @Nonnull
-    public static Cipherer<byte[], byte[]> newNoIv(@Nonnull String ciphererAlgorithm,
-                                                   @Nullable String provider) {
-        return new ByteArrayCipherer(ciphererAlgorithm, provider, InitialVectorDef.newEmpty());
-    }
+	@Nonnull
+	public static Cipherer<byte[], byte[]> newNoIv(@Nonnull String ciphererAlgorithm,
+												   @Nullable String provider) {
+		return new ByteArrayCipherer(ciphererAlgorithm, provider, InitialVectorDef.newEmpty());
+	}
 
-    @Nonnull
-    public byte[] encrypt(@Nonnull SecretKey secret,
-                          @Nonnull byte[] decrypted) throws CiphererException {
-        try {
-            final IvParameterSpec ivParameterSpec = initialVectorDef.getEncryptIvParameterSpec();
+	@Nonnull
+	public byte[] encrypt(@Nonnull SecretKey secret,
+						  @Nonnull byte[] decrypted) throws CiphererException {
+		try {
+			final IvParameterSpec ivParameterSpec = initialVectorDef.getEncryptIvParameterSpec();
 
-            final Cipher encrypter = getEncrypter(secret, ivParameterSpec);
+			final Cipher encrypter = getEncrypter(secret, ivParameterSpec);
 
-            final byte[] encrypted = encrypter.doFinal(decrypted);
+			final byte[] encrypted = encrypter.doFinal(decrypted);
 
-            return initialVectorDef.postEncrypt(ivParameterSpec, encrypted);
-        } catch (Exception e) {
-            throw new CiphererException("Unable to encrypt due to some errors!", e);
-        }
-    }
+			return initialVectorDef.postEncrypt(ivParameterSpec, encrypted);
+		} catch (Exception e) {
+			throw new CiphererException("Unable to encrypt due to some errors!", e);
+		}
+	}
 
-    @Nonnull
-    private Cipher getEncrypter(@Nonnull SecretKey secret,
-                                @Nullable IvParameterSpec ivParameterSpec) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
-        final Cipher result;
+	@Nonnull
+	private Cipher getEncrypter(@Nonnull SecretKey secret,
+								@Nullable IvParameterSpec ivParameterSpec) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+		final Cipher result;
 
-        if (provider != null) {
-            result = Cipher.getInstance(ciphererAlgorithm, provider);
-        } else {
-            result = Cipher.getInstance(ciphererAlgorithm);
-        }
+		if (provider != null) {
+			result = Cipher.getInstance(ciphererAlgorithm, provider);
+		} else {
+			result = Cipher.getInstance(ciphererAlgorithm);
+		}
 
-        if (ivParameterSpec != null) {
-            result.init(Cipher.ENCRYPT_MODE, secret, ivParameterSpec);
-        } else {
-            result.init(Cipher.ENCRYPT_MODE, secret);
-        }
+		if (ivParameterSpec != null) {
+			result.init(Cipher.ENCRYPT_MODE, secret, ivParameterSpec);
+		} else {
+			result.init(Cipher.ENCRYPT_MODE, secret);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public byte[] decrypt(@Nonnull SecretKey secret, @Nonnull byte[] encrypted) throws CiphererException {
-        try {
-            final IvParameterSpec ivParameterSpec = initialVectorDef.getDecryptIvParameterSpec(encrypted);
+	@Nonnull
+	@Override
+	public byte[] decrypt(@Nonnull SecretKey secret, @Nonnull byte[] encrypted) throws CiphererException {
+		try {
+			final IvParameterSpec ivParameterSpec = initialVectorDef.getDecryptIvParameterSpec(encrypted);
 
-            final byte[] encryptedBytes = initialVectorDef.preDecrypt(encrypted);
+			final byte[] encryptedBytes = initialVectorDef.preDecrypt(encrypted);
 
-            final Cipher decrypter = getDecrypter(secret, ivParameterSpec);
+			final Cipher decrypter = getDecrypter(secret, ivParameterSpec);
 
-            return decrypter.doFinal(encryptedBytes);
-        } catch (Exception e) {
-            throw new CiphererException("Unable to decrypt due to some errors!", e);
-        }
-    }
+			return decrypter.doFinal(encryptedBytes);
+		} catch (Exception e) {
+			throw new CiphererException("Unable to decrypt due to some errors!", e);
+		}
+	}
 
-    @Nonnull
-    private Cipher getDecrypter(@Nonnull SecretKey secret,
-                                @Nullable IvParameterSpec ivParameterSpec) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
-        Cipher result;
+	@Nonnull
+	private Cipher getDecrypter(@Nonnull SecretKey secret,
+								@Nullable IvParameterSpec ivParameterSpec) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+		Cipher result;
 
-        if (provider != null) {
-            result = Cipher.getInstance(ciphererAlgorithm, provider);
-        } else {
-            result = Cipher.getInstance(ciphererAlgorithm);
-        }
+		if (provider != null) {
+			result = Cipher.getInstance(ciphererAlgorithm, provider);
+		} else {
+			result = Cipher.getInstance(ciphererAlgorithm);
+		}
 
-        if (ivParameterSpec != null) {
-            result.init(Cipher.DECRYPT_MODE, secret, ivParameterSpec);
-        } else {
-            result.init(Cipher.DECRYPT_MODE, secret);
-        }
+		if (ivParameterSpec != null) {
+			result.init(Cipher.DECRYPT_MODE, secret, ivParameterSpec);
+		} else {
+			result.init(Cipher.DECRYPT_MODE, secret);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

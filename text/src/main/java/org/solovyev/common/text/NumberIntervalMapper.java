@@ -22,12 +22,12 @@
 
 package org.solovyev.common.text;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.interval.IntervalLimit;
 import org.solovyev.common.interval.Intervals;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -36,57 +36,57 @@ import org.solovyev.common.interval.Intervals;
  */
 public final class NumberIntervalMapper<T extends Number & Comparable<T>> extends AbstractIntervalMapper<T> {
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private NumberIntervalMapper(@Nonnull Class<T> clazz) {
-        super(NumberMapper.of(clazz));
-    }
+	private NumberIntervalMapper(@Nonnull Class<T> clazz) {
+		super(NumberMapper.of(clazz));
+	}
 
-    private NumberIntervalMapper(@Nonnull Class<T> clazz, @Nonnull String delimiter) {
-        super(NumberMapper.of(clazz), delimiter);
-    }
+	private NumberIntervalMapper(@Nonnull Class<T> clazz, @Nonnull String delimiter) {
+		super(NumberMapper.of(clazz), delimiter);
+	}
 
-    @Nonnull
-    public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> of(@Nonnull Class<T> clazz) {
-        return new NumberIntervalMapper<T>(clazz);
-    }
+	@Nonnull
+	public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> of(@Nonnull Class<T> clazz) {
+		return new NumberIntervalMapper<T>(clazz);
+	}
 
-    @Nonnull
-    public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> newInstance(@Nonnull Class<T> clazz, @Nonnull String delimiter) {
-        return new NumberIntervalMapper<T>(clazz, delimiter);
-    }
+	@Nonnull
+	public static <T extends Number & Comparable<T>> NumberIntervalMapper<T> newInstance(@Nonnull Class<T> clazz, @Nonnull String delimiter) {
+		return new NumberIntervalMapper<T>(clazz, delimiter);
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    @Override
-    protected Interval<T> newInstance(@Nullable T left, @Nullable T right) {
-        final IntervalLimit<T> leftLimit;
-        if (left == null) {
-            leftLimit = Intervals.newLowestLimit();
-        } else {
-            leftLimit = Intervals.newLimit(left, true);
-        }
+	@Nonnull
+	@Override
+	protected Interval<T> newInstance(@Nullable T left, @Nullable T right) {
+		final IntervalLimit<T> leftLimit;
+		if (left == null) {
+			leftLimit = Intervals.newLowestLimit();
+		} else {
+			leftLimit = Intervals.newLimit(left, true);
+		}
 
-        final IntervalLimit<T> rightLimit;
-        if (right == null) {
-            rightLimit = Intervals.newHighestLimit();
-        } else {
-            rightLimit = Intervals.newLimit(right, true);
-        }
+		final IntervalLimit<T> rightLimit;
+		if (right == null) {
+			rightLimit = Intervals.newHighestLimit();
+		} else {
+			rightLimit = Intervals.newLimit(right, true);
+		}
 
-        return Intervals.newInstance(leftLimit, rightLimit);
-    }
+		return Intervals.newInstance(leftLimit, rightLimit);
+	}
 }

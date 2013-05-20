@@ -31,35 +31,35 @@ import javax.annotation.Nonnull;
  */
 public class UnitImpl<V> implements Unit<V> {
 
-    @Nonnull
-    private V value;
+	@Nonnull
+	private V value;
 
-    @Nonnull
-    private UnitType<V> unitType;
+	@Nonnull
+	private UnitType<V> unitType;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
-    private UnitImpl() {
-    }
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
+	private UnitImpl() {
+	}
 
-    @Nonnull
-    public static <V> Unit<V> newInstance(@Nonnull V value, @Nonnull UnitType<V> unitType) {
-        final UnitImpl<V> result = new UnitImpl<V>();
+	@Nonnull
+	public static <V> Unit<V> newInstance(@Nonnull V value, @Nonnull UnitType<V> unitType) {
+		final UnitImpl<V> result = new UnitImpl<V>();
 
-        result.value = value;
-        result.unitType = unitType;
+		result.value = value;
+		result.unitType = unitType;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public V getValue() {
-        return this.value;
-    }
+	@Nonnull
+	@Override
+	public V getValue() {
+		return this.value;
+	}
 
-    @Nonnull
-    @Override
-    public UnitType<V> getUnitType() {
-        return unitType;
-    }
+	@Nonnull
+	@Override
+	public UnitType<V> getUnitType() {
+		return unitType;
+	}
 }

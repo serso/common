@@ -24,7 +24,6 @@ package org.solovyev.common.text;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 
 /**
@@ -34,64 +33,64 @@ import java.util.Collection;
  */
 public abstract class CollectionMapper<C extends Collection<E>, E> implements Mapper<C> {
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTANTS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTANTS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private static final String DEFAULT_DELIMITER = ";";
+	@Nonnull
+	private static final String DEFAULT_DELIMITER = ";";
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private final Formatter<E> formatter;
+	@Nonnull
+	private final Formatter<E> formatter;
 
-    @Nonnull
-    private final Parser<E> parser;
+	@Nonnull
+	private final Parser<E> parser;
 
-    @Nonnull
-    private final String delimiter;
+	@Nonnull
+	private final String delimiter;
 
-    protected CollectionMapper(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter, @Nonnull String delimiter) {
-        this.parser = parser;
-        this.formatter = formatter;
-        this.delimiter = delimiter;
-    }
+	protected CollectionMapper(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter, @Nonnull String delimiter) {
+		this.parser = parser;
+		this.formatter = formatter;
+		this.delimiter = delimiter;
+	}
 
-    protected CollectionMapper(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter) {
-        this(parser, formatter, DEFAULT_DELIMITER);
-    }
+	protected CollectionMapper(@Nonnull Parser<E> parser, @Nonnull Formatter<E> formatter) {
+		this(parser, formatter, DEFAULT_DELIMITER);
+	}
 
-    protected CollectionMapper(@Nonnull Mapper<E> mapper, @Nonnull String delimiter) {
-        this(mapper, mapper, delimiter);
-    }
+	protected CollectionMapper(@Nonnull Mapper<E> mapper, @Nonnull String delimiter) {
+		this(mapper, mapper, delimiter);
+	}
 
-    protected CollectionMapper(@Nonnull Mapper<E> mapper) {
-        this(mapper, DEFAULT_DELIMITER);
-    }
+	protected CollectionMapper(@Nonnull Mapper<E> mapper) {
+		this(mapper, DEFAULT_DELIMITER);
+	}
 
-    @Nullable
-    @Override
-    public String formatValue(@Nullable C collection) throws IllegalArgumentException {
-        return StringCollections.formatValue(collection, delimiter, formatter);
-    }
+	@Nullable
+	@Override
+	public String formatValue(@Nullable C collection) throws IllegalArgumentException {
+		return StringCollections.formatValue(collection, delimiter, formatter);
+	}
 
-    @Nullable
-    @Override
-    public C parseValue(@Nullable String value) throws IllegalArgumentException {
-        return StringCollections.split(newCollection(), value, delimiter, parser);
-    }
+	@Nullable
+	@Override
+	public C parseValue(@Nullable String value) throws IllegalArgumentException {
+		return StringCollections.split(newCollection(), value, delimiter, parser);
+	}
 
-    @Nonnull
-    protected abstract C newCollection();
+	@Nonnull
+	protected abstract C newCollection();
 }

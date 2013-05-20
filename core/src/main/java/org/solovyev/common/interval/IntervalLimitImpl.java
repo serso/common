@@ -35,262 +35,262 @@ import javax.annotation.Nullable;
  */
 class IntervalLimitImpl<T extends Comparable<T>> extends JObject implements IntervalLimit<T> {
 
-    public static enum Type {
-        lowest,
-        between,
-        highest
-    }
+	public static enum Type {
+		lowest,
+		between,
+		highest
+	}
 
-    @Nullable
-    private T value;
+	@Nullable
+	private T value;
 
-    private boolean closed;
+	private boolean closed;
 
-    @Nonnull
-    private Type type;
+	@Nonnull
+	private Type type;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
-    private IntervalLimitImpl() {
-    }
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
+	private IntervalLimitImpl() {
+	}
 
-    @Nonnull
-    public static <T extends Comparable<T>> IntervalLimit<T> newInstance(@Nonnull T value, boolean closed) {
-        final IntervalLimitImpl<T> result = new IntervalLimitImpl<T>();
+	@Nonnull
+	public static <T extends Comparable<T>> IntervalLimit<T> newInstance(@Nonnull T value, boolean closed) {
+		final IntervalLimitImpl<T> result = new IntervalLimitImpl<T>();
 
-        result.value = value;
-        result.closed = closed;
-        result.type = Type.between;
+		result.value = value;
+		result.closed = closed;
+		result.type = Type.between;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    public static <T extends Comparable<T>> IntervalLimit<T> newLowest() {
-        return newInstance(Type.lowest);
-    }
+	@Nonnull
+	public static <T extends Comparable<T>> IntervalLimit<T> newLowest() {
+		return newInstance(Type.lowest);
+	}
 
-    @Nonnull
-    public static <T extends Comparable<T>> IntervalLimit<T> newHighest() {
-        return newInstance(Type.highest);
-    }
+	@Nonnull
+	public static <T extends Comparable<T>> IntervalLimit<T> newHighest() {
+		return newInstance(Type.highest);
+	}
 
-    @Nonnull
-    private static <T extends Comparable<T>> IntervalLimit<T> newInstance(@Nonnull Type type) {
-        final IntervalLimitImpl<T> result = new IntervalLimitImpl<T>();
+	@Nonnull
+	private static <T extends Comparable<T>> IntervalLimit<T> newInstance(@Nonnull Type type) {
+		final IntervalLimitImpl<T> result = new IntervalLimitImpl<T>();
 
-        result.value = null;
-        result.type = type;
-        result.closed = false;
+		result.value = null;
+		result.type = type;
+		result.closed = false;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nullable
-    @Override
-    public T getValue() {
-        return this.value;
-    }
+	@Nullable
+	@Override
+	public T getValue() {
+		return this.value;
+	}
 
-    @Override
-    public boolean isClosed() {
-        return this.closed;
-    }
+	@Override
+	public boolean isClosed() {
+		return this.closed;
+	}
 
-    @Override
-    public boolean isOpened() {
-        return !this.closed;
-    }
+	@Override
+	public boolean isOpened() {
+		return !this.closed;
+	}
 
-    @Override
-    public boolean isLowest() {
-        return this.type == Type.lowest;
-    }
+	@Override
+	public boolean isLowest() {
+		return this.type == Type.lowest;
+	}
 
-    @Override
-    public boolean isHighest() {
-        return this.type == Type.highest;
-    }
+	@Override
+	public boolean isHighest() {
+		return this.type == Type.highest;
+	}
 
-    @Override
-    public boolean isLowerThan(@Nonnull T that) {
-        if (this.isLowest()) {
-            return true;
-        } else if (this.isHighest()) {
-            return false;
-        } else {
-            assert this.value != null;
-            return this.value.compareTo(that) < 0;
-        }
-    }
+	@Override
+	public boolean isLowerThan(@Nonnull T that) {
+		if (this.isLowest()) {
+			return true;
+		} else if (this.isHighest()) {
+			return false;
+		} else {
+			assert this.value != null;
+			return this.value.compareTo(that) < 0;
+		}
+	}
 
-    @Override
-    public boolean isLowerThan(@Nonnull IntervalLimit<T> that) {
-        if (this.isLowest()) {
-            return !that.isLowest();
-        } else if (this.isHighest()) {
-            return false;
-        } else {
-            return this.compareTo(that) < 0;
-        }
-    }
+	@Override
+	public boolean isLowerThan(@Nonnull IntervalLimit<T> that) {
+		if (this.isLowest()) {
+			return !that.isLowest();
+		} else if (this.isHighest()) {
+			return false;
+		} else {
+			return this.compareTo(that) < 0;
+		}
+	}
 
-    @Override
-    public boolean isLowerOrEqualsThan(@Nonnull T that) {
-        if (this.isLowest()) {
-            return true;
-        } else if (this.isHighest()) {
-            return false;
-        } else {
-            if (this.isClosed()) {
-                assert this.value != null;
-                return this.value.compareTo(that) <= 0;
-            } else {
-                assert this.value != null;
-                return this.value.compareTo(that) < 0;
-            }
-        }
-    }
+	@Override
+	public boolean isLowerOrEqualsThan(@Nonnull T that) {
+		if (this.isLowest()) {
+			return true;
+		} else if (this.isHighest()) {
+			return false;
+		} else {
+			if (this.isClosed()) {
+				assert this.value != null;
+				return this.value.compareTo(that) <= 0;
+			} else {
+				assert this.value != null;
+				return this.value.compareTo(that) < 0;
+			}
+		}
+	}
 
-    @Override
-    public boolean isLowerOrEqualsThan(@Nonnull IntervalLimit<T> that) {
-        if (this.isLowest()) {
-            return that.isLowest();
-        } else if (this.isHighest()) {
-            return that.isHighest();
-        } else {
-            if (this.isClosed()) {
-                return this.compareTo(that) <= 0;
-            } else {
-                return this.compareTo(that) < 0;
-            }
-        }
-    }
+	@Override
+	public boolean isLowerOrEqualsThan(@Nonnull IntervalLimit<T> that) {
+		if (this.isLowest()) {
+			return that.isLowest();
+		} else if (this.isHighest()) {
+			return that.isHighest();
+		} else {
+			if (this.isClosed()) {
+				return this.compareTo(that) <= 0;
+			} else {
+				return this.compareTo(that) < 0;
+			}
+		}
+	}
 
-    @Override
-    public boolean isHigherThan(@Nonnull T that) {
-        if (this.isHighest()) {
-            return true;
-        } else if (this.isLowest()) {
-            return false;
-        } else {
-            assert this.value != null;
-            return this.value.compareTo(that) > 0;
-        }
-    }
+	@Override
+	public boolean isHigherThan(@Nonnull T that) {
+		if (this.isHighest()) {
+			return true;
+		} else if (this.isLowest()) {
+			return false;
+		} else {
+			assert this.value != null;
+			return this.value.compareTo(that) > 0;
+		}
+	}
 
-    @Override
-    public boolean isHigherThan(@Nonnull IntervalLimit<T> that) {
-        if (this.isHighest()) {
-            return !that.isHighest();
-        } else if (this.isLowest()) {
-            return false;
-        } else {
-            return this.compareTo(that) > 0;
-        }
-    }
+	@Override
+	public boolean isHigherThan(@Nonnull IntervalLimit<T> that) {
+		if (this.isHighest()) {
+			return !that.isHighest();
+		} else if (this.isLowest()) {
+			return false;
+		} else {
+			return this.compareTo(that) > 0;
+		}
+	}
 
-    @Override
-    public boolean isHigherOrEqualsThan(@Nonnull T that) {
-        if (this.isHighest()) {
-            return true;
-        } else if (this.isLowest()) {
-            return false;
-        } else {
-            assert this.value != null;
-            if (this.isClosed()) {
-                assert this.value != null;
-                return this.value.compareTo(that) >= 0;
-            } else {
-                assert this.value != null;
-                return this.value.compareTo(that) > 0;
-            }
-        }
-    }
+	@Override
+	public boolean isHigherOrEqualsThan(@Nonnull T that) {
+		if (this.isHighest()) {
+			return true;
+		} else if (this.isLowest()) {
+			return false;
+		} else {
+			assert this.value != null;
+			if (this.isClosed()) {
+				assert this.value != null;
+				return this.value.compareTo(that) >= 0;
+			} else {
+				assert this.value != null;
+				return this.value.compareTo(that) > 0;
+			}
+		}
+	}
 
-    @Override
-    public boolean isHigherOrEqualsThan(@Nonnull IntervalLimit<T> that) {
-        if (this.isHighest()) {
-            return that.isHighest();
-        } else if (this.isLowest()) {
-            return that.isLowest();
-        } else {
-            if (this.isClosed()) {
-                return this.compareTo(that) >= 0;
-            } else {
-                return this.compareTo(that) > 0;
-            }
-        }
-    }
+	@Override
+	public boolean isHigherOrEqualsThan(@Nonnull IntervalLimit<T> that) {
+		if (this.isHighest()) {
+			return that.isHighest();
+		} else if (this.isLowest()) {
+			return that.isLowest();
+		} else {
+			if (this.isClosed()) {
+				return this.compareTo(that) >= 0;
+			} else {
+				return this.compareTo(that) > 0;
+			}
+		}
+	}
 
-    @Override
-    public int compareTo(@Nonnull IntervalLimit<T> that) {
-        if (this == that) {
-            return 0;
-        }
+	@Override
+	public int compareTo(@Nonnull IntervalLimit<T> that) {
+		if (this == that) {
+			return 0;
+		}
 
-        if (this.isLowest()) {
-            if (that.isLowest()) {
-                return 0;
-            } else {
-                return -1;
-            }
-        } else if (this.isHighest()) {
-            if (that.isHighest()) {
-                return 0;
-            } else {
-                return 1;
-            }
-        }
+		if (this.isLowest()) {
+			if (that.isLowest()) {
+				return 0;
+			} else {
+				return -1;
+			}
+		} else if (this.isHighest()) {
+			if (that.isHighest()) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}
 
-        return Objects.compare(this.value, that.getValue());
-    }
+		return Objects.compare(this.value, that.getValue());
+	}
 
-    @Nonnull
-    @Override
-    public IntervalLimitImpl<T> clone() {
-        return (IntervalLimitImpl<T>) super.clone();
-    }
+	@Nonnull
+	@Override
+	public IntervalLimitImpl<T> clone() {
+		return (IntervalLimitImpl<T>) super.clone();
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof IntervalLimitImpl)) {
-            return false;
-        }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof IntervalLimitImpl)) {
+			return false;
+		}
 
-        IntervalLimitImpl that = (IntervalLimitImpl) o;
+		IntervalLimitImpl that = (IntervalLimitImpl) o;
 
-        if (closed != that.closed) {
-            return false;
-        }
-        if (type != that.type) {
-            return false;
-        }
-        if (value != null ? !value.equals(that.value) : that.value != null) {
-            return false;
-        }
+		if (closed != that.closed) {
+			return false;
+		}
+		if (type != that.type) {
+			return false;
+		}
+		if (value != null ? !value.equals(that.value) : that.value != null) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = value != null ? value.hashCode() : 0;
-        result = 31 * result + (closed ? 1 : 0);
-        result = 31 * result + type.hashCode();
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		int result = value != null ? value.hashCode() : 0;
+		result = 31 * result + (closed ? 1 : 0);
+		result = 31 * result + type.hashCode();
+		return result;
+	}
 
-    @Override
-    public String toString() {
-        if (this.isLowest()) {
-            return "-Inf";
-        } else if (this.isHighest()) {
-            return "Inf";
-        } else {
-            return String.valueOf(this.value);
-        }
-    }
+	@Override
+	public String toString() {
+		if (this.isLowest()) {
+			return "-Inf";
+		} else if (this.isHighest()) {
+			return "Inf";
+		} else {
+			return String.valueOf(this.value);
+		}
+	}
 }

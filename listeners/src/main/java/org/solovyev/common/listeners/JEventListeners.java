@@ -32,43 +32,43 @@ import java.util.Collection;
  */
 public interface JEventListeners<L extends JEventListener<? extends E>, E extends JEvent> {
 
-    /**
-     * Calls {@link JEventListener#onEvent(E)} for every listener added to container.
-     * Note: method calls may be done on current thread or on some background thread depending on implementation
-     *
-     * @param event to be fired event
-     */
-    void fireEvent(@Nonnull E event);
+	/**
+	 * Calls {@link JEventListener#onEvent(E)} for every listener added to container.
+	 * Note: method calls may be done on current thread or on some background thread depending on implementation
+	 *
+	 * @param event to be fired event
+	 */
+	void fireEvent(@Nonnull E event);
 
-    /**
-     * Calls {@link JEventListener#onEvent(E)} for every listener added to container for each event in <var>events</var>
-     * Note: method calls may be done on current thread or on some background thread depending on implementation
-     *
-     * @param events to be fired events
-     */
-    void fireEvents(@Nonnull Collection<E> events);
+	/**
+	 * Calls {@link JEventListener#onEvent(E)} for every listener added to container for each event in <var>events</var>
+	 * Note: method calls may be done on current thread or on some background thread depending on implementation
+	 *
+	 * @param events to be fired events
+	 */
+	void fireEvents(@Nonnull Collection<E> events);
 
-    /**
-     * Adds <var>listener</var> to container.
-     * <p/>
-     * Note: implementation of this interface may accept or may not accept same listener objects
-     *
-     * @param listener listener to be added to container
-     * @return true if listener was added to the container, false otherwise
-     */
-    boolean addListener(@Nonnull L listener);
+	/**
+	 * Adds <var>listener</var> to container.
+	 * <p/>
+	 * Note: implementation of this interface may accept or may not accept same listener objects
+	 *
+	 * @param listener listener to be added to container
+	 * @return true if listener was added to the container, false otherwise
+	 */
+	boolean addListener(@Nonnull L listener);
 
-    /**
-     * Removes <var>listener</var> from container.
-     *
-     * @param listener listener to be removed from container
-     * @return true if listener was removed, false if listener was not in container
-     */
-    boolean removeListener(@Nonnull L listener);
+	/**
+	 * Removes <var>listener</var> from container.
+	 *
+	 * @param listener listener to be removed from container
+	 * @return true if listener was removed, false if listener was not in container
+	 */
+	boolean removeListener(@Nonnull L listener);
 
 
-    /**
-     * Removes all registered listeners
-     */
-    void removeListeners();
+	/**
+	 * Removes all registered listeners
+	 */
+	void removeListeners();
 }

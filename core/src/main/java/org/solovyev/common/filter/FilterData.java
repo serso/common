@@ -38,29 +38,29 @@ import javax.annotation.Nonnull;
  */
 public class FilterData<T> {
 
-    private final T element;
+	private final T element;
 
-    private final boolean wasFiltered;
+	private final boolean wasFiltered;
 
-    private FilterData(T element, boolean wasFiltered) {
-        this.element = element;
-        this.wasFiltered = wasFiltered;
-    }
+	private FilterData(T element, boolean wasFiltered) {
+		this.element = element;
+		this.wasFiltered = wasFiltered;
+	}
 
-    @Nonnull
-    public static <T> FilterData<T> newInstance(T element, boolean wasFiltered) {
-        return new FilterData<T>(element, wasFiltered);
-    }
+	@Nonnull
+	public static <T> FilterData<T> newInstance(T element, boolean wasFiltered) {
+		return new FilterData<T>(element, wasFiltered);
+	}
 
-    public T getElement() {
-        return element;
-    }
+	public T getElement() {
+		return element;
+	}
 
-    public T getNotFiltered() {
-        return wasFiltered ? null : element;
-    }
+	public T getNotFiltered() {
+		return wasFiltered ? null : element;
+	}
 
-    public boolean wasFiltered() {
-        return wasFiltered;
-    }
+	public boolean wasFiltered() {
+		return wasFiltered;
+	}
 }

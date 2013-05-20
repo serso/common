@@ -31,6 +31,6 @@ import javax.annotation.Nonnull;
  */
 public interface HashProvider<T, H> {
 
-    @Nonnull
-    H getHash(@Nonnull T object, @Nonnull byte[] salt) throws CiphererException;
+	@Nonnull
+	H getHash(@Nonnull T object, @Nonnull byte[] salt) throws CiphererException;
 }

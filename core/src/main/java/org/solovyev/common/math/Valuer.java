@@ -31,11 +31,11 @@ import javax.annotation.Nonnull;
  */
 public interface Valuer<T> {
 
-    /**
-     * @param item object for which value is counted
-     * @return value of the object
-     */
-    @Nonnull
-    public Double getValue(@Nonnull T item);
+	/**
+	 * @param item object for which value is counted
+	 * @return value of the object
+	 */
+	@Nonnull
+	public Double getValue(@Nonnull T item);
 
 }

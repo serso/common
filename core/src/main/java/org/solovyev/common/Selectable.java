@@ -31,30 +31,30 @@ import javax.annotation.Nonnull;
  */
 public class Selectable<T> {
 
-    private boolean selected = false;
+	private boolean selected = false;
 
-    @Nonnull
-    final private T value;
+	@Nonnull
+	final private T value;
 
-    public Selectable(@Nonnull T value) {
-        this.value = value;
-    }
+	public Selectable(@Nonnull T value) {
+		this.value = value;
+	}
 
-    public Selectable(Boolean selected, @Nonnull T value) {
-        this.selected = selected;
-        this.value = value;
-    }
+	public Selectable(Boolean selected, @Nonnull T value) {
+		this.selected = selected;
+		this.value = value;
+	}
 
-    @Nonnull
-    public T getValue() {
-        return value;
-    }
+	@Nonnull
+	public T getValue() {
+		return value;
+	}
 
-    public boolean getSelected() {
-        return selected;
-    }
+	public boolean getSelected() {
+		return selected;
+	}
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 }

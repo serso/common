@@ -7,7 +7,7 @@ package org.solovyev.tasks;
  */
 public class TaskException extends Exception {
 
-    public TaskException(String detailMessage) {
-        super(detailMessage);
-    }
+	public TaskException(String detailMessage) {
+		super(detailMessage);
+	}
 }

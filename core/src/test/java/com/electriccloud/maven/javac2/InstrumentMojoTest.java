@@ -37,60 +37,60 @@ import javax.annotation.Nonnull;
  */
 public class InstrumentMojoTest {
 
-    @Test
-    public void testInstrumentation() throws Exception {
-        try {
-            Interval<String> interval = Intervals.newPoint(null);
-            Assert.fail();
-        } catch (IllegalArgumentException e) {
-            // ok
-        }
+	@Test
+	public void testInstrumentation() throws Exception {
+		try {
+			Interval<String> interval = Intervals.newPoint(null);
+			Assert.fail();
+		} catch (IllegalArgumentException e) {
+			// ok
+		}
 
-        TestObject testObject = new TestObject();
+		TestObject testObject = new TestObject();
 
-        try {
-            testObject.setNotNullField(null);
-            Assert.fail();
-        } catch (IllegalArgumentException e) {
-            // ok
-        }
+		try {
+			testObject.setNotNullField(null);
+			Assert.fail();
+		} catch (IllegalArgumentException e) {
+			// ok
+		}
 
-        try {
-            testObject.setNonnullField(null);
-            Assert.fail();
-        } catch (IllegalArgumentException e) {
-            // ok
-        }
+		try {
+			testObject.setNonnullField(null);
+			Assert.fail();
+		} catch (IllegalArgumentException e) {
+			// ok
+		}
 
-        testObject.setNotNullField("test");
-        testObject.setNonnullField("test");
+		testObject.setNotNullField("test");
+		testObject.setNonnullField("test");
 
-    }
+	}
 
-    private static final class TestObject {
+	private static final class TestObject {
 
-        @NotNull
-        private String notNullField;
+		@NotNull
+		private String notNullField;
 
-        @Nonnull
-        private String nonnullField;
+		@Nonnull
+		private String nonnullField;
 
-        @NotNull
-        public String getNotNullField() {
-            return notNullField;
-        }
+		@NotNull
+		public String getNotNullField() {
+			return notNullField;
+		}
 
-        public void setNotNullField(@NotNull String notNullField) {
-            this.notNullField = notNullField;
-        }
+		public void setNotNullField(@NotNull String notNullField) {
+			this.notNullField = notNullField;
+		}
 
-        @Nonnull
-        public String getNonnullField() {
-            return nonnullField;
-        }
+		@Nonnull
+		public String getNonnullField() {
+			return nonnullField;
+		}
 
-        public void setNonnullField(@Nonnull String nonnullField) {
-            this.nonnullField = nonnullField;
-        }
-    }
+		public void setNonnullField(@Nonnull String nonnullField) {
+			this.nonnullField = nonnullField;
+		}
+	}
 }

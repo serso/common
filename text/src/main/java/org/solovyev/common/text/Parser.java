@@ -30,13 +30,13 @@ import javax.annotation.Nullable;
  * Time: 10:35 PM
  */
 public interface Parser<T> {
-    /**
-     * Method parses specified value and returns converted object
-     *
-     * @param value string to be parsed
-     * @return parsed object
-     * @throws IllegalArgumentException illegal argument exception in case of any error (AND ONLY ONE EXCEPTION, I.E. NO NUMBER FORMAT EXCEPTIONS AND SO ON)
-     */
-    @Nullable
-    T parseValue(@Nullable String value) throws IllegalArgumentException;
+	/**
+	 * Method parses specified value and returns converted object
+	 *
+	 * @param value string to be parsed
+	 * @return parsed object
+	 * @throws IllegalArgumentException illegal argument exception in case of any error (AND ONLY ONE EXCEPTION, I.E. NO NUMBER FORMAT EXCEPTIONS AND SO ON)
+	 */
+	@Nullable
+	T parseValue(@Nullable String value) throws IllegalArgumentException;
 }

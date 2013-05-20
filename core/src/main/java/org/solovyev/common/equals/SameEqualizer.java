@@ -32,19 +32,19 @@ import javax.annotation.Nonnull;
  */
 public class SameEqualizer<T> implements Equalizer<T> {
 
-    @Nonnull
-    private static SameEqualizer<?> instance = new SameEqualizer<Object>();
+	@Nonnull
+	private static SameEqualizer<?> instance = new SameEqualizer<Object>();
 
-    @Nonnull
-    public static <T> SameEqualizer<T> getInstance() {
-        return (SameEqualizer<T>) instance;
-    }
+	@Nonnull
+	public static <T> SameEqualizer<T> getInstance() {
+		return (SameEqualizer<T>) instance;
+	}
 
-    private SameEqualizer() {
-    }
+	private SameEqualizer() {
+	}
 
-    @Override
-    public boolean areEqual(@Nonnull Object first, @Nonnull Object second) {
-        return first == second;
-    }
+	@Override
+	public boolean areEqual(@Nonnull Object first, @Nonnull Object second) {
+		return first == second;
+	}
 }

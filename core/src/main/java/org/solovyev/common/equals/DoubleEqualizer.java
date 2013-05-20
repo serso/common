@@ -22,9 +22,9 @@
 
 package org.solovyev.common.equals;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.math.Maths;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,14 +33,14 @@ import org.solovyev.common.math.Maths;
  */
 public class DoubleEqualizer implements Equalizer<Double> {
 
-    private final int precision;
+	private final int precision;
 
-    public DoubleEqualizer(int precision) {
-        this.precision = precision;
-    }
+	public DoubleEqualizer(int precision) {
+		this.precision = precision;
+	}
 
-    @Override
-    public boolean areEqual(@Nonnull Double first, @Nonnull Double second) {
-        return Maths.equals(first, second, precision);
-    }
+	@Override
+	public boolean areEqual(@Nonnull Double first, @Nonnull Double second) {
+		return Maths.equals(first, second, precision);
+	}
 }

@@ -23,7 +23,6 @@
 package org.solovyev.common.collections.multiset;
 
 import javax.annotation.Nonnull;
-
 import java.util.*;
 
 /**
@@ -33,147 +32,147 @@ import java.util.*;
  */
 abstract class AbstractMapManyInstancesMultiSet<E> extends AbstractMultiSet<E> implements ManyInstancesMultiSet<E> {
 
-    @Nonnull
-    private final Map<E, List<E>> backingMap;
+	@Nonnull
+	private final Map<E, List<E>> backingMap;
 
-    protected AbstractMapManyInstancesMultiSet(@Nonnull Map<E, List<E>> backingMap) {
-        this.backingMap = backingMap;
-    }
+	protected AbstractMapManyInstancesMultiSet(@Nonnull Map<E, List<E>> backingMap) {
+		this.backingMap = backingMap;
+	}
 
-    @Override
-    public int count(E e) {
-        return get(e).size();
-    }
+	@Override
+	public int count(E e) {
+		return get(e).size();
+	}
 
-    // always returns unmodifiable list
-    @Nonnull
-    private List<E> get(E e) {
-        final List<E> list = backingMap.get(e);
-        return list == null ? Collections.<E>emptyList() : Collections.unmodifiableList(list);
-    }
+	// always returns unmodifiable list
+	@Nonnull
+	private List<E> get(E e) {
+		final List<E> list = backingMap.get(e);
+		return list == null ? Collections.<E>emptyList() : Collections.unmodifiableList(list);
+	}
 
-    @Nonnull
-    @Override
-    public Collection<E> getAll(E e) {
-        return get(e);
-    }
+	@Nonnull
+	@Override
+	public Collection<E> getAll(E e) {
+		return get(e);
+	}
 
-    @Nonnull
-    @Override
-    public Set<E> toElementSet() {
-        final Set<E> result = new HashSet<E>();
+	@Nonnull
+	@Override
+	public Set<E> toElementSet() {
+		final Set<E> result = new HashSet<E>();
 
-        for (Map.Entry<E, List<E>> entry : backingMap.entrySet()) {
-            final List<E> list = entry.getValue();
-            if (list != null && !list.isEmpty()) {
-                result.add(entry.getKey());
-            }
-        }
+		for (Map.Entry<E, List<E>> entry : backingMap.entrySet()) {
+			final List<E> list = entry.getValue();
+			if (list != null && !list.isEmpty()) {
+				result.add(entry.getKey());
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public boolean add(E e, int count) {
-        MultiSets.checkAdd(count);
+	@Override
+	public boolean add(E e, int count) {
+		MultiSets.checkAdd(count);
 
-        final List<E> oldList = get(e);
+		final List<E> oldList = get(e);
 
-        final List<E> newList = new ArrayList<E>(oldList);
-        for (int i = 0; i < count; i++) {
-            newList.add(e);
-        }
+		final List<E> newList = new ArrayList<E>(oldList);
+		for (int i = 0; i < count; i++) {
+			newList.add(e);
+		}
 
-        this.backingMap.put(e, newList);
+		this.backingMap.put(e, newList);
 
-        return count > 0;
-    }
+		return count > 0;
+	}
 
-    @Override
-    public int remove(E e, int count) {
-        MultiSets.checkRemove(count);
+	@Override
+	public int remove(E e, int count) {
+		MultiSets.checkRemove(count);
 
-        final List<E> list = backingMap.get(e);
+		final List<E> list = backingMap.get(e);
 
-        final int result = list == null ? 0 : list.size();
+		final int result = list == null ? 0 : list.size();
 
-        int i = 0;
-        if (list != null) {
-            for (Iterator<E> it = list.iterator(); it.hasNext() && i < count; i++) {
-                it.next();
-                it.remove();
-            }
-        }
+		int i = 0;
+		if (list != null) {
+			for (Iterator<E> it = list.iterator(); it.hasNext() && i < count; i++) {
+				it.next();
+				it.remove();
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public int size() {
-        int result = 0;
+	@Override
+	public int size() {
+		int result = 0;
 
-        for (List<E> list : backingMap.values()) {
-            result += list.size();
-        }
+		for (List<E> list : backingMap.values()) {
+			result += list.size();
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public boolean contains(Object o) {
-        return !get((E) o).isEmpty();
-    }
+	@Override
+	public boolean contains(Object o) {
+		return !get((E) o).isEmpty();
+	}
 
-    @Override
-    public Iterator<E> iterator() {
-        return new ValueIterator();
-    }
+	@Override
+	public Iterator<E> iterator() {
+		return new ValueIterator();
+	}
 
-    private class ValueIterator implements Iterator<E> {
-        private final Iterator<Map.Entry<E, List<E>>> keyIterator;
-        private Collection<E> collection;
-        private Iterator<E> valueIterator;
+	private class ValueIterator implements Iterator<E> {
+		private final Iterator<Map.Entry<E, List<E>>> keyIterator;
+		private Collection<E> collection;
+		private Iterator<E> valueIterator;
 
-        private ValueIterator() {
-            keyIterator = backingMap.entrySet().iterator();
-            if (keyIterator.hasNext()) {
-                findValueIteratorAndKey();
-            } else {
-                valueIterator = (Iterator<E>) MultiSets.EMPTY_MODIFIABLE_ITERATOR;
-            }
-        }
+		private ValueIterator() {
+			keyIterator = backingMap.entrySet().iterator();
+			if (keyIterator.hasNext()) {
+				findValueIteratorAndKey();
+			} else {
+				valueIterator = (Iterator<E>) MultiSets.EMPTY_MODIFIABLE_ITERATOR;
+			}
+		}
 
-        void findValueIteratorAndKey() {
-            Map.Entry<E, List<E>> entry = keyIterator.next();
-            collection = entry.getValue();
-            valueIterator = collection.iterator();
-        }
+		void findValueIteratorAndKey() {
+			Map.Entry<E, List<E>> entry = keyIterator.next();
+			collection = entry.getValue();
+			valueIterator = collection.iterator();
+		}
 
-        @Override
-        public boolean hasNext() {
-            return keyIterator.hasNext() || valueIterator.hasNext();
-        }
+		@Override
+		public boolean hasNext() {
+			return keyIterator.hasNext() || valueIterator.hasNext();
+		}
 
-        @Override
-        public E next() {
-            if (!valueIterator.hasNext()) {
-                findValueIteratorAndKey();
-            }
+		@Override
+		public E next() {
+			if (!valueIterator.hasNext()) {
+				findValueIteratorAndKey();
+			}
 
-            return valueIterator.next();
-        }
+			return valueIterator.next();
+		}
 
-        @Override
-        public void remove() {
-            valueIterator.remove();
-            if (collection.isEmpty()) {
-                keyIterator.remove();
-            }
-        }
-    }
+		@Override
+		public void remove() {
+			valueIterator.remove();
+			if (collection.isEmpty()) {
+				keyIterator.remove();
+			}
+		}
+	}
 
-    @Override
-    public void clear() {
-        this.backingMap.clear();
-    }
+	@Override
+	public void clear() {
+		this.backingMap.clear();
+	}
 }

@@ -23,7 +23,6 @@
 package org.solovyev.common.collections.tree;
 
 import javax.annotation.Nonnull;
-
 import java.util.List;
 
 /**
@@ -39,37 +38,37 @@ import java.util.List;
  */
 public interface Tree<T> extends Iterable<TreeNode<T>> {
 
-    /**
-     * @return root of the tree (one unique tree node without parent)
-     */
-    @Nonnull
-    TreeNode<T> getRoot();
+	/**
+	 * @return root of the tree (one unique tree node without parent)
+	 */
+	@Nonnull
+	TreeNode<T> getRoot();
 
-    /**
-     * Note: this method might be not fast as iteration over
-     * all nodes in the tree might be done
-     *
-     * @return total number of elements in the tree
-     */
-    int getSize();
+	/**
+	 * Note: this method might be not fast as iteration over
+	 * all nodes in the tree might be done
+	 *
+	 * @return total number of elements in the tree
+	 */
+	int getSize();
 
-    /**
-     * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
-     *
-     * @return iterator which iterates over all elements in the tree
-     */
-    @Nonnull
-    @Override
-    TreeIterator<T> iterator();
+	/**
+	 * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
+	 *
+	 * @return iterator which iterates over all elements in the tree
+	 */
+	@Nonnull
+	@Override
+	TreeIterator<T> iterator();
 
-    /**
-     * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
-     *
-     * @return iterator which iterates over all elements in the tree
-     */
-    @Nonnull
-    TreeIterator<T> getIterator();
+	/**
+	 * NOTE: returned iterator which may support remove() BUT root cannot be removed in any case
+	 *
+	 * @return iterator which iterates over all elements in the tree
+	 */
+	@Nonnull
+	TreeIterator<T> getIterator();
 
-    @Nonnull
-    List<? extends TreeNode<T>> getAllNodes();
+	@Nonnull
+	List<? extends TreeNode<T>> getAllNodes();
 }

@@ -22,11 +22,10 @@
 
 package org.solovyev.common.collections.tree;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.solovyev.common.JPredicate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -38,171 +37,171 @@ import java.util.Iterator;
  */
 class LinkedTreeNode<T> implements MutableTreeNode<T> {
 
-    @Nullable
-    private T value;
+	@Nullable
+	private T value;
 
-    @Nullable
-    private TreeNode<T> parent;
+	@Nullable
+	private TreeNode<T> parent;
 
-    @Nonnull
-    private Collection<MutableTreeNode<T>> children = new ArrayList<MutableTreeNode<T>>();
+	@Nonnull
+	private Collection<MutableTreeNode<T>> children = new ArrayList<MutableTreeNode<T>>();
 
-    private LinkedTreeNode() {
-    }
+	private LinkedTreeNode() {
+	}
 
-    @Nonnull
-    static <T> LinkedTreeNode<T> newInstance(@Nullable T value) {
-        final LinkedTreeNode<T> result = new LinkedTreeNode<T>();
+	@Nonnull
+	static <T> LinkedTreeNode<T> newInstance(@Nullable T value) {
+		final LinkedTreeNode<T> result = new LinkedTreeNode<T>();
 
-        result.value = value;
+		result.value = value;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nullable
-    @Override
-    public MutableTreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder) {
-        return org.solovyev.common.collections.Collections.find(children.iterator(), finder);
-    }
+	@Nullable
+	@Override
+	public MutableTreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder) {
+		return org.solovyev.common.collections.Collections.find(children.iterator(), finder);
+	}
 
-    @Override
-    public void setValue(@Nullable T value) {
-        this.value = value;
-    }
+	@Override
+	public void setValue(@Nullable T value) {
+		this.value = value;
+	}
 
-    @Nonnull
-    @Override
-    public Collection<MutableTreeNode<T>> getOwnChildren() {
-        return java.util.Collections.unmodifiableCollection(children);
-    }
+	@Nonnull
+	@Override
+	public Collection<MutableTreeNode<T>> getOwnChildren() {
+		return java.util.Collections.unmodifiableCollection(children);
+	}
 
-    @Nonnull
-    @Override
-    public Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator() {
-        return this.children.iterator();
-    }
+	@Nonnull
+	@Override
+	public Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator() {
+		return this.children.iterator();
+	}
 
-    @Nonnull
-    @Override
-    public Collection<? extends MutableTreeNode<T>> getAllChildren() {
-        final Collection<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(children);
+	@Nonnull
+	@Override
+	public Collection<? extends MutableTreeNode<T>> getAllChildren() {
+		final Collection<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(children);
 
-        for (MutableTreeNode<T> child : children) {
-            result.addAll(child.getAllChildren());
-        }
+		for (MutableTreeNode<T> child : children) {
+			result.addAll(child.getAllChildren());
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public void addChild(@Nonnull MutableTreeNode<T> node) {
-        node.setParent(this);
-        this.children.add(node);
-    }
+	@Override
+	public void addChild(@Nonnull MutableTreeNode<T> node) {
+		node.setParent(this);
+		this.children.add(node);
+	}
 
-    @Nonnull
-    @Override
-    public MutableTreeNode<T> addChild(@Nonnull T value) {
-        final LinkedTreeNode<T> node = LinkedTreeNode.newInstance(value);
-        addChild(node);
-        return node;
-    }
+	@Nonnull
+	@Override
+	public MutableTreeNode<T> addChild(@Nonnull T value) {
+		final LinkedTreeNode<T> node = LinkedTreeNode.newInstance(value);
+		addChild(node);
+		return node;
+	}
 
-    @Nonnull
-    @Override
-    public MutableTreeNode<T> addChildIfNotExists(@Nonnull final T value) {
-        MutableTreeNode<T> result = this.findOwnChild(new JPredicate<TreeNode<T>>() {
-            @Override
-            public boolean apply(@Nullable TreeNode<T> input) {
-                return input != null && value.equals(input.getValue());
-            }
-        });
+	@Nonnull
+	@Override
+	public MutableTreeNode<T> addChildIfNotExists(@Nonnull final T value) {
+		MutableTreeNode<T> result = this.findOwnChild(new JPredicate<TreeNode<T>>() {
+			@Override
+			public boolean apply(@Nullable TreeNode<T> input) {
+				return input != null && value.equals(input.getValue());
+			}
+		});
 
-        if (result == null) {
-            result = this.addChild(value);
-        }
+		if (result == null) {
+			result = this.addChild(value);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public void removeOwnChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
-        org.solovyev.common.collections.Collections.removeIf(this.children.iterator(), predicate);
-    }
+	@Override
+	public void removeOwnChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
+		org.solovyev.common.collections.Collections.removeIf(this.children.iterator(), predicate);
+	}
 
-    @Override
-    public void removeChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
-        org.solovyev.common.collections.Collections.removeIf(this.iterator(), predicate);
-    }
+	@Override
+	public void removeChildIf(@Nonnull JPredicate<TreeNode<T>> predicate) {
+		org.solovyev.common.collections.Collections.removeIf(this.iterator(), predicate);
+	}
 
-    @Nullable
-    @Override
-    public T getValue() {
-        return this.value;
-    }
+	@Nullable
+	@Override
+	public T getValue() {
+		return this.value;
+	}
 
-    @Nonnull
-    @Override
-    public Iterator<TreeNode<T>> iterator() {
-        return new DepthTreeIterator<T>(this.children);
-    }
+	@Nonnull
+	@Override
+	public Iterator<TreeNode<T>> iterator() {
+		return new DepthTreeIterator<T>(this.children);
+	}
 
-    @Nonnull
-    @Override
-    public Iterator<? extends TreeNode<T>> getIterator() {
-        return iterator();
-    }
+	@Nonnull
+	@Override
+	public Iterator<? extends TreeNode<T>> getIterator() {
+		return iterator();
+	}
 
-    @Override
-    public int getSize() {
-        int result = children.size();
+	@Override
+	public int getSize() {
+		int result = children.size();
 
-        for (MutableTreeNode<T> child : children) {
-            result += child.getSize();
-        }
+		for (MutableTreeNode<T> child : children) {
+			result += child.getSize();
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public boolean isLeaf() {
-        return this.children.isEmpty();
-    }
+	@Override
+	public boolean isLeaf() {
+		return this.children.isEmpty();
+	}
 
-    @Override
-    public boolean isRoot() {
-        return this.parent == null;
-    }
+	@Override
+	public boolean isRoot() {
+		return this.parent == null;
+	}
 
-    @Override
-    public int getDepth() {
-        int depth = 0;
+	@Override
+	public int getDepth() {
+		int depth = 0;
 
-        TreeNode<?> parent = this.parent;
-        while (parent != null) {
-            parent = parent.getParent();
-            depth++;
-        }
+		TreeNode<?> parent = this.parent;
+		while (parent != null) {
+			parent = parent.getParent();
+			depth++;
+		}
 
-        return depth;
-    }
+		return depth;
+	}
 
-    @Override
-    public String toString() {
-        return "SimpleTreeNode{" +
-                "value=" + value +
-                ", number of own children=" + children.size() +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "SimpleTreeNode{" +
+				"value=" + value +
+				", number of own children=" + children.size() +
+				'}';
+	}
 
-    @Override
-    @Nullable
-    public TreeNode<T> getParent() {
-        return parent;
-    }
+	@Override
+	@Nullable
+	public TreeNode<T> getParent() {
+		return parent;
+	}
 
-    @Override
-    public void setParent(@Nullable TreeNode<T> parent) {
-        this.parent = parent;
-    }
+	@Override
+	public void setParent(@Nullable TreeNode<T> parent) {
+		this.parent = parent;
+	}
 }

@@ -24,7 +24,6 @@ package org.solovyev.common.text;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,67 +34,67 @@ import java.util.Map;
  */
 public class EnumMapper<T extends Enum> implements Mapper<T> {
 
-    /*
-    **********************************************************************
-    *
-    *                           STATIC
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           STATIC
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private final static Map<Class<? extends Enum>, Mapper<?>> cachedMappers = new HashMap<Class<? extends Enum>, Mapper<?>>();
+	@Nonnull
+	private final static Map<Class<? extends Enum>, Mapper<?>> cachedMappers = new HashMap<Class<? extends Enum>, Mapper<?>>();
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private final Class<T> enumClass;
+	@Nonnull
+	private final Class<T> enumClass;
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private EnumMapper(@Nonnull Class<T> enumClass) {
-        this.enumClass = enumClass;
-    }
+	private EnumMapper(@Nonnull Class<T> enumClass) {
+		this.enumClass = enumClass;
+	}
 
-    @Nonnull
-    public static <T extends Enum> Mapper<T> of(@Nonnull Class<T> enumClass) {
-        Mapper<T> result = (Mapper<T>) cachedMappers.get(enumClass);
-        if (result == null) {
-            // do not care about synchronization
-            result = new EnumMapper<T>(enumClass);
-            cachedMappers.put(enumClass, result);
-        }
+	@Nonnull
+	public static <T extends Enum> Mapper<T> of(@Nonnull Class<T> enumClass) {
+		Mapper<T> result = (Mapper<T>) cachedMappers.get(enumClass);
+		if (result == null) {
+			// do not care about synchronization
+			result = new EnumMapper<T>(enumClass);
+			cachedMappers.put(enumClass, result);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Override
-    public String formatValue(@Nullable T value) throws IllegalArgumentException {
-        return value == null ? null : value.name();
-    }
+	@Override
+	public String formatValue(@Nullable T value) throws IllegalArgumentException {
+		return value == null ? null : value.name();
+	}
 
-    @Override
-    public T parseValue(@Nullable String value) throws IllegalArgumentException {
-        return value == null ? null : (T) Enum.valueOf(enumClass, value);
-    }
+	@Override
+	public T parseValue(@Nullable String value) throws IllegalArgumentException {
+		return value == null ? null : (T) Enum.valueOf(enumClass, value);
+	}
 }

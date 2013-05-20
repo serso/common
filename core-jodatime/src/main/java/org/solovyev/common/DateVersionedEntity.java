@@ -39,12 +39,12 @@ import javax.annotation.Nonnull;
  */
 public interface DateVersionedEntity<I> extends VersionedEntity<I> {
 
-    @Nonnull
-    DateTime getCreationDate();
+	@Nonnull
+	DateTime getCreationDate();
 
-    @Nonnull
-    DateTime getModificationDate();
+	@Nonnull
+	DateTime getModificationDate();
 
-    @Nonnull
-    DateVersionedEntity<I> clone();
+	@Nonnull
+	DateVersionedEntity<I> clone();
 }

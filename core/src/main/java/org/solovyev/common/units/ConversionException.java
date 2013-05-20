@@ -29,10 +29,10 @@ package org.solovyev.common.units;
  */
 public final class ConversionException extends Exception {
 
-    public ConversionException() {
-    }
+	public ConversionException() {
+	}
 
-    public ConversionException(Throwable throwable) {
-        super(throwable);
-    }
+	public ConversionException(Throwable throwable) {
+		super(throwable);
+	}
 }

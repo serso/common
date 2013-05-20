@@ -34,166 +34,166 @@ import java.util.*;
  */
 class AbstractListMultiSet<E> extends AbstractMultiSet<E> implements ManyInstancesMultiSet<E> {
 
-    @Nonnull
-    private final List<E> backingList;
+	@Nonnull
+	private final List<E> backingList;
 
-    protected AbstractListMultiSet(@Nonnull List<E> backingList) {
-        this.backingList = backingList;
-    }
+	protected AbstractListMultiSet(@Nonnull List<E> backingList) {
+		this.backingList = backingList;
+	}
 
-    @Nonnull
-    @Override
-    public Collection<E> getAll(E e) {
-        final List<E> result = new ArrayList<E>();
+	@Nonnull
+	@Override
+	public Collection<E> getAll(E e) {
+		final List<E> result = new ArrayList<E>();
 
-        for (E el : backingList) {
-            if (Objects.areEqual(el, e)) {
-                result.add(el);
-            }
-        }
+		for (E el : backingList) {
+			if (Objects.areEqual(el, e)) {
+				result.add(el);
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public int count(E e) {
-        int result = 0;
+	@Override
+	public int count(E e) {
+		int result = 0;
 
-        if (e == null) {
-            for (E el : backingList) {
-                if (el == null) {
-                    result++;
-                }
-            }
-        } else {
-            for (E el : backingList) {
-                if (e.equals(el)) {
-                    result++;
-                }
-            }
-        }
+		if (e == null) {
+			for (E el : backingList) {
+				if (el == null) {
+					result++;
+				}
+			}
+		} else {
+			for (E el : backingList) {
+				if (e.equals(el)) {
+					result++;
+				}
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public Set<E> toElementSet() {
-        final Set<E> result = new HashSet<E>();
+	@Nonnull
+	@Override
+	public Set<E> toElementSet() {
+		final Set<E> result = new HashSet<E>();
 
-        for (E e : backingList) {
-            result.add(e);
-        }
+		for (E e : backingList) {
+			result.add(e);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public boolean add(E e, int count) {
-        MultiSets.checkAdd(count);
+	@Override
+	public boolean add(E e, int count) {
+		MultiSets.checkAdd(count);
 
-        boolean result = false;
+		boolean result = false;
 
-        for (int i = 0; i < count; i++) {
-            result = true;
-            this.backingList.add(e);
-        }
+		for (int i = 0; i < count; i++) {
+			result = true;
+			this.backingList.add(e);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public int remove(E e, int count) {
-        MultiSets.checkRemove(count);
+	@Override
+	public int remove(E e, int count) {
+		MultiSets.checkRemove(count);
 
-        int result = 0;
+		int result = 0;
 
 
-        if (e == null) {
+		if (e == null) {
 
-            for (Iterator<E> it = backingList.iterator(); it.hasNext(); ) {
-                final E el = it.next();
+			for (Iterator<E> it = backingList.iterator(); it.hasNext(); ) {
+				final E el = it.next();
 
-                if (el == null) {
+				if (el == null) {
 
-                    result++;
+					result++;
 
-                    if (count > 0) {
-                        it.remove();
-                        count--;
-                    }
-                }
+					if (count > 0) {
+						it.remove();
+						count--;
+					}
+				}
 
-            }
+			}
 
-        } else {
+		} else {
 
-            for (Iterator<E> it = backingList.iterator(); it.hasNext(); ) {
-                final E el = it.next();
+			for (Iterator<E> it = backingList.iterator(); it.hasNext(); ) {
+				final E el = it.next();
 
-                if (e.equals(el)) {
+				if (e.equals(el)) {
 
-                    result++;
+					result++;
 
-                    if (count > 0) {
-                        it.remove();
-                        count--;
-                    }
-                }
+					if (count > 0) {
+						it.remove();
+						count--;
+					}
+				}
 
-            }
+			}
 
-        }
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public int size() {
-        return this.backingList.size();
-    }
+	@Override
+	public int size() {
+		return this.backingList.size();
+	}
 
-    @Override
-    public boolean isEmpty() {
-        return this.backingList.isEmpty();
-    }
+	@Override
+	public boolean isEmpty() {
+		return this.backingList.isEmpty();
+	}
 
-    @Override
-    public boolean contains(Object o) {
-        return this.backingList.contains(o);
-    }
+	@Override
+	public boolean contains(Object o) {
+		return this.backingList.contains(o);
+	}
 
-    @Nonnull
-    @Override
-    public Iterator<E> iterator() {
-        return this.backingList.iterator();
-    }
+	@Nonnull
+	@Override
+	public Iterator<E> iterator() {
+		return this.backingList.iterator();
+	}
 
-    @Nonnull
-    @Override
-    public Object[] toArray() {
-        return this.backingList.toArray();
-    }
+	@Nonnull
+	@Override
+	public Object[] toArray() {
+		return this.backingList.toArray();
+	}
 
-    @Nonnull
-    @Override
-    public <T> T[] toArray(@Nonnull T[] a) {
-        //noinspection SuspiciousToArrayCall
-        return this.backingList.toArray(a);
-    }
+	@Nonnull
+	@Override
+	public <T> T[] toArray(@Nonnull T[] a) {
+		//noinspection SuspiciousToArrayCall
+		return this.backingList.toArray(a);
+	}
 
-    @Override
-    public boolean containsAll(@Nonnull Collection<?> c) {
-        return this.backingList.containsAll(c);
-    }
+	@Override
+	public boolean containsAll(@Nonnull Collection<?> c) {
+		return this.backingList.containsAll(c);
+	}
 
-    @Override
-    public boolean addAll(@Nonnull Collection<? extends E> c) {
-        return this.backingList.addAll(c);
-    }
+	@Override
+	public boolean addAll(@Nonnull Collection<? extends E> c) {
+		return this.backingList.addAll(c);
+	}
 
-    @Override
-    public void clear() {
-        this.backingList.clear();
-    }
+	@Override
+	public void clear() {
+		this.backingList.clear();
+	}
 }

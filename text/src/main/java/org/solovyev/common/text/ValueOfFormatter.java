@@ -32,75 +32,75 @@ import javax.annotation.Nullable;
  */
 public class ValueOfFormatter<T> implements Formatter<T> {
 
-    /*
-    **********************************************************************
-    *
-    *                           STATIC
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           STATIC
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private static final ValueOfFormatter<Object> notNullFormatter = new ValueOfFormatter<Object>(false);
+	@Nonnull
+	private static final ValueOfFormatter<Object> notNullFormatter = new ValueOfFormatter<Object>(false);
 
-    @Nonnull
-    private static final ValueOfFormatter<Object> nullableFormatter = new ValueOfFormatter<Object>(true);
+	@Nonnull
+	private static final ValueOfFormatter<Object> nullableFormatter = new ValueOfFormatter<Object>(true);
 
-    @Nonnull
-    public static <T> ValueOfFormatter<T> getNotNullFormatter() {
-        return (ValueOfFormatter<T>) notNullFormatter;
-    }
+	@Nonnull
+	public static <T> ValueOfFormatter<T> getNotNullFormatter() {
+		return (ValueOfFormatter<T>) notNullFormatter;
+	}
 
-    @Nonnull
-    public static <T> ValueOfFormatter<T> getNullableFormatter() {
-        return (ValueOfFormatter<T>) nullableFormatter;
-    }
+	@Nonnull
+	public static <T> ValueOfFormatter<T> getNullableFormatter() {
+		return (ValueOfFormatter<T>) nullableFormatter;
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    private final boolean processNulls;
+	private final boolean processNulls;
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private ValueOfFormatter() {
-        this(false);
-    }
+	private ValueOfFormatter() {
+		this(false);
+	}
 
-    private ValueOfFormatter(boolean processNulls) {
-        this.processNulls = processNulls;
-    }
+	private ValueOfFormatter(boolean processNulls) {
+		this.processNulls = processNulls;
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_LOAD_OF_KNOWN_NULL_VALUE"}, justification = "If 'processNulls' is true => must result 'null'")
-    @Override
-    public String formatValue(@Nullable T t) throws IllegalArgumentException {
-        if (t == null) {
-            if (processNulls) {
-                return String.valueOf(t);
-            } else {
-                return null;
-            }
-        } else {
-            return String.valueOf(t);
-        }
-    }
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_LOAD_OF_KNOWN_NULL_VALUE"}, justification = "If 'processNulls' is true => must result 'null'")
+	@Override
+	public String formatValue(@Nullable T t) throws IllegalArgumentException {
+		if (t == null) {
+			if (processNulls) {
+				return String.valueOf(t);
+			} else {
+				return null;
+			}
+		} else {
+			return String.valueOf(t);
+		}
+	}
 }

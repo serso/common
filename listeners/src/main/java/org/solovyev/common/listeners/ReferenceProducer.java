@@ -23,7 +23,6 @@
 package org.solovyev.common.listeners;
 
 import javax.annotation.Nonnull;
-
 import java.lang.ref.Reference;
 
 /**
@@ -33,6 +32,6 @@ import java.lang.ref.Reference;
  */
 public interface ReferenceProducer<R extends Reference<L>, L> {
 
-    @Nonnull
-    R newReference(@Nonnull L listener);
+	@Nonnull
+	R newReference(@Nonnull L listener);
 }

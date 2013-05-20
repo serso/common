@@ -32,47 +32,48 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractTypedJEvent<D, T> implements JEvent {
 
-    @Nonnull
-    private final D eventObject;
+	@Nonnull
+	private final D eventObject;
 
-    @Nonnull
-    private final T type;
+	@Nonnull
+	private final T type;
 
-    @Nullable
-    private final Object data;
+	@Nullable
+	private final Object data;
 
-    protected AbstractTypedJEvent(@Nonnull D eventObject, @Nonnull T type, @Nullable Object data) {
-        this.eventObject = eventObject;
-        this.type = type;
-        this.data = data;
-    }
+	protected AbstractTypedJEvent(@Nonnull D eventObject, @Nonnull T type, @Nullable Object data) {
+		this.eventObject = eventObject;
+		this.type = type;
+		this.data = data;
+	}
 
-    /**
-     * Implementations of this class might want to add own public method with good naming (like, getUser() or getAccount())
-     * @return event object
-     */
-    @Nonnull
-    protected final D getEventObject() {
-        return eventObject;
-    }
+	/**
+	 * Implementations of this class might want to add own public method with good naming (like, getUser() or getAccount())
+	 *
+	 * @return event object
+	 */
+	@Nonnull
+	protected final D getEventObject() {
+		return eventObject;
+	}
 
-    @Nonnull
-    public final T getType() {
-        return type;
-    }
+	@Nonnull
+	public final T getType() {
+		return type;
+	}
 
-    @Nullable
-    public final Object getData() {
-        return data;
-    }
+	@Nullable
+	public final Object getData() {
+		return data;
+	}
 
-    public boolean isOfType(@Nonnull T... types) {
-        for (T type : types) {
-            if ( this.type.equals(type) ) {
-                return true;
-            }
-        }
+	public boolean isOfType(@Nonnull T... types) {
+		for (T type : types) {
+			if (this.type.equals(type)) {
+				return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 }

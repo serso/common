@@ -35,29 +35,29 @@ import java.util.Map;
  */
 public class StringsTest {
 
-    @Test
-    public void testGenerateRandomString() throws Exception {
-        final Map<String, String> generatedStrings = new HashMap<String, String>(100);
+	@Test
+	public void testGenerateRandomString() throws Exception {
+		final Map<String, String> generatedStrings = new HashMap<String, String>(100);
 
-        for (int i = 0; i < 100; i++) {
-            final String newString = Strings.generateRandomString(100);
-            final String oldString = generatedStrings.get(newString);
-            Assert.assertNull("Iteration " + i + "\nNew string: " + newString + "\nOld string: " + oldString, oldString);
-            generatedStrings.put(newString, newString);
-        }
-    }
+		for (int i = 0; i < 100; i++) {
+			final String newString = Strings.generateRandomString(100);
+			final String oldString = generatedStrings.get(newString);
+			Assert.assertNull("Iteration " + i + "\nNew string: " + newString + "\nOld string: " + oldString, oldString);
+			generatedStrings.put(newString, newString);
+		}
+	}
 
-    @Test
-    public void testToCharacterObjects() throws Exception {
-        char[] chars = new char[]{'2', '3', 'a'};
-        Character[] characters = Strings.toObjects(chars);
-        Assert.assertTrue(chars.length == characters.length);
-        for (int i = 0; i < characters.length; i++) {
-            Character character = characters[i];
-            char ch = chars[i];
-            Assert.assertTrue(character.equals(ch));
+	@Test
+	public void testToCharacterObjects() throws Exception {
+		char[] chars = new char[]{'2', '3', 'a'};
+		Character[] characters = Strings.toObjects(chars);
+		Assert.assertTrue(chars.length == characters.length);
+		for (int i = 0; i < characters.length; i++) {
+			Character character = characters[i];
+			char ch = chars[i];
+			Assert.assertTrue(character.equals(ch));
 
-        }
+		}
 
-    }
+	}
 }

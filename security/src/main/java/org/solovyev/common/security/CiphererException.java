@@ -29,18 +29,18 @@ package org.solovyev.common.security;
  */
 public class CiphererException extends RuntimeException {
 
-    public CiphererException() {
-    }
+	public CiphererException() {
+	}
 
-    public CiphererException(String detailMessage) {
-        super(detailMessage);
-    }
+	public CiphererException(String detailMessage) {
+		super(detailMessage);
+	}
 
-    public CiphererException(String detailMessage, Throwable throwable) {
-        super(detailMessage, throwable);
-    }
+	public CiphererException(String detailMessage, Throwable throwable) {
+		super(detailMessage, throwable);
+	}
 
-    public CiphererException(Throwable throwable) {
-        super(throwable);
-    }
+	public CiphererException(Throwable throwable) {
+		super(throwable);
+	}
 }

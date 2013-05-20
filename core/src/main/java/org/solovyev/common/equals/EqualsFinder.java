@@ -22,11 +22,11 @@
 
 package org.solovyev.common.equals;
 
+import org.solovyev.common.JPredicate;
+import org.solovyev.common.Objects;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.solovyev.common.Objects;
-import org.solovyev.common.JPredicate;
 
 /**
  * User: serso
@@ -35,19 +35,19 @@ import org.solovyev.common.JPredicate;
  */
 public class EqualsFinder<T> implements JPredicate<T> {
 
-    @Nonnull
-    private final T modelObject;
+	@Nonnull
+	private final T modelObject;
 
-    @Nullable
-    private final Equalizer<T> equalizer;
+	@Nullable
+	private final Equalizer<T> equalizer;
 
-    public EqualsFinder(@Nonnull T modelObject, @Nullable Equalizer<T> equalizer) {
-        this.modelObject = modelObject;
-        this.equalizer = equalizer;
-    }
+	public EqualsFinder(@Nonnull T modelObject, @Nullable Equalizer<T> equalizer) {
+		this.modelObject = modelObject;
+		this.equalizer = equalizer;
+	}
 
-    @Override
-    public boolean apply(@Nullable T object) {
-        return Objects.areEqual(modelObject, object, equalizer);
-    }
+	@Override
+	public boolean apply(@Nullable T object) {
+		return Objects.areEqual(modelObject, object, equalizer);
+	}
 }

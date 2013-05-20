@@ -33,20 +33,20 @@ import javax.annotation.Nonnull;
  */
 public class StringEncoder implements Converter<byte[], String> {
 
-    @Nonnull
-    private static Converter<byte[], String> instance = new StringEncoder();
+	@Nonnull
+	private static Converter<byte[], String> instance = new StringEncoder();
 
-    private StringEncoder() {
-    }
+	private StringEncoder() {
+	}
 
-    @Nonnull
-    public static Converter<byte[], String> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static Converter<byte[], String> getInstance() {
+		return instance;
+	}
 
-    @Nonnull
-    @Override
-    public String convert(@Nonnull byte[] bytes) {
-        return new String(bytes, Charsets.UTF_8);
-    }
+	@Nonnull
+	@Override
+	public String convert(@Nonnull byte[] bytes) {
+		return new String(bytes, Charsets.UTF_8);
+	}
 }

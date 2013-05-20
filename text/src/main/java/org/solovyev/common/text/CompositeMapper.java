@@ -27,31 +27,31 @@ import javax.annotation.Nullable;
 
 public class CompositeMapper<T> implements Mapper<T> {
 
-    @Nonnull
-    private final Formatter<T> formatter;
+	@Nonnull
+	private final Formatter<T> formatter;
 
-    @Nonnull
-    private final Parser<T> parser;
+	@Nonnull
+	private final Parser<T> parser;
 
-    private CompositeMapper(@Nonnull Formatter<T> formatter, @Nonnull Parser<T> parser) {
-        this.formatter = formatter;
-        this.parser = parser;
-    }
+	private CompositeMapper(@Nonnull Formatter<T> formatter, @Nonnull Parser<T> parser) {
+		this.formatter = formatter;
+		this.parser = parser;
+	}
 
-    @Nonnull
-    public static <T> CompositeMapper<T> newInstance(@Nonnull Formatter<T> formatter, @Nonnull Parser<T> parser) {
-        return new CompositeMapper<T>(formatter, parser);
-    }
+	@Nonnull
+	public static <T> CompositeMapper<T> newInstance(@Nonnull Formatter<T> formatter, @Nonnull Parser<T> parser) {
+		return new CompositeMapper<T>(formatter, parser);
+	}
 
-    @Nullable
-    @Override
-    public String formatValue(@Nullable T value) throws IllegalArgumentException {
-        return formatter.formatValue(value);
-    }
+	@Nullable
+	@Override
+	public String formatValue(@Nullable T value) throws IllegalArgumentException {
+		return formatter.formatValue(value);
+	}
 
-    @Nullable
-    @Override
-    public T parseValue(@Nullable String value) throws IllegalArgumentException {
-        return parser.parseValue(value);
-    }
+	@Nullable
+	@Override
+	public T parseValue(@Nullable String value) throws IllegalArgumentException {
+		return parser.parseValue(value);
+	}
 }

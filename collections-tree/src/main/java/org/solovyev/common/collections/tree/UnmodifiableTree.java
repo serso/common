@@ -22,146 +22,145 @@
 
 package org.solovyev.common.collections.tree;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.JPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 class UnmodifiableTree<T> implements MutableTree<T> {
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private final MutableTree<T> t;
+	@Nonnull
+	private final MutableTree<T> t;
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTOR
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTOR
+	*
+	**********************************************************************
+	*/
 
-    private UnmodifiableTree(@Nonnull MutableTree<T> t) {
-        this.t = t;
-    }
+	private UnmodifiableTree(@Nonnull MutableTree<T> t) {
+		this.t = t;
+	}
 
-    public static <T> UnmodifiableTree<T> wrap(@Nonnull MutableTree<T> t) {
-        return new UnmodifiableTree<T>(t);
-    }
+	public static <T> UnmodifiableTree<T> wrap(@Nonnull MutableTree<T> t) {
+		return new UnmodifiableTree<T>(t);
+	}
 
 
-    public static <T> UnmodifiableTree<T> wrap(@Nonnull Tree<T> t) {
-        if (t instanceof MutableTree) {
-            return wrap((MutableTree<T>) t);
-        } else {
-            return new UnmodifiableTree<T>(TreeAdapter.adapt(t));
-        }
-    }
+	public static <T> UnmodifiableTree<T> wrap(@Nonnull Tree<T> t) {
+		if (t instanceof MutableTree) {
+			return wrap((MutableTree<T>) t);
+		} else {
+			return new UnmodifiableTree<T>(TreeAdapter.adapt(t));
+		}
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    @Override
-    public MutableTreeNode<T> getRoot() {
-        return t.getRoot();
-    }
+	@Nonnull
+	@Override
+	public MutableTreeNode<T> getRoot() {
+		return t.getRoot();
+	}
 
-    @Override
-    public int getSize() {
-        return t.getSize();
-    }
+	@Override
+	public int getSize() {
+		return t.getSize();
+	}
 
-    @Nonnull
-    @Override
-    public TreeIterator<T> iterator() {
-        return t.iterator();
-    }
+	@Nonnull
+	@Override
+	public TreeIterator<T> iterator() {
+		return t.iterator();
+	}
 
-    @Nonnull
-    @Override
-    public TreeIterator<T> getIterator() {
-        return t.getIterator();
-    }
+	@Nonnull
+	@Override
+	public TreeIterator<T> getIterator() {
+		return t.getIterator();
+	}
 
-    @Override
-    public void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter) {
-        throw new UnsupportedOperationException();
-    }
+	@Override
+	public void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter) {
+		throw new UnsupportedOperationException();
+	}
 
-    @Nonnull
-    @Override
-    public List<? extends MutableTreeNode<T>> getAllNodes() {
-        return t.getAllNodes();
-    }
+	@Nonnull
+	@Override
+	public List<? extends MutableTreeNode<T>> getAllNodes() {
+		return t.getAllNodes();
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           STATIC
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           STATIC
+	*
+	**********************************************************************
+	*/
 
-    private static class TreeAdapter<T> implements MutableTree<T> {
+	private static class TreeAdapter<T> implements MutableTree<T> {
 
-        @Nonnull
-        private final Tree<T> tree;
+		@Nonnull
+		private final Tree<T> tree;
 
-        private TreeAdapter(@Nonnull Tree<T> tree) {
-            this.tree = tree;
-        }
+		private TreeAdapter(@Nonnull Tree<T> tree) {
+			this.tree = tree;
+		}
 
-        @Nonnull
-        private static <T> TreeAdapter<T> adapt(@Nonnull Tree<T> tree) {
-            return new TreeAdapter<T>(tree);
-        }
+		@Nonnull
+		private static <T> TreeAdapter<T> adapt(@Nonnull Tree<T> tree) {
+			return new TreeAdapter<T>(tree);
+		}
 
-        @Override
-        @Nonnull
-        public MutableTreeNode<T> getRoot() {
-            return UnmodifiableTreeNode.wrap(tree.getRoot());
-        }
+		@Override
+		@Nonnull
+		public MutableTreeNode<T> getRoot() {
+			return UnmodifiableTreeNode.wrap(tree.getRoot());
+		}
 
-        @Override
-        public void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter) {
-            throw new AssertionError("Should never happen!");
-        }
+		@Override
+		public void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter) {
+			throw new AssertionError("Should never happen!");
+		}
 
-        @Override
-        public int getSize() {
-            return tree.getSize();
-        }
+		@Override
+		public int getSize() {
+			return tree.getSize();
+		}
 
-        @Nonnull
-        @Override
-        public TreeIterator<T> iterator() {
-            return tree.iterator();
-        }
+		@Nonnull
+		@Override
+		public TreeIterator<T> iterator() {
+			return tree.iterator();
+		}
 
-        @Override
-        @Nonnull
-        public TreeIterator<T> getIterator() {
-            return tree.getIterator();
-        }
+		@Override
+		@Nonnull
+		public TreeIterator<T> getIterator() {
+			return tree.getIterator();
+		}
 
-        @Override
-        @Nonnull
-        public List<? extends MutableTreeNode<T>> getAllNodes() {
-            return Trees.unmodifiableTreeNodes(tree.getAllNodes());
-        }
-    }
+		@Override
+		@Nonnull
+		public List<? extends MutableTreeNode<T>> getAllNodes() {
+			return Trees.unmodifiableTreeNodes(tree.getAllNodes());
+		}
+	}
 }

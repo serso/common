@@ -23,7 +23,6 @@
 package org.solovyev.common.security;
 
 import javax.annotation.Nonnull;
-
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -36,61 +35,61 @@ import javax.crypto.spec.SecretKeySpec;
  */
 class PbeSecretKeyProvider implements SecretKeyProvider {
 
-    private final int iterationCount;
+	private final int iterationCount;
 
-    @Nonnull
-    private final String algorithm;
+	@Nonnull
+	private final String algorithm;
 
-    @Nonnull
-    private final String provider;
+	@Nonnull
+	private final String provider;
 
-    @Nonnull
-    private final String ciphererAlgorithm;
+	@Nonnull
+	private final String ciphererAlgorithm;
 
-    private final int keyLength;
+	private final int keyLength;
 
-    private final int saltLength;
+	private final int saltLength;
 
-    private PbeSecretKeyProvider(int iterationCount,
-                                 @Nonnull String algorithm,
-                                 @Nonnull String ciphererAlgorithm,
-                                 @Nonnull String provider,
-                                 int keyLength,
-                                 int saltLength) {
-        this.iterationCount = iterationCount;
-        this.algorithm = algorithm;
-        this.provider = provider;
-        this.ciphererAlgorithm = ciphererAlgorithm;
-        this.keyLength = keyLength;
-        this.saltLength = saltLength;
-    }
+	private PbeSecretKeyProvider(int iterationCount,
+								 @Nonnull String algorithm,
+								 @Nonnull String ciphererAlgorithm,
+								 @Nonnull String provider,
+								 int keyLength,
+								 int saltLength) {
+		this.iterationCount = iterationCount;
+		this.algorithm = algorithm;
+		this.provider = provider;
+		this.ciphererAlgorithm = ciphererAlgorithm;
+		this.keyLength = keyLength;
+		this.saltLength = saltLength;
+	}
 
-    @Nonnull
-    public static SecretKeyProvider newInstance(int iterationCount,
-                                                @Nonnull String algorithm,
-                                                @Nonnull String ciphererAlgorithm,
-                                                @Nonnull String provider,
-                                                int keyLength,
-                                                int saltLength) {
-        return new PbeSecretKeyProvider(iterationCount, algorithm, ciphererAlgorithm, provider, keyLength, saltLength);
-    }
+	@Nonnull
+	public static SecretKeyProvider newInstance(int iterationCount,
+												@Nonnull String algorithm,
+												@Nonnull String ciphererAlgorithm,
+												@Nonnull String provider,
+												int keyLength,
+												int saltLength) {
+		return new PbeSecretKeyProvider(iterationCount, algorithm, ciphererAlgorithm, provider, keyLength, saltLength);
+	}
 
-    @Override
-    @Nonnull
-    public SecretKey getSecretKey(@Nonnull String secret, @Nonnull byte[] salt) throws CiphererException {
-        try {
-            if (salt.length != saltLength) {
-                throw new IllegalArgumentException("Salt size is not valid -  expected: " + saltLength + ", actual: " + salt.length);
-            }
+	@Override
+	@Nonnull
+	public SecretKey getSecretKey(@Nonnull String secret, @Nonnull byte[] salt) throws CiphererException {
+		try {
+			if (salt.length != saltLength) {
+				throw new IllegalArgumentException("Salt size is not valid -  expected: " + saltLength + ", actual: " + salt.length);
+			}
 
-            final PBEKeySpec pbeKeySpec = new PBEKeySpec(secret.toCharArray(), salt, iterationCount, keyLength);
-            final SecretKeyFactory factory = SecretKeyFactory.getInstance(algorithm, provider);
+			final PBEKeySpec pbeKeySpec = new PBEKeySpec(secret.toCharArray(), salt, iterationCount, keyLength);
+			final SecretKeyFactory factory = SecretKeyFactory.getInstance(algorithm, provider);
 
-            final SecretKey tmp = factory.generateSecret(pbeKeySpec);
+			final SecretKey tmp = factory.generateSecret(pbeKeySpec);
 
-            return new SecretKeySpec(tmp.getEncoded(), ciphererAlgorithm);
-        } catch (Exception e) {
-            throw new CiphererException("Unable to get secret key due to some errors!", e);
-        }
-    }
+			return new SecretKeySpec(tmp.getEncoded(), ciphererAlgorithm);
+		} catch (Exception e) {
+			throw new CiphererException("Unable to get secret key due to some errors!", e);
+		}
+	}
 }

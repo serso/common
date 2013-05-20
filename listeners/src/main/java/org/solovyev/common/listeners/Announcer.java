@@ -29,7 +29,6 @@ package org.solovyev.common.listeners;
  */
 
 import javax.annotation.Nonnull;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -40,63 +39,63 @@ import java.util.List;
 
 public class Announcer<T extends EventListener> {
 
-    @Nonnull
-    private final T proxy;
+	@Nonnull
+	private final T proxy;
 
-    @Nonnull
-    private final List<T> listeners = new ArrayList<T>();
+	@Nonnull
+	private final List<T> listeners = new ArrayList<T>();
 
-    public Announcer(@Nonnull Class<? extends T> listenerType) {
-        proxy = listenerType.cast(Proxy.newProxyInstance(
-                getClass().getClassLoader(),
-                new Class<?>[]{listenerType},
-                new InvocationHandler() {
-                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        announce(method, args);
-                        return null;
-                    }
-                }));
-    }
+	public Announcer(@Nonnull Class<? extends T> listenerType) {
+		proxy = listenerType.cast(Proxy.newProxyInstance(
+				getClass().getClassLoader(),
+				new Class<?>[]{listenerType},
+				new InvocationHandler() {
+					public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+						announce(method, args);
+						return null;
+					}
+				}));
+	}
 
-    public void addListener(@Nonnull T listener) {
-        if (!listeners.contains(listener)) {
-            listeners.add(listener);
-        }
-    }
+	public void addListener(@Nonnull T listener) {
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
+		}
+	}
 
-    public void removeListener(@Nonnull T listener) {
-        listeners.remove(listener);
-    }
+	public void removeListener(@Nonnull T listener) {
+		listeners.remove(listener);
+	}
 
-    public void clear() {
-        listeners.clear();
-    }
+	public void clear() {
+		listeners.clear();
+	}
 
-    public T announce() {
-        return proxy;
-    }
+	public T announce() {
+		return proxy;
+	}
 
-    private void announce(Method m, Object[] args) {
-        try {
-            for (T listener : listeners) {
-                m.invoke(listener, args);
-            }
-        } catch (IllegalAccessException e) {
-            throw new IllegalArgumentException("Could not invoke listener!", e);
-        } catch (InvocationTargetException e) {
-            Throwable cause = e.getCause();
+	private void announce(Method m, Object[] args) {
+		try {
+			for (T listener : listeners) {
+				m.invoke(listener, args);
+			}
+		} catch (IllegalAccessException e) {
+			throw new IllegalArgumentException("Could not invoke listener!", e);
+		} catch (InvocationTargetException e) {
+			Throwable cause = e.getCause();
 
-            if (cause instanceof RuntimeException) {
-                throw (RuntimeException) cause;
-            } else if (cause instanceof Error) {
-                throw (Error) cause;
-            } else {
-                throw new UnsupportedOperationException("Listener threw exception!", cause);
-            }
-        }
-    }
+			if (cause instanceof RuntimeException) {
+				throw (RuntimeException) cause;
+			} else if (cause instanceof Error) {
+				throw (Error) cause;
+			} else {
+				throw new UnsupportedOperationException("Listener threw exception!", cause);
+			}
+		}
+	}
 
-    public static <T extends EventListener> Announcer<T> to(@Nonnull Class<? extends T> listenerType) {
-        return new Announcer<T>(listenerType);
-    }
+	public static <T extends EventListener> Announcer<T> to(@Nonnull Class<? extends T> listenerType) {
+		return new Announcer<T>(listenerType);
+	}
 }

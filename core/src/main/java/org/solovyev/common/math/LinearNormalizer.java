@@ -29,26 +29,26 @@ package org.solovyev.common.math;
  */
 public class LinearNormalizer implements Normalizer {
 
-    private final double min;
-    private final double max;
+	private final double min;
+	private final double max;
 
-    public LinearNormalizer(double min, double max) {
-        this.min = min;
-        this.max = max;
-    }
+	public LinearNormalizer(double min, double max) {
+		this.min = min;
+		this.max = max;
+	}
 
-    @Override
-    public double normalize(double value) {
-        if ((max - min) != 0d) {
-            return (value - min) / (max - min);
-        } else {
-            return 1d;
-        }
-    }
+	@Override
+	public double normalize(double value) {
+		if ((max - min) != 0d) {
+			return (value - min) / (max - min);
+		} else {
+			return 1d;
+		}
+	}
 
-    @Override
-    public double denormalize(double value) {
-        return min + value * (max - min);
-    }
+	@Override
+	public double denormalize(double value) {
+		return min + value * (max - min);
+	}
 
 }

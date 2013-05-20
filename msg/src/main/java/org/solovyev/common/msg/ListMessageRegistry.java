@@ -23,7 +23,6 @@
 package org.solovyev.common.msg;
 
 import javax.annotation.Nonnull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,24 +33,24 @@ import java.util.List;
  */
 public class ListMessageRegistry implements MessageRegistry {
 
-    @Nonnull
-    private final List<Message> messages = new ArrayList<Message>();
+	@Nonnull
+	private final List<Message> messages = new ArrayList<Message>();
 
-    @Override
-    public void addMessage(@Nonnull Message message) {
-        if (!messages.contains(message)) {
-            messages.add(message);
-        }
-    }
+	@Override
+	public void addMessage(@Nonnull Message message) {
+		if (!messages.contains(message)) {
+			messages.add(message);
+		}
+	}
 
-    @Nonnull
-    @Override
-    public Message getMessage() {
-        return this.messages.remove(0);
-    }
+	@Nonnull
+	@Override
+	public Message getMessage() {
+		return this.messages.remove(0);
+	}
 
-    @Override
-    public boolean hasMessage() {
-        return !this.messages.isEmpty();
-    }
+	@Override
+	public boolean hasMessage() {
+		return !this.messages.isEmpty();
+	}
 }

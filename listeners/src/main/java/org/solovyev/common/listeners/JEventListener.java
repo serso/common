@@ -23,7 +23,6 @@
 package org.solovyev.common.listeners;
 
 import javax.annotation.Nonnull;
-
 import java.util.EventListener;
 
 /**
@@ -33,16 +32,16 @@ import java.util.EventListener;
  */
 public interface JEventListener<E extends JEvent> extends EventListener {
 
-    /**
-     * @return type of supported event
-     */
-    @Nonnull
-    Class<E> getEventType();
+	/**
+	 * @return type of supported event
+	 */
+	@Nonnull
+	Class<E> getEventType();
 
-    /**
-     * Method which is called after {@link JEventListeners#fireEvent(E)} of the container is called
-     *
-     * @param event event to be processed by current listener
-     */
-    void onEvent(@Nonnull E event);
+	/**
+	 * Method which is called after {@link JEventListeners#fireEvent(E)} of the container is called
+	 *
+	 * @param event event to be processed by current listener
+	 */
+	void onEvent(@Nonnull E event);
 }

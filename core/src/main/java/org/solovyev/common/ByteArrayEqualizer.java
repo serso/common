@@ -22,9 +22,9 @@
 
 package org.solovyev.common;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.equals.Equalizer;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,32 +33,32 @@ import org.solovyev.common.equals.Equalizer;
  */
 public class ByteArrayEqualizer implements Equalizer<byte[]> {
 
-    @Nonnull
-    private static Equalizer<byte[]> instance = new ByteArrayEqualizer();
+	@Nonnull
+	private static Equalizer<byte[]> instance = new ByteArrayEqualizer();
 
-    private ByteArrayEqualizer() {
-    }
+	private ByteArrayEqualizer() {
+	}
 
-    @Nonnull
-    public static Equalizer<byte[]> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static Equalizer<byte[]> getInstance() {
+		return instance;
+	}
 
-    @Override
-    public boolean areEqual(@Nonnull byte[] first, @Nonnull byte[] second) {
-        boolean result = true;
+	@Override
+	public boolean areEqual(@Nonnull byte[] first, @Nonnull byte[] second) {
+		boolean result = true;
 
-        if (first.length == second.length) {
-            for (int i = 0; i < first.length; i++) {
-                if (first[i] != second[i]) {
-                    result = false;
-                    break;
-                }
-            }
-        } else {
-            result = false;
-        }
+		if (first.length == second.length) {
+			for (int i = 0; i < first.length; i++) {
+				if (first[i] != second[i]) {
+					result = false;
+					break;
+				}
+			}
+		} else {
+			result = false;
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

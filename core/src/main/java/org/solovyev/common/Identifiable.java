@@ -28,5 +28,5 @@ package org.solovyev.common;
  * Time: 1:04:17
  */
 public interface Identifiable<T> {
-    T getId();
+	T getId();
 }

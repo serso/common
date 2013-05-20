@@ -31,9 +31,9 @@ import javax.annotation.Nonnull;
  */
 public interface Unit<V> {
 
-    @Nonnull
-    V getValue();
+	@Nonnull
+	V getValue();
 
-    @Nonnull
-    UnitType<V> getUnitType();
+	@Nonnull
+	UnitType<V> getUnitType();
 }

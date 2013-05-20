@@ -34,50 +34,50 @@ import java.util.Arrays;
 
 public class Sha1HashSecretKeyProvider implements SecretKeyProvider {
 
-    @Nonnull
-    private static final SecretKeyProvider aes = newInstance(Security.CIPHERER_ALGORITHM_AES, 16);
+	@Nonnull
+	private static final SecretKeyProvider aes = newInstance(Security.CIPHERER_ALGORITHM_AES, 16);
 
-    @Nonnull
-    private static final SecretKeyProvider des = newInstance(Security.CIPHERER_ALGORITHM_DES, 16);
+	@Nonnull
+	private static final SecretKeyProvider des = newInstance(Security.CIPHERER_ALGORITHM_DES, 16);
 
-    private final int saltLength;
+	private final int saltLength;
 
-    @Nonnull
-    private final String ciphererAlgorithm;
+	@Nonnull
+	private final String ciphererAlgorithm;
 
-    private Sha1HashSecretKeyProvider(@Nonnull String ciphererAlgorithm, int saltLength) {
-        this.ciphererAlgorithm = ciphererAlgorithm;
-        this.saltLength = saltLength;
-    }
+	private Sha1HashSecretKeyProvider(@Nonnull String ciphererAlgorithm, int saltLength) {
+		this.ciphererAlgorithm = ciphererAlgorithm;
+		this.saltLength = saltLength;
+	}
 
-    @Nonnull
-    public static SecretKeyProvider newAesInstance() {
-        return aes;
-    }
+	@Nonnull
+	public static SecretKeyProvider newAesInstance() {
+		return aes;
+	}
 
-    @Nonnull
-    public static SecretKeyProvider newDesInstance() {
-        return des;
-    }
+	@Nonnull
+	public static SecretKeyProvider newDesInstance() {
+		return des;
+	}
 
-    @Nonnull
-    public static Sha1HashSecretKeyProvider newInstance(@Nonnull String ciphererAlgorithm, int saltLength) {
-        return new Sha1HashSecretKeyProvider(ciphererAlgorithm, saltLength);
-    }
+	@Nonnull
+	public static Sha1HashSecretKeyProvider newInstance(@Nonnull String ciphererAlgorithm, int saltLength) {
+		return new Sha1HashSecretKeyProvider(ciphererAlgorithm, saltLength);
+	}
 
-    @Nonnull
-    @Override
-    public SecretKey getSecretKey(@Nonnull String secret, @Nonnull byte[] salt) throws CiphererException {
-        final String secretKey = secret + Bytes.toHex(salt);
+	@Nonnull
+	@Override
+	public SecretKey getSecretKey(@Nonnull String secret, @Nonnull byte[] salt) throws CiphererException {
+		final String secretKey = secret + Bytes.toHex(salt);
 
-        try {
-            final MessageDigest sha = MessageDigest.getInstance("SHA-1");
-            byte[] secretKeyHash = sha.digest(secretKey.getBytes(Charsets.UTF_8));
-            secretKeyHash = Arrays.copyOf(secretKeyHash, saltLength);
+		try {
+			final MessageDigest sha = MessageDigest.getInstance("SHA-1");
+			byte[] secretKeyHash = sha.digest(secretKey.getBytes(Charsets.UTF_8));
+			secretKeyHash = Arrays.copyOf(secretKeyHash, saltLength);
 
-            return new SecretKeySpec(secretKeyHash, ciphererAlgorithm);
-        } catch (NoSuchAlgorithmException e) {
-            throw new CiphererException(e);
-        }
-    }
+			return new SecretKeySpec(secretKeyHash, ciphererAlgorithm);
+		} catch (NoSuchAlgorithmException e) {
+			throw new CiphererException(e);
+		}
+	}
 }

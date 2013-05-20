@@ -22,10 +22,10 @@
 
 package org.solovyev.common.units;
 
+import org.solovyev.common.text.Strings;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.solovyev.common.text.Strings;
 
 /**
  * User: Solovyev_S
@@ -34,35 +34,35 @@ import org.solovyev.common.text.Strings;
  */
 public final class Conversions {
 
-    private Conversions() {
-        throw new AssertionError();
-    }
+	private Conversions() {
+		throw new AssertionError();
+	}
 
-    @Nonnull
-    public static String doConversion(@Nonnull UnitConverter<String> converter,
-                                      @Nullable String from,
-                                      @Nonnull UnitType<String> fromUnitType,
-                                      @Nonnull UnitType<String> toUnitType) throws ConversionException {
-        final String result;
+	@Nonnull
+	public static String doConversion(@Nonnull UnitConverter<String> converter,
+									  @Nullable String from,
+									  @Nonnull UnitType<String> fromUnitType,
+									  @Nonnull UnitType<String> toUnitType) throws ConversionException {
+		final String result;
 
-        if (Strings.isEmpty(from)) {
-            result = "";
-        } else {
+		if (Strings.isEmpty(from)) {
+			result = "";
+		} else {
 
-            final String to;
-            try {
-                if (converter.isSupported(fromUnitType, toUnitType)) {
-                    to = converter.convert(UnitImpl.newInstance(from, fromUnitType), toUnitType).getValue();
-                } else {
-                    to = "";
-                }
-            } catch (RuntimeException e) {
-                throw new ConversionException(e);
-            }
+			final String to;
+			try {
+				if (converter.isSupported(fromUnitType, toUnitType)) {
+					to = converter.convert(UnitImpl.newInstance(from, fromUnitType), toUnitType).getValue();
+				} else {
+					to = "";
+				}
+			} catch (RuntimeException e) {
+				throw new ConversionException(e);
+			}
 
-            result = to;
-        }
+			result = to;
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

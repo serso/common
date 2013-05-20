@@ -18,249 +18,249 @@ import java.util.concurrent.Executors;
  */
 final class TaskServiceImpl implements TaskService {
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTANTS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTANTS
+	*
+	**********************************************************************
+	*/
 
-    private static final int DEFAULT_THREAD_COUNT = 10;
+	private static final int DEFAULT_THREAD_COUNT = 10;
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    @GuardedBy("tasks")
-    @Nonnull
-    private final Map<String, ListenableFutureTask<?>> tasks = new HashMap<String, ListenableFutureTask<?>>();
+	@GuardedBy("tasks")
+	@Nonnull
+	private final Map<String, ListenableFutureTask<?>> tasks = new HashMap<String, ListenableFutureTask<?>>();
 
-    @Nonnull
-    private final ExecutorService executor;
+	@Nonnull
+	private final ExecutorService executor;
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    TaskServiceImpl() {
-        this(DEFAULT_THREAD_COUNT);
-    }
+	TaskServiceImpl() {
+		this(DEFAULT_THREAD_COUNT);
+	}
 
-    TaskServiceImpl(int threadCount) {
-        this(Executors.newFixedThreadPool(threadCount));
-    }
+	TaskServiceImpl(int threadCount) {
+		this(Executors.newFixedThreadPool(threadCount));
+	}
 
-    TaskServiceImpl(@Nonnull ExecutorService executor) {
-        this.executor = executor;
-    }
+	TaskServiceImpl(@Nonnull ExecutorService executor) {
+		this.executor = executor;
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Override
-    public <T> void tryRun(@Nonnull String taskName, @Nonnull Callable<T> task) throws TaskIsAlreadyRunningException {
-        tryRun(taskName, task, null);
-    }
+	@Override
+	public <T> void tryRun(@Nonnull String taskName, @Nonnull Callable<T> task) throws TaskIsAlreadyRunningException {
+		tryRun(taskName, task, null);
+	}
 
-    @Override
-    public boolean isRunning(@Nonnull String taskName) {
-        synchronized (tasks) {
-            final ListenableFutureTask<?> task = tasks.get(taskName);
-            if (task != null && !task.isDone()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
+	@Override
+	public boolean isRunning(@Nonnull String taskName) {
+		synchronized (tasks) {
+			final ListenableFutureTask<?> task = tasks.get(taskName);
+			if (task != null && !task.isDone()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 
-    @Nonnull
-    @Override
-    public <T> FutureCallback<T> tryAddTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) throws NoSuchTaskException, TaskFinishedException {
-        synchronized (tasks) {
-            final ListenableFutureTask<T> task = (ListenableFutureTask<T>) tasks.get(taskName);
-            if (task == null) {
-                throw new NoSuchTaskException(taskName);
-            } else {
-                if (task.isDone()) {
-                    throw new TaskFinishedException(taskName);
-                } else {
-                    task.addListener(taskListener);
-                    return taskListener;
-                }
-            }
-        }
-    }
+	@Nonnull
+	@Override
+	public <T> FutureCallback<T> tryAddTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) throws NoSuchTaskException, TaskFinishedException {
+		synchronized (tasks) {
+			final ListenableFutureTask<T> task = (ListenableFutureTask<T>) tasks.get(taskName);
+			if (task == null) {
+				throw new NoSuchTaskException(taskName);
+			} else {
+				if (task.isDone()) {
+					throw new TaskFinishedException(taskName);
+				} else {
+					task.addListener(taskListener);
+					return taskListener;
+				}
+			}
+		}
+	}
 
 
-    @Nullable
-    @Override
-    public <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Callable<T> callable, @Nullable final FutureCallback<T> taskListener) throws TaskIsAlreadyRunningException {
-        synchronized (tasks) {
-            final ListenableFutureTask<T> oldTask = (ListenableFutureTask<T>) tasks.get(taskName);
-            if (oldTask == null || oldTask.isDone()) {
-                final ListenableFutureTask<T> task = createTask(taskName, callable, taskListener);
-                tasks.put(taskName, task);
-                executor.execute(task);
-                return taskListener;
-            } else {
-                throw new TaskIsAlreadyRunningException(taskName);
-            }
-        }
-    }
+	@Nullable
+	@Override
+	public <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Callable<T> callable, @Nullable final FutureCallback<T> taskListener) throws TaskIsAlreadyRunningException {
+		synchronized (tasks) {
+			final ListenableFutureTask<T> oldTask = (ListenableFutureTask<T>) tasks.get(taskName);
+			if (oldTask == null || oldTask.isDone()) {
+				final ListenableFutureTask<T> task = createTask(taskName, callable, taskListener);
+				tasks.put(taskName, task);
+				executor.execute(task);
+				return taskListener;
+			} else {
+				throw new TaskIsAlreadyRunningException(taskName);
+			}
+		}
+	}
 
-    @Nullable
-    @Override
-    public <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Task<T> task) throws TaskIsAlreadyRunningException {
-        return tryRun(taskName, task, task);
-    }
+	@Nullable
+	@Override
+	public <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Task<T> task) throws TaskIsAlreadyRunningException {
+		return tryRun(taskName, task, task);
+	}
 
-    @Nullable
-    @Override
-    public <T> FutureCallback<T> tryRun(@Nonnull NamedTask<T> task) throws TaskIsAlreadyRunningException {
-        return tryRun(task.getName(), task);
-    }
+	@Nullable
+	@Override
+	public <T> FutureCallback<T> tryRun(@Nonnull NamedTask<T> task) throws TaskIsAlreadyRunningException {
+		return tryRun(task.getName(), task);
+	}
 
-    @Override
-    public <T> void run(@Nonnull String taskName, @Nonnull Callable<T> task) {
-        run(taskName, task, null);
-    }
+	@Override
+	public <T> void run(@Nonnull String taskName, @Nonnull Callable<T> task) {
+		run(taskName, task, null);
+	}
 
-    @Nullable
-    @Override
-    public <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Callable<T> callable, @Nullable FutureCallback<T> taskListener) {
-        synchronized (tasks) {
-            final ListenableFutureTask<T> oldTask = (ListenableFutureTask<T>) tasks.get(taskName);
-            if (oldTask != null && !oldTask.isDone()) {
-                oldTask.cancel(false);
-            }
+	@Nullable
+	@Override
+	public <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Callable<T> callable, @Nullable FutureCallback<T> taskListener) {
+		synchronized (tasks) {
+			final ListenableFutureTask<T> oldTask = (ListenableFutureTask<T>) tasks.get(taskName);
+			if (oldTask != null && !oldTask.isDone()) {
+				oldTask.cancel(false);
+			}
 
-            final ListenableFutureTask<T> task = createTask(taskName, callable, taskListener);
-            tasks.put(taskName, task);
-            executor.execute(task);
-            return taskListener;
-        }
-    }
+			final ListenableFutureTask<T> task = createTask(taskName, callable, taskListener);
+			tasks.put(taskName, task);
+			executor.execute(task);
+			return taskListener;
+		}
+	}
 
-    @Nullable
-    @Override
-    public <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Task<T> task) {
-        return run(taskName, task, task);
-    }
+	@Nullable
+	@Override
+	public <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Task<T> task) {
+		return run(taskName, task, task);
+	}
 
-    @Nullable
-    @Override
-    public <T> FutureCallback<T> run(@Nonnull NamedTask<T> task) {
-        return run(task.getName(), task);
-    }
+	@Nullable
+	@Override
+	public <T> FutureCallback<T> run(@Nonnull NamedTask<T> task) {
+		return run(task.getName(), task);
+	}
 
-    @Override
-    public void tryCancel(@Nonnull String taskName) throws NoSuchTaskException, TaskFinishedException {
-        synchronized (tasks) {
-            final ListenableFutureTask<?> task = tasks.get(taskName);
-            if (task == null) {
-                throw new NoSuchTaskException(taskName);
-            } else {
-                if (task.isDone()) {
-                    throw new TaskFinishedException(taskName);
-                } else {
-                    task.cancel(false);
-                }
-            }
-        }
-    }
+	@Override
+	public void tryCancel(@Nonnull String taskName) throws NoSuchTaskException, TaskFinishedException {
+		synchronized (tasks) {
+			final ListenableFutureTask<?> task = tasks.get(taskName);
+			if (task == null) {
+				throw new NoSuchTaskException(taskName);
+			} else {
+				if (task.isDone()) {
+					throw new TaskFinishedException(taskName);
+				} else {
+					task.cancel(false);
+				}
+			}
+		}
+	}
 
-    @Override
-    public boolean cancel(@Nonnull String taskName) {
-        try {
-            tryCancel(taskName);
-            return true;
-        } catch (NoSuchTaskException e) {
-            return false;
-        } catch (TaskFinishedException e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean cancel(@Nonnull String taskName) {
+		try {
+			tryCancel(taskName);
+			return true;
+		} catch (NoSuchTaskException e) {
+			return false;
+		} catch (TaskFinishedException e) {
+			return false;
+		}
+	}
 
-    @Nullable
-    @Override
-    public <T> FutureCallback<T> addTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) {
-        try {
-            tryAddTaskListener(taskName, taskListener);
-            return taskListener;
-        } catch (NoSuchTaskException e) {
-            return null;
-        } catch (TaskFinishedException e) {
-            return null;
-        }
-    }
+	@Nullable
+	@Override
+	public <T> FutureCallback<T> addTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) {
+		try {
+			tryAddTaskListener(taskName, taskListener);
+			return taskListener;
+		} catch (NoSuchTaskException e) {
+			return null;
+		} catch (TaskFinishedException e) {
+			return null;
+		}
+	}
 
-    @Override
-    public <T> void removeTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) {
-        synchronized (tasks) {
-            final ListenableFutureTask<T> task = (ListenableFutureTask<T>) tasks.get(taskName);
-            if (task != null) {
-                task.removeListener(taskListener);
-            }
-        }
-    }
+	@Override
+	public <T> void removeTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) {
+		synchronized (tasks) {
+			final ListenableFutureTask<T> task = (ListenableFutureTask<T>) tasks.get(taskName);
+			if (task != null) {
+				task.removeListener(taskListener);
+			}
+		}
+	}
 
-    @Override
-    public void removeAllTaskListeners(@Nonnull String taskName) {
-        synchronized (tasks) {
-            final ListenableFutureTask<?> task = tasks.get(taskName);
-            if (task != null) {
-                task.removeAllListeners();
-            }
-        }
-    }
+	@Override
+	public void removeAllTaskListeners(@Nonnull String taskName) {
+		synchronized (tasks) {
+			final ListenableFutureTask<?> task = tasks.get(taskName);
+			if (task != null) {
+				task.removeAllListeners();
+			}
+		}
+	}
 
-    private final class TaskRemover<V> implements FutureCallback<V> {
+	private final class TaskRemover<V> implements FutureCallback<V> {
 
-        @Nonnull
-        private final String taskName;
+		@Nonnull
+		private final String taskName;
 
-        private TaskRemover(@Nonnull String taskName) {
-            this.taskName = taskName;
-        }
+		private TaskRemover(@Nonnull String taskName) {
+			this.taskName = taskName;
+		}
 
-        @Override
-        public void onSuccess(V result) {
-            synchronized (tasks) {
-                tasks.remove(taskName);
-            }
-        }
+		@Override
+		public void onSuccess(V result) {
+			synchronized (tasks) {
+				tasks.remove(taskName);
+			}
+		}
 
-        @Override
-        public void onFailure(Throwable t) {
-            synchronized (tasks) {
-                tasks.remove(taskName);
-            }
-        }
-    }
+		@Override
+		public void onFailure(Throwable t) {
+			synchronized (tasks) {
+				tasks.remove(taskName);
+			}
+		}
+	}
 
-    @Nonnull
-    private <V> ListenableFutureTask<V> createTask(@Nonnull String taskName, @Nonnull Callable<V> task, @Nullable FutureCallback<V> taskListener) {
-        final ListenableFutureTask<V> result = ListenableFutureTask.create(task);
-        if (taskListener != null) {
-            result.addListener(taskListener);
-        }
-        result.addListener(new TaskRemover<V>(taskName));
-        return result;
-    }
+	@Nonnull
+	private <V> ListenableFutureTask<V> createTask(@Nonnull String taskName, @Nonnull Callable<V> task, @Nullable FutureCallback<V> taskListener) {
+		final ListenableFutureTask<V> result = ListenableFutureTask.create(task);
+		if (taskListener != null) {
+			result.addListener(taskListener);
+		}
+		result.addListener(new TaskRemover<V>(taskName));
+		return result;
+	}
 
 }

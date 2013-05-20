@@ -31,91 +31,91 @@ import javax.annotation.Nonnull;
  */
 public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
 
-    @Nonnull
-    private I id;
+	@Nonnull
+	private I id;
 
-    @Nonnull
-    private Integer version = FIRST_VERSION;
+	@Nonnull
+	private Integer version = FIRST_VERSION;
 
-    public VersionedEntityImpl(@Nonnull I id) {
-        this.id = id;
-    }
+	public VersionedEntityImpl(@Nonnull I id) {
+		this.id = id;
+	}
 
-    public VersionedEntityImpl(@Nonnull I id, @Nonnull Integer version) {
-        this.id = id;
-        this.version = version;
-    }
+	public VersionedEntityImpl(@Nonnull I id, @Nonnull Integer version) {
+		this.id = id;
+		this.version = version;
+	}
 
-    public VersionedEntityImpl(@Nonnull VersionedEntity<I> versionedEntity) {
-        this.id = versionedEntity.getId();
-        this.version = versionedEntity.getVersion();
-    }
+	public VersionedEntityImpl(@Nonnull VersionedEntity<I> versionedEntity) {
+		this.id = versionedEntity.getId();
+		this.version = versionedEntity.getVersion();
+	}
 
-    @Nonnull
-    public static <I> VersionedEntity<I> newVersion(@Nonnull VersionedEntity<I> versionedEntity) {
-        return new VersionedEntityImpl<I>(versionedEntity.getId(), versionedEntity.getVersion() + 1);
-    }
+	@Nonnull
+	public static <I> VersionedEntity<I> newVersion(@Nonnull VersionedEntity<I> versionedEntity) {
+		return new VersionedEntityImpl<I>(versionedEntity.getId(), versionedEntity.getVersion() + 1);
+	}
 
-    @Nonnull
-    @Override
-    public I getId() {
-        return this.id;
-    }
+	@Nonnull
+	@Override
+	public I getId() {
+		return this.id;
+	}
 
-    @Nonnull
-    @Override
-    public Integer getVersion() {
-        return version;
-    }
+	@Nonnull
+	@Override
+	public Integer getVersion() {
+		return version;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof VersionedEntityImpl)) {
-            return false;
-        }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof VersionedEntityImpl)) {
+			return false;
+		}
 
-        VersionedEntityImpl that = (VersionedEntityImpl) o;
+		VersionedEntityImpl that = (VersionedEntityImpl) o;
 
-        if (!id.equals(that.id)) {
-            return false;
-        }
+		if (!id.equals(that.id)) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean equalsVersion(Object that) {
-        return this.equals(that) && this.version.equals(((VersionedEntityImpl) that).version);
-    }
+	@Override
+	public boolean equalsVersion(Object that) {
+		return this.equals(that) && this.version.equals(((VersionedEntityImpl) that).version);
+	}
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
 
-    @Override
-    public String toString() {
-        return "VersionedEntityImpl{" +
-                "id=" + id +
-                ", version=" + version +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "VersionedEntityImpl{" +
+				"id=" + id +
+				", version=" + version +
+				'}';
+	}
 
-    @Nonnull
-    @Override
-    public VersionedEntityImpl<I> clone() {
-        final VersionedEntityImpl<I> clone;
+	@Nonnull
+	@Override
+	public VersionedEntityImpl<I> clone() {
+		final VersionedEntityImpl<I> clone;
 
-        try {
-            //noinspection unchecked
-            clone = (VersionedEntityImpl<I>) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError(e);
-        }
+		try {
+			//noinspection unchecked
+			clone = (VersionedEntityImpl<I>) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new AssertionError(e);
+		}
 
-        return clone;
-    }
+		return clone;
+	}
 }

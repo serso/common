@@ -31,8 +31,8 @@ import java.util.Iterator;
  */
 public interface TreeIterator<T> extends Iterator<TreeNode<T>> {
 
-    /**
-     * @return current depth in tree
-     */
-    int getDepth();
+	/**
+	 * @return current depth in tree
+	 */
+	int getDepth();
 }

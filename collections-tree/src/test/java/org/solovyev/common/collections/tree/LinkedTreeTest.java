@@ -23,12 +23,11 @@
 package org.solovyev.common.collections.tree;
 
 import junit.framework.Assert;
+import org.junit.Test;
+import org.solovyev.common.JPredicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.junit.Test;
-import org.solovyev.common.JPredicate;
 
 
 /**
@@ -37,7 +36,7 @@ import org.solovyev.common.JPredicate;
  * Time: 11:08 PM
  */
 public class LinkedTreeTest {
-    /*
+	/*
 
 1
 ├──── 2
@@ -50,82 +49,82 @@ public class LinkedTreeTest {
 │     ├──── 9
 │     └──── 10
 └──── 11
-      └──── 12
-            └──── 13
-                  └──── 14
-     */
-    @Nonnull
-    static MutableTree<Integer> createMockTree() {
-        final MutableTree<Integer> result = Trees.newLinkedTree(1);
+	  └──── 12
+			└──── 13
+				  └──── 14
+	 */
+	@Nonnull
+	static MutableTree<Integer> createMockTree() {
+		final MutableTree<Integer> result = Trees.newLinkedTree(1);
 
-        MutableTreeNode<Integer> root = result.getRoot();
-        MutableTreeNode<Integer> child2 = root.addChild(2);
-        MutableTreeNode<Integer> child3 = child2.addChild(3);
-        child3.addChild(4);
-        child3.addChild(5);
-        child2.addChild(6);
-        root.addChild(7);
-        MutableTreeNode<Integer> child8 = root.addChild(8);
-        child8.addChild(9);
-        child8.addChild(10);
-        root.addChild(11).addChild(12).addChild(13).addChild(14);
-
-
-        return result;
-    }
-
-    @Test
-    public void testRemoveNodeIf() throws Exception {
-        // remove all even elements
-        MutableTree<Integer> tree = createMockTree();
-        tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
-            @Override
-            public boolean apply(@Nullable TreeNode<Integer> input) {
-                return input.getValue() % 2 == 0;
-            }
-        });
-
-        Assert.assertEquals(3, tree.getSize());
-        for (TreeNode<Integer> node : tree) {
-            Assert.assertTrue(node.getValue() % 2 != 0);
-        }
-
-        // remove all elements
-        tree = createMockTree();
-        tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
-            @Override
-            public boolean apply(@Nullable TreeNode<Integer> input) {
-                return true;
-            }
-        });
-        Assert.assertEquals(1, tree.getSize());
+		MutableTreeNode<Integer> root = result.getRoot();
+		MutableTreeNode<Integer> child2 = root.addChild(2);
+		MutableTreeNode<Integer> child3 = child2.addChild(3);
+		child3.addChild(4);
+		child3.addChild(5);
+		child2.addChild(6);
+		root.addChild(7);
+		MutableTreeNode<Integer> child8 = root.addChild(8);
+		child8.addChild(9);
+		child8.addChild(10);
+		root.addChild(11).addChild(12).addChild(13).addChild(14);
 
 
-        // remove all odd elements
-        tree = createMockTree();
-        tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
-            @Override
-            public boolean apply(@Nullable TreeNode<Integer> input) {
-                return input.getValue() % 2 != 0;
-            }
-        });
+		return result;
+	}
 
-        Assert.assertEquals(5, tree.getSize());
-        for (TreeNode<Integer> node : tree) {
-            if (node != tree.getRoot()) {
-                Assert.assertTrue(node.getValue() % 2 == 0);
-            }
-        }
-    }
+	@Test
+	public void testRemoveNodeIf() throws Exception {
+		// remove all even elements
+		MutableTree<Integer> tree = createMockTree();
+		tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
+			@Override
+			public boolean apply(@Nullable TreeNode<Integer> input) {
+				return input.getValue() % 2 == 0;
+			}
+		});
 
-    @Test
-    public void testDepthTreeIterator() throws Exception {
-        MutableTree<Integer> tree = createMockTree();
+		Assert.assertEquals(3, tree.getSize());
+		for (TreeNode<Integer> node : tree) {
+			Assert.assertTrue(node.getValue() % 2 != 0);
+		}
 
-        for (TreeIterator<Integer> it = Trees.newDepthTreeIterator(tree); it.hasNext(); ) {
-            final TreeNode<Integer> node = it.next();
-            Assert.assertEquals(node.getDepth(), it.getDepth());
-            System.out.println(it.getDepth() + " ->" + node.getValue());
-        }
-    }
+		// remove all elements
+		tree = createMockTree();
+		tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
+			@Override
+			public boolean apply(@Nullable TreeNode<Integer> input) {
+				return true;
+			}
+		});
+		Assert.assertEquals(1, tree.getSize());
+
+
+		// remove all odd elements
+		tree = createMockTree();
+		tree.removeNodeIf(new JPredicate<TreeNode<Integer>>() {
+			@Override
+			public boolean apply(@Nullable TreeNode<Integer> input) {
+				return input.getValue() % 2 != 0;
+			}
+		});
+
+		Assert.assertEquals(5, tree.getSize());
+		for (TreeNode<Integer> node : tree) {
+			if (node != tree.getRoot()) {
+				Assert.assertTrue(node.getValue() % 2 == 0);
+			}
+		}
+	}
+
+	@Test
+	public void testDepthTreeIterator() throws Exception {
+		MutableTree<Integer> tree = createMockTree();
+
+		for (TreeIterator<Integer> it = Trees.newDepthTreeIterator(tree); it.hasNext(); ) {
+			final TreeNode<Integer> node = it.next();
+			Assert.assertEquals(node.getDepth(), it.getDepth());
+			System.out.println(it.getDepth() + " ->" + node.getValue());
+		}
+	}
 }

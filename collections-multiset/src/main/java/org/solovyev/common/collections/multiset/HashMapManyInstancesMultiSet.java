@@ -23,7 +23,6 @@
 package org.solovyev.common.collections.multiset;
 
 import javax.annotation.Nonnull;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,38 +33,38 @@ import java.util.List;
  */
 public class HashMapManyInstancesMultiSet<E> extends AbstractMapManyInstancesMultiSet<E> {
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private HashMapManyInstancesMultiSet() {
-        super(new HashMap<E, List<E>>());
-    }
+	private HashMapManyInstancesMultiSet() {
+		super(new HashMap<E, List<E>>());
+	}
 
-    private HashMapManyInstancesMultiSet(int capacity) {
-        super(new HashMap<E, List<E>>(capacity));
-    }
+	private HashMapManyInstancesMultiSet(int capacity) {
+		super(new HashMap<E, List<E>>(capacity));
+	}
 
-    private HashMapManyInstancesMultiSet(int capacity, float loadFactor) {
-        super(new HashMap<E, List<E>>(capacity, loadFactor));
-    }
+	private HashMapManyInstancesMultiSet(int capacity, float loadFactor) {
+		super(new HashMap<E, List<E>>(capacity, loadFactor));
+	}
 
-    @Nonnull
-    public static <E> ManyInstancesMultiSet<E> newInstance() {
-        return new HashMapManyInstancesMultiSet<E>();
-    }
+	@Nonnull
+	public static <E> ManyInstancesMultiSet<E> newInstance() {
+		return new HashMapManyInstancesMultiSet<E>();
+	}
 
-    @Nonnull
-    public static <E> ManyInstancesMultiSet<E> newInstance(int capacity) {
-        return new HashMapManyInstancesMultiSet<E>(capacity);
-    }
+	@Nonnull
+	public static <E> ManyInstancesMultiSet<E> newInstance(int capacity) {
+		return new HashMapManyInstancesMultiSet<E>(capacity);
+	}
 
-    @Nonnull
-    public static <E> ManyInstancesMultiSet<E> newInstance(int capacity, float loadFactor) {
-        return new HashMapManyInstancesMultiSet<E>(capacity, loadFactor);
-    }
+	@Nonnull
+	public static <E> ManyInstancesMultiSet<E> newInstance(int capacity, float loadFactor) {
+		return new HashMapManyInstancesMultiSet<E>(capacity, loadFactor);
+	}
 }

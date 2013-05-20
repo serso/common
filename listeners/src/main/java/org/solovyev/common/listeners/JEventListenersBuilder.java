@@ -35,99 +35,99 @@ import java.util.concurrent.ExecutorService;
  */
 public final class JEventListenersBuilder<L extends JEventListener<? extends E>, E extends JEvent> implements JBuilder<JEventListeners<L, E>> {
 
-    private static final int NO_THREAD = -1;
+	private static final int NO_THREAD = -1;
 
-    private int eventThreadsCount = 1;
+	private int eventThreadsCount = 1;
 
-    @Nullable
-    private ExecutorService executorService;
+	@Nullable
+	private ExecutorService executorService;
 
-    private boolean weakReference = true;
+	private boolean weakReference = true;
 
-    @Nonnull
-    private final Class<E> baseEventType;
+	@Nonnull
+	private final Class<E> baseEventType;
 
-    private JEventListenersBuilder(@Nonnull Class<E> baseEventType) {
-        this.baseEventType = baseEventType;
-    }
+	private JEventListenersBuilder(@Nonnull Class<E> baseEventType) {
+		this.baseEventType = baseEventType;
+	}
 
-    @Nonnull
-    static <L extends JEventListener<? extends E>, E extends JEvent> JEventListenersBuilder<L, E> newFor(@Nonnull Class<E> baseEventType) {
-        return new JEventListenersBuilder<L, E>(baseEventType);
-    }
+	@Nonnull
+	static <L extends JEventListener<? extends E>, E extends JEvent> JEventListenersBuilder<L, E> newFor(@Nonnull Class<E> baseEventType) {
+		return new JEventListenersBuilder<L, E>(baseEventType);
+	}
 
-    @Nonnull
-    static <L extends JEventListener<? extends JEvent>> JEventListenersBuilder<L, JEvent> newForJEvent() {
-        return new JEventListenersBuilder<L, JEvent>(JEvent.class);
-    }
+	@Nonnull
+	static <L extends JEventListener<? extends JEvent>> JEventListenersBuilder<L, JEvent> newForJEvent() {
+		return new JEventListenersBuilder<L, JEvent>(JEvent.class);
+	}
 
-    /**
-     * Means that events must be fired on the same thread which calls {@link JEventListeners#fireEvent(E)} method
-     *
-     * @return current builder
-     */
-    @Nonnull
-    public JEventListenersBuilder<L, E> onCallerThread() {
-        this.eventThreadsCount = 0;
-        this.executorService = null;
-        return this;
-    }
+	/**
+	 * Means that events must be fired on the same thread which calls {@link JEventListeners#fireEvent(E)} method
+	 *
+	 * @return current builder
+	 */
+	@Nonnull
+	public JEventListenersBuilder<L, E> onCallerThread() {
+		this.eventThreadsCount = 0;
+		this.executorService = null;
+		return this;
+	}
 
-    @Nonnull
-    public JEventListenersBuilder<L, E> onBackgroundThread() {
-        this.eventThreadsCount = 1;
-        this.executorService = null;
-        return this;
-    }
+	@Nonnull
+	public JEventListenersBuilder<L, E> onBackgroundThread() {
+		this.eventThreadsCount = 1;
+		this.executorService = null;
+		return this;
+	}
 
-    @Nonnull
-    public JEventListenersBuilder<L, E> onBackgroundThreads(int eventThreadsCount) {
-        if ( eventThreadsCount < 1) {
-            throw new IllegalArgumentException("Threads count must be >= 1");
-        }
-        this.eventThreadsCount = eventThreadsCount;
-        this.executorService = null;
-        return this;
-    }
+	@Nonnull
+	public JEventListenersBuilder<L, E> onBackgroundThreads(int eventThreadsCount) {
+		if (eventThreadsCount < 1) {
+			throw new IllegalArgumentException("Threads count must be >= 1");
+		}
+		this.eventThreadsCount = eventThreadsCount;
+		this.executorService = null;
+		return this;
+	}
 
-    @Nonnull
-    public JEventListenersBuilder<L, E> withExecutor(@Nonnull ExecutorService executor) {
-        this.eventThreadsCount = NO_THREAD;
-        this.executorService = executor;
-        return this;
-    }
+	@Nonnull
+	public JEventListenersBuilder<L, E> withExecutor(@Nonnull ExecutorService executor) {
+		this.eventThreadsCount = NO_THREAD;
+		this.executorService = executor;
+		return this;
+	}
 
-    @Nonnull
-    public JEventListenersBuilder<L, E> withWeakReferences() {
-        this.weakReference = true;
-        return this;
-    }
+	@Nonnull
+	public JEventListenersBuilder<L, E> withWeakReferences() {
+		this.weakReference = true;
+		return this;
+	}
 
-    @Nonnull
-    public JEventListenersBuilder<L, E> withHardReferences() {
-        this.weakReference = false;
-        return this;
-    }
+	@Nonnull
+	public JEventListenersBuilder<L, E> withHardReferences() {
+		this.weakReference = false;
+		return this;
+	}
 
-    @Nonnull
-    @Override
-    public JEventListeners<L, E> create() {
-        final JEventListeners<L, E> result;
+	@Nonnull
+	@Override
+	public JEventListeners<L, E> create() {
+		final JEventListeners<L, E> result;
 
-        final JListeners<L> listeners;
+		final JListeners<L> listeners;
 
-        if (weakReference) {
-            listeners = Listeners.newWeakRefListeners();
-        } else {
-            listeners = Listeners.newHardRefListeners();
-        }
+		if (weakReference) {
+			listeners = Listeners.newWeakRefListeners();
+		} else {
+			listeners = Listeners.newHardRefListeners();
+		}
 
-        if (executorService != null) {
-            result = EventListenersImpl.newInstance(listeners, baseEventType, executorService);
-        } else {
-            result = EventListenersImpl.newInstance(listeners, baseEventType, eventThreadsCount);
-        }
+		if (executorService != null) {
+			result = EventListenersImpl.newInstance(listeners, baseEventType, executorService);
+		} else {
+			result = EventListenersImpl.newInstance(listeners, baseEventType, eventThreadsCount);
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

@@ -23,7 +23,6 @@
 package org.solovyev.common.collections.multiset;
 
 import javax.annotation.Nonnull;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,38 +33,38 @@ import java.util.Map;
  */
 public class HashMapOneInstanceMultiSet<E> extends AbstractMapOneInstanceMultiSet<E> {
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTOR
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTOR
+	*
+	**********************************************************************
+	*/
 
-    private HashMapOneInstanceMultiSet() {
-        super(new HashMap<E, Value<E>>());
-    }
+	private HashMapOneInstanceMultiSet() {
+		super(new HashMap<E, Value<E>>());
+	}
 
-    private HashMapOneInstanceMultiSet(int capacity) {
-        super(new HashMap<E, Value<E>>(capacity));
-    }
+	private HashMapOneInstanceMultiSet(int capacity) {
+		super(new HashMap<E, Value<E>>(capacity));
+	}
 
-    private HashMapOneInstanceMultiSet(Map<? extends E, ? extends Value<E>> m) {
-        super(new HashMap<E, Value<E>>(m));
-    }
+	private HashMapOneInstanceMultiSet(Map<? extends E, ? extends Value<E>> m) {
+		super(new HashMap<E, Value<E>>(m));
+	}
 
-    @Nonnull
-    public static <E> HashMapOneInstanceMultiSet<E> newInstance() {
-        return new HashMapOneInstanceMultiSet<E>();
-    }
+	@Nonnull
+	public static <E> HashMapOneInstanceMultiSet<E> newInstance() {
+		return new HashMapOneInstanceMultiSet<E>();
+	}
 
-    @Nonnull
-    public static <E> HashMapOneInstanceMultiSet<E> newInstance(int capacity) {
-        return new HashMapOneInstanceMultiSet<E>(capacity);
-    }
+	@Nonnull
+	public static <E> HashMapOneInstanceMultiSet<E> newInstance(int capacity) {
+		return new HashMapOneInstanceMultiSet<E>(capacity);
+	}
 
-    @Nonnull
-    public static <E> HashMapOneInstanceMultiSet<E> from(@Nonnull Map<? extends E, ? extends Value<E>> m) {
-        return new HashMapOneInstanceMultiSet<E>(m);
-    }
+	@Nonnull
+	public static <E> HashMapOneInstanceMultiSet<E> from(@Nonnull Map<? extends E, ? extends Value<E>> m) {
+		return new HashMapOneInstanceMultiSet<E>(m);
+	}
 }

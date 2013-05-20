@@ -31,8 +31,8 @@ import javax.annotation.Nonnull;
  */
 public interface UnitType<V> {
 
-    @Nonnull
-    Class<V> getUnitValueClass();
+	@Nonnull
+	Class<V> getUnitValueClass();
 
-    boolean equals(@Nonnull Object o);
+	boolean equals(@Nonnull Object o);
 }

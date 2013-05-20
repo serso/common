@@ -23,7 +23,6 @@
 package org.solovyev.common.listeners;
 
 import javax.annotation.Nonnull;
-
 import java.util.Collection;
 
 /**
@@ -40,40 +39,40 @@ import java.util.Collection;
  */
 public interface JListeners<L> {
 
-    /**
-     * Adds <var>listener</var> to container.
-     * After this method is called {@link JListeners#getListeners()} should return collection containing this <var>listener</var>.
-     * <p/>
-     * Note: implementation of this interface may accept or may not accept same listener objects
-     *
-     * @param listener listener to be added to container
-     * @return true if listener was added to the container, false otherwise
-     */
-    boolean addListener(@Nonnull L listener);
+	/**
+	 * Adds <var>listener</var> to container.
+	 * After this method is called {@link JListeners#getListeners()} should return collection containing this <var>listener</var>.
+	 * <p/>
+	 * Note: implementation of this interface may accept or may not accept same listener objects
+	 *
+	 * @param listener listener to be added to container
+	 * @return true if listener was added to the container, false otherwise
+	 */
+	boolean addListener(@Nonnull L listener);
 
-    /**
-     * Removes <var>listener</var> from container.
-     * After this method is called {@link JListeners#getListeners()} should return collection not containing this <var>listener</var>.
-     *
-     * @param listener listener to be removed from container
-     * @return true if listener was removed, false if listener was not in container
-     */
-    boolean removeListener(@Nonnull L listener);
+	/**
+	 * Removes <var>listener</var> from container.
+	 * After this method is called {@link JListeners#getListeners()} should return collection not containing this <var>listener</var>.
+	 *
+	 * @param listener listener to be removed from container
+	 * @return true if listener was removed, false if listener was not in container
+	 */
+	boolean removeListener(@Nonnull L listener);
 
-    /**
-     * Removes all registered listeners
-     */
-    void removeListeners();
+	/**
+	 * Removes all registered listeners
+	 */
+	void removeListeners();
 
-    /**
-     * @return collection of listeners of container. This collection must be a mutable copy of original collection
-     */
-    @Nonnull
-    Collection<L> getListeners();
+	/**
+	 * @return collection of listeners of container. This collection must be a mutable copy of original collection
+	 */
+	@Nonnull
+	Collection<L> getListeners();
 
-    /**
-     * @return collection of listeners of specified <var>type</var> of container. This collection must be a mutable copy of original collection
-     */
-    @Nonnull
-    <LE extends L> Collection<LE> getListenersOfType(@Nonnull Class<LE> type);
+	/**
+	 * @return collection of listeners of specified <var>type</var> of container. This collection must be a mutable copy of original collection
+	 */
+	@Nonnull
+	<LE extends L> Collection<LE> getListenersOfType(@Nonnull Class<LE> type);
 }

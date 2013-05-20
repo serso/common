@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  */
 public class TaskIsAlreadyRunningException extends TaskException {
 
-    public TaskIsAlreadyRunningException(@Nonnull String taskName) {
-        super("Task is already running: " + taskName);
-    }
+	public TaskIsAlreadyRunningException(@Nonnull String taskName) {
+		super("Task is already running: " + taskName);
+	}
 }

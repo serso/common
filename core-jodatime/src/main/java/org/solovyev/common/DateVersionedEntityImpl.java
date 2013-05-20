@@ -33,123 +33,123 @@ import javax.annotation.Nonnull;
  */
 public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> {
 
-    @Nonnull
-    private VersionedEntity<I> versionedEntity;
+	@Nonnull
+	private VersionedEntity<I> versionedEntity;
 
-    @Nonnull
-    private DateTime creationDate;
+	@Nonnull
+	private DateTime creationDate;
 
-    @Nonnull
-    private DateTime modificationDate;
+	@Nonnull
+	private DateTime modificationDate;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
-    private DateVersionedEntityImpl() {
-    }
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
+	private DateVersionedEntityImpl() {
+	}
 
-    @Nonnull
-    public static <I> DateVersionedEntity<I> newEntity(@Nonnull I id) {
-        final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
+	@Nonnull
+	public static <I> DateVersionedEntity<I> newEntity(@Nonnull I id) {
+		final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
-        result.versionedEntity = new VersionedEntityImpl<I>(id);
-        result.creationDate = DateTime.now();
-        result.modificationDate = result.creationDate;
+		result.versionedEntity = new VersionedEntityImpl<I>(id);
+		result.creationDate = DateTime.now();
+		result.modificationDate = result.creationDate;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    public static <I> DateVersionedEntity<I> newVersion(@Nonnull DateVersionedEntity<I> dateVersionedEntity) {
-        final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
+	@Nonnull
+	public static <I> DateVersionedEntity<I> newVersion(@Nonnull DateVersionedEntity<I> dateVersionedEntity) {
+		final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
-        // increase version
-        result.versionedEntity = new VersionedEntityImpl<I>(dateVersionedEntity.getId(), dateVersionedEntity.getVersion() + 1);
-        result.creationDate = dateVersionedEntity.getCreationDate();
-        result.modificationDate = DateTime.now();
+		// increase version
+		result.versionedEntity = new VersionedEntityImpl<I>(dateVersionedEntity.getId(), dateVersionedEntity.getVersion() + 1);
+		result.creationDate = dateVersionedEntity.getCreationDate();
+		result.modificationDate = DateTime.now();
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    public static <I> DateVersionedEntity<I> newInstance(@Nonnull VersionedEntity<I> versionedEntity, @Nonnull DateTime creationDate, @Nonnull DateTime modificationDate) {
-        final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
+	@Nonnull
+	public static <I> DateVersionedEntity<I> newInstance(@Nonnull VersionedEntity<I> versionedEntity, @Nonnull DateTime creationDate, @Nonnull DateTime modificationDate) {
+		final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
-        result.versionedEntity = versionedEntity;
-        result.creationDate = creationDate;
-        result.modificationDate = modificationDate;
+		result.versionedEntity = versionedEntity;
+		result.creationDate = creationDate;
+		result.modificationDate = modificationDate;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public DateTime getCreationDate() {
-        return this.creationDate;
-    }
+	@Nonnull
+	@Override
+	public DateTime getCreationDate() {
+		return this.creationDate;
+	}
 
-    @Nonnull
-    @Override
-    public DateTime getModificationDate() {
-        return this.modificationDate;
-    }
+	@Nonnull
+	@Override
+	public DateTime getModificationDate() {
+		return this.modificationDate;
+	}
 
-    @Override
-    @Nonnull
-    public I getId() {
-        return versionedEntity.getId();
-    }
+	@Override
+	@Nonnull
+	public I getId() {
+		return versionedEntity.getId();
+	}
 
-    @Override
-    @Nonnull
-    public Integer getVersion() {
-        return versionedEntity.getVersion();
-    }
+	@Override
+	@Nonnull
+	public Integer getVersion() {
+		return versionedEntity.getVersion();
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
 
-        if (!(o instanceof DateVersionedEntityImpl)) {
-            return false;
-        }
+		if (!(o instanceof DateVersionedEntityImpl)) {
+			return false;
+		}
 
-        DateVersionedEntityImpl that = (DateVersionedEntityImpl) o;
+		DateVersionedEntityImpl that = (DateVersionedEntityImpl) o;
 
-        if (!versionedEntity.equals(that.versionedEntity)) {
-            return false;
-        }
+		if (!versionedEntity.equals(that.versionedEntity)) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean equalsVersion(Object that) {
-        return this.equals(that) && this.versionedEntity.equalsVersion(((DateVersionedEntityImpl) that).versionedEntity);
-    }
+	@Override
+	public boolean equalsVersion(Object that) {
+		return this.equals(that) && this.versionedEntity.equalsVersion(((DateVersionedEntityImpl) that).versionedEntity);
+	}
 
-    @Override
-    public int hashCode() {
-        return versionedEntity.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return versionedEntity.hashCode();
+	}
 
-    @Nonnull
-    @Override
-    public DateVersionedEntityImpl<I> clone() {
-        final DateVersionedEntityImpl<I> clone;
+	@Nonnull
+	@Override
+	public DateVersionedEntityImpl<I> clone() {
+		final DateVersionedEntityImpl<I> clone;
 
-        try {
-            //noinspection unchecked
-            clone = (DateVersionedEntityImpl<I>) super.clone();
+		try {
+			//noinspection unchecked
+			clone = (DateVersionedEntityImpl<I>) super.clone();
 
-            clone.versionedEntity = this.versionedEntity.clone();
+			clone.versionedEntity = this.versionedEntity.clone();
 
-            // dates are immutable => can leave links as is
+			// dates are immutable => can leave links as is
 
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError(e);
-        }
+		} catch (CloneNotSupportedException e) {
+			throw new AssertionError(e);
+		}
 
-        return clone;
-    }
+		return clone;
+	}
 }

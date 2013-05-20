@@ -34,30 +34,30 @@ import java.util.Random;
 
 public abstract class AbstractStringCiphererTest {
 
-    protected static <E> void doRandomCiphererTest(SecretKeyProvider secretKeyProvider, Cipherer<E, String> cipherer) throws CiphererException, NoSuchProviderException, NoSuchAlgorithmException {
-        java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-        final Random r = new Random(new Date().getTime());
-        for (int i = 0; i < 1000; i++) {
+	protected static <E> void doRandomCiphererTest(SecretKeyProvider secretKeyProvider, Cipherer<E, String> cipherer) throws CiphererException, NoSuchProviderException, NoSuchAlgorithmException {
+		java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+		final Random r = new Random(new Date().getTime());
+		for (int i = 0; i < 1000; i++) {
 
-            final String expected = Strings.generateRandomString(r.nextInt(500) + 500);
+			final String expected = Strings.generateRandomString(r.nextInt(500) + 500);
 
-            final SecretKey sk = secretKeyProvider.getSecretKey(Strings.generateRandomString(10), Bytes.generateRandomBytes(10));
+			final SecretKey sk = secretKeyProvider.getSecretKey(Strings.generateRandomString(10), Bytes.generateRandomBytes(10));
 
-            final E encrypted = cipherer.encrypt(sk, expected);
-            final String decrypted = cipherer.decrypt(sk, encrypted);
+			final E encrypted = cipherer.encrypt(sk, expected);
+			final String decrypted = cipherer.decrypt(sk, encrypted);
 
-            Assert.assertEquals(expected, decrypted);
-        }
-    }
+			Assert.assertEquals(expected, decrypted);
+		}
+	}
 
-    protected static <E> void doCipherTest(SecretKey sk, Cipherer<E, String> cipherer, String expected) throws CiphererException {
-        java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+	protected static <E> void doCipherTest(SecretKey sk, Cipherer<E, String> cipherer, String expected) throws CiphererException {
+		java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
-        final E encrypted = cipherer.encrypt(sk, expected);
-        final String decrypted = cipherer.decrypt(sk, encrypted);
+		final E encrypted = cipherer.encrypt(sk, expected);
+		final String decrypted = cipherer.decrypt(sk, encrypted);
 
-        Assert.assertFalse(encrypted.equals(expected));
-        Assert.assertFalse(decrypted.equals(encrypted));
-        Assert.assertEquals(expected, decrypted);
-    }
+		Assert.assertFalse(encrypted.equals(expected));
+		Assert.assertFalse(decrypted.equals(encrypted));
+		Assert.assertEquals(expected, decrypted);
+	}
 }

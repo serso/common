@@ -24,35 +24,34 @@ package org.solovyev.common.history;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 public interface HistoryHelper<T> {
 
-    boolean isEmpty();
+	boolean isEmpty();
 
-    @Nullable
-    T getLastHistoryState();
+	@Nullable
+	T getLastHistoryState();
 
-    boolean isUndoAvailable();
+	boolean isUndoAvailable();
 
-    @Nullable
-    T undo(@Nullable T currentState);
+	@Nullable
+	T undo(@Nullable T currentState);
 
-    boolean isRedoAvailable();
+	boolean isRedoAvailable();
 
-    @Nullable
-    T redo(@Nullable T currentState);
+	@Nullable
+	T redo(@Nullable T currentState);
 
-    boolean isActionAvailable(@Nonnull HistoryAction historyAction);
+	boolean isActionAvailable(@Nonnull HistoryAction historyAction);
 
-    @Nullable
-    T doAction(@Nonnull HistoryAction historyAction, @Nullable T currentState);
+	@Nullable
+	T doAction(@Nonnull HistoryAction historyAction, @Nullable T currentState);
 
-    void addState(@Nullable T currentState);
+	void addState(@Nullable T currentState);
 
-    @Nonnull
-    List<T> getStates();
+	@Nonnull
+	List<T> getStates();
 
-    void clear();
+	void clear();
 }

@@ -24,7 +24,6 @@ package org.solovyev.common.collections;
 
 
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 
 /**
@@ -39,77 +38,77 @@ import java.util.Collection;
  */
 public class LoopData {
 
-    private final long length;
+	private final long length;
 
-    private long index = 0;
+	private long index = 0;
 
-    public LoopData(@Nullable Collection collection) {
-        if (Collections.isEmpty(collection)) {
-            this.length = (long) 0;
-        } else {
-            this.length = (long) collection.size();
-        }
-    }
+	public LoopData(@Nullable Collection collection) {
+		if (Collections.isEmpty(collection)) {
+			this.length = (long) 0;
+		} else {
+			this.length = (long) collection.size();
+		}
+	}
 
-    public LoopData(@Nullable Object... objects) {
-        if (Collections.isEmpty(objects)) {
-            this.length = (long) 0;
-        } else {
-            this.length = (long) objects.length;
-        }
-    }
+	public LoopData(@Nullable Object... objects) {
+		if (Collections.isEmpty(objects)) {
+			this.length = (long) 0;
+		} else {
+			this.length = (long) objects.length;
+		}
+	}
 
-    /**
-     * Indicates if it is the first time of usage of method or not (used in loops)
-     *
-     * @return 'true' if it is the first loop step, 'false' otherwise
-     */
-    public boolean isFirstAndNext() {
-        boolean result = index == 0;
-        next();
-        return result;
-    }
+	/**
+	 * Indicates if it is the first time of usage of method or not (used in loops)
+	 *
+	 * @return 'true' if it is the first loop step, 'false' otherwise
+	 */
+	public boolean isFirstAndNext() {
+		boolean result = index == 0;
+		next();
+		return result;
+	}
 
-    /**
-     * Increases the counter
-     *
-     * @return current index in loop (before increasing counter)
-     */
-    public long next() {
-        long result = index;
-        index++;
-        return result;
-    }
+	/**
+	 * Increases the counter
+	 *
+	 * @return current index in loop (before increasing counter)
+	 */
+	public long next() {
+		long result = index;
+		index++;
+		return result;
+	}
 
-    /**
-     * Indicates if it is the last element in collection
-     *
-     * @return 'true' if current position is last in collection, 'false' otherwise
-     */
-    public boolean isLast() {
-        return this.length == (this.index + 1);
-    }
+	/**
+	 * Indicates if it is the last element in collection
+	 *
+	 * @return 'true' if current position is last in collection, 'false' otherwise
+	 */
+	public boolean isLast() {
+		return this.length == (this.index + 1);
+	}
 
-    /**
-     * Indicates if it is the last element in collection and goes to the next element
-     *
-     * @return 'true' if current position is last in collection, 'false' otherwise
-     */
-    public boolean isLastAndNext() {
-        boolean result = isLast();
-        next();
-        return result;
-    }
+	/**
+	 * Indicates if it is the last element in collection and goes to the next element
+	 *
+	 * @return 'true' if current position is last in collection, 'false' otherwise
+	 */
+	public boolean isLastAndNext() {
+		boolean result = isLast();
+		next();
+		return result;
+	}
 
-    /**
-     * Rewinds to start of loop
-     */
-    public void rewind() {
-        index = 0;
-    }
+	/**
+	 * Rewinds to start of loop
+	 */
+	public void rewind() {
+		index = 0;
+	}
 
-    public long getIndex() {
-        return index;
-    }
+	public long getIndex() {
+		return index;
+	}
 }
 

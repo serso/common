@@ -32,48 +32,48 @@ import javax.annotation.Nullable;
  */
 public class StringMapper implements Mapper<String> {
 
-    /*
-    **********************************************************************
-    *
-    *                           STATIC
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           STATIC
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private static final Mapper<String> instance = new StringMapper();
+	@Nonnull
+	private static final Mapper<String> instance = new StringMapper();
 
-    @Nonnull
-    public static Mapper<String> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static Mapper<String> getInstance() {
+		return instance;
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTOR
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTOR
+	*
+	**********************************************************************
+	*/
 
-    private StringMapper() {
-    }
+	private StringMapper() {
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Override
-    public String formatValue(@Nullable String value) {
-        return value;
-    }
+	@Override
+	public String formatValue(@Nullable String value) {
+		return value;
+	}
 
-    @Override
-    public String parseValue(@Nullable String value) {
-        return value;
-    }
+	@Override
+	public String parseValue(@Nullable String value) {
+		return value;
+	}
 }

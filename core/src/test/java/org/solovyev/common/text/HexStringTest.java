@@ -35,12 +35,12 @@ import org.solovyev.common.Objects;
  */
 public class HexStringTest {
 
-    @Test
-    public void testGetBytes() throws Exception {
-        final String s = "/]'23']324;32,4p9j;ret";
-        final HexString sHex = HexString.fromString(s);
+	@Test
+	public void testGetBytes() throws Exception {
+		final String s = "/]'23']324;32,4p9j;ret";
+		final HexString sHex = HexString.fromString(s);
 
-        Assert.assertTrue(Objects.areEqual(s, sHex.getOriginal(), null));
-        Assert.assertTrue(Objects.areEqual(Bytes.hexToBytes(sHex), sHex.getOriginal().getBytes(), ByteArrayEqualizer.getInstance()));
-    }
+		Assert.assertTrue(Objects.areEqual(s, sHex.getOriginal(), null));
+		Assert.assertTrue(Objects.areEqual(Bytes.hexToBytes(sHex), sHex.getOriginal().getBytes(), ByteArrayEqualizer.getInstance()));
+	}
 }

@@ -22,9 +22,9 @@
 
 package org.solovyev.common.security;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.Bytes;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,28 +33,28 @@ import org.solovyev.common.Bytes;
  */
 class SaltGeneratorImpl implements SaltGenerator {
 
-    @Nonnull
-    private final String randomAlgorithm;
+	@Nonnull
+	private final String randomAlgorithm;
 
-    private final int saltLength;
+	private final int saltLength;
 
-    private SaltGeneratorImpl(@Nonnull String randomAlgorithm, int saltLength) {
-        this.randomAlgorithm = randomAlgorithm;
-        this.saltLength = saltLength;
-    }
+	private SaltGeneratorImpl(@Nonnull String randomAlgorithm, int saltLength) {
+		this.randomAlgorithm = randomAlgorithm;
+		this.saltLength = saltLength;
+	}
 
-    @Nonnull
-    static SaltGenerator newInstance(@Nonnull String randomAlgorithm, int saltLength) {
-        return new SaltGeneratorImpl(randomAlgorithm, saltLength);
-    }
+	@Nonnull
+	static SaltGenerator newInstance(@Nonnull String randomAlgorithm, int saltLength) {
+		return new SaltGeneratorImpl(randomAlgorithm, saltLength);
+	}
 
-    @Override
-    @Nonnull
-    public byte[] generateSalt() throws CiphererException {
-        try {
-            return Bytes.generateSecureRandomBytes(randomAlgorithm, saltLength);
-        } catch (Exception e) {
-            throw new CiphererException("Unable to generate salt due to some errors!", e);
-        }
-    }
+	@Override
+	@Nonnull
+	public byte[] generateSalt() throws CiphererException {
+		try {
+			return Bytes.generateSecureRandomBytes(randomAlgorithm, saltLength);
+		} catch (Exception e) {
+			throw new CiphererException("Unable to generate salt due to some errors!", e);
+		}
+	}
 }

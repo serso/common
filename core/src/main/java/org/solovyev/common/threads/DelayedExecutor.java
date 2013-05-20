@@ -23,7 +23,6 @@
 package org.solovyev.common.threads;
 
 import javax.annotation.Nonnull;
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
@@ -34,5 +33,5 @@ import java.util.concurrent.TimeUnit;
  */
 public interface DelayedExecutor extends Executor {
 
-    void execute(@Nonnull Runnable command, long delay, @Nonnull TimeUnit delayUnit);
+	void execute(@Nonnull Runnable command, long delay, @Nonnull TimeUnit delayUnit);
 }

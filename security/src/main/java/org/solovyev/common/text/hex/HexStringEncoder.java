@@ -22,10 +22,10 @@
 
 package org.solovyev.common.text.hex;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.Converter;
 import org.solovyev.common.text.HexString;
+
+import javax.annotation.Nonnull;
 
 /**
  * Converter from bytes to base64 encoded String.
@@ -33,20 +33,20 @@ import org.solovyev.common.text.HexString;
  */
 public class HexStringEncoder implements Converter<byte[], HexString> {
 
-    @Nonnull
-    private static Converter<byte[], HexString> instance = new HexStringEncoder();
+	@Nonnull
+	private static Converter<byte[], HexString> instance = new HexStringEncoder();
 
-    private HexStringEncoder() {
-    }
+	private HexStringEncoder() {
+	}
 
-    @Nonnull
-    public static Converter<byte[], HexString> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static Converter<byte[], HexString> getInstance() {
+		return instance;
+	}
 
-    @Nonnull
-    @Override
-    public HexString convert(@Nonnull byte[] bytes) {
-        return HexString.fromBytes(bytes);
-    }
+	@Nonnull
+	@Override
+	public HexString convert(@Nonnull byte[] bytes) {
+		return HexString.fromBytes(bytes);
+	}
 }

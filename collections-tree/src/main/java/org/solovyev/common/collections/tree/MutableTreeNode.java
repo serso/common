@@ -22,11 +22,10 @@
 
 package org.solovyev.common.collections.tree;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.solovyev.common.JPredicate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -41,52 +40,52 @@ import java.util.Iterator;
  */
 public interface MutableTreeNode<T> extends TreeNode<T> {
 
-    @Nullable
-    MutableTreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder);
+	@Nullable
+	MutableTreeNode<T> findOwnChild(@Nonnull JPredicate<TreeNode<T>> finder);
 
-    void setValue(@Nullable T value);
+	void setValue(@Nullable T value);
 
-    @Nonnull
-    Collection<? extends MutableTreeNode<T>> getOwnChildren();
+	@Nonnull
+	Collection<? extends MutableTreeNode<T>> getOwnChildren();
 
-    @Nonnull
-    Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator();
+	@Nonnull
+	Iterator<? extends MutableTreeNode<T>> getOwnChildrenIterator();
 
-    @Nonnull
-    Collection<? extends MutableTreeNode<T>> getAllChildren();
+	@Nonnull
+	Collection<? extends MutableTreeNode<T>> getAllChildren();
 
-    /**
-     * @param node node to be added. The parent specified in the node will be overwritten by this tree node
-     */
-    void addChild(@Nonnull MutableTreeNode<T> node);
+	/**
+	 * @param node node to be added. The parent specified in the node will be overwritten by this tree node
+	 */
+	void addChild(@Nonnull MutableTreeNode<T> node);
 
-    /**
-     * @param value data to be added in the node
-     * @return just added tree node
-     */
-    @Nonnull
-    MutableTreeNode<T> addChild(@Nonnull T value);
+	/**
+	 * @param value data to be added in the node
+	 * @return just added tree node
+	 */
+	@Nonnull
+	MutableTreeNode<T> addChild(@Nonnull T value);
 
-    @Nonnull
-    MutableTreeNode<T> addChildIfNotExists(@Nonnull T value);
+	@Nonnull
+	MutableTreeNode<T> addChildIfNotExists(@Nonnull T value);
 
-    /**
-     * Method removes from OWN children elements which are applied by predicate
-     *
-     * @param predicate removal condition
-     */
-    void removeOwnChildIf(@Nonnull JPredicate<TreeNode<T>> predicate);
+	/**
+	 * Method removes from OWN children elements which are applied by predicate
+	 *
+	 * @param predicate removal condition
+	 */
+	void removeOwnChildIf(@Nonnull JPredicate<TreeNode<T>> predicate);
 
-    /**
-     * Method removes from ALL children elements which are applied by predicate
-     *
-     * @param predicate removal condition
-     */
-    void removeChildIf(@Nonnull JPredicate<TreeNode<T>> predicate);
+	/**
+	 * Method removes from ALL children elements which are applied by predicate
+	 *
+	 * @param predicate removal condition
+	 */
+	void removeChildIf(@Nonnull JPredicate<TreeNode<T>> predicate);
 
 
-    /**
-     * @param parent parent of current node
-     */
-    void setParent(@Nullable TreeNode<T> parent);
+	/**
+	 * @param parent parent of current node
+	 */
+	void setParent(@Nullable TreeNode<T> parent);
 }

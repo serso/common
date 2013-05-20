@@ -23,11 +23,10 @@
 package org.solovyev.common.equals;
 
 import junit.framework.Assert;
-
-import javax.annotation.Nonnull;
-
 import org.junit.Test;
 import org.solovyev.common.Objects;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -36,93 +35,93 @@ import org.solovyev.common.Objects;
  */
 public class ArrayEqualizerTest {
 
-    @Test
-    public void testNaturalEquals() throws Exception {
-        final Equalizer<Integer[]> equalizer = ArrayEqualizer.newWithNaturalEquals();
+	@Test
+	public void testNaturalEquals() throws Exception {
+		final Equalizer<Integer[]> equalizer = ArrayEqualizer.newWithNaturalEquals();
 
-        Integer[] first = new Integer[]{1, 2, 3};
-        Integer[] second = new Integer[]{1, 2, 3};
+		Integer[] first = new Integer[]{1, 2, 3};
+		Integer[] second = new Integer[]{1, 2, 3};
 
-        Assert.assertTrue(Objects.areEqual(first, second, equalizer));
+		Assert.assertTrue(Objects.areEqual(first, second, equalizer));
 
-        first = new Integer[]{1, 2, 3, 5};
-        second = new Integer[]{1, 2, 3, 4};
-        Assert.assertFalse(Objects.areEqual(first, second, equalizer));
+		first = new Integer[]{1, 2, 3, 5};
+		second = new Integer[]{1, 2, 3, 4};
+		Assert.assertFalse(Objects.areEqual(first, second, equalizer));
 
-        first = new Integer[]{1, 2, 3};
-        second = new Integer[]{1, 2, 3, 4};
-        Assert.assertFalse(Objects.areEqual(first, second, equalizer));
+		first = new Integer[]{1, 2, 3};
+		second = new Integer[]{1, 2, 3, 4};
+		Assert.assertFalse(Objects.areEqual(first, second, equalizer));
 
-        first = new Integer[]{1, 2, 3, 5};
-        second = new Integer[]{1, 2, 3};
-        Assert.assertFalse(Objects.areEqual(first, second, equalizer));
+		first = new Integer[]{1, 2, 3, 5};
+		second = new Integer[]{1, 2, 3};
+		Assert.assertFalse(Objects.areEqual(first, second, equalizer));
 
-        first = new Integer[]{1, 2, 3};
-        second = new Integer[]{3, 2, 1};
-        Assert.assertFalse(Objects.areEqual(first, second, equalizer));
+		first = new Integer[]{1, 2, 3};
+		second = new Integer[]{3, 2, 1};
+		Assert.assertFalse(Objects.areEqual(first, second, equalizer));
 
-        first = new Integer[]{};
-        second = new Integer[]{};
-        Assert.assertTrue(Objects.areEqual(first, second, equalizer));
+		first = new Integer[]{};
+		second = new Integer[]{};
+		Assert.assertTrue(Objects.areEqual(first, second, equalizer));
 
-        first = new Integer[]{0};
-        second = new Integer[]{new Integer(0)};
-        Assert.assertTrue(Objects.areEqual(first, second, equalizer));
-    }
+		first = new Integer[]{0};
+		second = new Integer[]{new Integer(0)};
+		Assert.assertTrue(Objects.areEqual(first, second, equalizer));
+	}
 
-    @Test
-    public void testCustomEquals() throws Exception {
-        final Equalizer<TestJObject[]> equalizer = ArrayEqualizer.newWithNestedEqualizer(new Equalizer<TestJObject>() {
-            @Override
-            public boolean areEqual(@Nonnull TestJObject first, @Nonnull TestJObject second) {
-                return first.getField().equals(second.getField());
-            }
-        });
+	@Test
+	public void testCustomEquals() throws Exception {
+		final Equalizer<TestJObject[]> equalizer = ArrayEqualizer.newWithNestedEqualizer(new Equalizer<TestJObject>() {
+			@Override
+			public boolean areEqual(@Nonnull TestJObject first, @Nonnull TestJObject second) {
+				return first.getField().equals(second.getField());
+			}
+		});
 
-        TestJObject[] first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
-        TestJObject[] second = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
+		TestJObject[] first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
+		TestJObject[] second = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
 
-        Assert.assertTrue(Objects.areEqual(first, second, equalizer));
+		Assert.assertTrue(Objects.areEqual(first, second, equalizer));
 
-        first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3"), TestJObject.newInstance("5")};
-        second = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3"), TestJObject.newInstance("4")};
-        Assert.assertFalse(Objects.areEqual(first, second, equalizer));
+		first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3"), TestJObject.newInstance("5")};
+		second = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3"), TestJObject.newInstance("4")};
+		Assert.assertFalse(Objects.areEqual(first, second, equalizer));
 
-        first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
-        second = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3"), TestJObject.newInstance("4")};
-        Assert.assertFalse(Objects.areEqual(first, second, equalizer));
+		first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
+		second = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3"), TestJObject.newInstance("4")};
+		Assert.assertFalse(Objects.areEqual(first, second, equalizer));
 
-        first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3"), TestJObject.newInstance("5")};
-        second = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
-        Assert.assertFalse(Objects.areEqual(first, second, equalizer));
+		first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3"), TestJObject.newInstance("5")};
+		second = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
+		Assert.assertFalse(Objects.areEqual(first, second, equalizer));
 
-        first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
-        second = new TestJObject[]{TestJObject.newInstance("3"), TestJObject.newInstance("2"), TestJObject.newInstance("1")};
-        Assert.assertFalse(Objects.areEqual(first, second, equalizer));
+		first = new TestJObject[]{TestJObject.newInstance("1"), TestJObject.newInstance("2"), TestJObject.newInstance("3")};
+		second = new TestJObject[]{TestJObject.newInstance("3"), TestJObject.newInstance("2"), TestJObject.newInstance("1")};
+		Assert.assertFalse(Objects.areEqual(first, second, equalizer));
 
-        first = new TestJObject[]{};
-        second = new TestJObject[]{};
-        Assert.assertTrue(Objects.areEqual(first, second, equalizer));
+		first = new TestJObject[]{};
+		second = new TestJObject[]{};
+		Assert.assertTrue(Objects.areEqual(first, second, equalizer));
 
 
-    }
+	}
 
-    private static final class TestJObject {
+	private static final class TestJObject {
 
-        @Nonnull
-        private final String field;
+		@Nonnull
+		private final String field;
 
-        private TestJObject(@Nonnull String field) {
-            this.field = field;
-        }
+		private TestJObject(@Nonnull String field) {
+			this.field = field;
+		}
 
-        private static TestJObject newInstance(@Nonnull String field) {
-            return new TestJObject(field);
-        }
+		private static TestJObject newInstance(@Nonnull String field) {
+			return new TestJObject(field);
+		}
 
-        @Nonnull
-        public String getField() {
-            return field;
-        }
-    }
+		@Nonnull
+		public String getField() {
+			return field;
+		}
+	}
 }

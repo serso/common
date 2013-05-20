@@ -38,7 +38,7 @@ import javax.annotation.Nonnull;
  */
 public interface Converter<FROM, TO> {
 
-    @Nonnull
-    TO convert(@Nonnull FROM from);
+	@Nonnull
+	TO convert(@Nonnull FROM from);
 }
 

@@ -28,58 +28,58 @@ import javax.annotation.Nonnull;
 
 class SynchronizedMessageRegistry extends SynchronizedObject<MessageRegistry> implements MessageRegistry {
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
-    private SynchronizedMessageRegistry(@Nonnull MessageRegistry delegate) {
-        super(delegate);
-    }
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
+	private SynchronizedMessageRegistry(@Nonnull MessageRegistry delegate) {
+		super(delegate);
+	}
 
-    private SynchronizedMessageRegistry(@Nonnull MessageRegistry delegate, @Nonnull Object mutex) {
-        super(delegate, mutex);
-    }
+	private SynchronizedMessageRegistry(@Nonnull MessageRegistry delegate, @Nonnull Object mutex) {
+		super(delegate, mutex);
+	}
 
-    @Nonnull
-    public static MessageRegistry wrap(@Nonnull MessageRegistry delegate) {
-        return new SynchronizedMessageRegistry(delegate);
-    }
+	@Nonnull
+	public static MessageRegistry wrap(@Nonnull MessageRegistry delegate) {
+		return new SynchronizedMessageRegistry(delegate);
+	}
 
-    @Nonnull
-    public static MessageRegistry wrap(@Nonnull MessageRegistry delegate, @Nonnull Object mutex) {
-        return new SynchronizedMessageRegistry(delegate, mutex);
-    }
+	@Nonnull
+	public static MessageRegistry wrap(@Nonnull MessageRegistry delegate, @Nonnull Object mutex) {
+		return new SynchronizedMessageRegistry(delegate, mutex);
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Override
-    public void addMessage(@Nonnull Message message) {
-        synchronized (this.mutex) {
-            delegate.addMessage(message);
-        }
-    }
+	@Override
+	public void addMessage(@Nonnull Message message) {
+		synchronized (this.mutex) {
+			delegate.addMessage(message);
+		}
+	}
 
-    @Override
-    public boolean hasMessage() {
-        synchronized (this.mutex) {
-            return delegate.hasMessage();
-        }
-    }
+	@Override
+	public boolean hasMessage() {
+		synchronized (this.mutex) {
+			return delegate.hasMessage();
+		}
+	}
 
-    @Nonnull
-    @Override
-    public Message getMessage() {
-        synchronized (this.mutex) {
-            return delegate.getMessage();
-        }
-    }
+	@Nonnull
+	@Override
+	public Message getMessage() {
+		synchronized (this.mutex) {
+			return delegate.getMessage();
+		}
+	}
 }

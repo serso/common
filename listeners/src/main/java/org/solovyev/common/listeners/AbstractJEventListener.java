@@ -31,16 +31,16 @@ import javax.annotation.Nonnull;
  */
 public abstract class AbstractJEventListener<E extends JEvent> implements JEventListener<E> {
 
-    @Nonnull
-    private final Class<E> eventType;
+	@Nonnull
+	private final Class<E> eventType;
 
-    protected AbstractJEventListener(@Nonnull Class<E> eventType) {
-        this.eventType = eventType;
-    }
+	protected AbstractJEventListener(@Nonnull Class<E> eventType) {
+		this.eventType = eventType;
+	}
 
-    @Nonnull
-    @Override
-    public final Class<E> getEventType() {
-        return this.eventType;
-    }
+	@Nonnull
+	@Override
+	public final Class<E> getEventType() {
+		return this.eventType;
+	}
 }

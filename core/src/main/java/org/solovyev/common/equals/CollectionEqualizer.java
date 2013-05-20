@@ -22,11 +22,10 @@
 
 package org.solovyev.common.equals;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.solovyev.common.Objects;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collection;
 
 /**
@@ -36,38 +35,38 @@ import java.util.Collection;
  */
 public class CollectionEqualizer<T> implements Equalizer<Collection<T>> {
 
-    @Nullable
-    protected final Equalizer<T> nestedEqualizer;
+	@Nullable
+	protected final Equalizer<T> nestedEqualizer;
 
-    public CollectionEqualizer(@Nullable Equalizer<T> nestedEqualizer) {
-        this.nestedEqualizer = nestedEqualizer;
-    }
+	public CollectionEqualizer(@Nullable Equalizer<T> nestedEqualizer) {
+		this.nestedEqualizer = nestedEqualizer;
+	}
 
-    @Override
-    public boolean areEqual(@Nonnull Collection<T> first, @Nonnull Collection<T> second) {
-        boolean result = false;
+	@Override
+	public boolean areEqual(@Nonnull Collection<T> first, @Nonnull Collection<T> second) {
+		boolean result = false;
 
-        if (first.size() == second.size()) {
-            result = true;
+		if (first.size() == second.size()) {
+			result = true;
 
-            for (T el1 : first) {
-                boolean found = false;
+			for (T el1 : first) {
+				boolean found = false;
 
-                for (T el2 : second) {
-                    if (Objects.areEqual(el1, el2, nestedEqualizer)) {
-                        found = true;
-                        break;
-                    }
-                }
+				for (T el2 : second) {
+					if (Objects.areEqual(el1, el2, nestedEqualizer)) {
+						found = true;
+						break;
+					}
+				}
 
-                if (!found) {
-                    result = false;
-                    break;
-                }
-            }
-        }
+				if (!found) {
+					result = false;
+					break;
+				}
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

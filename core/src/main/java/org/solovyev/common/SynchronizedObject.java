@@ -32,60 +32,60 @@ import javax.annotation.concurrent.GuardedBy;
  */
 public abstract class SynchronizedObject<D> {
 
-    @GuardedBy("mutex")
-    @Nonnull
-    protected final D delegate;
+	@GuardedBy("mutex")
+	@Nonnull
+	protected final D delegate;
 
-    @Nonnull
-    protected final Object mutex;
+	@Nonnull
+	protected final Object mutex;
 
-    protected SynchronizedObject(@Nonnull D delegate) {
-        this.delegate = delegate;
-        this.mutex = this;
-    }
+	protected SynchronizedObject(@Nonnull D delegate) {
+		this.delegate = delegate;
+		this.mutex = this;
+	}
 
-    protected SynchronizedObject(@Nonnull D delegate, @Nonnull Object mutex) {
-        this.delegate = delegate;
-        this.mutex = mutex;
-    }
+	protected SynchronizedObject(@Nonnull D delegate, @Nonnull Object mutex) {
+		this.delegate = delegate;
+		this.mutex = mutex;
+	}
 
-    // for manually synchronization it is allows to use mutex
-    @Nonnull
-    public Object getMutex() {
-        return mutex;
-    }
+	// for manually synchronization it is allows to use mutex
+	@Nonnull
+	public Object getMutex() {
+		return mutex;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof SynchronizedObject)) {
-            return false;
-        }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof SynchronizedObject)) {
+			return false;
+		}
 
-        final SynchronizedObject that = (SynchronizedObject) o;
+		final SynchronizedObject that = (SynchronizedObject) o;
 
-        synchronized (mutex) {
-            if (!delegate.equals(that.delegate)) {
-                return false;
-            }
-        }
+		synchronized (mutex) {
+			if (!delegate.equals(that.delegate)) {
+				return false;
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        synchronized (mutex) {
-            return delegate.hashCode();
-        }
-    }
+	@Override
+	public int hashCode() {
+		synchronized (mutex) {
+			return delegate.hashCode();
+		}
+	}
 
-    @Override
-    public String toString() {
-        synchronized (mutex) {
-            return delegate.toString();
-        }
-    }
+	@Override
+	public String toString() {
+		synchronized (mutex) {
+			return delegate.toString();
+		}
+	}
 }

@@ -35,5 +35,5 @@ import javax.annotation.Nullable;
  */
 public interface JPredicate<T> {
 
-    boolean apply(@Nullable T t);
+	boolean apply(@Nullable T t);
 }

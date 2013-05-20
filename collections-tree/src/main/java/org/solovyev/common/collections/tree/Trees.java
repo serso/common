@@ -24,7 +24,6 @@ package org.solovyev.common.collections.tree;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,71 +31,71 @@ import java.util.List;
 
 public final class Trees {
 
-    private Trees() {
-        throw new AssertionError();
-    }
+	private Trees() {
+		throw new AssertionError();
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           PUBLIC
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           PUBLIC
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    public static <N> MutableTree<N> newLinkedTree(@Nullable N root) {
-        return LinkedTree.newInstance(root);
-    }
+	@Nonnull
+	public static <N> MutableTree<N> newLinkedTree(@Nullable N root) {
+		return LinkedTree.newInstance(root);
+	}
 
-    @Nonnull
-    public static <N> MutableTree<N> unmodifiableTree(@Nonnull MutableTree<N> tree) {
-        return UnmodifiableTree.wrap(tree);
-    }
+	@Nonnull
+	public static <N> MutableTree<N> unmodifiableTree(@Nonnull MutableTree<N> tree) {
+		return UnmodifiableTree.wrap(tree);
+	}
 
-    @Nonnull
-    public static <N> MutableTree<N> unmodifiableTree(@Nonnull Tree<N> tree) {
-        return UnmodifiableTree.wrap(tree);
-    }
+	@Nonnull
+	public static <N> MutableTree<N> unmodifiableTree(@Nonnull Tree<N> tree) {
+		return UnmodifiableTree.wrap(tree);
+	}
 
-    @Nonnull
-    public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull Tree<N> tree) {
-        return new DepthTreeIterator<N>(tree);
-    }
+	@Nonnull
+	public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull Tree<N> tree) {
+		return new DepthTreeIterator<N>(tree);
+	}
 
-    @Nonnull
-    public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull TreeNode<N> teeNode) {
-        return new DepthTreeIterator<N>(teeNode);
-    }
+	@Nonnull
+	public static <N> TreeIterator<N> newDepthTreeIterator(@Nonnull TreeNode<N> teeNode) {
+		return new DepthTreeIterator<N>(teeNode);
+	}
 
 
-    /*
-    **********************************************************************
-    *
-    *                           PACKAGE LOCAL
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           PACKAGE LOCAL
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    static <T> List<? extends MutableTreeNode<T>> unmodifiableMutableTreeNodes(@Nonnull Collection<? extends MutableTreeNode<T>> treeNodes) {
-        final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(treeNodes.size());
+	@Nonnull
+	static <T> List<? extends MutableTreeNode<T>> unmodifiableMutableTreeNodes(@Nonnull Collection<? extends MutableTreeNode<T>> treeNodes) {
+		final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(treeNodes.size());
 
-        for (MutableTreeNode<T> treeNode : treeNodes) {
-            result.add(UnmodifiableTreeNode.wrap(treeNode));
-        }
+		for (MutableTreeNode<T> treeNode : treeNodes) {
+			result.add(UnmodifiableTreeNode.wrap(treeNode));
+		}
 
-        return Collections.unmodifiableList(result);
-    }
+		return Collections.unmodifiableList(result);
+	}
 
-    @Nonnull
-    static <T> List<? extends MutableTreeNode<T>> unmodifiableTreeNodes(@Nonnull Collection<? extends TreeNode<T>> treeNodes) {
-        final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(treeNodes.size());
+	@Nonnull
+	static <T> List<? extends MutableTreeNode<T>> unmodifiableTreeNodes(@Nonnull Collection<? extends TreeNode<T>> treeNodes) {
+		final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>(treeNodes.size());
 
-        for (TreeNode<T> treeNode : treeNodes) {
-            result.add(UnmodifiableTreeNode.wrap(treeNode));
-        }
+		for (TreeNode<T> treeNode : treeNodes) {
+			result.add(UnmodifiableTreeNode.wrap(treeNode));
+		}
 
-        return Collections.unmodifiableList(result);
-    }
+		return Collections.unmodifiableList(result);
+	}
 }

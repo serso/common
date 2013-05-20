@@ -36,29 +36,29 @@ import java.util.List;
 
 public class CloneablesTest {
 
-    @Test
-    public void testCloneList() throws Exception {
-        final List<Interval<Integer>> intervals = new ArrayList<Interval<Integer>>();
-        intervals.add(Intervals.newClosedInterval(10, 20));
-        intervals.add(Intervals.newClosedInterval(-10, 20));
-        intervals.add(Intervals.newClosedInterval(10, 520));
+	@Test
+	public void testCloneList() throws Exception {
+		final List<Interval<Integer>> intervals = new ArrayList<Interval<Integer>>();
+		intervals.add(Intervals.newClosedInterval(10, 20));
+		intervals.add(Intervals.newClosedInterval(-10, 20));
+		intervals.add(Intervals.newClosedInterval(10, 520));
 
-        final List<Interval<Integer>> intervalsCopy = Cloneables.cloneList(intervals);
+		final List<Interval<Integer>> intervalsCopy = Cloneables.cloneList(intervals);
 
-        Assert.assertTrue(intervalsCopy.size() == intervals.size());
-        Assert.assertTrue(Objects.areEqual(intervals, intervalsCopy, ListEqualizer.<Interval<Integer>>newWithNaturalEquals(true)));
-        Assert.assertFalse(Objects.areEqual(intervals, intervalsCopy, ListEqualizer.newWithNestedEqualizer(true, SameEqualizer.<Interval<Integer>>getInstance())));
-    }
+		Assert.assertTrue(intervalsCopy.size() == intervals.size());
+		Assert.assertTrue(Objects.areEqual(intervals, intervalsCopy, ListEqualizer.<Interval<Integer>>newWithNaturalEquals(true)));
+		Assert.assertFalse(Objects.areEqual(intervals, intervalsCopy, ListEqualizer.newWithNestedEqualizer(true, SameEqualizer.<Interval<Integer>>getInstance())));
+	}
 
-    @Test
-    public void testCloneArray() throws Exception {
-        Interval[] expected = new Interval[3];
-        expected[0] = Intervals.newPoint(2);
-        expected[1] = Intervals.newClosedInterval(0, 3);
-        expected[2] = Intervals.newInterval(10, false, 15, true);
+	@Test
+	public void testCloneArray() throws Exception {
+		Interval[] expected = new Interval[3];
+		expected[0] = Intervals.newPoint(2);
+		expected[1] = Intervals.newClosedInterval(0, 3);
+		expected[2] = Intervals.newInterval(10, false, 15, true);
 
-        Interval[] actual = Cloneables.deepClone(expected);
-        Assert.assertTrue(Objects.areEqual(expected, actual, ArrayEqualizer.newWithNaturalEquals()));
-        Assert.assertFalse(Objects.areEqual(expected, actual, ArrayEqualizer.newWithNestedEqualizer(SameEqualizer.getInstance())));
-    }
+		Interval[] actual = Cloneables.deepClone(expected);
+		Assert.assertTrue(Objects.areEqual(expected, actual, ArrayEqualizer.newWithNaturalEquals()));
+		Assert.assertFalse(Objects.areEqual(expected, actual, ArrayEqualizer.newWithNestedEqualizer(SameEqualizer.getInstance())));
+	}
 }

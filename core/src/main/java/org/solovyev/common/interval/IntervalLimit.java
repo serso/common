@@ -22,10 +22,10 @@
 
 package org.solovyev.common.interval;
 
+import org.solovyev.common.JCloneable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.solovyev.common.JCloneable;
 
 /**
  * User: serso
@@ -33,33 +33,33 @@ import org.solovyev.common.JCloneable;
  * Time: 12:12 PM
  */
 public interface IntervalLimit<T extends Comparable<T>>
-        extends Comparable<IntervalLimit<T>>,
-        JCloneable<IntervalLimit<T>> {
+		extends Comparable<IntervalLimit<T>>,
+		JCloneable<IntervalLimit<T>> {
 
-    @Nullable
-    T getValue();
+	@Nullable
+	T getValue();
 
-    boolean isClosed();
+	boolean isClosed();
 
-    boolean isOpened();
+	boolean isOpened();
 
-    boolean isLowest();
+	boolean isLowest();
 
-    boolean isHighest();
+	boolean isHighest();
 
-    boolean isLowerThan(@Nonnull T that);
+	boolean isLowerThan(@Nonnull T that);
 
-    boolean isLowerThan(@Nonnull IntervalLimit<T> that);
+	boolean isLowerThan(@Nonnull IntervalLimit<T> that);
 
-    boolean isLowerOrEqualsThan(@Nonnull T that);
+	boolean isLowerOrEqualsThan(@Nonnull T that);
 
-    boolean isLowerOrEqualsThan(@Nonnull IntervalLimit<T> that);
+	boolean isLowerOrEqualsThan(@Nonnull IntervalLimit<T> that);
 
-    boolean isHigherThan(@Nonnull T that);
+	boolean isHigherThan(@Nonnull T that);
 
-    boolean isHigherThan(@Nonnull IntervalLimit<T> that);
+	boolean isHigherThan(@Nonnull IntervalLimit<T> that);
 
-    boolean isHigherOrEqualsThan(@Nonnull T that);
+	boolean isHigherOrEqualsThan(@Nonnull T that);
 
-    boolean isHigherOrEqualsThan(@Nonnull IntervalLimit<T> that);
+	boolean isHigherOrEqualsThan(@Nonnull IntervalLimit<T> that);
 }

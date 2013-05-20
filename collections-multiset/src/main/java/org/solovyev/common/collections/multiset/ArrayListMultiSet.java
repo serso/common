@@ -23,7 +23,6 @@
 package org.solovyev.common.collections.multiset;
 
 import javax.annotation.Nonnull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -34,36 +33,36 @@ import java.util.Collection;
  */
 public class ArrayListMultiSet<E> extends AbstractListMultiSet<E> {
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private ArrayListMultiSet() {
-        super(new ArrayList<E>());
-    }
+	private ArrayListMultiSet() {
+		super(new ArrayList<E>());
+	}
 
-    private ArrayListMultiSet(int capacity) {
-        super(new ArrayList<E>(capacity));
-    }
+	private ArrayListMultiSet(int capacity) {
+		super(new ArrayList<E>(capacity));
+	}
 
-    private ArrayListMultiSet(@Nonnull Collection<? extends E> c) {
-        super(new ArrayList<E>(c));
-    }
+	private ArrayListMultiSet(@Nonnull Collection<? extends E> c) {
+		super(new ArrayList<E>(c));
+	}
 
-    @Nonnull
-    public static <E> ManyInstancesMultiSet<E> newInstance() {
-        return new ArrayListMultiSet<E>();
-    }
+	@Nonnull
+	public static <E> ManyInstancesMultiSet<E> newInstance() {
+		return new ArrayListMultiSet<E>();
+	}
 
-    public static <E> ManyInstancesMultiSet<E> newInstance(int capacity) {
-        return new ArrayListMultiSet<E>(capacity);
-    }
+	public static <E> ManyInstancesMultiSet<E> newInstance(int capacity) {
+		return new ArrayListMultiSet<E>(capacity);
+	}
 
-    public static <E> ManyInstancesMultiSet<E> from(@Nonnull Collection<? extends E> c) {
-        return new ArrayListMultiSet<E>(c);
-    }
+	public static <E> ManyInstancesMultiSet<E> from(@Nonnull Collection<? extends E> c) {
+		return new ArrayListMultiSet<E>(c);
+	}
 }

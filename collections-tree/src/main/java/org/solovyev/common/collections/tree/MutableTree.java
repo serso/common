@@ -22,10 +22,9 @@
 
 package org.solovyev.common.collections.tree;
 
-import javax.annotation.Nonnull;
-
 import org.solovyev.common.JPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -35,12 +34,12 @@ import java.util.List;
  */
 public interface MutableTree<T> extends Tree<T> {
 
-    @Nonnull
-    MutableTreeNode<T> getRoot();
+	@Nonnull
+	MutableTreeNode<T> getRoot();
 
-    void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter);
+	void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter);
 
-    @Nonnull
-    @Override
-    List<? extends MutableTreeNode<T>> getAllNodes();
+	@Nonnull
+	@Override
+	List<? extends MutableTreeNode<T>> getAllNodes();
 }

@@ -32,20 +32,20 @@ import javax.annotation.Nonnull;
  */
 public class StringDecoder implements Converter<String, byte[]> {
 
-    @Nonnull
-    private static Converter<String, byte[]> instance = new StringDecoder();
+	@Nonnull
+	private static Converter<String, byte[]> instance = new StringDecoder();
 
-    private StringDecoder() {
-    }
+	private StringDecoder() {
+	}
 
-    @Nonnull
-    public static Converter<String, byte[]> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static Converter<String, byte[]> getInstance() {
+		return instance;
+	}
 
-    @Nonnull
-    @Override
-    public byte[] convert(@Nonnull String s) {
-        return s.getBytes(Charsets.UTF_8);
-    }
+	@Nonnull
+	@Override
+	public byte[] convert(@Nonnull String s) {
+		return s.getBytes(Charsets.UTF_8);
+	}
 }

@@ -53,8 +53,8 @@ import javax.annotation.Nonnull;
  *   ...
  *
  *   public int hashCode() {
- *     // you pick a hard-coded, randomly chosen, non-zero, odd number
- *     // ideally different for each class
+ * 	// you pick a hard-coded, randomly chosen, non-zero, odd number
+ * 	// ideally different for each class
  *     return new HashCodeBuilder(17, 37).
  *       append(name).
  *       append(age).
@@ -93,458 +93,458 @@ import javax.annotation.Nonnull;
  * @since 1.0
  */
 public class HashCodeBuilder {
-    
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
 
-    /**
-     * Constant to use in building the hashCode.
-     */
-    private final int constant;
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    /**
-     * Running total of the hashCode.
-     */
-    private int total = 0;
+	/**
+	 * Constant to use in building the hashCode.
+	 */
+	private final int constant;
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/**
+	 * Running total of the hashCode.
+	 */
+	private int total = 0;
 
-    /**
-     * <p>
-     * Uses two hard coded choices for the constants needed to build a <code>hashCode</code>.
-     * </p>
-     */
-    private HashCodeBuilder() {
-        constant = 37;
-        total = 17;
-    }
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    /**
-     * <p>
-     * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally these should be different for each class,
-     * however this is not vital.
-     * </p>
-     * <p/>
-     * <p>
-     * Prime numbers are preferred, especially for the multiplier.
-     * </p>
-     *
-     * @param initialNonZeroOddNumber    a non-zero, odd number used as the initial value
-     * @param multiplierNonZeroOddNumber a non-zero, odd number used as the multiplier
-     * @throws IllegalArgumentException if the number is zero or even
-     */
-    private HashCodeBuilder(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber) {
-        if (initialNonZeroOddNumber == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires a non zero initial value");
-        }
-        if (initialNonZeroOddNumber % 2 == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires an odd initial value");
-        }
-        if (multiplierNonZeroOddNumber == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires a non zero multiplier");
-        }
-        if (multiplierNonZeroOddNumber % 2 == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires an odd multiplier");
-        }
-        constant = multiplierNonZeroOddNumber;
-        total = initialNonZeroOddNumber;
-    }
+	/**
+	 * <p>
+	 * Uses two hard coded choices for the constants needed to build a <code>hashCode</code>.
+	 * </p>
+	 */
+	private HashCodeBuilder() {
+		constant = 37;
+		total = 17;
+	}
 
-    @Nonnull
-    public static HashCodeBuilder newInstance() {
-        return new HashCodeBuilder();
-    }
+	/**
+	 * <p>
+	 * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally these should be different for each class,
+	 * however this is not vital.
+	 * </p>
+	 * <p/>
+	 * <p>
+	 * Prime numbers are preferred, especially for the multiplier.
+	 * </p>
+	 *
+	 * @param initialNonZeroOddNumber    a non-zero, odd number used as the initial value
+	 * @param multiplierNonZeroOddNumber a non-zero, odd number used as the multiplier
+	 * @throws IllegalArgumentException if the number is zero or even
+	 */
+	private HashCodeBuilder(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber) {
+		if (initialNonZeroOddNumber == 0) {
+			throw new IllegalArgumentException("HashCodeBuilder requires a non zero initial value");
+		}
+		if (initialNonZeroOddNumber % 2 == 0) {
+			throw new IllegalArgumentException("HashCodeBuilder requires an odd initial value");
+		}
+		if (multiplierNonZeroOddNumber == 0) {
+			throw new IllegalArgumentException("HashCodeBuilder requires a non zero multiplier");
+		}
+		if (multiplierNonZeroOddNumber % 2 == 0) {
+			throw new IllegalArgumentException("HashCodeBuilder requires an odd multiplier");
+		}
+		constant = multiplierNonZeroOddNumber;
+		total = initialNonZeroOddNumber;
+	}
 
-    @Nonnull
-    public static HashCodeBuilder newInstance(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber) {
-        return new HashCodeBuilder(initialNonZeroOddNumber, multiplierNonZeroOddNumber);
-    }
+	@Nonnull
+	public static HashCodeBuilder newInstance() {
+		return new HashCodeBuilder();
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	@Nonnull
+	public static HashCodeBuilder newInstance(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber) {
+		return new HashCodeBuilder(initialNonZeroOddNumber, multiplierNonZeroOddNumber);
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>boolean</code>.
-     * </p>
-     * <p>
-     * This adds <code>constant * 1</code> to the <code>hashCode</code> and not a <code>1231</code> or
-     * <code>1237</code> as done in java.lang.Boolean. This is in accordance with the <quote>Effective Java</quote>
-     * design.
-     * </p>
-     *
-     * @param value the boolean to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(boolean value) {
-        total = total * constant + (value ? 0 : 1);
-        return this;
-    }
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>boolean</code> array.
-     * </p>
-     *
-     * @param array the array to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(boolean[] array) {
-        if (array == null) {
-            total = total * constant;
-        } else {
-            for (boolean element : array) {
-                append(element);
-            }
-        }
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>boolean</code>.
+	 * </p>
+	 * <p>
+	 * This adds <code>constant * 1</code> to the <code>hashCode</code> and not a <code>1231</code> or
+	 * <code>1237</code> as done in java.lang.Boolean. This is in accordance with the <quote>Effective Java</quote>
+	 * design.
+	 * </p>
+	 *
+	 * @param value the boolean to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(boolean value) {
+		total = total * constant + (value ? 0 : 1);
+		return this;
+	}
 
-    // -------------------------------------------------------------------------
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>boolean</code> array.
+	 * </p>
+	 *
+	 * @param array the array to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(boolean[] array) {
+		if (array == null) {
+			total = total * constant;
+		} else {
+			for (boolean element : array) {
+				append(element);
+			}
+		}
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>byte</code>.
-     * </p>
-     *
-     * @param value the byte to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(byte value) {
-        total = total * constant + value;
-        return this;
-    }
+	// -------------------------------------------------------------------------
 
-    // -------------------------------------------------------------------------
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>byte</code>.
+	 * </p>
+	 *
+	 * @param value the byte to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(byte value) {
+		total = total * constant + value;
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>byte</code> array.
-     * </p>
-     *
-     * @param array the array to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(byte[] array) {
-        if (array == null) {
-            total = total * constant;
-        } else {
-            for (byte element : array) {
-                append(element);
-            }
-        }
-        return this;
-    }
+	// -------------------------------------------------------------------------
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>char</code>.
-     * </p>
-     *
-     * @param value the char to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(char value) {
-        total = total * constant + value;
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>byte</code> array.
+	 * </p>
+	 *
+	 * @param array the array to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(byte[] array) {
+		if (array == null) {
+			total = total * constant;
+		} else {
+			for (byte element : array) {
+				append(element);
+			}
+		}
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>char</code> array.
-     * </p>
-     *
-     * @param array the array to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(char[] array) {
-        if (array == null) {
-            total = total * constant;
-        } else {
-            for (char element : array) {
-                append(element);
-            }
-        }
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>char</code>.
+	 * </p>
+	 *
+	 * @param value the char to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(char value) {
+		total = total * constant + value;
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>double</code>.
-     * </p>
-     *
-     * @param value the double to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(double value) {
-        return append(Double.doubleToLongBits(value));
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>char</code> array.
+	 * </p>
+	 *
+	 * @param array the array to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(char[] array) {
+		if (array == null) {
+			total = total * constant;
+		} else {
+			for (char element : array) {
+				append(element);
+			}
+		}
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>double</code> array.
-     * </p>
-     *
-     * @param array the array to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(double[] array) {
-        if (array == null) {
-            total = total * constant;
-        } else {
-            for (double element : array) {
-                append(element);
-            }
-        }
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>double</code>.
+	 * </p>
+	 *
+	 * @param value the double to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(double value) {
+		return append(Double.doubleToLongBits(value));
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>float</code>.
-     * </p>
-     *
-     * @param value the float to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(float value) {
-        total = total * constant + Float.floatToIntBits(value);
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>double</code> array.
+	 * </p>
+	 *
+	 * @param array the array to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(double[] array) {
+		if (array == null) {
+			total = total * constant;
+		} else {
+			for (double element : array) {
+				append(element);
+			}
+		}
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>float</code> array.
-     * </p>
-     *
-     * @param array the array to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(float[] array) {
-        if (array == null) {
-            total = total * constant;
-        } else {
-            for (float element : array) {
-                append(element);
-            }
-        }
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>float</code>.
+	 * </p>
+	 *
+	 * @param value the float to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(float value) {
+		total = total * constant + Float.floatToIntBits(value);
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for an <code>int</code>.
-     * </p>
-     *
-     * @param value the int to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(int value) {
-        total = total * constant + value;
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>float</code> array.
+	 * </p>
+	 *
+	 * @param array the array to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(float[] array) {
+		if (array == null) {
+			total = total * constant;
+		} else {
+			for (float element : array) {
+				append(element);
+			}
+		}
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for an <code>int</code> array.
-     * </p>
-     *
-     * @param array the array to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(int[] array) {
-        if (array == null) {
-            total = total * constant;
-        } else {
-            for (int element : array) {
-                append(element);
-            }
-        }
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for an <code>int</code>.
+	 * </p>
+	 *
+	 * @param value the int to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(int value) {
+		total = total * constant + value;
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>long</code>.
-     * </p>
-     *
-     * @param value the long to add to the <code>hashCode</code>
-     * @return this
-     */
-    // NOTE: This method uses >> and not >>> as Effective Java and
-    //       Long.hashCode do. Ideally we should switch to >>> at
-    //       some stage. There are backwards compat issues, so
-    //       that will have to wait for the time being. cf LANG-342.
-    public HashCodeBuilder append(long value) {
-        total = total * constant + ((int) (value ^ (value >> 32)));
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for an <code>int</code> array.
+	 * </p>
+	 *
+	 * @param array the array to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(int[] array) {
+		if (array == null) {
+			total = total * constant;
+		} else {
+			for (int element : array) {
+				append(element);
+			}
+		}
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>long</code> array.
-     * </p>
-     *
-     * @param array the array to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(long[] array) {
-        if (array == null) {
-            total = total * constant;
-        } else {
-            for (long element : array) {
-                append(element);
-            }
-        }
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>long</code>.
+	 * </p>
+	 *
+	 * @param value the long to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	// NOTE: This method uses >> and not >>> as Effective Java and
+	//       Long.hashCode do. Ideally we should switch to >>> at
+	//       some stage. There are backwards compat issues, so
+	//       that will have to wait for the time being. cf LANG-342.
+	public HashCodeBuilder append(long value) {
+		total = total * constant + ((int) (value ^ (value >> 32)));
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for an <code>Object</code>.
-     * </p>
-     *
-     * @param object the Object to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(Object object) {
-        if (object == null) {
-            total = total * constant;
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>long</code> array.
+	 * </p>
+	 *
+	 * @param array the array to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(long[] array) {
+		if (array == null) {
+			total = total * constant;
+		} else {
+			for (long element : array) {
+				append(element);
+			}
+		}
+		return this;
+	}
 
-        } else {
-            if (object.getClass().isArray()) {
-                // 'Switch' on type of array, to dispatch to the correct handler
-                // This handles multi dimensional arrays
-                if (object instanceof long[]) {
-                    append((long[]) object);
-                } else if (object instanceof int[]) {
-                    append((int[]) object);
-                } else if (object instanceof short[]) {
-                    append((short[]) object);
-                } else if (object instanceof char[]) {
-                    append((char[]) object);
-                } else if (object instanceof byte[]) {
-                    append((byte[]) object);
-                } else if (object instanceof double[]) {
-                    append((double[]) object);
-                } else if (object instanceof float[]) {
-                    append((float[]) object);
-                } else if (object instanceof boolean[]) {
-                    append((boolean[]) object);
-                } else {
-                    // Not an array of primitives
-                    append((Object[]) object);
-                }
-            } else {
-                total = total * constant + object.hashCode();
-            }
-        }
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for an <code>Object</code>.
+	 * </p>
+	 *
+	 * @param object the Object to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(Object object) {
+		if (object == null) {
+			total = total * constant;
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for an <code>Object</code> array.
-     * </p>
-     *
-     * @param array the array to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(Object[] array) {
-        if (array == null) {
-            total = total * constant;
-        } else {
-            for (Object element : array) {
-                append(element);
-            }
-        }
-        return this;
-    }
+		} else {
+			if (object.getClass().isArray()) {
+				// 'Switch' on type of array, to dispatch to the correct handler
+				// This handles multi dimensional arrays
+				if (object instanceof long[]) {
+					append((long[]) object);
+				} else if (object instanceof int[]) {
+					append((int[]) object);
+				} else if (object instanceof short[]) {
+					append((short[]) object);
+				} else if (object instanceof char[]) {
+					append((char[]) object);
+				} else if (object instanceof byte[]) {
+					append((byte[]) object);
+				} else if (object instanceof double[]) {
+					append((double[]) object);
+				} else if (object instanceof float[]) {
+					append((float[]) object);
+				} else if (object instanceof boolean[]) {
+					append((boolean[]) object);
+				} else {
+					// Not an array of primitives
+					append((Object[]) object);
+				}
+			} else {
+				total = total * constant + object.hashCode();
+			}
+		}
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>short</code>.
-     * </p>
-     *
-     * @param value the short to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(short value) {
-        total = total * constant + value;
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for an <code>Object</code> array.
+	 * </p>
+	 *
+	 * @param array the array to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(Object[] array) {
+		if (array == null) {
+			total = total * constant;
+		} else {
+			for (Object element : array) {
+				append(element);
+			}
+		}
+		return this;
+	}
 
-    /**
-     * <p>
-     * Append a <code>hashCode</code> for a <code>short</code> array.
-     * </p>
-     *
-     * @param array the array to add to the <code>hashCode</code>
-     * @return this
-     */
-    public HashCodeBuilder append(short[] array) {
-        if (array == null) {
-            total = total * constant;
-        } else {
-            for (short element : array) {
-                append(element);
-            }
-        }
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>short</code>.
+	 * </p>
+	 *
+	 * @param value the short to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(short value) {
+		total = total * constant + value;
+		return this;
+	}
 
-    /**
-     * <p>
-     * Adds the result of super.hashCode() to this builder.
-     * </p>
-     *
-     * @param superHashCode the result of calling <code>super.hashCode()</code>
-     * @return this HashCodeBuilder, used to chain calls.
-     * @since 2.0
-     */
-    public HashCodeBuilder appendSuper(int superHashCode) {
-        total = total * constant + superHashCode;
-        return this;
-    }
+	/**
+	 * <p>
+	 * Append a <code>hashCode</code> for a <code>short</code> array.
+	 * </p>
+	 *
+	 * @param array the array to add to the <code>hashCode</code>
+	 * @return this
+	 */
+	public HashCodeBuilder append(short[] array) {
+		if (array == null) {
+			total = total * constant;
+		} else {
+			for (short element : array) {
+				append(element);
+			}
+		}
+		return this;
+	}
 
-    /**
-     * <p>
-     * Return the computed <code>hashCode</code>.
-     * </p>
-     *
-     * @return <code>hashCode</code> based on the fields appended
-     */
-    public int toHashCode() {
-        return total;
-    }
+	/**
+	 * <p>
+	 * Adds the result of super.hashCode() to this builder.
+	 * </p>
+	 *
+	 * @param superHashCode the result of calling <code>super.hashCode()</code>
+	 * @return this HashCodeBuilder, used to chain calls.
+	 * @since 2.0
+	 */
+	public HashCodeBuilder appendSuper(int superHashCode) {
+		total = total * constant + superHashCode;
+		return this;
+	}
 
-    /**
-     * <p/>
-     * The computed <code>hashCode</code> from toHashCode() is returned due to the likelyhood
-     * of bugs in mis-calling toHashCode() and the unlikelyness of it mattering what the hashCode for
-     * HashCodeBuilder itself is.
-     *
-     * @return <code>hashCode</code> based on the fields appended
-     * @since 2.5
-     */
-    public int hashCode() {
-        return toHashCode();
-    }
+	/**
+	 * <p>
+	 * Return the computed <code>hashCode</code>.
+	 * </p>
+	 *
+	 * @return <code>hashCode</code> based on the fields appended
+	 */
+	public int toHashCode() {
+		return total;
+	}
+
+	/**
+	 * <p/>
+	 * The computed <code>hashCode</code> from toHashCode() is returned due to the likelyhood
+	 * of bugs in mis-calling toHashCode() and the unlikelyness of it mattering what the hashCode for
+	 * HashCodeBuilder itself is.
+	 *
+	 * @return <code>hashCode</code> based on the fields appended
+	 * @since 2.5
+	 */
+	public int hashCode() {
+		return toHashCode();
+	}
 
 }

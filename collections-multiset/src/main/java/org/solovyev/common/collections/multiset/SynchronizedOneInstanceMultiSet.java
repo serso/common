@@ -31,49 +31,49 @@ import javax.annotation.Nonnull;
  */
 public class SynchronizedOneInstanceMultiSet<E> extends SynchronizedMultiSet<E> implements OneInstanceMultiSet<E> {
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private SynchronizedOneInstanceMultiSet(@Nonnull OneInstanceMultiSet<E> delegate) {
-        super(delegate);
-    }
+	private SynchronizedOneInstanceMultiSet(@Nonnull OneInstanceMultiSet<E> delegate) {
+		super(delegate);
+	}
 
-    private SynchronizedOneInstanceMultiSet(@Nonnull OneInstanceMultiSet<E> delegate, @Nonnull Object mutex) {
-        super(delegate, mutex);
-    }
+	private SynchronizedOneInstanceMultiSet(@Nonnull OneInstanceMultiSet<E> delegate, @Nonnull Object mutex) {
+		super(delegate, mutex);
+	}
 
-    @Nonnull
-    public static <E> SynchronizedOneInstanceMultiSet<E> wrap(@Nonnull OneInstanceMultiSet<E> delegate) {
-        return new SynchronizedOneInstanceMultiSet<E>(delegate);
-    }
+	@Nonnull
+	public static <E> SynchronizedOneInstanceMultiSet<E> wrap(@Nonnull OneInstanceMultiSet<E> delegate) {
+		return new SynchronizedOneInstanceMultiSet<E>(delegate);
+	}
 
-    @Nonnull
-    public static <E> SynchronizedOneInstanceMultiSet<E> wrap(@Nonnull OneInstanceMultiSet<E> delegate, @Nonnull Object mutex) {
-        return new SynchronizedOneInstanceMultiSet<E>(delegate, mutex);
-    }
+	@Nonnull
+	public static <E> SynchronizedOneInstanceMultiSet<E> wrap(@Nonnull OneInstanceMultiSet<E> delegate, @Nonnull Object mutex) {
+		return new SynchronizedOneInstanceMultiSet<E>(delegate, mutex);
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    protected OneInstanceMultiSet<E> getDelegate() {
-        return (OneInstanceMultiSet<E>) delegate;
-    }
+	@Nonnull
+	protected OneInstanceMultiSet<E> getDelegate() {
+		return (OneInstanceMultiSet<E>) delegate;
+	}
 
-    @Override
-    public int setCount(E e, int count) {
-        synchronized (mutex) {
-            return getDelegate().setCount(e, count);
-        }
-    }
+	@Override
+	public int setCount(E e, int count) {
+		synchronized (mutex) {
+			return getDelegate().setCount(e, count);
+		}
+	}
 }

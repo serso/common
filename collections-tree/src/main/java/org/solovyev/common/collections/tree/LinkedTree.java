@@ -38,77 +38,77 @@ import java.util.List;
  */
 class LinkedTree<T> implements MutableTree<T> {
 
-    @Nonnull
-    private MutableTreeNode<T> root;
+	@Nonnull
+	private MutableTreeNode<T> root;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
-    private LinkedTree() {
-    }
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"})
+	private LinkedTree() {
+	}
 
-    @Nonnull
-    static <T> MutableTree<T> newInstance(@Nullable T root) {
-        final LinkedTree<T> result = new LinkedTree<T>();
+	@Nonnull
+	static <T> MutableTree<T> newInstance(@Nullable T root) {
+		final LinkedTree<T> result = new LinkedTree<T>();
 
-        result.root = LinkedTreeNode.newInstance(root);
+		result.root = LinkedTreeNode.newInstance(root);
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public MutableTreeNode<T> getRoot() {
-        return this.root;
-    }
+	@Nonnull
+	@Override
+	public MutableTreeNode<T> getRoot() {
+		return this.root;
+	}
 
-    @Override
-    public int getSize() {
-        // root + children
-        int result = 1 + this.root.getOwnChildren().size();
+	@Override
+	public int getSize() {
+		// root + children
+		int result = 1 + this.root.getOwnChildren().size();
 
-        for (MutableTreeNode<T> child : root.getOwnChildren()) {
-            result += child.getSize();
-        }
+		for (MutableTreeNode<T> child : root.getOwnChildren()) {
+			result += child.getSize();
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter) {
-        Collections.removeIf(this.iterator(), filter);
-    }
+	@Override
+	public void removeNodeIf(@Nonnull JPredicate<? super TreeNode<T>> filter) {
+		Collections.removeIf(this.iterator(), filter);
+	}
 
-    @Nonnull
-    @Override
-    public List<? extends MutableTreeNode<T>> getAllNodes() {
-        final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>();
-        result.add(this.root);
-        result.addAll(this.root.getAllChildren());
-        return result;
-    }
+	@Nonnull
+	@Override
+	public List<? extends MutableTreeNode<T>> getAllNodes() {
+		final List<MutableTreeNode<T>> result = new ArrayList<MutableTreeNode<T>>();
+		result.add(this.root);
+		result.addAll(this.root.getAllChildren());
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public DepthTreeIterator<T> iterator() {
-        return new DepthTreeIterator<T>(this.root);
-    }
+	@Nonnull
+	@Override
+	public DepthTreeIterator<T> iterator() {
+		return new DepthTreeIterator<T>(this.root);
+	}
 
-    @Nonnull
-    @Override
-    public DepthTreeIterator<T> getIterator() {
-        return iterator();
-    }
+	@Nonnull
+	@Override
+	public DepthTreeIterator<T> getIterator() {
+		return iterator();
+	}
 
-    @Override
-    public String toString() {
-        final StringBuilder result = new StringBuilder();
+	@Override
+	public String toString() {
+		final StringBuilder result = new StringBuilder();
 
-        for (DepthTreeIterator<T> it = iterator(); it.hasNext(); ) {
-            final TreeNode<T> node = it.next();
-            result.append(Strings.repeat(" ", it.getDepth()));
-            result.append(node.getValue());
-            result.append("\n");
-        }
+		for (DepthTreeIterator<T> it = iterator(); it.hasNext(); ) {
+			final TreeNode<T> node = it.next();
+			result.append(Strings.repeat(" ", it.getDepth()));
+			result.append(node.getValue());
+			result.append("\n");
+		}
 
-        return result.toString();
-    }
+		return result.toString();
+	}
 }

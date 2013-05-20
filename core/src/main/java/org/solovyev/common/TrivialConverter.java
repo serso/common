@@ -31,19 +31,19 @@ import javax.annotation.Nonnull;
  */
 public class TrivialConverter<T> implements Converter<T, T> {
 
-    private static final Converter<?, ?> instance = new TrivialConverter();
+	private static final Converter<?, ?> instance = new TrivialConverter();
 
-    private TrivialConverter() {
-    }
+	private TrivialConverter() {
+	}
 
-    @Nonnull
-    public static <T> Converter<T, T> getInstance() {
-        return (Converter<T, T>) instance;
-    }
+	@Nonnull
+	public static <T> Converter<T, T> getInstance() {
+		return (Converter<T, T>) instance;
+	}
 
-    @Nonnull
-    @Override
-    public T convert(@Nonnull T t) {
-        return t;
-    }
+	@Nonnull
+	@Override
+	public T convert(@Nonnull T t) {
+		return t;
+	}
 }

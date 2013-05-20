@@ -31,34 +31,34 @@ import javax.annotation.Nonnull;
  */
 public interface UnitConverter<T> {
 
-    boolean isSupported(@Nonnull UnitType<?> from, @Nonnull UnitType<T> to);
+	boolean isSupported(@Nonnull UnitType<?> from, @Nonnull UnitType<T> to);
 
-    @Nonnull
-    Unit<T> convert(@Nonnull Unit<?> from, @Nonnull UnitType<T> toType);
+	@Nonnull
+	Unit<T> convert(@Nonnull Unit<?> from, @Nonnull UnitType<T> toType);
 
-    public static class Dummy implements UnitConverter<Object> {
+	public static class Dummy implements UnitConverter<Object> {
 
-        @Nonnull
-        private static final Dummy instance = new Dummy();
+		@Nonnull
+		private static final Dummy instance = new Dummy();
 
-        @Nonnull
-        public static <T> UnitConverter<T> getInstance() {
-            return (UnitConverter<T>) instance;
-        }
+		@Nonnull
+		public static <T> UnitConverter<T> getInstance() {
+			return (UnitConverter<T>) instance;
+		}
 
-        private Dummy() {
-        }
+		private Dummy() {
+		}
 
-        @Override
-        public boolean isSupported(@Nonnull UnitType<?> from, @Nonnull UnitType<Object> to) {
-            return false;
-        }
+		@Override
+		public boolean isSupported(@Nonnull UnitType<?> from, @Nonnull UnitType<Object> to) {
+			return false;
+		}
 
-        @Nonnull
-        @Override
-        public Unit<Object> convert(@Nonnull Unit<?> from, @Nonnull UnitType<Object> toType) {
-            throw new IllegalArgumentException();
-        }
-    }
+		@Nonnull
+		@Override
+		public Unit<Object> convert(@Nonnull Unit<?> from, @Nonnull UnitType<Object> toType) {
+			throw new IllegalArgumentException();
+		}
+	}
 
 }

@@ -38,7 +38,7 @@ import javax.annotation.Nonnull;
  */
 public interface JCloneable<T extends JCloneable<T>> extends Cloneable {
 
-    @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")
-    @Nonnull
-    T clone();
+	@SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")
+	@Nonnull
+	T clone();
 }

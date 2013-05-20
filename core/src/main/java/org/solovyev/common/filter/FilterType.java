@@ -32,6 +32,6 @@ package org.solovyev.common.filter;
  * Specifies common filter types
  */
 public enum FilterType {
-    included,
-    excluded
+	included,
+	excluded
 }

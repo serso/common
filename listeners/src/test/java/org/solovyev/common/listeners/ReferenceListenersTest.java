@@ -32,84 +32,84 @@ import java.util.Collection;
  */
 public class ReferenceListenersTest {
 
-    @Test
-    public void testGetListeners() throws Exception {
-        final JListeners<TestListener> listeners = ReferenceListeners.newHardReferenceInstance();
+	@Test
+	public void testGetListeners() throws Exception {
+		final JListeners<TestListener> listeners = ReferenceListeners.newHardReferenceInstance();
 
-        final TestListener l1 = new TestListener() {
-            @Override
-            public void doSomething() {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-        };
+		final TestListener l1 = new TestListener() {
+			@Override
+			public void doSomething() {
+				//To change body of implemented methods use File | Settings | File Templates.
+			}
+		};
 
-        Assert.assertTrue(listeners.addListener(l1));
-        Assert.assertFalse(listeners.addListener(l1));
+		Assert.assertTrue(listeners.addListener(l1));
+		Assert.assertFalse(listeners.addListener(l1));
 
-        listeners.addListener(new TestListener() {
-            @Override
-            public void doSomething() {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-        });
+		listeners.addListener(new TestListener() {
+			@Override
+			public void doSomething() {
+				//To change body of implemented methods use File | Settings | File Templates.
+			}
+		});
 
-        final Collection<TestListener> testListeners = listeners.getListeners();
-        Assert.assertEquals(2, testListeners.size());
-        testListeners.remove(l1);
-        Assert.assertEquals(1, testListeners.size());
-        Assert.assertEquals(2, listeners.getListeners().size());
+		final Collection<TestListener> testListeners = listeners.getListeners();
+		Assert.assertEquals(2, testListeners.size());
+		testListeners.remove(l1);
+		Assert.assertEquals(1, testListeners.size());
+		Assert.assertEquals(2, listeners.getListeners().size());
 
-    }
+	}
 
-    @Test
-    public void testGetListenersOfType() throws Exception {
+	@Test
+	public void testGetListenersOfType() throws Exception {
 
-        final JListeners<TestListener> listeners = ReferenceListeners.newHardReferenceInstance();
+		final JListeners<TestListener> listeners = ReferenceListeners.newHardReferenceInstance();
 
-        final TestListener l1 = new TestListener1();
-        final TestListener l2 = new TestListener2();
-        final TestListener l3 = new TestListener3();
+		final TestListener l1 = new TestListener1();
+		final TestListener l2 = new TestListener2();
+		final TestListener l3 = new TestListener3();
 
-        Assert.assertTrue(listeners.addListener(l1));
-        Assert.assertTrue(listeners.addListener(l2));
-        Assert.assertTrue(listeners.addListener(l3));
+		Assert.assertTrue(listeners.addListener(l1));
+		Assert.assertTrue(listeners.addListener(l2));
+		Assert.assertTrue(listeners.addListener(l3));
 
-        final Collection<TestListener> testListeners = listeners.getListenersOfType(TestListener.class);
-        Assert.assertEquals(3, testListeners.size());
+		final Collection<TestListener> testListeners = listeners.getListenersOfType(TestListener.class);
+		Assert.assertEquals(3, testListeners.size());
 
-        final Collection<TestListener1> testListeners1 = listeners.getListenersOfType(TestListener1.class);
-        Assert.assertEquals(1, testListeners1.size());
+		final Collection<TestListener1> testListeners1 = listeners.getListenersOfType(TestListener1.class);
+		Assert.assertEquals(1, testListeners1.size());
 
-        final Collection<TestListener2> testListeners2 = listeners.getListenersOfType(TestListener2.class);
-        Assert.assertEquals(2, testListeners2.size());
+		final Collection<TestListener2> testListeners2 = listeners.getListenersOfType(TestListener2.class);
+		Assert.assertEquals(2, testListeners2.size());
 
-        final Collection<TestListener3> testListeners3 = listeners.getListenersOfType(TestListener3.class);
-        Assert.assertEquals(1, testListeners3.size());
+		final Collection<TestListener3> testListeners3 = listeners.getListenersOfType(TestListener3.class);
+		Assert.assertEquals(1, testListeners3.size());
 
-    }
+	}
 
-    private static interface TestListener {
+	private static interface TestListener {
 
-        void doSomething();
+		void doSomething();
 
-    }
+	}
 
-    private static class TestListener1 implements TestListener {
+	private static class TestListener1 implements TestListener {
 
-        @Override
-        public void doSomething() {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-    }
+		@Override
+		public void doSomething() {
+			//To change body of implemented methods use File | Settings | File Templates.
+		}
+	}
 
-    private static class TestListener2 implements TestListener {
+	private static class TestListener2 implements TestListener {
 
-        @Override
-        public void doSomething() {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-    }
+		@Override
+		public void doSomething() {
+			//To change body of implemented methods use File | Settings | File Templates.
+		}
+	}
 
-    private static class TestListener3 extends TestListener2 {
-    }
+	private static class TestListener3 extends TestListener2 {
+	}
 }

@@ -24,7 +24,6 @@ package org.solovyev.common.text;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -37,81 +36,81 @@ import java.util.Map;
  */
 public class NumberParser<N extends Number> implements Parser<N> {
 
-    /*
-    **********************************************************************
-    *
-    *                           STATIC
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           STATIC
+	*
+	**********************************************************************
+	*/
 
-    static final List<Class<? extends Number>> supportedClasses = Arrays.<Class<? extends Number>>asList(Integer.class, Float.class, Long.class, Double.class);
+	static final List<Class<? extends Number>> supportedClasses = Arrays.<Class<? extends Number>>asList(Integer.class, Float.class, Long.class, Double.class);
 
-    private static final Map<Class<?>, Parser<?>> parsers = new HashMap<Class<?>, Parser<?>>(supportedClasses.size());
+	private static final Map<Class<?>, Parser<?>> parsers = new HashMap<Class<?>, Parser<?>>(supportedClasses.size());
 
-    static {
-        for (Class<? extends Number> supportedClass : supportedClasses) {
-            parsers.put(supportedClass, new NumberParser<Number>(supportedClass));
-        }
-    }
+	static {
+		for (Class<? extends Number> supportedClass : supportedClasses) {
+			parsers.put(supportedClass, new NumberParser<Number>(supportedClass));
+		}
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private final Class<? extends N> clazz;
+	@Nonnull
+	private final Class<? extends N> clazz;
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private NumberParser(@Nonnull Class<? extends N> clazz) {
-        this.clazz = clazz;
-    }
+	private NumberParser(@Nonnull Class<? extends N> clazz) {
+		this.clazz = clazz;
+	}
 
-    @Nonnull
-    public static <N extends Number> Parser<N> of(@Nonnull Class<N> clazz) {
-        assert supportedClasses.contains(clazz) : "Class " + clazz + " is not supported by " + NumberParser.class;
-        return (Parser<N>) parsers.get(clazz);
-    }
+	@Nonnull
+	public static <N extends Number> Parser<N> of(@Nonnull Class<N> clazz) {
+		assert supportedClasses.contains(clazz) : "Class " + clazz + " is not supported by " + NumberParser.class;
+		return (Parser<N>) parsers.get(clazz);
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Override
-    public N parseValue(@Nullable String value) throws IllegalArgumentException {
-        N result;
+	@Override
+	public N parseValue(@Nullable String value) throws IllegalArgumentException {
+		N result;
 
-        if (value != null) {
-            if (this.clazz.equals(Integer.class)) {
-                result = (N) Integer.valueOf(value);
-            } else if (this.clazz.equals(Float.class)) {
-                result = (N) Float.valueOf(value);
-            } else if (this.clazz.equals(Long.class)) {
-                result = (N) Long.valueOf(value);
-            } else if (this.clazz.equals(Double.class)) {
-                result = (N) Double.valueOf(value);
-            } else {
-                throw new UnsupportedOperationException(this.clazz + " is not supported!");
-            }
-        } else {
-            result = null;
-        }
+		if (value != null) {
+			if (this.clazz.equals(Integer.class)) {
+				result = (N) Integer.valueOf(value);
+			} else if (this.clazz.equals(Float.class)) {
+				result = (N) Float.valueOf(value);
+			} else if (this.clazz.equals(Long.class)) {
+				result = (N) Long.valueOf(value);
+			} else if (this.clazz.equals(Double.class)) {
+				result = (N) Double.valueOf(value);
+			} else {
+				throw new UnsupportedOperationException(this.clazz + " is not supported!");
+			}
+		} else {
+			result = null;
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

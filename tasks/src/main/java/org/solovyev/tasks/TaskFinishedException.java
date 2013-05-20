@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  */
 public class TaskFinishedException extends TaskException {
 
-    public TaskFinishedException(@Nonnull String taskName) {
-        super("Task has already been finished: " + taskName);
-    }
+	public TaskFinishedException(@Nonnull String taskName) {
+		super("Task has already been finished: " + taskName);
+	}
 }

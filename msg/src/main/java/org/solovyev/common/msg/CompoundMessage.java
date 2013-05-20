@@ -23,7 +23,6 @@
 package org.solovyev.common.msg;
 
 import javax.annotation.Nonnull;
-
 import java.util.List;
 import java.util.Locale;
 
@@ -34,35 +33,35 @@ import java.util.Locale;
  */
 public class CompoundMessage extends AbstractMessage {
 
-    @Nonnull
-    private final Message compoundMessage;
+	@Nonnull
+	private final Message compoundMessage;
 
-    private CompoundMessage(@Nonnull Message compoundMessage, @Nonnull MessageLevel messageLevel, @Nonnull List<?> parameters) {
-        super(compoundMessage.getMessageCode(), messageLevel, parameters);
-        this.compoundMessage = compoundMessage;
-    }
+	private CompoundMessage(@Nonnull Message compoundMessage, @Nonnull MessageLevel messageLevel, @Nonnull List<?> parameters) {
+		super(compoundMessage.getMessageCode(), messageLevel, parameters);
+		this.compoundMessage = compoundMessage;
+	}
 
-    public static CompoundMessage newInstance(@Nonnull Message compoundMessage, @Nonnull List<? extends Message> messages) {
-        MessageLevel messageLevel = MessageType.info;
-        for (Message message : messages) {
-            messageLevel = Messages.getMessageLevelWithHigherLevel(messageLevel, message.getMessageLevel());
-        }
-        return new CompoundMessage(compoundMessage, messageLevel, messages);
-    }
+	public static CompoundMessage newInstance(@Nonnull Message compoundMessage, @Nonnull List<? extends Message> messages) {
+		MessageLevel messageLevel = MessageType.info;
+		for (Message message : messages) {
+			messageLevel = Messages.getMessageLevelWithHigherLevel(messageLevel, message.getMessageLevel());
+		}
+		return new CompoundMessage(compoundMessage, messageLevel, messages);
+	}
 
-    @Override
-    protected String getMessagePattern(@Nonnull Locale locale) {
-        final StringBuilder result = new StringBuilder();
+	@Override
+	protected String getMessagePattern(@Nonnull Locale locale) {
+		final StringBuilder result = new StringBuilder();
 
-        result.append(compoundMessage.getLocalizedMessage(locale)).append("\n");
+		result.append(compoundMessage.getLocalizedMessage(locale)).append("\n");
 
-        for (int i = 0; i < getParameters().size(); i++) {
-            if (i != 0) {
-                result.append(",\n");
-            }
-            result.append("{").append(i).append("}");
-        }
+		for (int i = 0; i < getParameters().size(); i++) {
+			if (i != 0) {
+				result.append(",\n");
+			}
+			result.append("{").append(i).append("}");
+		}
 
-        return result.toString();
-    }
+		return result.toString();
+	}
 }

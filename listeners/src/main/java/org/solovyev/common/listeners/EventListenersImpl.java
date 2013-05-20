@@ -24,7 +24,6 @@ package org.solovyev.common.listeners;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
@@ -39,159 +38,159 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent> implements JEventListeners<L, E> {
 
-    /*
-    **********************************************************************
-    *
-    *                           FIELDS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private final JListeners<L> listeners;
+	@Nonnull
+	private final JListeners<L> listeners;
 
-    @Nonnull
-    private final Class<E> baseEventType;
+	@Nonnull
+	private final Class<E> baseEventType;
 
-    @Nullable
-    private final ExecutorService eventExecutor;
+	@Nullable
+	private final ExecutorService eventExecutor;
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTRUCTORS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           CONSTRUCTORS
+	*
+	**********************************************************************
+	*/
 
-    private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, int eventThreadsCount) {
-        this(listeners, baseEventType, newExecutor(eventThreadsCount));
-    }
+	private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, int eventThreadsCount) {
+		this(listeners, baseEventType, newExecutor(eventThreadsCount));
+	}
 
-    @Nullable
-    private static ExecutorService newExecutor(int eventThreadsCount) {
-        final ExecutorService result;
+	@Nullable
+	private static ExecutorService newExecutor(int eventThreadsCount) {
+		final ExecutorService result;
 
-        if (eventThreadsCount < 0) {
-            throw new IllegalArgumentException("eventThreadsCount should be not negative!");
-        }
-        if (eventThreadsCount == 0) {
-            result = null;
-        } else if (eventThreadsCount == 1) {
-            result = Executors.newSingleThreadExecutor(createDefaultThreadFactory());
-        } else {
-            result = Executors.newFixedThreadPool(eventThreadsCount, createDefaultThreadFactory());
-        }
+		if (eventThreadsCount < 0) {
+			throw new IllegalArgumentException("eventThreadsCount should be not negative!");
+		}
+		if (eventThreadsCount == 0) {
+			result = null;
+		} else if (eventThreadsCount == 1) {
+			result = Executors.newSingleThreadExecutor(createDefaultThreadFactory());
+		} else {
+			result = Executors.newFixedThreadPool(eventThreadsCount, createDefaultThreadFactory());
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nullable ExecutorService eventExecutor) {
-        this.listeners = listeners;
-        this.baseEventType = baseEventType;
-        this.eventExecutor = eventExecutor;
-    }
+	private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nullable ExecutorService eventExecutor) {
+		this.listeners = listeners;
+		this.baseEventType = baseEventType;
+		this.eventExecutor = eventExecutor;
+	}
 
-    @Nonnull
-    public static <L extends JEventListener<?>> EventListenersImpl<L, JEvent> newSingleThread(@Nonnull JListeners<L> listeners) {
-        return newInstance(listeners, JEvent.class, 1);
-    }
+	@Nonnull
+	public static <L extends JEventListener<?>> EventListenersImpl<L, JEvent> newSingleThread(@Nonnull JListeners<L> listeners) {
+		return newInstance(listeners, JEvent.class, 1);
+	}
 
-    @Nonnull
-    public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newSingleThread(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType) {
-        return newInstance(listeners, baseEventType, 1);
-    }
+	@Nonnull
+	public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newSingleThread(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType) {
+		return newInstance(listeners, baseEventType, 1);
+	}
 
-    @Nonnull
-    public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, int eventThreadsCount) {
-        return new EventListenersImpl<L, E>(listeners, baseEventType, eventThreadsCount);
-    }
+	@Nonnull
+	public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, int eventThreadsCount) {
+		return new EventListenersImpl<L, E>(listeners, baseEventType, eventThreadsCount);
+	}
 
-    @Nonnull
-    public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nonnull ExecutorService executor) {
-        return new EventListenersImpl<L, E>(listeners, baseEventType, executor);
-    }
+	@Nonnull
+	public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nonnull ExecutorService executor) {
+		return new EventListenersImpl<L, E>(listeners, baseEventType, executor);
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           METHODS
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           METHODS
+	*
+	**********************************************************************
+	*/
 
-    @Override
-    public void fireEvent(@Nonnull final E event) {
-        fireEvents(Arrays.asList(event));
-    }
+	@Override
+	public void fireEvent(@Nonnull final E event) {
+		fireEvents(Arrays.asList(event));
+	}
 
-    @Override
-    public void fireEvents(@Nonnull final Collection<E> events) {
-        final Collection<L> listeners = this.listeners.getListeners();
+	@Override
+	public void fireEvents(@Nonnull final Collection<E> events) {
+		final Collection<L> listeners = this.listeners.getListeners();
 
-        if (eventExecutor == null) {
-            // run on current thread
-            fireEvents(events, listeners);
-        } else {
-            eventExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    fireEvents(events, listeners);
-                }
-            });
-        }
-    }
+		if (eventExecutor == null) {
+			// run on current thread
+			fireEvents(events, listeners);
+		} else {
+			eventExecutor.execute(new Runnable() {
+				@Override
+				public void run() {
+					fireEvents(events, listeners);
+				}
+			});
+		}
+	}
 
-    private void fireEvents(@Nonnull Collection<E> events, @Nonnull Collection<L> listeners) {
-        // first loop for events as some events might be earlier than others and we want to notify all listeners
-        // in chronological order
-        for (E event : events) {
-            for (L listener : listeners) {
-                if (listener.getEventType().isAssignableFrom(event.getClass())) {
-                    ((JEventListener<E>) listener).onEvent(event);
-                }
-            }
-        }
-    }
+	private void fireEvents(@Nonnull Collection<E> events, @Nonnull Collection<L> listeners) {
+		// first loop for events as some events might be earlier than others and we want to notify all listeners
+		// in chronological order
+		for (E event : events) {
+			for (L listener : listeners) {
+				if (listener.getEventType().isAssignableFrom(event.getClass())) {
+					((JEventListener<E>) listener).onEvent(event);
+				}
+			}
+		}
+	}
 
-    @Override
-    public boolean addListener(@Nonnull L listener) {
-        if (!baseEventType.isAssignableFrom(listener.getEventType())) {
-            throw new IllegalArgumentException("Current listener cannot be added, because will never be fired!");
-        }
-        return listeners.addListener(listener);
-    }
+	@Override
+	public boolean addListener(@Nonnull L listener) {
+		if (!baseEventType.isAssignableFrom(listener.getEventType())) {
+			throw new IllegalArgumentException("Current listener cannot be added, because will never be fired!");
+		}
+		return listeners.addListener(listener);
+	}
 
-    @Override
-    public boolean removeListener(@Nonnull L listener) {
-        return listeners.removeListener(listener);
-    }
+	@Override
+	public boolean removeListener(@Nonnull L listener) {
+		return listeners.removeListener(listener);
+	}
 
-    @Override
-    public void removeListeners() {
-        this.listeners.removeListeners();
-    }
+	@Override
+	public void removeListeners() {
+		this.listeners.removeListeners();
+	}
 
-    /*
-    **********************************************************************
-    *
-    *                           STATIC
-    *
-    **********************************************************************
-    */
+	/*
+	**********************************************************************
+	*
+	*                           STATIC
+	*
+	**********************************************************************
+	*/
 
-    @Nonnull
-    private static ThreadFactory createDefaultThreadFactory() {
-        return new ThreadFactory() {
+	@Nonnull
+	private static ThreadFactory createDefaultThreadFactory() {
+		return new ThreadFactory() {
 
-            @Nonnull
-            private AtomicInteger threadCounter = new AtomicInteger(0);
+			@Nonnull
+			private AtomicInteger threadCounter = new AtomicInteger(0);
 
-            @Nonnull
-            @Override
-            public Thread newThread(@Nonnull Runnable r) {
-                return new Thread(r, "Event executor thread #" + threadCounter.incrementAndGet());
-            }
-        };
-    }
+			@Nonnull
+			@Override
+			public Thread newThread(@Nonnull Runnable r) {
+				return new Thread(r, "Event executor thread #" + threadCounter.incrementAndGet());
+			}
+		};
+	}
 }
