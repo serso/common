@@ -116,7 +116,7 @@ public class SortedList<T> implements List<T> {
 			public void remove() {
 				it.remove();
 				// todo serso: think
-				Collections.sort(list, comparator);
+				sort();
 			}
 		};
 	}
@@ -136,14 +136,14 @@ public class SortedList<T> implements List<T> {
 	@Override
 	public boolean add(T t) {
 		boolean result = list.add(t);
-		Collections.sort(list, comparator);
+		sort();
 		return result;
 	}
 
 	@Override
 	public boolean remove(Object o) {
 		boolean result = list.remove(o);
-		Collections.sort(list, comparator);
+		sort();
 		return result;
 	}
 
@@ -155,28 +155,28 @@ public class SortedList<T> implements List<T> {
 	@Override
 	public boolean addAll(@Nonnull Collection<? extends T> c) {
 		boolean result = this.list.addAll(c);
-		Collections.sort(list, comparator);
+		sort();
 		return result;
 	}
 
 	@Override
 	public boolean addAll(int index, @Nonnull Collection<? extends T> c) {
 		boolean result = this.list.addAll(index, c);
-		Collections.sort(list, comparator);
+		sort();
 		return result;
 	}
 
 	@Override
 	public boolean removeAll(@Nonnull Collection<?> c) {
 		boolean result = this.list.removeAll(c);
-		Collections.sort(list, comparator);
+		sort();
 		return result;
 	}
 
 	@Override
 	public boolean retainAll(@Nonnull Collection<?> c) {
 		boolean result = this.list.retainAll(c);
-		Collections.sort(list, comparator);
+		sort();
 		return result;
 	}
 
@@ -193,20 +193,20 @@ public class SortedList<T> implements List<T> {
 	@Override
 	public T set(int index, T element) {
 		T result = this.list.set(index, element);
-		Collections.sort(list, comparator);
+		sort();
 		return result;
 	}
 
 	@Override
 	public void add(int index, T element) {
 		this.list.add(index, element);
-		Collections.sort(list, comparator);
+		sort();
 	}
 
 	@Override
 	public T remove(int index) {
 		T result = this.list.remove(index);
-		Collections.sort(list, comparator);
+		sort();
 		return result;
 	}
 
@@ -264,21 +264,25 @@ public class SortedList<T> implements List<T> {
 			@Override
 			public void remove() {
 				it.remove();
-				Collections.sort(list, comparator);
+				sort();
 			}
 
 			@Override
 			public void set(T t) {
 				it.set(t);
-				Collections.sort(list, comparator);
+				sort();
 			}
 
 			@Override
 			public void add(T t) {
 				it.add(t);
-				Collections.sort(list, comparator);
+				sort();
 			}
 		};
+	}
+
+	public void sort() {
+		Collections.sort(list, comparator);
 	}
 
 	@Nonnull
