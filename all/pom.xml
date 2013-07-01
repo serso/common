@@ -26,62 +26,62 @@
 	<parent>
 		<groupId>org.solovyev</groupId>
 		<artifactId>common</artifactId>
-		<version>1.0.5-SNAPSHOT</version>
+		<version>1.0.5</version>
 	</parent>
 
 	<groupId>org.solovyev</groupId>
 	<artifactId>common-all</artifactId>
 	<name>Java Common Library All</name>
-	<version>1.0.5-SNAPSHOT</version>
+	<version>1.0.5</version>
 
 	<dependencies>
 
 		<dependency>
 			<groupId>org.solovyev</groupId>
 			<artifactId>common-core</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
+			<version>1.0.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.solovyev</groupId>
 			<artifactId>common-msg</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
+			<version>1.0.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.solovyev</groupId>
 			<artifactId>common-text</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
+			<version>1.0.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.solovyev</groupId>
 			<artifactId>common-listeners</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
+			<version>1.0.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.solovyev</groupId>
 			<artifactId>common-collections-multiset</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
+			<version>1.0.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.solovyev</groupId>
 			<artifactId>common-collections-tree</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
+			<version>1.0.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.solovyev</groupId>
 			<artifactId>common-core-jodatime</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
+			<version>1.0.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.solovyev</groupId>
 			<artifactId>common-tasks</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
+			<version>1.0.5</version>
 		</dependency>
 
 	</dependencies>
