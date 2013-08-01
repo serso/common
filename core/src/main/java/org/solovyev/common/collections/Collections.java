@@ -40,6 +40,9 @@ import java.util.*;
  */
 public class Collections {
 
+	@Nonnull
+	private static final Comparator<Comparable> naturalComparator = new NaturalComparator();
+
 	protected Collections() {
 		throw new AssertionError();
 	}
@@ -476,6 +479,11 @@ public class Collections {
 		}
 
 		return result;
+	}
+
+	@Nonnull
+	public static <T extends Comparable> Comparator<T> naturalComparator() {
+		return (Comparator<T>) naturalComparator;
 	}
 }
 
