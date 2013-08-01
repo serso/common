@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
  * Date: 4/29/12
  * Time: 9:47 PM
  */
-public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
+final class VersionedEntityImpl<I> implements VersionedEntity<I> {
 
 	@Nonnull
 	private I id;
@@ -37,22 +37,22 @@ public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
 	@Nonnull
 	private Integer version = FIRST_VERSION;
 
-	public VersionedEntityImpl(@Nonnull I id) {
+	VersionedEntityImpl(@Nonnull I id) {
 		this.id = id;
 	}
 
-	public VersionedEntityImpl(@Nonnull I id, @Nonnull Integer version) {
+	VersionedEntityImpl(@Nonnull I id, @Nonnull Integer version) {
 		this.id = id;
 		this.version = version;
 	}
 
-	public VersionedEntityImpl(@Nonnull VersionedEntity<I> versionedEntity) {
+	VersionedEntityImpl(@Nonnull VersionedEntity<I> versionedEntity) {
 		this.id = versionedEntity.getId();
 		this.version = versionedEntity.getVersion();
 	}
 
 	@Nonnull
-	public static <I> VersionedEntity<I> newVersion(@Nonnull VersionedEntity<I> versionedEntity) {
+	static <I> VersionedEntity<I> newVersion(@Nonnull VersionedEntity<I> versionedEntity) {
 		return new VersionedEntityImpl<I>(versionedEntity.getId(), versionedEntity.getVersion() + 1);
 	}
 

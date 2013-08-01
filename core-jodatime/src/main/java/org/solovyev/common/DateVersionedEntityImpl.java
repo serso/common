@@ -31,7 +31,7 @@ import javax.annotation.Nonnull;
  * Date: 4/29/12
  * Time: 9:53 PM
  */
-public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> {
+final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> {
 
 	@Nonnull
 	private VersionedEntity<I> versionedEntity;
@@ -47,10 +47,10 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
 	}
 
 	@Nonnull
-	public static <I> DateVersionedEntity<I> newEntity(@Nonnull I id) {
+	static <I> DateVersionedEntity<I> newEntity(@Nonnull I id) {
 		final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
-		result.versionedEntity = new VersionedEntityImpl<I>(id);
+		result.versionedEntity = Entities.newEntity(id);
 		result.creationDate = DateTime.now();
 		result.modificationDate = result.creationDate;
 
@@ -58,11 +58,11 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
 	}
 
 	@Nonnull
-	public static <I> DateVersionedEntity<I> newVersion(@Nonnull DateVersionedEntity<I> dateVersionedEntity) {
+	static <I> DateVersionedEntity<I> newVersion(@Nonnull DateVersionedEntity<I> dateVersionedEntity) {
 		final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
 		// increase version
-		result.versionedEntity = new VersionedEntityImpl<I>(dateVersionedEntity.getId(), dateVersionedEntity.getVersion() + 1);
+		result.versionedEntity = Entities.newEntityVersion(dateVersionedEntity);
 		result.creationDate = dateVersionedEntity.getCreationDate();
 		result.modificationDate = DateTime.now();
 
@@ -70,7 +70,12 @@ public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> 
 	}
 
 	@Nonnull
-	public static <I> DateVersionedEntity<I> newInstance(@Nonnull VersionedEntity<I> versionedEntity, @Nonnull DateTime creationDate, @Nonnull DateTime modificationDate) {
+	static <I> DateVersionedEntity<I> newInstance(@Nonnull I id, @Nonnull Integer version, @Nonnull DateTime creationDate, @Nonnull DateTime modificationDate) {
+		return newInstance(Entities.newEntity(id, version), creationDate, modificationDate);
+	}
+
+		@Nonnull
+	static <I> DateVersionedEntity<I> newInstance(@Nonnull VersionedEntity<I> versionedEntity, @Nonnull DateTime creationDate, @Nonnull DateTime modificationDate) {
 		final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
 		result.versionedEntity = versionedEntity;
