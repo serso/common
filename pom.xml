@@ -48,6 +48,7 @@
 		<module>tasks</module>
 		<module>collections-tree</module>
 		<module>collections-multiset</module>
+		<module>graphs</module>
 		<module>core-jodatime</module>
 		<module>security</module>
 		<module>all</module>
