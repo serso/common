@@ -28,7 +28,7 @@ final class QuickSort<T> implements ArraySort<T> {
 	private int partition(@Nonnull T[] a, int l, int r, @Nonnull Comparator<? super T> c) {
 		final T pivot = a[r];
 		int j = l - 1;
-		for (int i = l; i < r - 1; i++) {
+		for (int i = l; i < r; i++) {
 			if (c.compare(a[i], pivot) <= 0) {
 				j++;
 				swap(a, i, j);
