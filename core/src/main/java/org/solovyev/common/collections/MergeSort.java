@@ -10,21 +10,22 @@ import static java.lang.System.*;
 final class MergeSort<T> implements ArraySort<T> {
 	@Override
 	public void sort(@Nonnull T[] a, @Nonnull Comparator<? super T> c) {
-		sort(a, 0, a.length - 1, c);
+		final T[] aux = a.clone();
+		sort(a, 0, a.length - 1, c, aux);
 	}
 
-	private void sort(@Nonnull T[] a, int l, int r, @Nonnull Comparator<? super T> c) {
+	private void sort(@Nonnull T[] a, int l, int r, @Nonnull Comparator<? super T> c, @Nonnull T[] aux) {
 		if(l < r) {
 			final int m = l + (r - l) / 2;
 			if (m > l) {
-				sort(a, l, m - 1, c);
-				sort(a, m, r, c);
-				merge(a, l, r, m, c);
+				sort(a, l, m - 1, c, aux);
+				sort(a, m, r, c, aux);
+				merge(a, l, r, m, c, aux);
 			}
 		}
 	}
 
-	private void merge(@Nonnull T[] a, int l, int r, int m, @Nonnull Comparator<? super T> c) {
+	private void merge(@Nonnull T[] a, int l, int r, int m, @Nonnull Comparator<? super T> c, @Nonnull T[] aux) {
 		final int lSize = (m - 1) - l;
 		final int rSize = r - m;
 
@@ -32,20 +33,21 @@ final class MergeSort<T> implements ArraySort<T> {
 			return;
 		}
 
-		// todo serso: these arrays better to create once in MergeSort.sort(T[], java.util.Comparator<? super T>)() and reuse
-		final Object[] la = new Object[lSize];
-		final Object[] ra = new Object[rSize];
+		if(c.compare(a[m-1], a[m]) <= 0) {
+			// already sorted
+			return;
+		}
 
-		arraycopy(a, l, la, 0, lSize);
-		arraycopy(a, m, ra, 0, rSize);
+		arraycopy(a, l, aux, 0, lSize);
+		arraycopy(a, m, aux, lSize, rSize);
 
 		int i = 0;
 		int j = 0;
 		int k = l;
 
 		while (true) {
-			final T lai = getI(la, i);
-			final T raj = getI(ra, j);
+			final T lai = getI(aux, i, lSize);
+			final T raj = getI(aux, lSize + j, lSize + rSize);
 			if(lai != null && raj != null) {
 				if(c.compare(lai, raj) <= 0) {
 					a[k] = lai;
@@ -69,9 +71,9 @@ final class MergeSort<T> implements ArraySort<T> {
 	}
 
 	@Nullable
-	private T getI(Object[] a, int i) {
+	private T getI(Object[] a, int i, int size) {
 		final Object ai;
-		if(i < a.length) {
+		if(i < size) {
 			ai = a[i];
 		} else {
 			ai = null;

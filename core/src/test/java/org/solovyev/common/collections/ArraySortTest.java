@@ -26,31 +26,37 @@ public abstract class ArraySortTest {
 
 	@Test
 	public void testShouldSortEmptyList() throws Exception {
-		final List<Integer> list = CollectionsTest.generateIntList(0);
-		sort.sort(list.toArray(new Integer[0]), Collections.<Integer>naturalComparator());
+		testSort(0);
 	}
 
 	@Test
 	public void testShouldSort1Element() throws Exception {
-		final List<Integer> list = CollectionsTest.generateIntList(1);
-		sort.sort(list.toArray(new Integer[1]), Collections.<Integer>naturalComparator());
+		testSort(1);
 	}
 
 	@Test
 	public void testShouldSort2Elements() throws Exception {
-		final List<Integer> list = CollectionsTest.generateIntList(2);
-		sort.sort(list.toArray(new Integer[2]), Collections.<Integer>naturalComparator());
+		testSort(2);
 	}
 
 	@Test
 	public void testShouldSort10Elements() throws Exception {
-		final List<Integer> list = CollectionsTest.generateIntList(10);
-		sort.sort(list.toArray(new Integer[10]), Collections.<Integer>naturalComparator());
+		testSort(10);
 	}
 
 	@Test
 	public void testShouldSort100Elements() throws Exception {
-		final List<Integer> list = CollectionsTest.generateIntList(100);
-		sort.sort(list.toArray(new Integer[100]), Collections.<Integer>naturalComparator());
+		testSort(100);
+	}
+
+
+	@Test
+	public void testShouldSort1000000Elements() throws Exception {
+		testSort(1000000);
+	}
+
+	private void testSort(int size) {
+		final List<Integer> list = CollectionsTest.generateIntList(size);
+		sort.sort(list.toArray(new Integer[size]), Collections.<Integer>naturalComparator());
 	}
 }
