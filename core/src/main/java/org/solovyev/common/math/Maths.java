@@ -389,4 +389,20 @@ public class Maths {
 
 		return result;
 	}
+
+	static int pow(int value, int exponent) {
+		if(exponent == 0) {
+			return 1;
+		}
+
+		if(exponent == 1) {
+			return value;
+		}
+
+		if (exponent % 2 == 0) {
+			return pow(value * value, exponent / 2);
+		} else {
+			return value * pow(value * value, (exponent - 1) / 2);
+		}
+	}
 }
