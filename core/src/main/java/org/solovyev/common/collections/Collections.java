@@ -43,6 +43,9 @@ public class Collections {
 	@Nonnull
 	private static final Comparator<Comparable> naturalComparator = new NaturalComparator();
 
+	@Nonnull
+	private static final Comparator<Comparable> reversedNaturalComparator = reversed(naturalComparator);
+
 	protected Collections() {
 		throw new AssertionError();
 	}
@@ -484,6 +487,22 @@ public class Collections {
 	@Nonnull
 	public static <T extends Comparable> Comparator<T> naturalComparator() {
 		return (Comparator<T>) naturalComparator;
+	}
+
+	@Nonnull
+	public static <T extends Comparable> Comparator<T> reversedNaturalComparator() {
+		return (Comparator<T>) reversedNaturalComparator;
+	}
+
+	@Nonnull
+	public static <T> Comparator<T> reversed(@Nonnull final Comparator<? super T> comparator) {
+		return new Comparator<T>() {
+
+			@Override
+			public int compare(T o1, T o2) {
+				return -comparator.compare(o1, o2);
+			}
+		};
 	}
 }
 

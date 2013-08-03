@@ -90,6 +90,18 @@ public class ArrayBinaryHeapTest {
 		assertHeapIsCorrect(heap);
 	}
 
+	@Test
+	public void testHeapifyShouldProduceCorrectHeap() throws Exception {
+		assertHeapIsCorrect(heapify(generateIntList(2).toArray(new Integer[2])));
+		assertHeapIsCorrect(heapify(generateIntList(3).toArray(new Integer[3])));
+		assertHeapIsCorrect(heapify(generateIntList(4).toArray(new Integer[4])));
+		assertHeapIsCorrect(heapify(generateIntList(5).toArray(new Integer[5])));
+		assertHeapIsCorrect(heapify(generateIntList(6).toArray(new Integer[6])));
+		assertHeapIsCorrect(heapify(generateIntList(7).toArray(new Integer[7])));
+		assertHeapIsCorrect(heapify(generateIntList(8).toArray(new Integer[8])));
+		assertHeapIsCorrect(heapify(generateIntList(100).toArray(new Integer[100])));
+	}
+
 	private void assertHeapIsCorrect(@Nonnull ArrayBinaryHeap<Integer> heap, int parentIndex) {
 		final Integer parent = heap.get(parentIndex);
 		final int leftChildIndex = heap.getLeftChildIndex(parentIndex);
