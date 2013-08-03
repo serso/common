@@ -113,7 +113,7 @@ final class ArrayBinaryHeap<T> {
 				largest = right;
 			}
 
-			if(largestIndex != currentIndex) {
+			if (largestIndex != currentIndex) {
 				swap(array, largestIndex, currentIndex);
 				bubbleDown(largestIndex);
 			}
@@ -152,7 +152,7 @@ final class ArrayBinaryHeap<T> {
 	}
 
 	private int getParentIndex(int position) {
-		return (position +1 ) / 2 - 1;
+		return (position + 1) / 2 - 1;
 	}
 
 	@Nullable
@@ -200,7 +200,18 @@ final class ArrayBinaryHeap<T> {
 		return index >= getRootIndex() && index < size;
 	}
 
-	void decreaseSize() {
+	private void decreaseSize() {
 		size--;
+	}
+
+	public static <T> void heapSort(@Nonnull T[] a, @Nonnull Comparator<? super T> c) {
+		final ArrayBinaryHeap<? super T> heap = heapify(a, c);
+		final int rootIndex = heap.getRootIndex();
+
+		for (int i = a.length - 1; i >= 1; i--) {
+			swap(a, i, rootIndex);
+			heap.decreaseSize();
+			heap.bubbleDown(rootIndex);
+		}
 	}
 }

@@ -25,8 +25,7 @@ package org.solovyev.common.collections;
 import javax.annotation.Nonnull;
 import java.util.Comparator;
 
-import static org.solovyev.common.collections.ArrayBinaryHeap.heapify;
-import static org.solovyev.common.collections.Sortings.swap;
+import static org.solovyev.common.collections.ArrayBinaryHeap.heapSort;
 
 /**
  * User: serso
@@ -37,12 +36,6 @@ class HeapSort<T> implements ArraySort<T> {
 
 	@Override
 	public void sort(@Nonnull T[] a, @Nonnull Comparator<? super T> c) {
-		final ArrayBinaryHeap<? super T> heap = heapify(a, c);
-		for (int i = a.length - 1; i >= 1; i--) {
-			swap(a, i, 0);
-			heap.decreaseSize();
-			heap.bubbleDown(0);
-		}
-
+		heapSort(a, c);
 	}
 }
