@@ -43,38 +43,47 @@ final class SubArrayTask {
 			return 0;
 		}
 
-		final int[] sums = calculateSums(a, n);
-		final MaxsMins maxsMins = calculateMaxsMins(sums, n);
-		return calculateMaxDiff(maxsMins, sums, n);
+		final int[] leftSums = calculateLeftSums(a, n);
+		final int[] rightSums = calculateRightSums(a, n);
+		final MaxsMins maxsMins = calculateMaxsMins(leftSums, rightSums, n);
+		return calculateMaxDiff(maxsMins, n);
 	}
 
-	private static int calculateMaxDiff(@Nonnull MaxsMins maxsMins, int[] sums, int n) {
+	private static int calculateMaxDiff(@Nonnull MaxsMins maxsMins, int n) {
 		int result = Integer.MIN_VALUE;
-		for (int i = 1; i < n - 1; i++) {
-			final int max1 = abs(2 * sums[i] - maxsMins.rightMaxs[i - 1] - maxsMins.leftMaxs[i + 1]);
-			final int max2 = abs(2 * sums[i] - maxsMins.rightMins[i + 1] - maxsMins.leftMins[i - 1]);
+		for (int i = 1; i < n; i++) {
+			final int max1 = abs(maxsMins.rightMaxs[i - 1] - maxsMins.leftMins[i]);
+			final int max2 = abs(maxsMins.rightMins[i] - maxsMins.leftMaxs[i - 1]);
 			result = max(result, max(max1, max2));
 		}
 		return result;
 	}
 
 	@Nonnull
-	private static MaxsMins calculateMaxsMins(int[] sums, int n) {
+	private static MaxsMins calculateMaxsMins(int[] leftSums, int[] rightSums, int n) {
 		final MaxsMins result = new MaxsMins(n);
-		result.leftMaxs[0] = sums[0];
-		result.leftMins[0] = sums[0];
-		result.rightMaxs[n - 1] = sums[n - 1];
-		result.rightMins[n - 1] = sums[n - 1];
+		result.leftMaxs[0] = leftSums[0];
+		result.leftMins[0] = leftSums[0];
+		result.rightMaxs[n - 1] = rightSums[n - 1];
+		result.rightMins[n - 1] = rightSums[n - 1];
 		for (int i = 1; i < n; i++) {
-			result.leftMaxs[i] = max(result.leftMaxs[i - 1], sums[i]);
-			result.leftMins[i] = min(result.leftMins[i - 1], sums[i]);
-			result.rightMaxs[n - i - 1] = max(result.rightMaxs[n - i], sums[n - i]);
-			result.rightMins[n - i - 1] = min(result.rightMins[n - i], sums[n - i]);
+			result.leftMaxs[i] = max(result.leftMaxs[i - 1], leftSums[i]);
+			result.leftMins[i] = min(result.leftMins[i - 1], leftSums[i]);
+			result.rightMaxs[n - i - 1] = max(result.rightMaxs[n - i], rightSums[n - i]);
+			result.rightMins[n - i - 1] = min(result.rightMins[n - i], rightSums[n - i]);
 		}
 		return result;
 	}
 
-	private static int[] calculateSums(int[] a, int n) {
+	private static int[] calculateRightSums(int[] a, int n) {
+		final int[] sums = new int[n];
+		sums[n-1] = a[n-1];
+		for (int i = n - 2; i >= 0; i--) {
+			sums[i] = sums[i + 1] + a[i];
+		}
+		return sums;
+	}
+	private static int[] calculateLeftSums(int[] a, int n) {
 		final int[] sums = new int[n];
 		sums[0] = a[0];
 		for (int i = 1; i < n; i++) {
