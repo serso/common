@@ -24,6 +24,7 @@ package org.solovyev.common.math;
 
 import javax.annotation.Nonnull;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -50,8 +51,8 @@ final class SubArrayTask {
 	private static int calculateMaxDiff(@Nonnull MaxsMins maxsMins, int[] sums, int n) {
 		int result = Integer.MIN_VALUE;
 		for (int i = 1; i < n - 1; i++) {
-			final int max1 = Math.abs(2 * sums[i] - maxsMins.rightMaxs[i - 1] - maxsMins.leftMaxs[i + 1]);
-			final int max2 = Math.abs(2 * sums[i] - maxsMins.rightMins[i + 1] - maxsMins.leftMins[i - 1]);
+			final int max1 = abs(2 * sums[i] - maxsMins.rightMaxs[i - 1] - maxsMins.leftMaxs[i + 1]);
+			final int max2 = abs(2 * sums[i] - maxsMins.rightMins[i + 1] - maxsMins.leftMins[i - 1]);
 			result = max(result, max(max1, max2));
 		}
 		return result;
