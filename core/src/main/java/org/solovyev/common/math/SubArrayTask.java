@@ -40,10 +40,8 @@ final class SubArrayTask {
 		}
 
 		final int[] sums = calculateSums(a, n);
-
-		final MaxsMins maxsMins = calculateMaxsMins(a, sums, n);
-
-		return calculateMaxDiff(maxsMins, sums,  n);
+		final MaxsMins maxsMins = calculateMaxsMins(sums, n);
+		return calculateMaxDiff(maxsMins, sums, n);
 	}
 
 	private static int calculateMaxDiff(@Nonnull MaxsMins maxsMins, int[] sums, int n) {
@@ -57,7 +55,7 @@ final class SubArrayTask {
 	}
 
 	@Nonnull
-	private static MaxsMins calculateMaxsMins(int[] a, int[] sums, int n) {
+	private static MaxsMins calculateMaxsMins(int[] sums, int n) {
 		final MaxsMins maxsMins = new MaxsMins(n);
 		maxsMins.leftMaxs[0] = sums[0];
 		maxsMins.leftMins[0] = sums[0];
