@@ -24,6 +24,9 @@ package org.solovyev.common.math;
 
 import javax.annotation.Nonnull;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 /**
  * User: serso
  * Date: 8/5/13
@@ -49,25 +52,25 @@ final class SubArrayTask {
 		for (int i = 1; i < n - 1; i++) {
 			final int max1 = Math.abs(2 * sums[i] - maxsMins.rightMaxs[i - 1] - maxsMins.leftMaxs[i + 1]);
 			final int max2 = Math.abs(2 * sums[i] - maxsMins.rightMins[i + 1] - maxsMins.leftMins[i - 1]);
-			result = Math.max(result, Math.max(max1, max2));
+			result = max(result, max(max1, max2));
 		}
 		return result;
 	}
 
 	@Nonnull
 	private static MaxsMins calculateMaxsMins(int[] sums, int n) {
-		final MaxsMins maxsMins = new MaxsMins(n);
-		maxsMins.leftMaxs[0] = sums[0];
-		maxsMins.leftMins[0] = sums[0];
-		maxsMins.rightMaxs[0] = sums[n - 1];
-		maxsMins.rightMins[0] = sums[n - 1];
+		final MaxsMins result = new MaxsMins(n);
+		result.leftMaxs[0] = sums[0];
+		result.leftMins[0] = sums[0];
+		result.rightMaxs[0] = sums[n - 1];
+		result.rightMins[0] = sums[n - 1];
 		for (int i = 1; i < n; i++) {
-			maxsMins.leftMaxs[i] = Math.max(maxsMins.leftMaxs[i - 1], sums[i]);
-			maxsMins.rightMaxs[n - i - 1] = Math.max(maxsMins.rightMaxs[n - i], sums[n - i]);
-			maxsMins.leftMins[i] = Math.min(maxsMins.leftMins[i - 1], sums[i]);
-			maxsMins.rightMins[n - i - 1] = Math.min(maxsMins.rightMins[n - i], sums[n - i]);
+			result.leftMaxs[i] = max(result.leftMaxs[i - 1], sums[i]);
+			result.leftMins[i] = min(result.leftMins[i - 1], sums[i]);
+			result.rightMaxs[n - i - 1] = max(result.rightMaxs[n - i], sums[n - i]);
+			result.rightMins[n - i - 1] = min(result.rightMins[n - i], sums[n - i]);
 		}
-		return maxsMins;
+		return result;
 	}
 
 	private static int[] calculateSums(int[] a, int n) {
