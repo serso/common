@@ -63,8 +63,8 @@ final class SubArrayTask {
 		final MaxsMins result = new MaxsMins(n);
 		result.leftMaxs[0] = sums[0];
 		result.leftMins[0] = sums[0];
-		result.rightMaxs[0] = sums[n - 1];
-		result.rightMins[0] = sums[n - 1];
+		result.rightMaxs[n - 1] = sums[n - 1];
+		result.rightMins[n - 1] = sums[n - 1];
 		for (int i = 1; i < n; i++) {
 			result.leftMaxs[i] = max(result.leftMaxs[i - 1], sums[i]);
 			result.leftMins[i] = min(result.leftMins[i - 1], sums[i]);
