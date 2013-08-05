@@ -24,6 +24,7 @@ package org.solovyev.common.collections;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import java.util.Comparator;
 
 import static org.solovyev.common.collections.Sortings.swap;
