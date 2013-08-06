@@ -4,50 +4,20 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Random;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.solovyev.common.collections.IntMsdRadixSort.BITS;
 
-public class IntMsdRadixSortTest {
+public class IntMsdRadixSortTest extends ArrayNonComparisonSortTest {
 
-	@Test
-	public void testSort() throws Exception {
-		testIntSort(new Integer[]{1});
-		testIntSort(new Integer[]{1, 2});
-		testIntSort(new Integer[]{2, 1});
-		testIntSort(new Integer[]{2, 1, 2});
-		testIntSort(new Integer[]{3, 2, 1});
-		testIntSort(new Integer[]{1, 2, 3});
-		testIntSort(new Integer[]{0, 2, 1});
-		testIntSort(new Integer[]{0, 3, 1, 2});
-		testIntSort(new Integer[]{3, 2, 0, 1});
-		testIntSort(new Integer[]{2, 4, 1, 0, 3});
-
-		final Random random = new Random(new Date().getTime());
-		for (int i = 0; i < 100; i++) {
-			final int size = random.nextInt(10000) + 1;
-			final Integer[] actual = CollectionsTest.generateIntList(size).toArray(new Integer[size]);
-			final Integer[] actualCopy = actual.clone();
-			try {
-				testIntSort(actual);
-			} catch (AssertionError e) {
-				System.out.println(Arrays.toString(actualCopy));
-				throw e;
-			}
-		}
+	public IntMsdRadixSortTest() {
+		super(0, Integer.MAX_VALUE);
 	}
 
-	private void testIntSort(@Nonnull Integer[] actual) {
-		final Integer[] expected = actual.clone();
-
-		Arrays.sort(expected);
-		newSort().sort(actual);
-
-		assertArrayEquals(expected, actual);
+	@Override
+	public void testSort() throws Exception {
+		super.testSort();
+		testIntSort(new Integer[]{1335553392,821585291,370543740});
 	}
 
 	@Test
@@ -72,8 +42,9 @@ public class IntMsdRadixSortTest {
 
 	}
 
+	@Override
 	@Nonnull
-	private IntMsdRadixSort newSort() {
+	protected IntMsdRadixSort newSort() {
 		return new IntMsdRadixSort();
 	}
 }

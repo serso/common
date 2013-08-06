@@ -32,7 +32,7 @@ final class IntMsdRadixSort implements ArrayNonComparisonSort<Integer> {
 			return;
 		}
 
-		if (start > end) {
+		if (end - start <= 1) {
 			return;
 		}
 
@@ -40,13 +40,15 @@ final class IntMsdRadixSort implements ArrayNonComparisonSort<Integer> {
 
 		int firstOne = end;
 		for (int i = start; i < firstOne; i++) {
-			final int currentBit = numbers[i] & bit;
+			final Integer currentNumber = numbers[i];
+			final int currentBit = currentNumber & bit;
 
 			if (currentBit != 0) {
 				boolean allOnes = true;
 
 				for (int j = firstOne - 1; j > i; j--) {
-					final int nextBit = numbers[j] & bit;
+					final Integer nextNumber = numbers[j];
+					final int nextBit = nextNumber & bit;
 
 					if (currentBit > nextBit) {
 						swap(numbers, i, j);

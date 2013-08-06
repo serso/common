@@ -61,7 +61,7 @@ public abstract class ArraySortTest {
 	}
 
 	private void testSort(int size) {
-		final List<Integer> list = CollectionsTest.generateIntList(size);
+		final List<Integer> list = CollectionsTest.generateUniqueIntList(size);
 		final Integer[] actual = list.toArray(new Integer[size]);
 		final Comparator<Integer> c = Collections.naturalComparator();
 		sort.sort(actual, c);

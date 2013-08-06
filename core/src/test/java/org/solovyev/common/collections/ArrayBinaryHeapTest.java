@@ -32,7 +32,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.solovyev.common.collections.ArrayBinaryHeap.heapify;
 import static org.solovyev.common.collections.ArrayBinaryHeap.newArrayBinaryHeapWithHeight;
-import static org.solovyev.common.collections.CollectionsTest.generateIntList;
+import static org.solovyev.common.collections.CollectionsTest.generateUniqueIntList;
 
 /**
  * User: serso
@@ -71,7 +71,7 @@ public class ArrayBinaryHeapTest {
 
 	@Test
 	public void testHeapifyShouldWork() throws Exception {
-		final List<Integer> values = generateIntList(100);
+		final List<Integer> values = generateUniqueIntList(100);
 		assertHeapIsCorrect(heapify(values.toArray(new Integer[100])));
 	}
 
@@ -83,7 +83,7 @@ public class ArrayBinaryHeapTest {
 	public void testShouldCreateHeapForArray100() throws Exception {
 		ArrayBinaryHeap<Integer> heap = newIntArrayBinaryHeap(10);
 
-		for (Integer value : generateIntList(heap.getSize())) {
+		for (Integer value : generateUniqueIntList(heap.getSize())) {
 			heap.add(value);
 		}
 
@@ -92,14 +92,14 @@ public class ArrayBinaryHeapTest {
 
 	@Test
 	public void testHeapifyShouldProduceCorrectHeap() throws Exception {
-		assertHeapIsCorrect(heapify(generateIntList(2).toArray(new Integer[2])));
-		assertHeapIsCorrect(heapify(generateIntList(3).toArray(new Integer[3])));
-		assertHeapIsCorrect(heapify(generateIntList(4).toArray(new Integer[4])));
-		assertHeapIsCorrect(heapify(generateIntList(5).toArray(new Integer[5])));
-		assertHeapIsCorrect(heapify(generateIntList(6).toArray(new Integer[6])));
-		assertHeapIsCorrect(heapify(generateIntList(7).toArray(new Integer[7])));
-		assertHeapIsCorrect(heapify(generateIntList(8).toArray(new Integer[8])));
-		assertHeapIsCorrect(heapify(generateIntList(100).toArray(new Integer[100])));
+		assertHeapIsCorrect(heapify(generateUniqueIntList(2).toArray(new Integer[2])));
+		assertHeapIsCorrect(heapify(generateUniqueIntList(3).toArray(new Integer[3])));
+		assertHeapIsCorrect(heapify(generateUniqueIntList(4).toArray(new Integer[4])));
+		assertHeapIsCorrect(heapify(generateUniqueIntList(5).toArray(new Integer[5])));
+		assertHeapIsCorrect(heapify(generateUniqueIntList(6).toArray(new Integer[6])));
+		assertHeapIsCorrect(heapify(generateUniqueIntList(7).toArray(new Integer[7])));
+		assertHeapIsCorrect(heapify(generateUniqueIntList(8).toArray(new Integer[8])));
+		assertHeapIsCorrect(heapify(generateUniqueIntList(100).toArray(new Integer[100])));
 	}
 
 	private void assertHeapIsCorrect(@Nonnull ArrayBinaryHeap<Integer> heap, int parentIndex) {
