@@ -1,17 +1,18 @@
 package org.solovyev.common.collections;
 
-import java.util.Arrays;
-
-import javax.annotation.Nonnull;
-
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Random;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.solovyev.common.collections.IntMostSignificantRadixSort.BITS;
+import static org.solovyev.common.collections.IntMsdRadixSort.BITS;
 
-public class IntMostSignificantRadixSortTest {
+public class IntMsdRadixSortTest {
 
 	@Test
 	public void testSort() throws Exception {
@@ -21,6 +22,23 @@ public class IntMostSignificantRadixSortTest {
 		testIntSort(new Integer[]{2, 1, 2});
 		testIntSort(new Integer[]{3, 2, 1});
 		testIntSort(new Integer[]{1, 2, 3});
+		testIntSort(new Integer[]{0, 2, 1});
+		testIntSort(new Integer[]{0, 3, 1, 2});
+		testIntSort(new Integer[]{3, 2, 0, 1});
+		testIntSort(new Integer[]{2, 4, 1, 0, 3});
+
+		final Random random = new Random(new Date().getTime());
+		for (int i = 0; i < 100; i++) {
+			final int size = random.nextInt(10000) + 1;
+			final Integer[] actual = CollectionsTest.generateIntList(size).toArray(new Integer[size]);
+			final Integer[] actualCopy = actual.clone();
+			try {
+				testIntSort(actual);
+			} catch (AssertionError e) {
+				System.out.println(Arrays.toString(actualCopy));
+				throw e;
+			}
+		}
 	}
 
 	private void testIntSort(@Nonnull Integer[] actual) {
@@ -44,7 +62,7 @@ public class IntMostSignificantRadixSortTest {
 
 	@Test
 	public void testGetMaxAbsNumber() throws Exception {
-		final IntMostSignificantRadixSort sort = newSort();
+		final IntMsdRadixSort sort = newSort();
 		assertEquals(Integer.valueOf(1), sort.getMaxAbsNumber(new Integer[]{1}));
 		assertEquals(Integer.valueOf(2), sort.getMaxAbsNumber(new Integer[]{-2}));
 		assertEquals(Integer.valueOf(Integer.MAX_VALUE), sort.getMaxAbsNumber(new Integer[]{Integer.MAX_VALUE, Integer.MIN_VALUE}));
@@ -55,7 +73,7 @@ public class IntMostSignificantRadixSortTest {
 	}
 
 	@Nonnull
-	private IntMostSignificantRadixSort newSort() {
-		return new IntMostSignificantRadixSort();
+	private IntMsdRadixSort newSort() {
+		return new IntMsdRadixSort();
 	}
 }
