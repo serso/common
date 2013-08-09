@@ -175,6 +175,22 @@ public class BinarySearchTreeTest {
 		}
 
 		assertNotNull(tree.getRoot());
+	}
 
+	@Test
+	public void testShouldRemoveNode() throws Exception {
+		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(1);
+		final BinaryTreeNode<Integer> oldNode = tree.addNode(3);
+		tree.addNodeTo(oldNode, 2);
+		tree.addNodeTo(oldNode, 4);
+
+		tree.removeNode(oldNode);
+		assertEquals(Integer.valueOf(1), tree.getRoot().getValue());
+		assertNull(tree.getRoot().getLeftChild());
+		assertEquals(Integer.valueOf(4), tree.getRoot().getRightChild().getValue());
+		assertEquals(Integer.valueOf(2), tree.getRoot().getRightChild().getLeftChild().getValue());
+		assertNull(tree.getRoot().getRightChild().getRightChild());
+
+		assertRemovedNodeEmpty(oldNode);
 	}
 }

@@ -106,6 +106,10 @@ final class BinaryTreeNode<T> {
 			if (leftMostRightChild != null) {
 				leftMostNode.replaceWithNode(tree, leftMostRightChild);
 			}
+			if (leftChild != null) {
+				leftMostNode.leftChild = leftChild;
+				leftChild.parent = leftMostNode;
+			}
 			replaceWithNode(tree, leftMostNode);
 		}
 
