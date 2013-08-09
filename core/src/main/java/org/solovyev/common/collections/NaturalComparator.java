@@ -2,6 +2,8 @@ package org.solovyev.common.collections;
 
 import java.util.Comparator;
 
+import org.solovyev.common.Objects;
+
 /**
  * User: serso
  * Date: 8/1/13
@@ -14,7 +16,6 @@ final class NaturalComparator implements Comparator<Comparable> {
 
 	@Override
 	public int compare(Comparable o1, Comparable o2) {
-		//noinspection unchecked
-		return o1.compareTo(o2);
+		return Objects.compare(o1 ,o2);
 	}
 }

@@ -26,8 +26,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+
+import org.solovyev.common.collections.Collections;
+
 
 public final class Trees {
 
@@ -85,7 +87,7 @@ public final class Trees {
 			result.add(UnmodifiableTreeNode.wrap(treeNode));
 		}
 
-		return Collections.unmodifiableList(result);
+		return java.util.Collections.unmodifiableList(result);
 	}
 
 	@Nonnull
@@ -96,6 +98,26 @@ public final class Trees {
 			result.add(UnmodifiableTreeNode.wrap(treeNode));
 		}
 
-		return Collections.unmodifiableList(result);
+		return java.util.Collections.unmodifiableList(result);
+	}
+
+	@Nonnull
+	static <T> BinaryTreeNode<T> newBinaryTreeNode(@Nullable T value) {
+		return newBinaryTreeNode(value, null);
+	}
+
+	@Nonnull
+	static <T> BinaryTreeNode<T> newBinaryTreeNode(T value, @Nullable BinaryTreeNode<T> parent) {
+		return new BinaryTreeNode<T>(value, parent);
+	}
+
+	@Nonnull
+	static <T extends Comparable> BinarySearchTree<T> newBinaryTree(@Nonnull BinaryTreeNode<T> root) {
+		return new BinarySearchTree<T>(root, Collections.<T>naturalComparator());
+	}
+
+	@Nonnull
+	static <T extends Comparable> BinarySearchTree<T> newBinaryTree(@Nullable T value) {
+		return new BinarySearchTree<T>(newBinaryTreeNode(value), Collections.<T>naturalComparator());
 	}
 }
