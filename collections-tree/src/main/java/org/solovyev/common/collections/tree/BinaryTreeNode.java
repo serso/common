@@ -102,7 +102,6 @@ final class BinaryTreeNode<T> {
 			replaceWithNode(tree, leftChild);
 		} else {
 			final BinaryTreeNode<T> leftMostNode = findLeftMostNode(rightChild);
-			final BinaryTreeNode<T> leftMostNodeParent = leftMostNode.getParent();
 			final BinaryTreeNode<T> leftMostRightChild = leftMostNode.getRightChild();
 			if (leftMostRightChild != null) {
 				leftMostNode.replaceWithNode(tree, leftMostRightChild);

@@ -22,11 +22,15 @@
 
 package org.solovyev.common.collections.tree;
 
+import javax.annotation.Nonnull;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 public class BinarySearchTreeTest {
 
@@ -111,9 +115,7 @@ public class BinarySearchTreeTest {
 		assertEquals(node, root.getLeftChild());
 		assertNull(root.getRightChild());
 
-		assertNull(oldNode.getParent());
-		assertNull(oldNode.getLeftChild());
-		assertNull(oldNode.getRightChild());
+		assertRemovedNodeEmpty(oldNode);
 	}
 
 	@Test
@@ -135,8 +137,44 @@ public class BinarySearchTreeTest {
 		assertEquals(node, root.getRightChild());
 		assertNull(root.getLeftChild());
 
-		assertNull(oldNode.getParent());
-		assertNull(oldNode.getLeftChild());
-		assertNull(oldNode.getRightChild());
+		assertRemovedNodeEmpty(oldNode);
+	}
+
+	private void assertRemovedNodeEmpty(@Nonnull BinaryTreeNode<Integer> node) {
+		assertNull(node.getParent());
+		assertNull(node.getLeftChild());
+		assertNull(node.getRightChild());
+	}
+
+	@Test
+	public void testShouldRemoveLeaf() throws Exception {
+		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(1);
+		final BinaryTreeNode<Integer> node = tree.addNode(3);
+		final BinaryTreeNode<Integer> toBeRemoved1 = tree.addNodeTo(node, 2);
+		final BinaryTreeNode<Integer> toBeRemoved2 = tree.addNodeTo(node, 4);
+
+		tree.removeNode(toBeRemoved1);
+		assertRemovedNodeEmpty(toBeRemoved1);
+		Assert.assertNull(node.getLeftChild());
+		Assert.assertNotNull(node.getRightChild());
+
+		tree.removeNode(toBeRemoved2);
+		assertRemovedNodeEmpty(toBeRemoved2);
+		Assert.assertNull(node.getLeftChild());
+		Assert.assertNull(node.getRightChild());
+	}
+
+	@Test
+	public void testShouldNotRemoveLeafRoot() throws Exception {
+		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(1);
+		try {
+			tree.removeNode(tree.getRoot());
+			fail();
+		} catch (IllegalArgumentException e) {
+			// ok
+		}
+
+		assertNotNull(tree.getRoot());
+
 	}
 }
