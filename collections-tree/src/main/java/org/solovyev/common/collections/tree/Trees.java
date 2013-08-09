@@ -22,13 +22,13 @@
 
 package org.solovyev.common.collections.tree;
 
+import org.solovyev.common.collections.Collections;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.solovyev.common.collections.Collections;
 
 
 public final class Trees {
@@ -102,17 +102,17 @@ public final class Trees {
 	}
 
 	@Nonnull
-	static <T> BinaryTreeNode<T> newBinaryTreeNode(@Nullable T value) {
+	static <T> BinarySearchTreeNode<T> newBinaryTreeNode(@Nullable T value) {
 		return newBinaryTreeNode(value, null);
 	}
 
 	@Nonnull
-	static <T> BinaryTreeNode<T> newBinaryTreeNode(T value, @Nullable BinaryTreeNode<T> parent) {
-		return new BinaryTreeNode<T>(value, parent);
+	static <T> BinarySearchTreeNode<T> newBinaryTreeNode(T value, @Nullable BinarySearchTreeNode<T> parent) {
+		return new BinarySearchTreeNode<T>(value, parent);
 	}
 
 	@Nonnull
-	static <T extends Comparable> BinarySearchTree<T> newBinaryTree(@Nonnull BinaryTreeNode<T> root) {
+	static <T extends Comparable> BinarySearchTree<T> newBinaryTree(@Nonnull BinarySearchTreeNode<T> root) {
 		return new BinarySearchTree<T>(root, Collections.<T>naturalComparator());
 	}
 
