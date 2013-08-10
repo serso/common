@@ -120,4 +120,9 @@ public final class Trees {
 	static <T extends Comparable> BinarySearchTree<T> newBinarySearchTree(@Nullable T value) {
 		return new BinarySearchTree<T>(newBinarySearchTreeNode(value), Collections.<T>naturalComparator());
 	}
+
+	@Nonnull
+	static PrefixTree newPrefixTree() {
+		return new PrefixTree();
+	}
 }
