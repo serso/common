@@ -102,22 +102,22 @@ public final class Trees {
 	}
 
 	@Nonnull
-	static <T> BinarySearchTreeNode<T> newBinaryTreeNode(@Nullable T value) {
-		return newBinaryTreeNode(value, null);
+	static <T> BinarySearchTreeNode<T> newBinarySearchTreeNode(@Nullable T value) {
+		return newBinarySearchTreeNode(value, null);
 	}
 
 	@Nonnull
-	static <T> BinarySearchTreeNode<T> newBinaryTreeNode(T value, @Nullable BinarySearchTreeNode<T> parent) {
+	static <T> BinarySearchTreeNode<T> newBinarySearchTreeNode(T value, @Nullable BinarySearchTreeNode<T> parent) {
 		return new BinarySearchTreeNode<T>(value, parent);
 	}
 
 	@Nonnull
-	static <T extends Comparable> BinarySearchTree<T> newBinaryTree(@Nonnull BinarySearchTreeNode<T> root) {
+	static <T extends Comparable> BinarySearchTree<T> newBinarySearchTree(@Nonnull BinarySearchTreeNode<T> root) {
 		return new BinarySearchTree<T>(root, Collections.<T>naturalComparator());
 	}
 
 	@Nonnull
-	static <T extends Comparable> BinarySearchTree<T> newBinaryTree(@Nullable T value) {
-		return new BinarySearchTree<T>(newBinaryTreeNode(value), Collections.<T>naturalComparator());
+	static <T extends Comparable> BinarySearchTree<T> newBinarySearchTree(@Nullable T value) {
+		return new BinarySearchTree<T>(newBinarySearchTreeNode(value), Collections.<T>naturalComparator());
 	}
 }

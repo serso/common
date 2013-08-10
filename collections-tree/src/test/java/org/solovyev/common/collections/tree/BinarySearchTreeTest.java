@@ -29,13 +29,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
+import static java.lang.Integer.MIN_VALUE;
 import static org.junit.Assert.*;
+import static org.solovyev.common.collections.tree.Trees.newBinarySearchTree;
 
 public class BinarySearchTreeTest {
 
 	@Test
 	public void testShouldCreateTree() throws Exception {
-		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(2);
+		final BinarySearchTree<Integer> tree = newBinarySearchTree(2);
 
 		assertNotNull(tree);
 		assertEquals(Integer.valueOf(2), tree.getRoot().getValue());
@@ -43,7 +45,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testShouldAddNodes() throws Exception {
-		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(10);
+		final BinarySearchTree<Integer> tree = newBinarySearchTree(10);
 		tree.addNode(30);
 		tree.addNode(20);
 		tree.addNode(40);
@@ -61,7 +63,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testShouldRemoveRootWithOnlyLeftChildren() throws Exception {
-		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(4);
+		final BinarySearchTree<Integer> tree = newBinarySearchTree(4);
 		final BinarySearchTreeNode<Integer> node = tree.addNode(2);
 		tree.addNodeTo(node, 1);
 		tree.addNodeTo(node, 3);
@@ -79,7 +81,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testShouldRemoveRootWithOnlyRightChildren() throws Exception {
-		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(1);
+		final BinarySearchTree<Integer> tree = newBinarySearchTree(1);
 		final BinarySearchTreeNode<Integer> node = tree.addNode(3);
 		tree.addNodeTo(node, 2);
 		tree.addNodeTo(node, 4);
@@ -97,7 +99,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testShouldRemoveNodeWithOnlyLeftChildren() throws Exception {
-		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(5);
+		final BinarySearchTree<Integer> tree = newBinarySearchTree(5);
 		final BinarySearchTreeNode<Integer> oldNode = tree.addNode(4);
 		final BinarySearchTreeNode<Integer> node = tree.addNode(2);
 		tree.addNodeTo(node, 1);
@@ -119,7 +121,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testShouldRemoveNodeWithOnlyRightChildren() throws Exception {
-		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(1);
+		final BinarySearchTree<Integer> tree = newBinarySearchTree(1);
 		final BinarySearchTreeNode<Integer> oldNode = tree.addNode(2);
 		final BinarySearchTreeNode<Integer> node = tree.addNode(4);
 		tree.addNodeTo(node, 3);
@@ -147,7 +149,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testShouldRemoveLeaf() throws Exception {
-		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(1);
+		final BinarySearchTree<Integer> tree = newBinarySearchTree(1);
 		final BinarySearchTreeNode<Integer> node = tree.addNode(3);
 		final BinarySearchTreeNode<Integer> toBeRemoved1 = tree.addNodeTo(node, 2);
 		final BinarySearchTreeNode<Integer> toBeRemoved2 = tree.addNodeTo(node, 4);
@@ -165,7 +167,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testShouldNotRemoveLeafRoot() throws Exception {
-		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(1);
+		final BinarySearchTree<Integer> tree = newBinarySearchTree(1);
 		try {
 			tree.removeNode(tree.getRoot());
 			fail();
@@ -178,7 +180,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testShouldRemoveNode() throws Exception {
-		final BinarySearchTree<Integer> tree = Trees.newBinaryTree(1);
+		final BinarySearchTree<Integer> tree = newBinarySearchTree(1);
 		final BinarySearchTreeNode<Integer> oldNode = tree.addNode(3);
 		tree.addNodeTo(oldNode, 2);
 		tree.addNodeTo(oldNode, 4);
@@ -196,9 +198,10 @@ public class BinarySearchTreeTest {
 	@Test
 	public void testRandomDelete() throws Exception {
 		final Random r = new Random(new Date().getTime());
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			final List<BinarySearchTreeNode<Integer>> nodes = new ArrayList<BinarySearchTreeNode<Integer>>(100);
-			final BinarySearchTree<Integer> tree = generateTree(100, nodes);
+			final BinarySearchTree<Integer> tree = generateTree(1000, nodes);
+			assertTreeIsCorrect(tree);
 			Collections.shuffle(nodes);
 
 			// must leave one node to be root
@@ -251,16 +254,56 @@ public class BinarySearchTreeTest {
 	@Nonnull
 	private static BinarySearchTree<Integer> generateTree(int size, @Nonnull List<BinarySearchTreeNode<Integer>> nodes) {
 		final Random r = new Random(new Date().getTime());
-		final BinarySearchTree<Integer> result = Trees.newBinaryTree(r.nextInt(Integer.MAX_VALUE));
+		int maxValue = 10000;
+		final BinarySearchTree<Integer> result = newBinarySearchTree(r.nextInt(maxValue));
 
 		nodes.add(result.getRoot());
 		for (int i = 1; i < size; i++) {
 			final int nodeIndex = r.nextInt(i);
 			final BinarySearchTreeNode<Integer> node = nodes.get(nodeIndex);
-			final BinarySearchTreeNode<Integer> newNode = result.addNodeTo(node, r.nextInt(Integer.MAX_VALUE));
+
+			final int newValue;
+			final int minPossibleValue = findMinPossibleValue(node);
+			final int maxPossibleValue = findMaxPossibleValue(node);
+			if(minPossibleValue == MIN_VALUE && maxPossibleValue == Integer.MAX_VALUE) {
+				newValue = r.nextInt(maxValue);
+			} else if(minPossibleValue != MIN_VALUE && maxPossibleValue != Integer.MAX_VALUE) {
+				newValue = r.nextInt(maxPossibleValue - minPossibleValue) + minPossibleValue;
+			} else if (minPossibleValue != MIN_VALUE) {
+				newValue = r.nextInt(maxValue - minPossibleValue) + minPossibleValue;
+			} else {
+				newValue = r.nextInt(maxPossibleValue);
+			}
+			final BinarySearchTreeNode<Integer> newNode = result.addNodeTo(node, newValue);
 			nodes.add(newNode);
 		}
 
 		return result;
+	}
+
+	private static int findMinPossibleValue(@Nonnull BinarySearchTreeNode<Integer> node) {
+		BinarySearchTreeNode<Integer> parent = node.getParent();
+		if(parent != null) {
+			if(node.isThisRightChildOf(parent)) {
+				return parent.getValue();
+			} else {
+				return findMinPossibleValue(parent);
+			}
+		} else {
+			return MIN_VALUE;
+		}
+	}
+
+	private static int findMaxPossibleValue(@Nonnull BinarySearchTreeNode<Integer> node) {
+		BinarySearchTreeNode<Integer> parent = node.getParent();
+		if(parent != null) {
+			if(node.isThisLeftChildOf(parent)) {
+				return parent.getValue();
+			} else {
+				return findMaxPossibleValue(parent);
+			}
+		} else {
+			return Integer.MAX_VALUE;
+		}
 	}
 }

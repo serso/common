@@ -1,10 +1,10 @@
 package org.solovyev.common.collections.tree;
 
+import org.solovyev.common.text.Strings;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Comparator;
-
-import static org.solovyev.common.collections.tree.Trees.newBinaryTreeNode;
 
 final class BinarySearchTreeNode<T> {
 
@@ -52,14 +52,14 @@ final class BinarySearchTreeNode<T> {
 			if (leftChild != null) {
 				return leftChild.addNode(newValue, comparator);
 			} else {
-				leftChild = newBinaryTreeNode(newValue, this);
+				leftChild = Trees.newBinarySearchTreeNode(newValue, this);
 				return leftChild;
 			}
 		} else {
 			if (rightChild != null) {
 				return rightChild.addNode(newValue, comparator);
 			} else {
-				rightChild = newBinaryTreeNode(newValue, this);
+				rightChild = Trees.newBinarySearchTreeNode(newValue, this);
 				return rightChild;
 			}
 		}
@@ -135,10 +135,11 @@ final class BinarySearchTreeNode<T> {
 		if (tree.getRoot().equals(this)) {
 			tree.setRoot(newNode);
 		} else {
+			newNode.parent = this.parent;
+
 			boolean wasLeft = false;
 			boolean wasRight = false;
 
-			newNode.parent = this.parent;
 			if (this.parent != null) {
 				if (this.parent.leftChild != null && this.parent.leftChild.equals(this)) {
 					wasLeft = true;
@@ -148,6 +149,7 @@ final class BinarySearchTreeNode<T> {
 				}
 				this.parent.removeChildSubtree(this);
 			}
+
 			if (wasLeft) {
 				newNode.parent.leftChild = newNode;
 			}
@@ -185,6 +187,41 @@ final class BinarySearchTreeNode<T> {
 			return node.findNode(value, comparator);
 		} else {
 			return null;
+		}
+	}
+
+	void toString(int depth, @Nonnull StringBuilder out, @Nullable String prefix) {
+		out.append(Strings.repeat(" ", depth));
+		if (prefix != null) {
+			out.append(prefix).append(":");
+		}
+		out.append(this.value);
+		out.append("\n");
+
+		if (rightChild != null) {
+			rightChild.toString(depth + 1, out, "r");
+		}
+
+		if (leftChild != null) {
+			leftChild.toString(depth + 1, out, "l");
+		}
+	}
+
+	public boolean isThisLeftChildOf(@Nonnull BinarySearchTreeNode<T> parent) {
+		final BinarySearchTreeNode<T> parentLeftChild = parent.getLeftChild();
+		if(parentLeftChild != null && parentLeftChild.equals(this)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isThisRightChildOf(@Nonnull BinarySearchTreeNode<T> parent) {
+		final BinarySearchTreeNode<T> parentRightChild = parent.getRightChild();
+		if(parentRightChild != null && parentRightChild.equals(this)) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

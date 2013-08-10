@@ -49,4 +49,13 @@ final class BinarySearchTree<T> {
 	public Comparator<? super T> getComparator() {
 		return comparator;
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder result = new StringBuilder();
+
+		getRoot().toString(0, result, null);
+
+		return result.toString();
+	}
 }
