@@ -22,11 +22,14 @@
 
 package org.solovyev.common.text;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.solovyev.common.text.Strings.indexOfRabinKarp;
 
 /**
  * User: serso
@@ -58,6 +61,18 @@ public class StringsTest {
 			Assert.assertTrue(character.equals(ch));
 
 		}
+	}
 
+	@Test
+	public void testIndexOfRabinKarp() throws Exception {
+		assertEquals(0, indexOfRabinKarp("abc", "a"));
+		assertEquals(0, indexOfRabinKarp("abc", "abc"));
+		assertEquals(1, indexOfRabinKarp("abc", "b"));
+		assertEquals(1, indexOfRabinKarp("abc", "bc"));
+		assertEquals(2, indexOfRabinKarp("abc", "c"));
+		assertEquals(-1, indexOfRabinKarp("abc", "d"));
+		assertEquals(0, indexOfRabinKarp("abc", ""));
+		assertEquals(1, indexOfRabinKarp("abababababab", "bababab"));
+		assertEquals(7, indexOfRabinKarp("abcdefghjklmopqrstvuwxyz", "hjklmopqrstvuw"));
 	}
 }

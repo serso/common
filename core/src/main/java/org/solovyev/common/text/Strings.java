@@ -281,4 +281,49 @@ public class Strings {
 
 		return result.toString();
 	}
+
+	// NOTE: works only on finite alphabet
+	static int indexOfRabinKarp(@Nonnull String text, @Nonnull String pattern) {
+		final int m = pattern.length();
+		final int n = text.length();
+		if (n < m) {
+			return -1;
+		}
+
+		if(m == 0) {
+			return 0;
+		}
+
+		final long q = 19999999991L;
+		final long d = 100;
+
+		long h = 1;
+		for (int i = 0; i < m - 1; i++) {
+			h = (h * d) % q;
+		}
+
+		long t = 0;
+		long p = 0;
+
+		for (int i = 0; i < m; i++) {
+			t = (d * t + text.charAt(i)) % q;
+			p = (d * p + pattern.charAt(i)) % q;
+		}
+
+		for (int i = 0; i < n - m + 1; i++) {
+			if (t == p) {
+				if (text.startsWith(pattern, i)) {
+					return i;
+				}
+			}
+
+			if (i < n - m) {
+				final char leftChar = text.charAt(i);
+				final char rightChar = text.charAt(i + m);
+				t = (d * (t - h * leftChar) + rightChar) % q;
+			}
+		}
+
+		return -1;
+	}
 }
