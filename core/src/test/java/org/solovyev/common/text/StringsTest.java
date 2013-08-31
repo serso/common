@@ -25,10 +25,13 @@ package org.solovyev.common.text;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.solovyev.common.text.Strings.indexOfRabinKarp;
 
 /**
@@ -74,5 +77,21 @@ public class StringsTest {
 		assertEquals(0, indexOfRabinKarp("abc", ""));
 		assertEquals(1, indexOfRabinKarp("abababababab", "bababab"));
 		assertEquals(7, indexOfRabinKarp("abcdefghjklmopqrstvuwxyz", "hjklmopqrstvuw"));
+		assertEquals(7, indexOfRabinKarp("gWEGqmrFgfmAfhX^jtkVcNRh[VlZ]a`UBj_QSl^hBLA[tq]WjpcUokseiZXjjtaRKdZZL_mqhWoVI[o]LBUQgJEgGEI`UnifL^IJ", "eiZXjjtaRKdZZL_mqhWoVI[o]LBUQgJEgGEI`Unif"));
+
+		final Random random = new Random(new Date().getTime());
+		for (int i = 0; i < 1000; i++) {
+			String s = Strings.generateRandomString(100);
+			int start = random.nextInt(100);
+			int length = random.nextInt(100 - start);
+
+			final String substring = s.substring(start, start + length);
+			System.out.println(s);
+			System.out.println(substring);
+			final int actual = indexOfRabinKarp(s, substring);
+			assertNotEquals(-1, actual);
+			assertEquals(substring, s.substring(actual, actual + substring.length()));
+
+		}
 	}
 }
