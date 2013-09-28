@@ -8,7 +8,7 @@ import javax.annotation.concurrent.GuardedBy;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
@@ -41,7 +41,7 @@ final class TaskServiceImpl implements TaskService {
 	private final Map<String, ListenableFutureTask<?>> tasks = new HashMap<String, ListenableFutureTask<?>>();
 
 	@Nonnull
-	private final ExecutorService executor;
+	private final Executor executor;
 
 	/*
 	**********************************************************************
@@ -59,7 +59,7 @@ final class TaskServiceImpl implements TaskService {
 		this(Executors.newFixedThreadPool(threadCount));
 	}
 
-	TaskServiceImpl(@Nonnull ExecutorService executor) {
+	TaskServiceImpl(@Nonnull Executor executor) {
 		this.executor = executor;
 	}
 

@@ -96,7 +96,7 @@ public final class ListenableFutureTask<V> extends FutureTask<V>
 		addListener(callback, MoreExecutors.sameThreadExecutor());
 	}
 
-	public void addListener(@Nonnull final FutureCallback<V> callback, @Nonnull ExecutorService executor) {
+	public void addListener(@Nonnull final FutureCallback<V> callback, @Nonnull Executor executor) {
 		this.addListener(new RunnableListener(callback), executor);
 	}
 

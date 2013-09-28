@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -53,7 +53,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
 	private final Class<E> baseEventType;
 
 	@Nullable
-	private final ExecutorService eventExecutor;
+	private final Executor eventExecutor;
 
 	/*
 	**********************************************************************
@@ -68,8 +68,8 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
 	}
 
 	@Nullable
-	private static ExecutorService newExecutor(int eventThreadsCount) {
-		final ExecutorService result;
+	private static Executor newExecutor(int eventThreadsCount) {
+		final Executor result;
 
 		if (eventThreadsCount < 0) {
 			throw new IllegalArgumentException("eventThreadsCount should be not negative!");
@@ -85,7 +85,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
 		return result;
 	}
 
-	private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nullable ExecutorService eventExecutor) {
+	private EventListenersImpl(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nullable Executor eventExecutor) {
 		this.listeners = listeners;
 		this.baseEventType = baseEventType;
 		this.eventExecutor = eventExecutor;
@@ -107,7 +107,7 @@ class EventListenersImpl<L extends JEventListener<? extends E>, E extends JEvent
 	}
 
 	@Nonnull
-	public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nonnull ExecutorService executor) {
+	public static <L extends JEventListener<? extends E>, E extends JEvent> EventListenersImpl<L, E> newInstance(@Nonnull JListeners<L> listeners, @Nonnull Class<E> baseEventType, @Nonnull Executor executor) {
 		return new EventListenersImpl<L, E>(listeners, baseEventType, executor);
 	}
 

@@ -1,7 +1,7 @@
 package org.solovyev.tasks;
 
 import javax.annotation.Nonnull;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 
 /**
  * User: serso
@@ -37,11 +37,11 @@ public class Tasks {
 	}
 
 	/**
-	 * @param executorService executor service on which background tasks will be executed
-	 * @return new default task service with custom <var>executorService</var>
+	 * @param executor executor service on which background tasks will be executed
+	 * @return new default task service with custom <var>executor</var>
 	 */
 	@Nonnull
-	public static TaskService newTaskService(@Nonnull ExecutorService executorService) {
-		return new TaskServiceImpl(executorService);
+	public static TaskService newTaskService(@Nonnull Executor executor) {
+		return new TaskServiceImpl(executor);
 	}
 }

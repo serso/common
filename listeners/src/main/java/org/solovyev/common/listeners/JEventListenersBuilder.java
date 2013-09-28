@@ -26,7 +26,7 @@ import org.solovyev.common.JBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 
 /**
  * User: serso
@@ -40,7 +40,7 @@ public final class JEventListenersBuilder<L extends JEventListener<? extends E>,
 	private int eventThreadsCount = 1;
 
 	@Nullable
-	private ExecutorService executorService;
+	private Executor executor;
 
 	private boolean weakReference = true;
 
@@ -69,14 +69,14 @@ public final class JEventListenersBuilder<L extends JEventListener<? extends E>,
 	@Nonnull
 	public JEventListenersBuilder<L, E> onCallerThread() {
 		this.eventThreadsCount = 0;
-		this.executorService = null;
+		this.executor = null;
 		return this;
 	}
 
 	@Nonnull
 	public JEventListenersBuilder<L, E> onBackgroundThread() {
 		this.eventThreadsCount = 1;
-		this.executorService = null;
+		this.executor = null;
 		return this;
 	}
 
@@ -86,14 +86,14 @@ public final class JEventListenersBuilder<L extends JEventListener<? extends E>,
 			throw new IllegalArgumentException("Threads count must be >= 1");
 		}
 		this.eventThreadsCount = eventThreadsCount;
-		this.executorService = null;
+		this.executor = null;
 		return this;
 	}
 
 	@Nonnull
-	public JEventListenersBuilder<L, E> withExecutor(@Nonnull ExecutorService executor) {
+	public JEventListenersBuilder<L, E> withExecutor(@Nonnull Executor executor) {
 		this.eventThreadsCount = NO_THREAD;
-		this.executorService = executor;
+		this.executor = executor;
 		return this;
 	}
 
@@ -122,8 +122,8 @@ public final class JEventListenersBuilder<L extends JEventListener<? extends E>,
 			listeners = Listeners.newHardRefListeners();
 		}
 
-		if (executorService != null) {
-			result = EventListenersImpl.newInstance(listeners, baseEventType, executorService);
+		if (executor != null) {
+			result = EventListenersImpl.newInstance(listeners, baseEventType, executor);
 		} else {
 			result = EventListenersImpl.newInstance(listeners, baseEventType, eventThreadsCount);
 		}
