@@ -1,0 +1,196 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.solovyev.external.com.electriccloud</groupId>
+  <artifactId>org.solovyev.external.javac2-maven-plugin</artifactId>
+  <version>1.0.3</version>
+  <packaging>maven-plugin</packaging>
+
+  <name>Javac2 Maven Plugin</name>
+  <description>Instruments NotNull/Nonnull class files using IntelliJ's javac2 instrumenter</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.version>3.0.4</maven.version>
+  </properties>
+
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>http://www.opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git@github.com:serso/javac2-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:serso/javac2-maven-plugin.git</developerConnection>
+    <url>http://github.com/serso/common</url>
+    <tag>release-1.0.3</tag>
+  </scm>
+
+  <prerequisites>
+    <maven>3.0.4</maven>
+  </prerequisites>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <tagNameFormat>release-@{project.version}</tagNameFormat>
+          <mavenExecutorId>forked-path</mavenExecutorId>
+          <useReleaseProfile>false</useReleaseProfile>
+          <arguments>-Psonatype-oss-release ${arguments}</arguments>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>2.4.1</version>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.3.1</version>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.1</version>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12</version>
+      </plugin>
+      
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <version>2.9</version>
+        <executions>
+          <execution>
+            <id>generated-helpmojo</id>
+            <goals>
+              <goal>helpmojo</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+            <dependency>
+                <groupId>br.com.ingenieux.maven.annomojo</groupId>
+                <artifactId>org.jfrog.maven.maven-plugin-tools-anno</artifactId>
+                <version>1.4.1</version>
+                <scope>runtime</scope>
+            </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm</artifactId>
+      <version>3.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm-commons</artifactId>
+      <version>3.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <version>${maven.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>${maven.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.intellij</groupId>
+      <artifactId>annotations</artifactId>
+      <version>12.0</version>
+    </dependency>
+
+    <!-- Must be installed manually, see misc/libs/javac2.jar and README -->
+    <dependency>
+      <groupId>com.intellij</groupId>
+      <artifactId>javac2</artifactId>
+      <version>11.1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.ant</groupId>
+      <artifactId>ant</artifactId>
+      <version>1.8.4</version>
+    </dependency>
+
+    <dependency>
+        <groupId>br.com.ingenieux.maven.annomojo</groupId>
+        <artifactId>org.jfrog.maven.maven-plugin-tools-anno</artifactId>
+        <version>1.4.1</version>
+    </dependency>
+
+  </dependencies>
+
+</project>
