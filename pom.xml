@@ -40,6 +40,14 @@
 
 	<packaging>pom</packaging>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>in-project-repository</id>
+			<name>In Project Repo</name>
+			<url>file://${project.basedir}/maven-repository</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<modules>
 		<module>text</module>
 		<module>core</module>
