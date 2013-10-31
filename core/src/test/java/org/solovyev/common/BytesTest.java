@@ -22,7 +22,7 @@
 
 package org.solovyev.common;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.solovyev.common.text.HexString;
 import org.solovyev.common.text.Strings;

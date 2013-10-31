@@ -22,7 +22,7 @@
 
 package org.solovyev.common.listeners;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Collection;

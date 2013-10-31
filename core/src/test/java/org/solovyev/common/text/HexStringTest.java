@@ -22,7 +22,7 @@
 
 package org.solovyev.common.text;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.solovyev.common.ByteArrayEqualizer;
 import org.solovyev.common.Bytes;

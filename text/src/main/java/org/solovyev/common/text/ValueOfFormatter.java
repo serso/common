@@ -25,11 +25,6 @@ package org.solovyev.common.text;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 9/20/11
- * Time: 10:52 PM
- */
 public class ValueOfFormatter<T> implements Formatter<T> {
 
 	/*

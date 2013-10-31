@@ -25,11 +25,6 @@ package org.solovyev.common.collections.multiset;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-/**
- * User: serso
- * Date: 7/9/12
- * Time: 6:28 PM
- */
 abstract class AbstractMapManyInstancesMultiSet<E> extends AbstractMultiSet<E> implements ManyInstancesMultiSet<E> {
 
 	@Nonnull

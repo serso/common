@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multimap;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.solovyev.common.collections.multiset.ArrayListMultiSet;
 import org.solovyev.common.collections.multiset.HashMapManyInstancesMultiSet;
@@ -33,11 +33,6 @@ import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Iterator;
 
-/**
- * User: serso
- * Date: 7/8/12
- * Time: 2:30 PM
- */
 public abstract class AbstractMultiSetTest {
 
 	@Nonnull

@@ -27,11 +27,6 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * User: serso
- * Date: 12/25/11
- * Time: 1:17 PM
- */
 public class EnumMapper<T extends Enum> implements Mapper<T> {
 
 	/*

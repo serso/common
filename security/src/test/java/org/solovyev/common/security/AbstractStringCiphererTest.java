@@ -22,7 +22,7 @@
 
 package org.solovyev.common.security;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.solovyev.common.Bytes;
 import org.solovyev.common.text.Strings;
 

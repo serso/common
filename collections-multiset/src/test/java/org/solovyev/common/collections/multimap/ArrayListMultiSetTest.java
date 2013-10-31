@@ -27,11 +27,6 @@ import org.solovyev.common.collections.multiset.MultiSet;
 
 import javax.annotation.Nonnull;
 
-/**
- * User: serso
- * Date: 7/8/12
- * Time: 2:31 PM
- */
 public class ArrayListMultiSetTest extends AbstractMultiSetTest {
 
 	@Nonnull

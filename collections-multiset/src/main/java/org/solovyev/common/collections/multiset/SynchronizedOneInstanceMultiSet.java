@@ -24,11 +24,6 @@ package org.solovyev.common.collections.multiset;
 
 import javax.annotation.Nonnull;
 
-/**
- * User: serso
- * Date: 7/9/12
- * Time: 4:17 PM
- */
 public class SynchronizedOneInstanceMultiSet<E> extends SynchronizedMultiSet<E> implements OneInstanceMultiSet<E> {
 
 	/*

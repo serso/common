@@ -31,11 +31,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 8/7/12
- * Time: 8:24 PM
- */
 public class StringCollections {
 
 	protected StringCollections() {

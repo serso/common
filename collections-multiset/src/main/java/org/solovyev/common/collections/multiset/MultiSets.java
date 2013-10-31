@@ -26,11 +26,6 @@ import javax.annotation.Nonnull;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
- * User: serso
- * Date: 7/12/12
- * Time: 1:37 PM
- */
 public final class MultiSets {
 
 	private MultiSets() {

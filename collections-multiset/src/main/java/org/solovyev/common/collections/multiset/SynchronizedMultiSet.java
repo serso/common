@@ -29,11 +29,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-/**
- * User: serso
- * Date: 7/9/12
- * Time: 4:10 PM
- */
 public class SynchronizedMultiSet<E> extends SynchronizedObject<MultiSet<E>> implements MultiSet<E> {
 
 	/*
