@@ -1,7 +1,7 @@
 package org.solovyev.tasks;
 
 import com.google.common.util.concurrent.FutureCallback;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,16 +12,16 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-/**
- * User: serso
- * Date: 4/8/13
- * Time: 9:56 PM
- */
+import static java.lang.Thread.sleep;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 public abstract class TaskServiceTest {
 
 	private static final int TASK_COUNT = 20;
-	private static final int TEST_COUNT = 200;
-	private static final int THREAD_MAX_SLEEP_MS = 1000;
+	private static final int TEST_COUNT = 50;
+	private static final int THREAD_MAX_SLEEP_MS = 300;
 
 	@Nonnull
 	private TaskService taskService;
@@ -46,7 +46,7 @@ public abstract class TaskServiceTest {
 		taskService.tryRun(taskName, new Callable<Object>() {
 			@Override
 			public Object call() throws Exception {
-				Thread.sleep(5000);
+				sleep(500);
 				return null;
 			}
 		});
@@ -58,17 +58,17 @@ public abstract class TaskServiceTest {
 					return null;
 				}
 			});
-			Assert.fail();
+			fail();
 		} catch (TaskIsAlreadyRunningException e) {
 
 		}
 
-		Assert.assertTrue(taskService.isRunning(taskName));
+		assertTrue(taskService.isRunning(taskName));
 
-		Assert.assertNotNull(taskService.addTaskListener(taskName, new FutureCallback<Object>() {
+		assertNotNull(taskService.addTaskListener(taskName, new FutureCallback<Object>() {
 			@Override
 			public void onSuccess(Object result) {
-				Assert.fail();
+				fail();
 			}
 
 			@Override
@@ -77,12 +77,12 @@ public abstract class TaskServiceTest {
 			}
 		}));
 
-		Assert.assertTrue(taskService.cancel(taskName));
+		assertTrue(taskService.cancel(taskName));
 
 		taskService.tryRun(taskName, new Callable<Object>() {
 			@Override
 			public Object call() throws Exception {
-				Thread.sleep(1000);
+				sleep(500);
 				return null;
 			}
 		});
@@ -90,26 +90,26 @@ public abstract class TaskServiceTest {
 		final FutureCallback<Object> listener = taskService.addTaskListener(taskName, new FutureCallback<Object>() {
 			@Override
 			public void onSuccess(Object result) {
-				Assert.fail();
+				fail();
 			}
 
 			@Override
 			public void onFailure(Throwable t) {
-				Assert.fail();
+				fail();
 			}
 		});
 
-		Assert.assertNotNull(listener);
+		assertNotNull(listener);
 		taskService.removeTaskListener(taskName, listener);
 
-		Thread.sleep(2000);
+		sleep(1000);
 	}
 
 	@Test
 	public void testTryRandomRun() throws Exception {
 		final Random r = new Random(new Date().getTime());
 		for (int i = 0; i < TEST_COUNT; i++) {
-			Thread.sleep(r.nextInt(100));
+			sleep(r.nextInt(50));
 			final String taskName = "task_" + r.nextInt(TASK_COUNT);
 
 			try {
@@ -119,7 +119,7 @@ public abstract class TaskServiceTest {
 				taskService.tryRun(taskName, new Callable<Object>() {
 							@Override
 							public Object call() throws Exception {
-								Thread.sleep(r.nextInt(THREAD_MAX_SLEEP_MS));
+								sleep(r.nextInt(THREAD_MAX_SLEEP_MS));
 								return taskName;
 							}
 						}, new FutureCallback<Object>() {
@@ -136,21 +136,21 @@ public abstract class TaskServiceTest {
 								synchronized (runningTasks) {
 									runningTasks.remove(taskName);
 								}
-								Assert.fail();
+								fail();
 							}
 						}
 				);
 			} catch (TaskIsAlreadyRunningException e) {
 				synchronized (runningTasks) {
 					if (!runningTasks.contains(taskName)) {
-						Assert.fail();
+						fail();
 					}
 				}
 			}
 		}
 
-		Thread.sleep(5000);
-		Assert.assertTrue(runningTasks.isEmpty());
+		sleep(1000);
+		assertTrue(runningTasks.isEmpty());
 
 	}
 
@@ -158,7 +158,7 @@ public abstract class TaskServiceTest {
 	public void testRandomRun() throws Exception {
 		final Random r = new Random(new Date().getTime());
 		for (int i = 0; i < TEST_COUNT; i++) {
-			Thread.sleep(r.nextInt(100));
+			sleep(r.nextInt(50));
 			final String taskName = "task_" + r.nextInt(TASK_COUNT);
 
 			synchronized (runningTasks) {
@@ -167,7 +167,7 @@ public abstract class TaskServiceTest {
 			taskService.run(taskName, new Callable<Object>() {
 						@Override
 						public Object call() throws Exception {
-							Thread.sleep(r.nextInt(THREAD_MAX_SLEEP_MS));
+							sleep(r.nextInt(THREAD_MAX_SLEEP_MS));
 							return taskName;
 						}
 					}, new FutureCallback<Object>() {
@@ -192,7 +192,7 @@ public abstract class TaskServiceTest {
 
 		}
 
-		Thread.sleep(5000);
-		Assert.assertTrue(runningTasks.isEmpty());
+		sleep(1000);
+		assertTrue(runningTasks.isEmpty());
 	}
 }
