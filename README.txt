@@ -1,24 +1,11 @@
-/*
-**********************************************************************
-*
-*                           DESCRIPTION
-*
-**********************************************************************
-*/
+DESCRIPTION
 
 This Java library contains different utilities, tools, etc
 Full description is available at http://se.solovyev.org/java/jcl
 
-/*
-**********************************************************************
-*
-*                           INSTALLATION
-*
-**********************************************************************
-*/
+INSTALLATION
 
 The project is based on Maven 3. In order to build it you need to install Apache Maven and run 'mvn install' command.
-
 
 ---------------------------------------------------------------------
 
