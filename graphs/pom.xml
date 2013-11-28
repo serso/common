@@ -27,19 +27,19 @@
 	<parent>
 		<groupId>org.solovyev</groupId>
 		<artifactId>common</artifactId>
-		<version>1.0.7-SNAPSHOT</version>
+		<version>1.0.7</version>
 	</parent>
 
 	<groupId>org.solovyev</groupId>
 	<artifactId>common-graphs</artifactId>
-	<version>1.0.7-SNAPSHOT</version>
+	<version>1.0.7</version>
 	<name>Java Common Library Graphs</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.solovyev</groupId>
 			<artifactId>common-core</artifactId>
-			<version>1.0.7-SNAPSHOT</version>
+			<version>1.0.7</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

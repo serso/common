@@ -26,13 +26,13 @@
 	<parent>
 		<groupId>org.solovyev</groupId>
 		<artifactId>common</artifactId>
-		<version>1.0.7-SNAPSHOT</version>
+		<version>1.0.7</version>
 	</parent>
 
 	<groupId>org.solovyev</groupId>
 	<artifactId>common-tasks</artifactId>
 	<name>Java Common Library Tasks</name>
-	<version>1.0.7-SNAPSHOT</version>
+	<version>1.0.7</version>
 
 	<dependencies>
 		<dependency>
