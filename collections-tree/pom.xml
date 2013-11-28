@@ -25,14 +25,14 @@
 	<parent>
 		<artifactId>common</artifactId>
 		<groupId>org.solovyev</groupId>
-		<version>1.0.7</version>
+		<version>1.0.8-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.solovyev</groupId>
 	<artifactId>common-collections-tree</artifactId>
 	<name>Java Common Library Collections Tree</name>
-	<version>1.0.7</version>
+	<version>1.0.8-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>

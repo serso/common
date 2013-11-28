@@ -26,13 +26,13 @@
 	<parent>
 		<groupId>org.solovyev</groupId>
 		<artifactId>common</artifactId>
-		<version>1.0.7</version>
+		<version>1.0.8-SNAPSHOT</version>
 	</parent>
 
 	<groupId>org.solovyev</groupId>
 	<artifactId>common-listeners</artifactId>
 	<name>Java Common Library Listeners</name>
-	<version>1.0.7</version>
+	<version>1.0.8-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
