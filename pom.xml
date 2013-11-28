@@ -37,6 +37,7 @@
 	<artifactId>common</artifactId>
 	<version>1.0.7-SNAPSHOT</version>
 	<name>Java Common Library</name>
+	<url>https://oss.sonatype.org/content/repositories/releases/org/solovyev</url>
 
 	<packaging>pom</packaging>
 
