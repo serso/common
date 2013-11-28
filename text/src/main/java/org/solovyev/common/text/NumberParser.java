@@ -29,11 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * User: serso
- * Date: 9/26/11
- * Time: 11:07 PM
- */
 public class NumberParser<N extends Number> implements Parser<N> {
 
 	/*

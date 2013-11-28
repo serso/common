@@ -22,7 +22,7 @@
 
 package org.solovyev.common.collections.multimap;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.solovyev.common.collections.multiset.ArrayListMultiSet;
 import org.solovyev.common.collections.multiset.MultiSet;
@@ -34,11 +34,6 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
-/**
- * User: serso
- * Date: 7/9/12
- * Time: 4:28 PM
- */
 public class SynchronizedMultiSetTest {
 
 	private static final int THREAD_NUMBER = 100;

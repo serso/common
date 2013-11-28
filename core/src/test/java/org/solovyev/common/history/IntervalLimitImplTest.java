@@ -22,7 +22,7 @@
 
 package org.solovyev.common.history;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.solovyev.common.interval.IntervalLimit;
 import org.solovyev.common.interval.Intervals;

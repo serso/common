@@ -27,11 +27,6 @@ import org.solovyev.common.Objects;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-/**
- * User: serso
- * Date: 7/5/12
- * Time: 2:22 PM
- */
 class AbstractListMultiSet<E> extends AbstractMultiSet<E> implements ManyInstancesMultiSet<E> {
 
 	@Nonnull

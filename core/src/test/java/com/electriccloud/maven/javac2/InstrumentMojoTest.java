@@ -22,7 +22,7 @@
 
 package com.electriccloud.maven.javac2;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.solovyev.common.interval.Interval;

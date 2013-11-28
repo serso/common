@@ -25,11 +25,6 @@ package org.solovyev.common.text;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 9/26/11
- * Time: 11:27 PM
- */
 public class BooleanMapper implements Mapper<Boolean> {
 
 	/*

@@ -24,11 +24,6 @@ package org.solovyev.common.collections.multiset;
 
 import java.util.*;
 
-/**
- * User: serso
- * Date: 7/12/12
- * Time: 2:02 PM
- */
 public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implements MultiSet<E> {
 
 	@Override

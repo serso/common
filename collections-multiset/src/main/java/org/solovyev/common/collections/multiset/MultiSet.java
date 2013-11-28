@@ -26,11 +26,6 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Set;
 
-/**
- * User: serso
- * Date: 7/5/12
- * Time: 1:53 PM
- */
 public interface MultiSet<E> extends Collection<E> {
 
 	/**

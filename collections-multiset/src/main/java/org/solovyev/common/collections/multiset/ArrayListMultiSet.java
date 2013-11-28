@@ -26,11 +26,6 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * User: serso
- * Date: 7/6/12
- * Time: 1:37 PM
- */
 public class ArrayListMultiSet<E> extends AbstractListMultiSet<E> {
 
 	/*

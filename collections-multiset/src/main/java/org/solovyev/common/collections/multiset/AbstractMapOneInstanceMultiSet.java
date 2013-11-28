@@ -26,11 +26,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
-/**
- * User: serso
- * Date: 7/8/12
- * Time: 1:49 PM
- */
 public class AbstractMapOneInstanceMultiSet<E> extends AbstractMultiSet<E> implements OneInstanceMultiSet<E> {
 
 	/*

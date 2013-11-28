@@ -26,11 +26,6 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * User: serso
- * Date: 7/8/12
- * Time: 2:25 PM
- */
 public class HashMapOneInstanceMultiSet<E> extends AbstractMapOneInstanceMultiSet<E> {
 
 	/*

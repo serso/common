@@ -22,15 +22,10 @@
 
 package org.solovyev.common.text;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.solovyev.common.interval.Intervals;
 
-/**
- * User: serso
- * Date: 1/30/13
- * Time: 8:09 PM
- */
 public class NumberIntervalMapperTest {
 
 	@Test

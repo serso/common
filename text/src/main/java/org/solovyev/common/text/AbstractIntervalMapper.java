@@ -29,11 +29,6 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 9/21/11
- * Time: 12:02 AM
- */
 public abstract class AbstractIntervalMapper<T extends Comparable<T>> implements Mapper<Interval<T>> {
 
 	/*

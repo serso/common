@@ -25,11 +25,6 @@ package org.solovyev.common.text;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 5/18/11
- * Time: 11:21 AM
- */
 public class StringMapper implements Mapper<String> {
 
 	/*

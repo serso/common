@@ -31,7 +31,7 @@
 	</parent>
 
 	<groupId>org.solovyev</groupId>
-	<artifactId>graphs</artifactId>
+	<artifactId>common-graphs</artifactId>
 	<version>1.0.7-SNAPSHOT</version>
 	<name>Java Common Library Graphs</name>
 

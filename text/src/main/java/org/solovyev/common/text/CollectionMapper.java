@@ -26,11 +26,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
-/**
- * User: serso
- * Date: 1/30/13
- * Time: 8:16 PM
- */
 public abstract class CollectionMapper<C extends Collection<E>, E> implements Mapper<C> {
 
 	/*

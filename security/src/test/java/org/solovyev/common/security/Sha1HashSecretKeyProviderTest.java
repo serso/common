@@ -1,6 +1,6 @@
 package org.solovyev.common.security;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.solovyev.common.ByteArrayEqualizer;
 import org.solovyev.common.Objects;

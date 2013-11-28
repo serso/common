@@ -29,11 +29,6 @@ import org.solovyev.common.interval.Intervals;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 9/20/11
- * Time: 11:56 PM
- */
 public final class NumberIntervalMapper<T extends Number & Comparable<T>> extends AbstractIntervalMapper<T> {
 
 	/*
